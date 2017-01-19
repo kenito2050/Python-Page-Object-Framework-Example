@@ -1,10 +1,14 @@
 from selenium.webdriver.common.by import By
-import select
 
 class ProductsAndPrograms():
 
     def __init__(self, driver):
         self.driver = driver
+
+    # Click Ballpark
+    def click_ballpark(self):
+        ballpark_link = self.driver.find_element(By.CSS_SELECTOR, "img[alt=\"Get a Ballpark Premium Indication\"]")
+        ballpark_link.click()
 
     # Products
     def click_NGP(self):
