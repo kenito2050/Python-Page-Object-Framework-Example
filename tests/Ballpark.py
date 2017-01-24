@@ -7,7 +7,7 @@ from pages.service_center.agents_page import AgentsPage
 from pages.service_center.applications_page import ApplicationsPage
 from pages.service_center.subjectivities import Subjectivities
 from pages.producer_center.products_programs_page import ProductsAndPrograms
-from pages.producer_center.ballpark import BallPark
+from pages.producer_center.ballpark.ballpark_PAF import BallPark_PAF
 
 from pages.producer_center.client_search_page import ClientSearch
 from pages.producer_center.client_contact_page import ClientContact
@@ -41,7 +41,7 @@ class CreateQuote(unittest.TestCase):
         state = "California"
         #state = Create_Insured_Address.return_alabama(state_value)
         company_name = company.company_name()
-        company_name_string = company_name + " " + "-" + " " + state + " " + "Test"
+        company_name_string = company_name + " " + "-" + " " + state + " " + " Ballpark Test"
         address_value = address.street_address()
         city = StateCapitals.return_state_capital(state)
         postal_code = ZipCodes.return_zip_codes(state)
@@ -76,7 +76,7 @@ class CreateQuote(unittest.TestCase):
         #contract_class_value = "74"
 
         # Initialize Driver; Launch URL
-        baseURL = "http://svcdev.wn.nasinsurance.com/"
+        baseURL = "http://svcdemo9.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -95,9 +95,19 @@ class CreateQuote(unittest.TestCase):
         pp = ProductsAndPrograms(driver)
         pp.click_ballpark()
 
-        bp = BallPark(driver)
-        bp.switch_windows()
-        bp.start_ballpark_enter_faker_company_name_valid_zip(company_name_string, postal_code)
+        bp_PAF = BallPark_PAF(driver)
+        bp_PAF.switch_windows()
+        bp_PAF.start_ballpark_enter_faker_company_name_valid_zip(company_name_string, postal_code)
+        bp_PAF.select_contract_class(contract_class)
+        bp_PAF.click_ballpark_button()
+
+        bp_PAF.select_product()
+        bp_PAF.enter_revenue()
+        bp_PAF.click_ballpark_button()
+
+        #bp = BallPark(driver)
+        #bp.switch_windows()
+        #bp.start_ballpark_enter_faker_company_name_valid_zip(company_name_string, postal_code)
 
         # Script Works up to this point - Ken
 
