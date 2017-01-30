@@ -8,6 +8,8 @@ from pages.service_center.applications_page import ApplicationsPage
 from pages.service_center.subjectivities import Subjectivities
 from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.producer_center.ballpark.ballpark_PAF import BallPark_PAF
+from pages.producer_center.ballpark.ballpark_Indication import BallPark_Indication
+from pages.producer_center.ballpark.ballpark_download_send import BallPark_Download_Send
 
 from pages.producer_center.client_search_page import ClientSearch
 from pages.producer_center.client_contact_page import ClientContact
@@ -105,12 +107,21 @@ class CreateQuote(unittest.TestCase):
         bp_PAF.enter_revenue()
         bp_PAF.click_ballpark_button()
 
-        #bp = BallPark(driver)
-        #bp.switch_windows()
-        #bp.start_ballpark_enter_faker_company_name_valid_zip(company_name_string, postal_code)
+        bp_Indication = BallPark_Indication(driver)
+        bp_Indication.click_Download_Send_Indication()
 
-        # Script Works up to this point - Ken
+        bp_Download_Send = BallPark_Download_Send(driver)
+        bp_Download_Send.input_email()
+        bp_Download_Send.click_send_email()
 
+        # Close Ballpark Window
+        driver.close()
+
+        # Switch to First Window (Service Center)
+        driver.switch_to.window(driver.window_handles[0])
+
+        # Close First Window (Service Center)
+        driver.close()
 
         # Wait
         driver.implicitly_wait(3)
