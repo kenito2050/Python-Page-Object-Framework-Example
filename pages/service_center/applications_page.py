@@ -10,7 +10,7 @@ class ApplicationsPage():
         search_field.click()
         search_field.send_keys(application_id)
 
-    def click_search_button(self,):
+    def click_search_button(self):
         search_field = self.driver.find_element(By.ID, "search-btn")
         search_field.click()
 

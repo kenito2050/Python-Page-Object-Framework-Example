@@ -78,7 +78,7 @@ class CreateQuote(unittest.TestCase):
         #contract_class_value = "74"
 
         # Initialize Driver; Launch URL
-        baseURL = "http://svcdemo9.wn.nasinsurance.com/"
+        baseURL = "http://svcdemo4.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -121,7 +121,7 @@ class CreateQuote(unittest.TestCase):
         driver.switch_to.window(driver.window_handles[0])
 
         # Close First Window (Service Center)
-        driver.close()
+        #driver.close()
 
         # Wait
         driver.implicitly_wait(3)

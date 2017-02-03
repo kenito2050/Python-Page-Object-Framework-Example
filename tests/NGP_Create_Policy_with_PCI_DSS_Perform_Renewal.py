@@ -6,10 +6,12 @@ from pages.service_center.navigation_bar import NavigationBar
 from pages.service_center.agents_page import AgentsPage
 from pages.service_center.applications_page import ApplicationsPage
 from pages.service_center.subjectivities import Subjectivities
+from pages.service_center.policies_page import PoliciesPage
 from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.producer_center.client_search_page import ClientSearch
 from pages.producer_center.client_contact_page import ClientContact
 from pages.producer_center.coverage_periods_page import CoveragePeriods
+from pages.producer_center.thank_you_page import Thank_You_Page
 from pages.producer_center.saw.products.NGP.insured_information.insured_information import Insured_Information
 from pages.producer_center.saw.products.NGP.PAF.PAF import PAF
 from pages.producer_center.saw.products.NGP.coverage_options.coverage_options import Coverage_Options
@@ -115,8 +117,8 @@ class CreateQuote(unittest.TestCase):
         # Get the Application ID from URL -- THIS WORKS
         current_url = driver.current_url
         first_url_string = urlparse(current_url)
-        query_dict = parse_qs(first_url_string.query)
-        application_id = (query_dict['app_id'][0])
+        query_dict_1 = parse_qs(first_url_string.query)
+        application_id = (query_dict_1['app_id'][0])
 
         cc.click_next()
 
@@ -127,10 +129,10 @@ class CreateQuote(unittest.TestCase):
         saw_ii.enter_annual_revenue()
         saw_ii.click_next()
         saw_PAF = PAF(driver)
-        saw_PAF.create_quote_no_DQ()
+        saw_PAF.create_quote_with_PCI_DSS()
         saw_PAF.click_next()
         saw_CC = Coverage_Options(driver)
-        saw_CC.select_limits_deductibles_on_coverage_options()
+        saw_CC.select_PCI_DSS_limits_deductibles_on_coverage_options()
         saw_CC.proceed_to_quote()
         saw_summary = Summary(driver)
         saw_summary.click_generate_quote()
@@ -171,16 +173,17 @@ class CreateQuote(unittest.TestCase):
         #app_page.click_application_id_link(application_id)
 
         # Navigate to Application Details page
-        new_current_url = driver.current_url
-        slashparts = new_current_url.split('/')
+        new_current_url_1 = driver.current_url
+        slashparts_1 = new_current_url_1.split('/')
         # Now join back the first three sections 'http:', '' and 'example.com'
-        new_base_url = '/'.join(slashparts[:3]) + '/'
+        new_base_url_1 = '/'.join(slashparts_1[:3]) + '/'
 
+        # URL strings for Subjectivities
         app_details_string = "?c=app.view&id="
         app_subjectivities_string = "?c=app.track_subjectivities&id="
 
-        application_details_screen = new_base_url + app_details_string + application_id
-        application_subjectivites_screen = new_base_url + app_subjectivities_string + application_id
+        application_details_screen = new_base_url_1 + app_details_string + application_id
+        application_subjectivites_screen = new_base_url_1 + app_subjectivities_string + application_id
 
         # Navigate to Application Subjectivities Screen
         driver.get(application_subjectivites_screen)
@@ -195,6 +198,49 @@ class CreateQuote(unittest.TestCase):
         # Return to Producer Center; Issue Policy
         saw_confirm_issue.input_signature()
         saw_confirm_issue.click_accept_terms_issue_policy()
+
+        # Click the Policy Link on Thank You Page -- Need to pass policy number value; Currently not working
+        thank_you = Thank_You_Page(driver)
+
+        # Retrieve and Store Policy Number
+        policy_number = thank_you.retrieve_store_policy_number()
+        ## push it to class
+        self.policy_number = policy_number
+
+        # Click on Policy Link
+        thank_you.click_policy_link()
+
+        # Get the Policy ID from URL -- This code works
+        current_url_policy = driver.current_url
+        second_url_string = urlparse(current_url_policy)
+        query_dict_2 = parse_qs(second_url_string.query)
+        policy_string = (query_dict_2['id'][0])
+        policy_id = policy_string[:-4]
+
+        # Return to Admin Interface
+        saw_confirm_issue.click_return_to_Admin_Interface()
+
+        # Click Policies
+        nb.click_policies()
+
+        # URL Strings for ALL Policies
+        new_current_url_2 = driver.current_url
+        slashparts_2 = new_current_url_2.split('/')
+        # Now join back the first three sections 'http:', '' and 'example.com'
+        new_base_url_2 = '/'.join(slashparts_2[:3]) + '/'
+        all_policies_string = '?c=policy_list.list&type=all'
+        policy_view_string = 'index.php?c=policy.view&id='
+
+        # Problem: In Demo 9, URL String differs
+        # Navigate to Policy Details Screen of Policy that was just created
+        policies_all_screen = new_base_url_2 + all_policies_string
+        policy_details_screen = new_base_url_2 + policy_view_string + policy_id
+        driver.get(policy_details_screen)
+
+        policies_page = PoliciesPage(driver)
+        # Enter Policy Number and Click Search
+        policies_page.enter_policy_name(policy_number)
+        policies_page.click_search_button()
 
         # Wait
         driver.implicitly_wait(3)
