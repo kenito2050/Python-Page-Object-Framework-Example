@@ -73,7 +73,7 @@ class CreateQuote(unittest.TestCase):
         #contract_class_value = "74"
 
         # Initialize Driver; Launch URL
-        baseURL = "http://svcdemo4.wn.nasinsurance.com/"
+        baseURL = "http://svcrel.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL

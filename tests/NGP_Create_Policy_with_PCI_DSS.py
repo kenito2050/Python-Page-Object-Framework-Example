@@ -38,7 +38,7 @@ class CreateQuote(unittest.TestCase):
         state = "California"
         #state = Create_Insured_Address.return_alabama(state_value)
         company_name = company.company_name()
-        company_name_string = company_name + " " + "-" + " " + state + " " + "NGP with PCI DSS Test"
+        company_name_string = company_name + " " + "-" + " " + state + " " + "Test"
         address_value = address.street_address()
         city = StateCapitals.return_state_capital(state)
         postal_code = ZipCodes.return_zip_codes(state)
@@ -53,6 +53,9 @@ class CreateQuote(unittest.TestCase):
         tree = ET.parse('Agents.xml')
         agents = tree.getroot()
         agent = (agents[0][0].text)
+
+        # 0,0 = QA Agent
+        # 1,0 = Janice Quinn
 
         # TODO: NEED TO FIX SO THAT SCRIPT USES STRING VALUE CONTAINED IN contract_class variable
         # Access XML to retrieve contract_class
@@ -73,7 +76,7 @@ class CreateQuote(unittest.TestCase):
         #contract_class_value = "74"
 
         # Initialize Driver; Launch URL
-        baseURL = "http://svcdemo4.wn.nasinsurance.com/"
+        baseURL = "http://svcfix.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
