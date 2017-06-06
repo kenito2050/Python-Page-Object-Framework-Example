@@ -1,33 +1,18 @@
+import unittest
+from xml.etree import ElementTree as ET
+
 from faker import address
 from faker import company
-from faker import frandom
+from selenium import webdriver
+
+from pages.service_center.applications_page import ApplicationsPage
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
-from pages.service_center.agents_page import AgentsPage
-from pages.service_center.applications_page import ApplicationsPage
 from pages.service_center.subjectivities import Subjectivities
-from pages.producer_center.products_programs_page import ProductsAndPrograms
-from pages.producer_center.client_search_page import ClientSearch
-from pages.producer_center.client_contact_page import ClientContact
-from pages.producer_center.coverage_periods_page import CoveragePeriods
-from pages.producer_center.saw.products.NGP.insured_information.insured_information import Insured_Information
-from pages.producer_center.saw.products.NGP.PAF.PAF import PAF
-from pages.producer_center.saw.products.NGP.coverage_options.coverage_options import Coverage_Options
-from pages.producer_center.saw.products.NGP.summary.summary import Summary
-from pages.producer_center.saw.products.NGP.quote_review.quote_review import Quote_Review
-from pages.producer_center.saw.products.NGP.select_option.select_option import Select_Option
-from pages.producer_center.saw.products.NGP.confirm_order_details.confirm_order_details import Confirm_Order_Details
-from pages.producer_center.saw.products.NGP.confirm_and_issue.confirm_and_issue import Confirm_and_Issue
-from pages.producer_center.saw.products.NGP.invoice.invoice import Invoice
-
-from selenium import webdriver
-import unittest
-from urllib.parse import urlparse, parse_qs
 from utilities.contract_classes.contract_classes import ContractClasses
-from utilities.create_insured_address.create_insured_address import Create_Insured_Address
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
-from xml.etree import ElementTree as ET
+
 
 class CreateQuote(unittest.TestCase):
 

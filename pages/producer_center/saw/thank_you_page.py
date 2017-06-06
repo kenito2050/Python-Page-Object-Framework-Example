@@ -9,11 +9,11 @@ class Thank_You_Page():
         policy_text = self.driver.find_element(By.PARTIAL_LINK_TEXT, "TEST").text
         return policy_text
 
-    def click_policy_link(self):
+    def click_policy_link(self, _policy_text):
         #policy_link = self.driver.find_element_by_css_selector("//a[contains(@href,'/index.php?c=policy.view')]")
         #policy_link = self.driver.find_element(By.XPATH, '//a[@class="db" and @href="/index.php?c=policy.view"]')
         #policy_link = self.driver.find_element(By.XPATH, "//span[starts-with(@href, '/index.php?c=policy.view_')]")
         #policy_link = self.driver.find_element(By.ID, "policy-link")
-        policy_link = self.driver.find_element(By.PARTIAL_LINK_TEXT, "TEST")
+        policy_link = self.driver.find_element(By.PARTIAL_LINK_TEXT, _policy_text)
         policy_number = self.driver.find_element(By.PARTIAL_LINK_TEXT, "TEST").text
         policy_link.click()

@@ -34,7 +34,17 @@ class BallPark_PAF():
         ballpark_button = self.driver.find_element(By.CSS_SELECTOR, "span.text-button-ds > span")
         ballpark_button.click()
 
-    def select_product(self):
+    def select_CYB_MICA(self):
+        # Ballpark Product Identifiers
+
+        # TODO: Move these identifiers into a separate class
+
+        # NGP Cyber Liability - product - list - item - 74
+        cb_CYB_MICA = self.driver.find_element(By.ID, "product-list-item-70")
+
+        cb_CYB_MICA.click()
+
+    def select_NGP(self):
         # Ballpark Product Identifiers
 
         # TODO: Move these identifiers into a separate class
@@ -42,8 +52,27 @@ class BallPark_PAF():
         # NGP Cyber Liability - product - list - item - 74
         cb_NGP = self.driver.find_element(By.ID, "product-list-item-74")
 
+        cb_NGP.click()
+
+    def select_NGP_OBLIC(self):
+        # Ballpark Product Identifiers
+
+        # TODO: Move these identifiers into a separate class
+
+        # NGP Cyber Liability - product - list - item - 74
+        cb_NGP_OBLIC = self.driver.find_element(By.ID, "product-list-item-86")
+
+        cb_NGP_OBLIC.click()
+
+    def select_NGP_USPRO(self):
+
+        # Ballpark Product Identifiers
         # US Pro Cyber Liability  - product-list-item-105
         cb_NGP_USPRO = self.driver.find_element(By.ID, "product-list-item-105")
+
+        cb_NGP_USPRO.click()
+
+        #Other Products
 
         # PrivaSafe Cyber Liability  - product-list-item-82
         cb_NGP_USI = self.driver.find_element(By.ID, "product-list-item-82")
@@ -51,9 +80,11 @@ class BallPark_PAF():
         # Swett IIABCal Cyber Liability - product-list-item-83
         cb_NGP_SWETT = self.driver.find_element(By.ID, "product-list-item-83")
 
-        cb_NGP.click()
-
-    def enter_revenue(self):
+    def enter_revenue(self, revenue):
         revenue_field = self.driver.find_element(By.ID, "annual_revenue_current_year")
-        revenue_field.send_keys("280,000")
+        revenue_field.send_keys(revenue)
+
+    def enter_doctor_count(self, doctor_count):
+        physician_count = self.driver.find_element(By.ID, "physician_count")
+        physician_count.send_keys(doctor_count)
 

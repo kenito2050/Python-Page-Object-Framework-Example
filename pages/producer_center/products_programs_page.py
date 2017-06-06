@@ -5,20 +5,67 @@ class ProductsAndPrograms():
     def __init__(self, driver):
         self.driver = driver
 
+    def Page_Elements(self):
+        ballpark_link = self.driver.find_element(By.CSS_SELECTOR, "img[alt=\"Get a Ballpark Premium Indication\"]")
+
+        # Products
+        EO_MISC_link = self.driver.find_element(By.ID, "Miscellaneous E&O_start")
+
+        NGP_link = self.driver.find_element(By.ID, "Cyber Liability_start")
+
+        NGP_OBLIC_link = self.driver.find_element(By.ID, "OBLIC Cyber Liability_start")
+
+        NGP_USPRO_link = self.driver.find_element(By.ID, "US Pro Cyber Liability_start")
+
+        return self
+
     # Click Ballpark
     def click_ballpark(self):
         ballpark_link = self.driver.find_element(By.CSS_SELECTOR, "img[alt=\"Get a Ballpark Premium Indication\"]")
         ballpark_link.click()
 
     # Products
+
+    def click_CYB_MMIC(self):
+
+        CYB_MMIC_link = self.driver.find_element(By.ID, "MMNC e-MD™ and MEDEFENSE™ Plus_start")
+        CYB_MMIC_link.click()
+
+    def click_CYB_MICA(self):
+
+        CYB_MICA_link = self.driver.find_element(By.ID, "MICA e-Med Protection Plus_start")
+        CYB_MICA_link.click()
+
+    def click_EO_MISC(self):
+        EO_MISC_link = self.driver.find_element(By.ID, "Miscellaneous E&O_start")
+        EO_MISC_link.click()
+
     def click_NGP(self):
+
+        #ProductsAndPrograms.Page_Elements(self).click_NGP()
         NGP_link = self.driver.find_element(By.ID, "Cyber Liability_start")
         NGP_link.click()
+
+    def click_NGP_OBLIC(self):
+        NGP_OBLIC_link = self.driver.find_element(By.ID, "OBLIC Cyber Liability_start")
+        NGP_OBLIC_link.click()
+
+    def click_NGP_USPRO(self):
+        NGP_USPRO_link = self.driver.find_element(By.ID, "US Pro Cyber Liability_start")
+        NGP_USPRO_link.click()
 
     # Declare and Click Contract Class Modal
     def click_contract_class_modal(self):
         contract_class_modal = self.driver.find_element(By.ID, "pcs-product-class")
         contract_class_modal.click()
+
+    def click_contract_class_drop_down_select_contract_class(self, contract_class):
+        contract_class_drop_down = self.driver.find_element_by_css_selector("select[name=\"contract_class_id\"]")
+        contract_class_drop_down.send_keys(contract_class)
+
+    def click_contract_class_modal_NGP_USPRO(self):
+        contract_class_modal_NGP_USPRO = self.driver.find_element_by_css_selector("select[name=\"contract_class_id\"]")
+        contract_class_modal_NGP_USPRO.click()
 
     # Declare and Select Contract Class Drop Down
     def select_contract_class_dropdown(self):
@@ -35,10 +82,30 @@ class ProductsAndPrograms():
         select_contract_class = self.driver.find_element(By.XPATH, "//*[@id='class-select-wrap']/select/option[" + contract_class_int_value + "]")
         select_contract_class.click()
 
+    # Declare and Select a Contract Class value from Drop Down
+    def select_contract_class_by_visible_text(self, contract_class):
+        select_contract_class = self.driver.find_element(By.XPATH, "//*[@id='class-select-wrap']/select/option[" + contract_class + "]")
+        select_contract_class.click()
+
+    def select_contract_class_NGP_USPRO(self, contract_class_int_value):
+        select_contract_class = self.driver.find_element(By.XPATH, "//*[@id='class-select-wrap']/select/option[" + contract_class_int_value + "]")
+        select_contract_class.click()
+
     # Declare and Click Continue button on Contract Class Modal
     def click_continue_on_contract_class_modal(self):
         continue_button_contract_class_modal = self.driver.find_element(By.XPATH, "//div[@id='pcs-product-class']/form/div[3]/a/span[2]/span/span")
         continue_button_contract_class_modal.click()
+
+    def click_continue_on_contract_class_modal_NGP_USPRO(self):
+        continue_button_contract_class_modal_NGP_USPRO = self.driver.find_element(By.XPATH, "//div[@id='pcs-product-class']/form/div[2]/a/span[2]/span/span")
+        continue_button_contract_class_modal_NGP_USPRO.click()
+
+    def click_continue_on_contract_class_modal_after_selecting_contract_class(self):
+        continue_button_contract_class_modal_ = self.driver.find_element(By.XPATH,
+                                                                                  "//div[@id='pcs-product-class']/form/div[2]/a/span[2]/span/span")
+        continue_button_contract_class_modal_.click()
+
+
 
     # This Method is not yet working -- Ken
     def select_contract_class_use_string(self):

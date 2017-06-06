@@ -7,7 +7,7 @@ class Insured_Information():
 
     def enter_annual_revenue(self):
         annual_revenue = self.driver.find_element(By.ID, "annual_revenue_current_year")
-        annual_revenue.send_keys(280000)
+        annual_revenue.send_keys(980000)
 
     def click_next(self):
         next_button = self.driver.find_element(By.NAME, "submit")

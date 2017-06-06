@@ -1,9 +1,34 @@
 from selenium.webdriver.common.by import By
+import time
 
 class Subjectivities():
 
     def __init__(self, driver):
         self.driver = driver
+
+    # set all subjectivities to received
+
+    def set_all_subjectivities_to_recieved(self):
+
+        received_btns = self.driver.find_elements(By.XPATH, '//*[contains(@id, "received")]')
+
+        for r in received_btns:
+            r.click()
+
+            # receive subjectivities
+
+        time.sleep(3)
+        subj_met_dropdown = self.driver.find_element(By.ID, 'subjectivities_met')
+        subj_met_dropdown.click()
+
+        yes_subj_met = self.driver.find_element(By.XPATH, '//*[@id="subjectivities_met"]/option[1]')
+        yes_subj_met.click()
+
+
+        # Click anywhere
+        anywhere_element = self.driver.find_element(By.ID, 'site-outer-wrap')
+        anywhere_element.click()
+
 
     # This code is working - Ken 1-4-17
     def change_open_subjectivities_to_received(self):
@@ -27,6 +52,12 @@ class Subjectivities():
 
         radio_button_07 = self.driver.find_element_by_css_selector('[id*="7_subj_received_"]')
         radio_button_07.click()
+
+        #radio_button_08 = self.driver.find_element_by_css_selector('[id*="8_subj_received_"]')
+        #radio_button_08.click()
+
+        #radio_button_07 = self.driver.find_element_by_css_selector('[id*="7_subj_received_"]')
+        #radio_button_text = radio_button_07.readtext()
 
         #signed_application_subjectivity_received_radio_button = self.driver.find_element_by_css_selector('[id*="4_subj_received_"]')
         #signed_application_subjectivity_received_radio_button.click()

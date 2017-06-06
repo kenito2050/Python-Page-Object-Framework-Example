@@ -1,23 +1,24 @@
-from faker import address
-from faker import company
-from faker import frandom
-from pages.service_center.login_page import LoginPage
-from pages.service_center.navigation_bar import NavigationBar
-from pages.service_center.agents_page import AgentsPage
-from pages.producer_center.products_programs_page import ProductsAndPrograms
-from pages.producer_center.client_search_page import ClientSearch
-from pages.producer_center.client_contact_page import ClientContact
-from pages.producer_center.coverage_periods_page import CoveragePeriods
-from pages.producer_center.saw.products.NGP.insured_information.insured_information import Insured_Information
-from pages.producer_center.saw.products.NGP.PAF.PAF import PAF
-from selenium import webdriver
 import unittest
 from urllib.parse import urlparse, parse_qs
+from xml.etree import ElementTree as ET
+
+from faker import address
+from faker import company
+from selenium import webdriver
+
+from pages.producer_center.client_contact_page import ClientContact
+from pages.producer_center.client_search_page import ClientSearch
+from pages.producer_center.products_programs_page import ProductsAndPrograms
+from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
+from pages.producer_center.saw.products.NGP.PAF.PAF import PAF
+from pages.producer_center.saw.products.NGP.insured_information.insured_information import Insured_Information
+from pages.service_center.agents_page import AgentsPage
+from pages.service_center.login_page import LoginPage
+from pages.service_center.navigation_bar import NavigationBar
 from utilities.contract_classes.contract_classes import ContractClasses
-from utilities.create_insured_address.create_insured_address import Create_Insured_Address
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
-from xml.etree import ElementTree as ET
+
 
 class CreateQuote(unittest.TestCase):
 

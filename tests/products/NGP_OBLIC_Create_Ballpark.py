@@ -1,38 +1,22 @@
+import unittest
+from xml.etree import ElementTree as ET
+
 from faker import address
 from faker import company
-from faker import frandom
+from faker import name
+from selenium import webdriver
+
+from pages.producer_center.ballpark.ballpark_Indication import BallPark_Indication
+from pages.producer_center.ballpark.ballpark_PAF import BallPark_PAF
+from pages.producer_center.ballpark.ballpark_download_send import BallPark_Download_Send
+from pages.producer_center.products_programs_page import ProductsAndPrograms
+from pages.service_center.agents_page import AgentsPage
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
-from pages.service_center.agents_page import AgentsPage
-from pages.service_center.applications_page import ApplicationsPage
-from pages.service_center.subjectivities import Subjectivities
-from pages.producer_center.products_programs_page import ProductsAndPrograms
-from pages.producer_center.ballpark.ballpark_PAF import BallPark_PAF
-from pages.producer_center.ballpark.ballpark_Indication import BallPark_Indication
-from pages.producer_center.ballpark.ballpark_download_send import BallPark_Download_Send
-
-from pages.producer_center.client_search_page import ClientSearch
-from pages.producer_center.client_contact_page import ClientContact
-from pages.producer_center.coverage_periods_page import CoveragePeriods
-from pages.producer_center.saw.products.NGP.insured_information.insured_information import Insured_Information
-from pages.producer_center.saw.products.NGP.PAF.PAF import PAF
-from pages.producer_center.saw.products.NGP.coverage_options.coverage_options import Coverage_Options
-from pages.producer_center.saw.products.NGP.summary.summary import Summary
-from pages.producer_center.saw.products.NGP.quote_review.quote_review import Quote_Review
-from pages.producer_center.saw.products.NGP.select_option.select_option import Select_Option
-from pages.producer_center.saw.products.NGP.confirm_order_details.confirm_order_details import Confirm_Order_Details
-from pages.producer_center.saw.products.NGP.confirm_and_issue.confirm_and_issue import Confirm_and_Issue
-from pages.producer_center.saw.products.NGP.invoice.invoice import Invoice
-
-from selenium import webdriver
-from selenium.webdriver.support.wait import WebDriverWait
-import unittest
-from urllib.parse import urlparse, parse_qs
 from utilities.contract_classes.contract_classes import ContractClasses
-from utilities.create_insured_address.create_insured_address import Create_Insured_Address
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
-from xml.etree import ElementTree as ET
+
 
 class CreateQuote(unittest.TestCase):
 
@@ -42,11 +26,16 @@ class CreateQuote(unittest.TestCase):
         #state = frandom.us_state()
         state = "California"
         #state = Create_Insured_Address.return_alabama(state_value)
+        first_name = name.first_name()
+        last_name = name.last_name()
         company_name = company.company_name()
-        company_name_string = company_name + " " + "-" + " " + state + " " + " Ballpark Test"
+        #company_name_string = company_name
+        company_name_string = "QA Ballpark Test" + " " + "-" + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
         address_value = address.street_address()
         city = StateCapitals.return_state_capital(state)
         postal_code = ZipCodes.return_zip_codes(state)
+
+        revenue = "9000000"
 
         # Access XML to retrieve login credentials
         tree = ET.parse('resources.xml')
@@ -57,7 +46,15 @@ class CreateQuote(unittest.TestCase):
         # Access XML to retrieve the agent to search for
         tree = ET.parse('Agents.xml')
         agents = tree.getroot()
-        agent = (agents[0][0].text)
+        agent = (agents[5][0].text)
+
+        # 0,0 = Crump Tester                -- Wholesale Agent - Crump Insurance Services, Boston - Test Account
+        # 1,0 = Susan Leeming - TEST        -- Sub Agent of Wholesale Agency
+        # 2,0 = Retail Agent                -- Retail Agent - Boston Retail Insurance
+        # 3,0 = Preferred Agent             -- Preferred Agent - Preferred Agency
+        # 4,0 = TMLT Test User              -- Account to Test COMM2 Scenarios
+        # 5,0 = QA Agent                    -- QA Agent
+        # 6,0 = 2nd Preferred Agent         -- 2nd Preferred Agent - ABC Insurance
 
         # TODO: NEED TO FIX SO THAT SCRIPT USES STRING VALUE CONTAINED IN contract_class variable
         # Access XML to retrieve contract_class
@@ -68,7 +65,8 @@ class CreateQuote(unittest.TestCase):
         # For List of Contract Classes, See Contract_Classes.xml
         tree = ET.parse('Contract_Classes.xml')
         contract_classes_XML = tree.getroot()
-        contract_class = (contract_classes_XML[0][7].text)
+        contract_class = (contract_classes_XML[0][35].text)
+        # Contract Class - 35 - Legal Services
 
         # NOTE: For contract_classes.py, the array count starts at 1
         # Array will be 1 - 74
@@ -78,7 +76,7 @@ class CreateQuote(unittest.TestCase):
         #contract_class_value = "74"
 
         # Initialize Driver; Launch URL
-        baseURL = "http://svcdemo4.wn.nasinsurance.com/"
+        baseURL = "https://svcdemo3.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -93,7 +91,7 @@ class CreateQuote(unittest.TestCase):
         nb.click_agents()
         ap = AgentsPage(driver)
         ap.search_for_agent(agent)
-
+        ap.click_submit_new_application_as_agent()
         pp = ProductsAndPrograms(driver)
         pp.click_ballpark()
 
@@ -103,8 +101,8 @@ class CreateQuote(unittest.TestCase):
         bp_PAF.select_contract_class(contract_class)
         bp_PAF.click_ballpark_button()
 
-        bp_PAF.select_product()
-        bp_PAF.enter_revenue()
+        bp_PAF.select_NGP_OBLIC()
+        bp_PAF.enter_revenue(revenue)
         bp_PAF.click_ballpark_button()
 
         bp_Indication = BallPark_Indication(driver)
