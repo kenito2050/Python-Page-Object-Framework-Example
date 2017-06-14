@@ -9,6 +9,8 @@ from selenium import webdriver
 
 from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.producer_center.client_search_page import ClientSearch
+from pages.producer_center.my_policies.my_policies_screens.active_policies import active_policies
+from pages.producer_center.navigation_bar import Navigation_Bar
 from pages.producer_center.client_contact_page import ClientContact
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
 from pages.producer_center.saw.products.CYB_MICA.insured_information.insured_information import Insured_Information
@@ -27,6 +29,8 @@ from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
 from pages.service_center.policies_page import PoliciesPage
 from pages.service_center.policy_screens.policy_screens import Policy_Screens
+from pages.service_center.policy_screens.details import Details
+from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.subjectivities import Subjectivities
 from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
@@ -58,7 +62,7 @@ class CreateQuote(unittest.TestCase):
 
         revenue = "1000000"
         total_num_records = '1 to 100,000'
-        doctor_count = "6"
+        doctor_count = "5"
 
         # Access XML to retrieve login credentials
         tree = ET.parse('resources.xml')
@@ -69,7 +73,7 @@ class CreateQuote(unittest.TestCase):
         # Access XML to retrieve the agent to search for
         tree = ET.parse('Agents.xml')
         agents = tree.getroot()
-        agent = (agents[6][0].text)
+        agent = (agents[5][0].text)
 
         # 0,0 = Crump Tester                -- Wholesale Agent - Crump Insurance Services, Boston - Test Account
         # 1,0 = Susan Leeming - TEST        -- Sub Agent of Wholesale Agency
@@ -100,7 +104,7 @@ class CreateQuote(unittest.TestCase):
         effectiveDate_June_1 = "06/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcdemo6.wn.nasinsurance.com/"
+        baseURL = "https://service.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -152,21 +156,52 @@ class CreateQuote(unittest.TestCase):
         saw_ii.enter_physician_count(doctor_count)
         saw_ii.click_next()
         saw_PAF = PAF(driver)
-        saw_PAF.create_quote_No_PCI_DSS_No_DQ()
-        saw_PAF.click_next()
-        saw_CC = Coverage_Options(driver)
-        #saw_CC.select_all_deselect_all()
-        # MEDEFENSE™ Plus Only
-        # Cyber Liability Only No PCI
-        # Cyber Liability with Breach Event Costs Outside the Limits No PCI
-        # Cyber Liability with Claims Expenses Outside the Limits No PCI
-        # Cyber Liability with Claims Expenses Outside the Limits and with Breach Event Costs Outside the Limits No PCI
-        # MEDEFENSE™ Plus and Cyber Liability Combined No PCI
-        # MEDEFENSE™ Plus and Cyber Liability with Breach Event Costs Outside the Limits No PCI
-        # MEDEFENSE™ Plus and Cyber Liability with Claims Expenses Outside the Limits and with Breach Event Costs Outside the Limits No PCI
-        # MEDEFENSE™ Plus and Cyber Liability with Claims Expenses Outside the Limits No PCI
 
-        saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_Combined_No_PCI()
+
+        ### Choose PCI / No PCI Workflow in this block  ###
+        ###                                             ###
+        # PCI Work Flow
+        saw_PAF.create_quote_PCI_DSS_No_DQ(revenue)
+
+        # NO PCI Work Flow
+        # saw_PAF.create_quote_No_PCI_DSS_No_DQ(revenue)
+
+
+        # Click Next on PAF screen
+        saw_PAF.click_next()
+
+        # Coverage Options Screen
+        saw_CC = Coverage_Options(driver)
+
+        ### Choose PCI / No PCI Options in this block   ###
+        ###                                             ###
+
+        ### PCI Options ###
+
+        # saw_CC.select_MEDEFENSE_Plus_Only()
+        # saw_CC.select_Cyber_Liability_Only()
+        # saw_CC.select_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits()
+        saw_CC.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits()
+        # saw_CC.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits()
+        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_Combined()
+        # saw_CC.select_MEDEFENSE_Plus_and Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits()
+        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits()
+        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits()
+
+        ### No PCI Options ###
+
+        # saw_CC.select_MEDEFENSE_Plus_Only()
+        # saw_CC.select_Cyber_Liability_Only_No_PCI()
+        # saw_CC.select_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
+        # saw_CC.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_No_PCI()
+        # saw_CC.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
+        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_Combined_No_PCI()
+        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
+        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
+        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_No_PCI()
+
+        #saw_CC.select_all_deselect_all()
+
         saw_CC.proceed_to_quote()
         saw_summary = Summary(driver)
         saw_summary.click_generate_quote()
@@ -263,6 +298,33 @@ class CreateQuote(unittest.TestCase):
         ep = Effective_Periods(driver)
         ep.change_dates_expire_policy_allow_renewal()
         ep.click_update_dates()
+
+        # Click Details link to display the Policy Details screen
+        ps.click_Details()
+
+        # On Details Screen, Click on the Agent that issued the Policy
+        details = Details(driver)
+        details.click_agent_link(agent)
+
+        # Agent Details Screen Displays
+        ag = Agent_Details(driver)
+
+        # Click "Submit New Application as" link
+        ag.click_submit_new_application_as_agent()
+
+        # Click My Policies on Navigation Bar
+        pnb = Navigation_Bar(driver)
+        pnb.click_my_policies()
+
+        # Locate Policy that was issued
+        ap = active_policies(driver)
+        ap.enter_policy_name(policy_text)
+        ap.click_search_button()
+
+        # Click Policy
+        ap.click_policy_link(policy_text)
+
+        # Code works up to this point
 
         # Wait
         driver.implicitly_wait(3)

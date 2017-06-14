@@ -65,7 +65,7 @@ class CreateQuote(unittest.TestCase):
         # For List of Contract Classes, See Contract_Classes.xml
         tree = ET.parse('Contract_Classes.xml')
         contract_classes_XML = tree.getroot()
-        contract_class = (contract_classes_XML[0][35].text)
+        contract_class = (contract_classes_XML[0][57].text)
         # Contract Class - 35 - Legal Services
 
         # NOTE: For contract_classes.py, the array count starts at 1
@@ -73,10 +73,13 @@ class CreateQuote(unittest.TestCase):
         contract_class_int_value = ContractClasses.return_contract_class_values(contract_class)
 
         # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
-        #contract_class_value = "74"
+        # 'Accounting, Auditing, and Bookkeeping': '1',
+        #'Online Retailer': '46'
+        #'Retail Sales': '57'
+        #'Title/Escrow Services': '63'
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcdemo3.wn.nasinsurance.com/"
+        baseURL = "https://svcdemo4.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -101,7 +104,7 @@ class CreateQuote(unittest.TestCase):
         bp_PAF.select_contract_class(contract_class)
         bp_PAF.click_ballpark_button()
 
-        bp_PAF.select_NGP_OBLIC()
+        bp_PAF.select_NGP()
         bp_PAF.enter_revenue(revenue)
         bp_PAF.click_ballpark_button()
 

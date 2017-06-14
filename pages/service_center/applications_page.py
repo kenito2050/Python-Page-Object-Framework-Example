@@ -16,5 +16,5 @@ class ApplicationsPage():
 
     # THIS METHOD IS NOT WORKING - Ken; 1-3-17
     def click_application_id_link(self, application_id):
-        application_id_link = self.driver.find_element(By.ID, application_id)
+        application_id_link = self.driver.find_element(By.LINK_TEXT, application_id)
         application_id_link.click()

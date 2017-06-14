@@ -232,7 +232,7 @@ class PAF():
         PAF.Page_Elements(self).operation_commence_date.send_keys("01-01-2001")
         PAF.Page_Elements(self).operations_description.send_keys("QA TEST")
         PAF.Page_Elements(self).annual_revenue_current_year.send_keys(revenue)
-        PAF.Page_Elements(self).annual_revenue_one_year_ago.send_keys("1,000,000")
+        PAF.Page_Elements(self).annual_revenue_one_year_ago.send_keys(revenue)
         PAF.Page_Elements(self).subsidiary_inclusion_no.click()
         PAF.Page_Elements(self).coverage_for_other_entity_no.click()
         PAF.Page_Elements(self).cyb_mica_utilize_cpt_manual_yes.click()
@@ -265,14 +265,14 @@ class PAF():
         PAF.Page_Elements(self).cyb_mica_aware_compromised_security_no.click()
         PAF.Page_Elements(self).cyb_mica_non_renewed_extention_cyb_no.click()
 
-    def create_quote_No_PCI_DSS_No_DQ(self):
+    def create_quote_No_PCI_DSS_No_DQ(self, revenue):
 
         PAF.Page_Elements(self).existing_insured_yes.click()
         PAF.Page_Elements(self).external_policy_number.send_keys("A111111111")
         PAF.Page_Elements(self).operation_commence_date.send_keys("01-01-2001")
         PAF.Page_Elements(self).operations_description.send_keys("QA TEST")
-        PAF.Page_Elements(self).annual_revenue_current_year.send_keys("2,000,000")
-        PAF.Page_Elements(self).annual_revenue_one_year_ago.send_keys("1,000,000")
+        PAF.Page_Elements(self).annual_revenue_current_year.send_keys(revenue)
+        PAF.Page_Elements(self).annual_revenue_one_year_ago.send_keys(revenue)
         PAF.Page_Elements(self).subsidiary_inclusion_no.click()
         PAF.Page_Elements(self).coverage_for_other_entity_no.click()
         PAF.Page_Elements(self).cyb_mica_utilize_cpt_manual_yes.click()

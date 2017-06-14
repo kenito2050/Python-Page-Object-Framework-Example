@@ -70,7 +70,7 @@ class CreateQuote(unittest.TestCase):
         #contract_class_value = "74"
 
         # Declare Application ID value
-        application_id = "67963"
+        application_id = "67971"
 
         # Initialize Driver; Launch URL
         baseURL = "http://svcdemo6.wn.nasinsurance.com/"
@@ -132,6 +132,7 @@ class CreateQuote(unittest.TestCase):
 
         # Change Effective Periods Dates to allow renewals
         ep = Effective_Periods(driver)
+        #ep.change_dates_expire_policy_allow_renewal_new()
         ep.change_dates_expire_policy_allow_renewal()
         ep.click_update_dates()
 

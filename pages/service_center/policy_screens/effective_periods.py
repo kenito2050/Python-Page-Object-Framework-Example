@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
@@ -47,7 +48,7 @@ class Effective_Periods():
 
         return self
 
-    def change_dates_expire_policy_allow_renewal(self):
+    def change_dates_expire_policy_allow_renewal_new(self):
 
         # Intialize Time Variables
 
@@ -76,6 +77,25 @@ class Effective_Periods():
 
 
         # Add 4 days to Effective End Day
+
+        # This line works
+        #select_month = Select(Effective_Periods.Page_Elements(self).effective_end_month).select_by_visible_text(expiration_month)
+        #select_month.select_by_visible_text(expiration_month)
+
+        select_month = Select(Effective_Periods.Page_Elements(self).effective_end_month)
+        select_month.select_by_visible_text(expiration_month)
+
+        select_day = Select(Effective_Periods.Page_Elements(self).effective_end_day)
+        select_day.select_by_visible_text(expiration_day)
+
+
+        Effective_Periods.Page_Elements(self).change_dates_button.click()
+
+
+        select_month = Select(self.driver.effective_end_month)
+        select_month.select_by_visible_text(expiration_month)
+
+
         Effective_Periods.Page_Elements(self).effective_end_day.click()
 
         self.driver.implicitly_wait(2)
@@ -87,6 +107,53 @@ class Effective_Periods():
         Effective_Periods.Page_Elements(self).effective_end_month.select_by_visible_text(expiration_month)
 
 
+
+    def change_dates_expire_policy_allow_renewal(self):
+
+        # Intialize Time Variables
+
+        # This Year
+        now = datetime.now()
+
+        # Last Year
+        last_year = datetime.now() - relativedelta(years=1)
+
+        current_year = now.year
+        previous_year = last_year.year
+
+        # Find Current Date and Add 4 days
+        current_date_plus_4_days = datetime.now() + relativedelta(days=4)
+
+        # Month and Day values of Date in 4 days
+        expiration_month = current_date_plus_4_days.strftime('%B')
+        expiration_day = current_date_plus_4_days.strftime('%d').lstrip('0')
+        expiration_year = current_date_plus_4_days.strftime('%Y')
+
+        # Set Effective Start Year to Previous Year
+        Effective_Periods.Page_Elements(self).effective_start_year.send_keys(previous_year)
+
+        # Set Expiration Year to Year from the date_plus_4_days
+        Effective_Periods.Page_Elements(self).effective_end_year.send_keys(expiration_year)
+
+        # Add 4 days to Effective End Day
+
+        # These lines do NOT work
+        #Effective_Periods.Page_Elements(self).effective_end_day.click()
+        #Effective_Periods.Page_Elements(self).effective_end_day.select_by_visible_text(expiration_day)
+
+        # These lines ARE working
+        select_day = Select(Effective_Periods.Page_Elements(self).effective_end_day)
+        select_day.select_by_visible_text(expiration_day)
+
+        # Set Month of Expiration Date
+
+        # These lines do NOT work
+        #Effective_Periods.Page_Elements(self).effective_end_month.click()
+        #Effective_Periods.Page_Elements(self).effective_end_month.select_by_visible_text(expiration_month)
+
+        # These lines ARE working
+        select_month = Select(Effective_Periods.Page_Elements(self).effective_end_month)
+        select_month.select_by_visible_text(expiration_month)
 
     def click_update_dates(self):
         Effective_Periods.Page_Elements(self).change_dates_button.click()

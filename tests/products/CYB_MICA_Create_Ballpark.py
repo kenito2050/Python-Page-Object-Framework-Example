@@ -36,7 +36,7 @@ class CreateQuote(unittest.TestCase):
         postal_code = ZipCodes.return_zip_codes(state)
 
         revenue = "9000000"
-        doctor_count = "101"
+        doctor_count = "5"
 
         # Access XML to retrieve login credentials
         tree = ET.parse('resources.xml')
@@ -77,7 +77,7 @@ class CreateQuote(unittest.TestCase):
         #contract_class_value = "74"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcdemo6.wn.nasinsurance.com/"
+        baseURL = "https://svcrel.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL

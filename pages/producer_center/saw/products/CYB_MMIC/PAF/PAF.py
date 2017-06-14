@@ -232,7 +232,7 @@ class PAF():
         PAF.Page_Elements(self).operation_commence_date.send_keys("01-01-2001")
         PAF.Page_Elements(self).operations_description.send_keys("QA TEST")
         PAF.Page_Elements(self).annual_revenue_current_year.send_keys(revenue)
-        PAF.Page_Elements(self).annual_revenue_one_year_ago.send_keys("1,000,000")
+        PAF.Page_Elements(self).annual_revenue_one_year_ago.send_keys(revenue)
         PAF.Page_Elements(self).subsidiary_inclusion_no.click()
         PAF.Page_Elements(self).coverage_for_other_entity_no.click()
         PAF.Page_Elements(self).cyb_mmic_utilize_cpt_manual_yes.click()
@@ -265,14 +265,14 @@ class PAF():
         PAF.Page_Elements(self).cyb_mmic_aware_compromised_security_no.click()
         PAF.Page_Elements(self).cyb_mmic_non_renewed_extention_cyb_no.click()
 
-    def create_quote_No_PCI_DSS_No_DQ(self):
+    def create_quote_No_PCI_DSS_No_DQ(self, revenue):
 
         PAF.Page_Elements(self).existing_insured_yes.click()
         PAF.Page_Elements(self).external_policy_number.send_keys("A111111111")
         PAF.Page_Elements(self).operation_commence_date.send_keys("01-01-2001")
         PAF.Page_Elements(self).operations_description.send_keys("QA TEST")
-        PAF.Page_Elements(self).annual_revenue_current_year.send_keys("2,000,000")
-        PAF.Page_Elements(self).annual_revenue_one_year_ago.send_keys("1,000,000")
+        PAF.Page_Elements(self).annual_revenue_current_year.send_keys(revenue)
+        PAF.Page_Elements(self).annual_revenue_one_year_ago.send_keys(revenue)
         PAF.Page_Elements(self).subsidiary_inclusion_no.click()
         PAF.Page_Elements(self).coverage_for_other_entity_no.click()
         PAF.Page_Elements(self).cyb_mmic_utilize_cpt_manual_yes.click()
@@ -305,7 +305,47 @@ class PAF():
         PAF.Page_Elements(self).cyb_mmic_aware_compromised_security_no.click()
         PAF.Page_Elements(self).cyb_mmic_non_renewed_extention_cyb_no.click()
 
-    #TODO
+    def create_quote_trigger_DQ(self, revenue):
+        PAF.Page_Elements(self).existing_insured_yes.click()
+        PAF.Page_Elements(self).external_policy_number.send_keys("A111111111")
+        PAF.Page_Elements(self).operation_commence_date.send_keys("01-01-2001")
+        PAF.Page_Elements(self).operations_description.send_keys("QA TEST")
+        PAF.Page_Elements(self).annual_revenue_current_year.send_keys(revenue)
+        PAF.Page_Elements(self).annual_revenue_one_year_ago.send_keys("1,000,000")
+        PAF.Page_Elements(self).subsidiary_inclusion_no.click()
+        PAF.Page_Elements(self).coverage_for_other_entity_no.click()
+        PAF.Page_Elements(self).cyb_mmic_utilize_cpt_manual_yes.click()
+        PAF.Page_Elements(self).cyb_mmic_billings_exceed_two_million_no.click()
+        # Next Line Triggers DQ
+        PAF.Page_Elements(self).cyb_mmic_audited_investigated_yes.click()
+        PAF.Page_Elements(self).cyb_mmic_audited_investigated_medicare_no.click()
+        PAF.Page_Elements(self).cyb_mmic_refund_excess_10_thousand_no.click()
+        PAF.Page_Elements(self).cyb_mmic_accused_billing_errors_no.click()
+        PAF.Page_Elements(self).cyb_mmic_investigated_sanctioned_no.click()
+        PAF.Page_Elements(self).cyb_mmic_anti_kickback_investigation_no.click()
+        PAF.Page_Elements(self).cyb_mmic_sued_deselected_payer_no.click()
+        PAF.Page_Elements(self).cyb_mmic_investigated_emtala_no.click()
+        PAF.Page_Elements(self).cyb_mmic_investigated_hipaa_no.click()
+        PAF.Page_Elements(self).cyb_mmic_voluntary_disclosure_no.click()
+        PAF.Page_Elements(self).cyb_mmic_non_renewed_extention_no.click()
+        PAF.Page_Elements(self).cyb_mmic_regulatory_investigation_no.click()
+
+        # Cyber Liability Questions
+        PAF.Page_Elements(self).cyb_mmic_hipaa_compliance_program_yes.click()
+        PAF.Page_Elements(self).cyb_mmic_platform_security_yes.click()
+        PAF.Page_Elements(self).cyb_mmic_patient_information_yes.click()
+        PAF.Page_Elements(self).cyb_mmic_data_security_yes.click()
+        PAF.Page_Elements(self).cyb_mmic_data_security_encrypted_yes.click()
+        PAF.Page_Elements(self).cyb_mmic_credit_card_data_yes.click()
+        PAF.Page_Elements(self).cyb_mmic_credit_card_data_compliant_yes.click()
+        PAF.Page_Elements(self).cyb_mmic_wire_transfer_protocols_yes.click()
+        PAF.Page_Elements(self).cyb_mmic_records_exceed_20000_no.click()
+        PAF.Page_Elements(self).cyb_mmic_wire_transfer_loss_no.click()
+        PAF.Page_Elements(self).cyb_mmic_cyber_complaints_litigation_no.click()
+        PAF.Page_Elements(self).cyb_mmic_aware_compromised_security_no.click()
+        PAF.Page_Elements(self).cyb_mmic_non_renewed_extention_cyb_no.click()
+
+
     # Ask Dev to create ID for next button
     def click_next(self):
         next_button = self.driver.find_element(By.XPATH, "//form[@id='rate-adjustment-form']/div[2]/div[5]/a/span[2]/span/span")

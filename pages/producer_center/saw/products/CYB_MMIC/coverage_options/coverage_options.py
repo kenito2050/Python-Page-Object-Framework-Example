@@ -10,138 +10,158 @@ class Coverage_Options():
         # MEDEFENSE™ Plus Only
 
         # Limits
+        # 500K/500K
+        self.option_679_limit_2770 = self.driver.find_element(By.ID, "option-679-limit-2770")
+
         # 1MM/1MM
-        self.option_658_limit_2753 = self.driver.find_element(By.ID, "option-658-limit-2753")
-
-        # Deductibles
-        # $1,500
-        self.option_658_deductible_1186 = self.driver.find_element(By.ID, "option-658-deductible-1186")
-
-        # Cyber Liability Only
-
-        # Limits
-        # 1MM/1MM
-        self.option_659_limit_2754 = self.driver.find_element(By.ID, "option-659-limit-2754")
+        self.option_320_limit_1645 = self.driver.find_element(By.ID, "option-320-limit-1645")
 
         # Deductibles
         # $0
-        self.option_659_deductible_1187 = self.driver.find_element(By.ID, "option-659-deductible-1187")
+        self.option_320_deductible_613 = self.driver.find_element(By.ID, "option-320-deductible-613")
 
-        # Cyber Liability with Breach Event Costs Outside the Limits
+        # MEDEFENSE+ with $50K Disciplinary
 
         # Limits
-        # 1MM/1MM
-        self.option_660_limit_2754 = self.driver.find_element(By.ID, "option-660-limit-2754")
+
+        # 500K/50K/500K
+        self.option_519_limit_2311 = self.driver.find_element(By.ID, "option-519-limit-2311")
+
+        # 1MM/50K/1MM
+        self.option_519_limit_2310 = self.driver.find_element(By.ID, "option-519-limit-2310")
 
         # Deductibles
         # $0
-        self.option_660_deductible_1187 = self.driver.find_element(By.ID, "option-660-deductible-1187")
+        self.option_519_deductible_884 = self.driver.find_element(By.ID, "option-519-deductible-884")
 
-        # Cyber Liability with Claims Expenses Outside the Limits
+        # e-MD™ Higher Limits
 
         # Limits
-        # 1MM/1MM
-        self.option_661_limit_2757 = self.driver.find_element(By.ID, "option-661-limit-2757")
+        # 2MM/2MM
+        self.option_679_limit_2770 = self.driver.find_element(By.ID, "option-679-limit-2770")
 
         # Deductibles
         # $0
-        self.option_661_deductible_1187 = self.driver.find_element(By.ID, "option-661-deductible-1187")
+        self.option_679_deductible_774 = self.driver.find_element(By.ID, "option-679-deductible-774")
 
-        # Cyber Liability with Claims Expenses Outside the Limits and with Breach Event Costs Outside the Limits
+        # e-MD™
 
         # Limits
+
+        # 500K/500K
+        self.option_463_limit_2028 = self.driver.find_element(By.ID, "option-463-limit-2028")
+
         # 1MM/1MM
-        self.option_662_limit_2757 = self.driver.find_element(By.ID, "option-662-limit-2757")
+        self.option_463_limit_2027 = self.driver.find_element(By.ID, "option-463-limit-2027")
 
         # Deductibles
         # $0
-        self.option_662_deductible_1187 = self.driver.find_element(By.ID, "option-662-deductible-1187")
+        self.option_463_deductible_774 = self.driver.find_element(By.ID, "option-463-deductible-774")
 
-        # MEDEFENSE™ Plus and Cyber Liability Combined
-
-        # Limits
-        # 1MM/1MM
-        self.option_663_limit_2758 = self.driver.find_element(By.ID, "option-663-limit-2758")
-
-        # Deductibles
-        # $1,500 / $0
-        self.option_663_deductible_1188 = self.driver.find_element(By.ID, "option-663-deductible-1188")
-
-        # MEDEFENSE™ Plus and Cyber Liability with Breach Event Costs Outside the Limits
+        # e-MD™ and MEDEFENSE+
 
         # Limits
+        # 500K/500K
+        self.option_446_limit_1966 = self.driver.find_element(By.ID, "option-446-limit-1966")
+
         # 1MM/1MM
-        self.option_664_limit_2758 = self.driver.find_element(By.ID, "option-664-limit-2758")
+        self.option_446_limit_1965 = self.driver.find_element(By.ID, "option-446-limit-1965")
 
         # Deductibles
-        # $1,500 / $0
-        self.option_664_deductible_1188 = self.driver.find_element(By.ID, "option-664-deductible-1188")
+        # $0
+        self.option_446_deductible_760 = self.driver.find_element(By.ID, "option-446-deductible-760")
 
-        # MEDEFENSE™ Plus and Cyber Liability with Claims Expenses Outside the Limits and with Breach Event Costs Outside the Limits
+        # e-MD™ and MEDEFENSE+ with $50k Disciplinary
 
         # Limits
-        # 1MM/1MM
-        self.option_665_limit_2759 = self.driver.find_element(By.ID, "option-665-limit-2759")
+        # 500K/500K
+        self.option_447_limit_1968 = self.driver.find_element(By.ID, "option-447-limit-1968")
+
+        # 1MM/50K/1MM
+        self.option_447_limit_1967 = self.driver.find_element(By.ID, "option-447-limit-1967")
 
         # Deductibles
-        # $1,500 / $0
-        self.option_665_deductible_1188 = self.driver.find_element(By.ID, "option-665-deductible-1188")
+        # $0 / $0
+        self.option_447_deductible_760 = self.driver.find_element(By.ID, "option-447-deductible-760")
 
-        # MEDEFENSE™ Plus and Cyber Liability with Claims Expenses Outside the Limits
+        # e-MD™ and MEDEFENSE+ Separate Limits
 
         # Limits
+        # 500K/500K/1MM
+        self.option_448_limit_1970 = self.driver.find_element(By.ID, "option-448-limit-1970")
+
         # 1MM/1MM
-        self.option_666_limit_2759 = self.driver.find_element(By.ID, "option-666-limit-2759")
+        self.option_448_limit_1969 = self.driver.find_element(By.ID, "option-448-limit-1969")
 
         # Deductibles
-        # $1,500 / $0
-        self.option_666_deductible_1188 = self.driver.find_element(By.ID, "option-666-deductible-1188")
+        # $0
+        self.option_448_deductible_760 = self.driver.find_element(By.ID, "option-448-deductible-760")
+
+        # e-MD™ and MEDEFENSE+ with $50k Disciplinary Separate Limits
+
+        # Limits
+        # 500K/50K/500K/1MM
+        self.option_449_limit_1972 = self.driver.find_element(By.ID, "option-449-limit-1972")
+
+        # 1MM/50K/1MM/2MM
+        self.option_449_limit_1972 = self.driver.find_element(By.ID, "option-449-limit-1972")
+
+        # Deductibles
+        # $0/ $0
+        self.option_449_deductible_760 = self.driver.find_element(By.ID, "option-449-deductible-760")
 
         return self
 
-    def select_MEDEFENSE_Plus_Only(self):
+    # MEDEFENSE_Only
+    # MEDEFENSE_with_50K_Disciplinary
+    # e_MD_Higher_Limits
+    # e_MD
+    # e_MD_and_MEDEFENSE
+    # e_MD_and_MEDEFENSE_with_50k_Disciplinary
+    # e_MD_and_MEDEFENSE_Separate_Limits
+    # e_MD_and_MEDEFENSE_with_50k_Disciplinary_Separate_Limits
 
-        Coverage_Options.PCI_PageElements(self).option_658_limit_2753.click()
-        Coverage_Options.PCI_PageElements(self).option_658_deductible_1186.click()
+    def select_MEDEFENSE_Only(self):
 
-    def select_Cyber_Liability_Only(self):
+        Coverage_Options.PCI_PageElements(self).option_320_limit_1645.click()
+        Coverage_Options.PCI_PageElements(self).option_320_deductible_613.click()
 
-        Coverage_Options.PCI_PageElements(self).option_659_limit_2754.click()
-        Coverage_Options.PCI_PageElements(self).option_659_deductible_1187.click()
+    def select_MEDEFENSE_with_50K_Disciplinary(self):
 
-    def select_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits(self):
+        Coverage_Options.PCI_PageElements(self).option_519_limit_2310.click()
+        Coverage_Options.PCI_PageElements(self).option_519_deductible_884.click()
 
-        Coverage_Options.PCI_PageElements(self).option_660_limit_2754.click()
-        Coverage_Options.PCI_PageElements(self).option_660_deductible_1187.click()
+    def select_e_MD_Higher_Limits(self):
+
+        Coverage_Options.PCI_PageElements(self).option_679_limit_2770.click()
+        Coverage_Options.PCI_PageElements(self).option_679_deductible_774.click()
 
 
-    def select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits(self):
+    def select_e_MD(self):
 
-        Coverage_Options.PCI_PageElements(self).option_661_limit_2757.click()
-        Coverage_Options.PCI_PageElements(self).option_661_deductible_1187.click()
+        Coverage_Options.PCI_PageElements(self).option_463_limit_2027.click()
+        Coverage_Options.PCI_PageElements(self).option_463_deductible_774.click()
 
-    def select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits(self):
+    def select_e_MD_and_MEDEFENSE(self):
 
-        Coverage_Options.PCI_PageElements(self).option_662_limit_2757.click()
-        Coverage_Options.PCI_PageElements(self).option_662_deductible_1187.click()
+        Coverage_Options.PCI_PageElements(self).option_446_limit_1965.click()
+        Coverage_Options.PCI_PageElements(self).option_446_deductible_760.click()
 
-    def select_MEDEFENSE_Plus_and_Cyber_Liability_Combined(self):
+    def select_e_MD_and_MEDEFENSE_with_50k_Disciplinary(self):
 
-        Coverage_Options.PCI_PageElements(self).option_663_limit_2758.click()
-        Coverage_Options.PCI_PageElements(self).option_663_deductible_1188.click()
+        Coverage_Options.PCI_PageElements(self).option_447_limit_1967.click()
+        Coverage_Options.PCI_PageElements(self).option_447_deductible_760.click()
 
-    def select_MEDEFENSE_Plus_and_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits(self):
+    def select_e_MD_and_MEDEFENSE_Separate_Limits(self):
 
-        Coverage_Options.PCI_PageElements(self).option_664_limit_2758.click()
-        Coverage_Options.PCI_PageElements(self).option_664_deductible_1188.click()
+        Coverage_Options.PCI_PageElements(self).option_448_limit_1969.click()
+        Coverage_Options.PCI_PageElements(self).option_448_deductible_760.click()
 
-    def select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits(self):
-        Coverage_Options.PCI_PageElements(self).option_665_limit_2759.click()
-        Coverage_Options.PCI_PageElements(self).option_665_deductible_1188.click()
+    def select_e_MD_and_MEDEFENSE_with_50k_Disciplinary_Separate_Limits(self):
+        Coverage_Options.PCI_PageElements(self).option_449_limit_1972.click()
+        Coverage_Options.PCI_PageElements(self).option_449_deductible_760.click()
 
-    def select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits(self):
-        Coverage_Options.PCI_PageElements(self).option_666_limit_2759.click()
-        Coverage_Options.PCI_PageElements(self).option_666_deductible_1188.click()
+    # ALL Elements & Options below this line need to be updated -- Ken
 
     def NO_PCI_PageElements(self):
         # MEDEFENSE™ Plus Only

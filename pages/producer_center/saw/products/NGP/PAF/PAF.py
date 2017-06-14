@@ -84,6 +84,19 @@ class PAF():
         PAF.Page_Elements(self).complaints_litigation_no.click()
         PAF.Page_Elements(self).regulatory_investigation_no.click()
 
+    def create_quote_trigger_DQ(self, total_num_records):
+        PAF.Page_Elements(self).operations_description.send_keys("QA Test")
+        PAF.Page_Elements(self).ngp_total_records.send_keys(total_num_records)
+        # Next Question will trigger DQ
+        PAF.Page_Elements(self).platform_security_no.click()
+        PAF.Page_Elements(self).data_storage_yes.click()
+        PAF.Page_Elements(self).data_security_standards_yes.click()
+        PAF.Page_Elements(self).cloud_provider_yes.click()
+        PAF.Page_Elements(self).ngp_cloud_provider_detail.send_keys("Amazon")
+        PAF.Page_Elements(self).pci_dss_compliant_yes.click()
+        PAF.Page_Elements(self).complaints_litigation_no.click()
+        PAF.Page_Elements(self).regulatory_investigation_no.click()
+
     def OLD_create_quote_with_PCI_DSS(self):
         # Description of Operations
         operations_description = self.driver.find_element(By.ID, "operation_nature")

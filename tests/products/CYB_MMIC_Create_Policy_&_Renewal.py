@@ -9,6 +9,8 @@ from selenium import webdriver
 
 from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.producer_center.client_search_page import ClientSearch
+from pages.producer_center.my_policies.my_policies_screens.active_policies import active_policies
+from pages.producer_center.navigation_bar import Navigation_Bar
 from pages.producer_center.client_contact_page import ClientContact
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
 from pages.producer_center.saw.products.CYB_MMIC.insured_information.insured_information import Insured_Information
@@ -19,11 +21,17 @@ from pages.producer_center.saw.quote_review import Quote_Review
 from pages.producer_center.saw.invoice import Invoice
 from pages.producer_center.saw.confirm_order_details import Confirm_Order_Details
 from pages.producer_center.saw.confirm_and_issue import Confirm_and_Issue
+from pages.producer_center.saw.thank_you_page import Thank_You_Page
 from pages.producer_center.saw.summary import Summary
 from pages.service_center.agents_page import AgentsPage
 from pages.service_center.applications_page import ApplicationsPage
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
+from pages.service_center.policies_page import PoliciesPage
+from pages.service_center.policy_screens.policy_screens import Policy_Screens
+from pages.service_center.policy_screens.details import Details
+from pages.service_center.agent_screens.agent_details import Agent_Details
+from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.subjectivities import Subjectivities
 from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
@@ -96,7 +104,7 @@ class CreateQuote(unittest.TestCase):
         effectiveDate_June_1 = "06/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcdemo1.wn.nasinsurance.com/"
+        baseURL = "https://service.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -129,7 +137,6 @@ class CreateQuote(unittest.TestCase):
         cs.enter_new_client_name_address(company_name_string, address_value, city, state)
         cc = ClientContact(driver)
 
-        # TODO:
         # Code now parses URL String & retrieves application ID
         #cc.parse_url_get_app_id()
 
@@ -148,21 +155,46 @@ class CreateQuote(unittest.TestCase):
         saw_ii.enter_physician_count(doctor_count)
         saw_ii.click_next()
         saw_PAF = PAF(driver)
-        saw_PAF.create_quote_PCI_DSS_No_DQ(revenue)
-        saw_PAF.click_next()
-        saw_CC = Coverage_Options(driver)
-        #saw_CC.select_all_deselect_all()
-        # MEDEFENSE_Plus_Only
-        # Cyber_Liability_Only
-        # Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits
-        # Cyber_Liability_with_Claims_Expenses_Outside_the_Limits
-        # Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits
-        # MEDEFENSE_Plus_and_Cyber_Liability_Combined
-        # MEDEFENSE_Plus_and Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits
-        # MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits
-        # MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits
 
-        saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits()
+        ### Quote Creation Section  ###
+        ###                         ###
+
+        # Create Quote with PCI Option
+        saw_PAF.create_quote_PCI_DSS_No_DQ(revenue)
+
+        # Create Quote with NO PCI Option
+        # saw_PAF.create_quote_No_PCI_DSS_No_DQ(revenue)
+
+        # Create Quote that Triggers DQ
+        # saw_PAF.create_quote_trigger_DQ(revenue)
+
+        # Click Next on PAF
+        saw_PAF.click_next()
+
+        saw_CC = Coverage_Options(driver)
+
+        #saw_CC.select_all_deselect_all()
+
+
+        ### Choose PCI / No PCI Options in this block   ###
+        ###                                             ###
+
+        ### PCI Options ###
+
+        saw_CC.select_MEDEFENSE_Only()
+        # saw_CC.select_MEDEFENSE_with_50K_Disciplinary()
+        # saw_CC.select_e_MD_Higher_Limits()
+        # saw_CC.select_e_MD()
+        # saw_CC.select_e_MD_and_MEDEFENSE()
+        # saw_CC.select_MEDEFENSE_with_50K_Disciplinary()
+        # saw_CC.select_e_MD_and_MEDEFENSE_Separate_Limits()
+        # saw_CC.select_e_MD_and_MEDEFENSE_with_50k_Disciplinary_Separate_Limits()
+
+        ### NO PCI Options ###
+
+        # saw_CC.select_MEDEFENSE_Only()
+        # saw_CC.select_MEDEFENSE_with_50K_Disciplinary()
+
         saw_CC.proceed_to_quote()
         saw_summary = Summary(driver)
         saw_summary.click_generate_quote()
@@ -229,6 +261,64 @@ class CreateQuote(unittest.TestCase):
         # Return to Producer Center; Issue Policy
         saw_confirm_issue.input_signature()
         saw_confirm_issue.click_accept_terms_issue_policy()
+
+        # Retrieve Policy Number of Policy that was issued; Policy Number stored in policy_text
+        thank_you = Thank_You_Page(driver)
+        policy_text = thank_you.retrieve_store_policy_number()
+
+        # Return to Admin Interface
+        saw_confirm_issue.click_return_to_Admin_Interface()
+
+        # Click on Policies link; Navigate to Policy that was just issued
+        nb.click_policies()
+
+        pp = PoliciesPage(driver)
+        # On Policies Page, Click All link
+        pp.click_all_link()
+
+        # Enter Policy Number & Click Search
+        pp.enter_policy_name(policy_text)
+        pp.click_search_button()
+
+        # Click on the Policy link, Open Policy Details
+        pp.click_policy_link(policy_text)
+
+        # Click Effective Periods
+        ps = Policy_Screens(driver)
+        ps.click_Effective_Periods()
+
+        # Change Effective Periods Dates to allow renewals
+        ep = Effective_Periods(driver)
+        ep.change_dates_expire_policy_allow_renewal()
+        ep.click_update_dates()
+
+        # Click Details link to display the Policy Details screen
+        ps.click_Details()
+
+        # On Details Screen, Click on the Agent that issued the Policy
+        details = Details(driver)
+        details.click_agent_link(agent)
+
+        # Agent Details Screen Displays
+        ag = Agent_Details(driver)
+
+        # Click "Submit New Application as" link
+        ag.click_submit_new_application_as_agent()
+
+        # Click My Policies on Navigation Bar
+        pnb = Navigation_Bar(driver)
+        pnb.click_my_policies()
+
+        # Locate Policy that was issued
+        ap = active_policies(driver)
+        ap.enter_policy_name(policy_text)
+        ap.click_search_button()
+
+        # Click Policy
+        ap.click_policy_link(policy_text)
+
+        # Code works up to this point
+
 
         # Wait
         driver.implicitly_wait(3)
