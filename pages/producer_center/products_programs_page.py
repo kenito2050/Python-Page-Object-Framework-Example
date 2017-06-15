@@ -26,6 +26,14 @@ class ProductsAndPrograms():
 
     # Products
 
+    def click_CYB_PSIC_DDS(self):
+        CYB_PSIC_DDS_link = self.driver.find_element(By.ID, "PSIC Regulatory Proceedings and Network Security & Privacy Coverage for Dentists_start")
+        CYB_PSIC_DDS_link.click()
+
+    def click_CYB_PSIC_MD(self):
+        CYB_PSIC_MD_link = self.driver.find_element(By.ID, "PSIC Regulatory Proceedings and Network Security & Privacy Coverage for Physicians_start")
+        CYB_PSIC_MD_link.click()
+
     def click_CYB_MMIC(self):
 
         CYB_MMIC_link = self.driver.find_element(By.ID, "MMNC e-MD™ and MEDEFENSE™ Plus_start")

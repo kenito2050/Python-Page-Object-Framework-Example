@@ -9,12 +9,12 @@ class PAF():
 
     def Page_Elements(self):
 
-        # Current or prospective MICA insured?
+        # Current or prospective PSIC insured?
         self.existing_insured_yes = self.driver.find_element(By.ID, "cyb_mica_existing_insured-yes")
 
         self.existing_insured_no = self.driver.find_element(By.ID, "cyb_mica_existing_insured-no")
 
-        # MICA policy number:
+        # mica policy number:
         self.external_policy_number = self.driver.find_element(By.ID, "external_policy_number")
 
         # Date operations commenced under current ownership
