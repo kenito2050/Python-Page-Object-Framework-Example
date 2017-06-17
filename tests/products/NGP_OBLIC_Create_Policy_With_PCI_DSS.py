@@ -125,6 +125,7 @@ class CreateQuote(unittest.TestCase):
         nb.click_agents()
         ap = AgentsPage(driver)
         ap.search_for_agent(agent)
+        ap.click_submit_new_application_as_agent()
 
         pp = ProductsAndPrograms(driver)
         pp.click_NGP_OBLIC()

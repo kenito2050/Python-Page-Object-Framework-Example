@@ -72,7 +72,7 @@ class CreateQuote(unittest.TestCase):
         # Access XML to retrieve the agent to search for
         tree = ET.parse('Agents.xml')
         agents = tree.getroot()
-        agent = (agents[6][0].text)
+        agent = (agents[5][0].text)
 
         # 0,0 = Crump Tester                -- Wholesale Agent - Crump Insurance Services, Boston - Test Account
         # 1,0 = Susan Leeming - TEST        -- Sub Agent of Wholesale Agency
@@ -108,7 +108,7 @@ class CreateQuote(unittest.TestCase):
         #contract_class_value = "74"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcdev.wn.nasinsurance.com/"
+        baseURL = "https://svcfix.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL

@@ -104,7 +104,7 @@ class CreateQuote(unittest.TestCase):
         effectiveDate_June_1 = "06/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://service.wn.nasinsurance.com/"
+        baseURL = "https://svcdemo9.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -181,19 +181,33 @@ class CreateQuote(unittest.TestCase):
 
         ### PCI Options ###
 
-        saw_CC.select_MEDEFENSE_Only()
-        # saw_CC.select_MEDEFENSE_with_50K_Disciplinary()
-        # saw_CC.select_e_MD_Higher_Limits()
-        # saw_CC.select_e_MD()
-        # saw_CC.select_e_MD_and_MEDEFENSE()
-        # saw_CC.select_MEDEFENSE_with_50K_Disciplinary()
-        # saw_CC.select_e_MD_and_MEDEFENSE_Separate_Limits()
-        # saw_CC.select_e_MD_and_MEDEFENSE_with_50k_Disciplinary_Separate_Limits()
+        # saw_CC.select_e_MD_and_MEDEFENSE_Separate_Limits_500K_limit()
+        # saw_CC.select_e_MD_and_MEDEFENSE_Separate_Limits_1MM_limit()
+
+        # saw_CC.select_e_MD_and_MEDEFENSE_with_50k_Disciplinary_Separate_Limits_500K_limit()
+        # saw_CC.select_e_MD_and_MEDEFENSE_with_50k_Disciplinary_Separate_Limits_1MM_limit()
+
+        # saw_CC.select_MEDEFENSE_with_50K_Disciplinary_500K_limit() ## Not working
+        # saw_CC.select_MEDEFENSE_with_50K_Disciplinary_1MM_limit()
+
+        # saw_CC.select_MEDEFENSE_with_50K_Disciplinary_500K_limit()
+        # saw_CC.select_MEDEFENSE_with_50K_Disciplinary_1MM_limit()
+
+        # saw_CC.select_MEDEFENSE_Only_500K_limit()
+        # saw_CC.select_MEDEFENSE_Only_1MM_limit()
+
+        # saw_CC.select_e_MD_and_MEDEFENSE_500K_limit()
+        # saw_CC.select_e_MD_and_MEDEFENSE_1MM_limit()
+
+        # saw_CC.select_e_MD_500K_limit()
+        # saw_CC.select_e_MD_1MM_limit()
 
         ### NO PCI Options ###
 
-        # saw_CC.select_MEDEFENSE_Only()
-        # saw_CC.select_MEDEFENSE_with_50K_Disciplinary()
+        # saw_CC.select_MEDEFENSE_with_50K_Disciplinary_500K_limit()
+        # saw_CC.select_MEDEFENSE_with_50K_Disciplinary_1MM_limit()
+        # saw_CC.select_MEDEFENSE_Only_500K_limit()
+        # saw_CC.select_MEDEFENSE_Only_1MM_limit()
 
         saw_CC.proceed_to_quote()
         saw_summary = Summary(driver)

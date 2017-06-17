@@ -110,7 +110,7 @@ class CreateQuote(unittest.TestCase):
         #contract_class_value = "74"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcdemo3.wn.nasinsurance.com/"
+        baseURL = "https://service.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -125,6 +125,7 @@ class CreateQuote(unittest.TestCase):
         nb.click_agents()
         ap = AgentsPage(driver)
         ap.search_for_agent(agent)
+        ap.click_submit_new_application_as_agent()
 
         pp = ProductsAndPrograms(driver)
         pp.click_NGP_OBLIC()
