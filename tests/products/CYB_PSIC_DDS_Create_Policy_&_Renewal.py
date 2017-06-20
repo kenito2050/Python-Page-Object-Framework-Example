@@ -101,7 +101,7 @@ class CreateQuote(unittest.TestCase):
         # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
         #contract_class_value = "74"
 
-        effectiveDate_June_1 = "06/01/2017"
+        ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
         baseURL = "https://svcdemo2.wn.nasinsurance.com/"
@@ -152,7 +152,7 @@ class CreateQuote(unittest.TestCase):
         cc.click_next()
 
         cp = CoveragePeriods(driver)
-        #cp.enter_june_1st_as_effective_date(effectiveDate_June_1)
+        cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
         cp.click_next()
         saw_ii = Insured_Information(driver)
         saw_ii.enter_physician_count(doctor_count)
@@ -180,7 +180,7 @@ class CreateQuote(unittest.TestCase):
 
         ### PCI Options ###
 
-        saw_CC.select_Regulatory_Proceedings_Only_Enhanced_250K_limit()
+        # saw_CC.select_Regulatory_Proceedings_Only_Enhanced_250K_limit()
         # saw_CC.select_Regulatory_Proceedings_Only_Enhanced_500K_limit()
         # saw_CC.select_Regulatory_Proceedings_Only_Enhanced_1MM_limit()
 
@@ -194,7 +194,7 @@ class CreateQuote(unittest.TestCase):
 
         ### No PCI Options ###
 
-        #saw_CC.select_all_deselect_all()
+        saw_CC.select_all_deselect_all()
 
         saw_CC.proceed_to_quote()
         saw_summary = Summary(driver)

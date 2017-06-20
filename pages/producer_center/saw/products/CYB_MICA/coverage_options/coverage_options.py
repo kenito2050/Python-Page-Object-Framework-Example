@@ -271,6 +271,10 @@ class Coverage_Options():
         Coverage_Options.NO_PCI_PageElements(self).option_674_limit_2763.click()
         Coverage_Options.NO_PCI_PageElements(self).option_674_deductible_1190.click()
 
+    def select_all_deselect_all(self):
+        select_deselect_all = self.driver.find_element(By.ID, "select-deselect-all")
+        select_deselect_all.click()
+
     def proceed_to_quote(self):
         proceed_to_quote = self.driver.find_element(By.XPATH, "//div[@id='saw-application-coverage-builder']/form/div[5]/a/span[2]/span/span")
         proceed_to_quote.click()

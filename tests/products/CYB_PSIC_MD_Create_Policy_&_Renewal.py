@@ -60,7 +60,7 @@ class CreateQuote(unittest.TestCase):
         city = StateCapitals.return_state_capital(state)
         postal_code = ZipCodes.return_zip_codes(state)
 
-        revenue = "1000000"
+        revenue = "100,000,001"
         total_num_records = '1 to 100,000'
         doctor_count = "5"
 
@@ -101,7 +101,7 @@ class CreateQuote(unittest.TestCase):
         # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
         #contract_class_value = "74"
 
-        effectiveDate_June_1 = "06/01/2017"
+        ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
         baseURL = "https://svcdemo3.wn.nasinsurance.com/"
@@ -150,7 +150,7 @@ class CreateQuote(unittest.TestCase):
         cc.click_next()
 
         cp = CoveragePeriods(driver)
-        #cp.enter_june_1st_as_effective_date(effectiveDate_June_1)
+        cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
         cp.click_next()
         saw_ii = Insured_Information(driver)
         saw_ii.enter_physician_count(doctor_count)
@@ -178,7 +178,7 @@ class CreateQuote(unittest.TestCase):
 
         ### PCI Options ###
 
-        saw_CC.select_Regulatory_Proceedings_Only_250K_limit()
+        # saw_CC.select_Regulatory_Proceedings_Only_250K_limit()
         # saw_CC.select_Regulatory_Proceedings_Only_500K_limit()
         # saw_CC.select_Regulatory_Proceedings_Only_1MM_limit()
 
@@ -186,11 +186,13 @@ class CreateQuote(unittest.TestCase):
         # saw_CC.select_Network_Security_Privacy_Only_500K_limit()
         # saw_CC.select_Network_Security_Privacy_Only_1MM_limit()
 
+        # select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_250K
+
         # saw_CC.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_250K_limit()
         # saw_CC.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_500K_limit()
         # saw_CC.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_1MM_limit()
 
-        #saw_CC.select_all_deselect_all()
+        saw_CC.select_all_deselect_all()
 
         saw_CC.proceed_to_quote()
         saw_summary = Summary(driver)

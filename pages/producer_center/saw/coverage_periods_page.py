@@ -31,7 +31,7 @@ class CoveragePeriods():
         effective_start_date_field.clear()
         effective_start_date_field.send_keys(current_date)
 
-    def enter_june_1st_as_effective_date(self, effectiveDate_June_1):
+    def enter_ad_hoc_effective_date(self, ad_hoc_effectiveDate):
 
         # Declare Date variables
         #current_date = datetime.now().strftime("%m-%d-%Y")
@@ -39,7 +39,7 @@ class CoveragePeriods():
 
         CoveragePeriods.PageElements(self).date_effective_start.click()
         CoveragePeriods.PageElements(self).date_effective_start.clear()
-        CoveragePeriods.PageElements(self).date_effective_start.send_keys(effectiveDate_June_1)
+        CoveragePeriods.PageElements(self).date_effective_start.send_keys(ad_hoc_effectiveDate)
 
         # Declare effective start date field; Enter current Date
         ##effective_start_date_field = self.driver.find_element(By.ID, "date_effective_start")

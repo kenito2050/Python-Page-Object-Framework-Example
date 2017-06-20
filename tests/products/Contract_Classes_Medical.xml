@@ -4,5 +4,6 @@
         <option value="0">Placeholder</option>
         <option value="1">Medical Group</option>
         <option value="2">Office of Physician</option>
+        <option value="3">Offices of Dentists</option>
     </select>
 </data>

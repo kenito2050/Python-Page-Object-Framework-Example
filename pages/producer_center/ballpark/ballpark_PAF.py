@@ -1,5 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 class BallPark_PAF():
 
@@ -44,6 +46,26 @@ class BallPark_PAF():
 
         cb_CYB_MICA.click()
 
+    def select_CYB_PSIC_DDS(self):
+        # Ballpark Product Identifiers
+
+        # TODO: Move these identifiers into a separate class
+
+        # NGP Cyber Liability - product - list - item - 67
+        cb_CYB_PSIC_DDS = self.driver.find_element(By.ID, "product-list-item-67")
+
+        cb_CYB_PSIC_DDS.click()
+
+    def select_CYB_PSIC_MD(self):
+        # Ballpark Product Identifiers
+
+        # TODO: Move these identifiers into a separate class
+
+        # NGP Cyber Liability - product - list - item - 66
+        cb_CYB_PSIC_MD = self.driver.find_element(By.ID, "product-list-item-66")
+
+        cb_CYB_PSIC_MD.click()
+
     def select_NGP(self):
         # Ballpark Product Identifiers
 
@@ -80,9 +102,33 @@ class BallPark_PAF():
         # Swett IIABCal Cyber Liability - product-list-item-83
         cb_NGP_SWETT = self.driver.find_element(By.ID, "product-list-item-83")
 
+    def wait_until_effective_date_field_displays(self):
+
+        userElement = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, 'effective-date')))
+
+
+    def enter_effective_date(self, ad_hoc_effectiveDate):
+
+        #wait = WebDriverWait(self.driver, 10)
+        #wait.until(EC.presence_of_element_located((By.ID, 'effective-date')))
+
+        effective_date = self.driver.find_element(By.ID, "effective-date")
+        effective_date.click()
+        effective_date.clear()
+        effective_date.send_keys(ad_hoc_effectiveDate)
+
+        # Click Zip Code Field (Popup calendar should disappear)
+
+        zip_code = self.driver.find_element(By.ID, "zip")
+        zip_code.click()
+
     def enter_revenue(self, revenue):
         revenue_field = self.driver.find_element(By.ID, "annual_revenue_current_year")
         revenue_field.send_keys(revenue)
+
+    def click_doctor_count_field(self):
+        doctor_count_field = self.driver.find_element(By.ID, "physician_count")
+        doctor_count_field.click()
 
     def enter_doctor_count(self, doctor_count):
         physician_count = self.driver.find_element(By.ID, "physician_count")

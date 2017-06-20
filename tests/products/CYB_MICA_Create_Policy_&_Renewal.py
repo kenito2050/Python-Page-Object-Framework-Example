@@ -104,7 +104,7 @@ class CreateQuote(unittest.TestCase):
         effectiveDate_June_1 = "06/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://service.wn.nasinsurance.com/"
+        baseURL = "https://svcrel.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
