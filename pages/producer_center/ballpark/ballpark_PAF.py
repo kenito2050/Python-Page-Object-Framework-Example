@@ -36,6 +36,17 @@ class BallPark_PAF():
         ballpark_button = self.driver.find_element(By.CSS_SELECTOR, "span.text-button-ds > span")
         ballpark_button.click()
 
+    def select_CYB_MMIC(self):
+        # Ballpark Product Identifiers
+
+        # TODO: Move these identifiers into a separate class
+
+        # CYB_MMIC - product - list - item - 74
+        cb_CYB_MMIC = self.driver.find_element(By.ID, "product-list-item-21")
+
+        cb_CYB_MMIC.click()
+
+
     def select_CYB_MICA(self):
         # Ballpark Product Identifiers
 

@@ -16,7 +16,6 @@ from pages.service_center.navigation_bar import NavigationBar
 from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
-import time
 
 
 class CreateQuote(unittest.TestCase):
@@ -25,7 +24,7 @@ class CreateQuote(unittest.TestCase):
 
         # Create "Fake" Variables
         #state = frandom.us_state()
-        state = "California"
+        state = "North Carolina"
         #state = Create_Insured_Address.return_alabama(state_value)
         first_name = name.first_name()
         last_name = name.last_name()
@@ -67,10 +66,8 @@ class CreateQuote(unittest.TestCase):
         # For List of Contract Classes, See Contract_Classes.xml
         tree = ET.parse('Contract_Classes_Medical.xml')
         contract_classes_XML = tree.getroot()
-        contract_class = (contract_classes_XML[0][3].text)
+        contract_class = (contract_classes_XML[0][1].text)
         # Contract Class - 1 - Medical Group
-        # Contract Class - 2 - Office of Physician
-        # Contract Class - 3 - Office of Dentists
 
         # NOTE: For contract_classes.py, the array count starts at 1
         # Array will be 1 - 74
@@ -79,10 +76,8 @@ class CreateQuote(unittest.TestCase):
         # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
         #contract_class_value = "74"
 
-        ad_hoc_effectiveDate = "07/01/2017"
-
         # Initialize Driver; Launch URL
-        baseURL = "https://svcdemo2.wn.nasinsurance.com/"
+        baseURL = "https://svcdemo9.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -107,11 +102,7 @@ class CreateQuote(unittest.TestCase):
         bp_PAF.select_contract_class(contract_class)
         bp_PAF.click_ballpark_button()
 
-        bp_PAF.select_CYB_PSIC_DDS()
-        time.sleep(3)
-        bp_PAF.enter_effective_date(ad_hoc_effectiveDate)
-        time.sleep(3)
-        bp_PAF.click_doctor_count_field()
+        bp_PAF.select_CYB_MMIC()
         bp_PAF.enter_doctor_count(doctor_count)
         bp_PAF.click_ballpark_button()
 
