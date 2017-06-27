@@ -53,9 +53,9 @@ class PAF():
 
         # Do Your billings from federal and state health care programs, such as Medicare and Medicaid, exceed an average of $2,000,000 per physician in Your group?
 
-        self.cyb_mmic_billings_exceed_two_million_yes = self.driver.find_element(By.ID, "cyb_mmic_billings_exceed_two_million-yes")
+        self.cyb_mmic_billings_exceed_two_million_yes = self.driver.find_element(By.ID, "cyb_mmic_billings_exceed_one_million-yes")
 
-        self.cyb_mmic_billings_exceed_two_million_no = self.driver.find_element(By.ID, "cyb_mmic_billings_exceed_two_million-no")
+        self.cyb_mmic_billings_exceed_two_million_no = self.driver.find_element(By.ID, "cyb_mmic_billings_exceed_one_million-no")
 
         # Have You or any physician in Your group ever been audited or investigated, or received a request for records or other documentation by or on behalf of a commercial payer or government entity?
 
@@ -185,9 +185,9 @@ class PAF():
 
         # Do Your wire transfer protocols prohibit one employee from controlling a transaction from beginning to end?
 
-        self.cyb_mmic_wire_transfer_protocols_yes = self.driver.find_element(By.ID, "cyb_mmic_wire_transfer_protocols-yes")
-
-        self.cyb_mmic_wire_transfer_protocols_no = self.driver.find_element(By.ID, "cyb_mmic_wire_transfer_protocols-no")
+        # self.cyb_mmic_wire_transfer_protocols_yes = self.driver.find_element(By.ID, "cyb_mmic_wire_transfer_protocols-yes")
+        #
+        # self.cyb_mmic_wire_transfer_protocols_no = self.driver.find_element(By.ID, "cyb_mmic_wire_transfer_protocols-no")
 
         # Does the number of records You store, either electronic or paper, exceed 20,000 records per physician?
 
@@ -201,9 +201,9 @@ class PAF():
 
         # Has the Applicant or any other organization proposed for this insurance experienced a wire transfer loss in the last five years?
 
-        self.cyb_mmic_wire_transfer_loss_yes = self.driver.find_element(By.ID, "cyb_mmic_wire_transfer_loss-yes")
-
-        self.cyb_mmic_wire_transfer_loss_no = self.driver.find_element(By.ID, "cyb_mmic_wire_transfer_loss-no")
+        # self.cyb_mmic_wire_transfer_loss_yes = self.driver.find_element(By.ID, "cyb_mmic_wire_transfer_loss-yes")
+        #
+        # self.cyb_mmic_wire_transfer_loss_no = self.driver.find_element(By.ID, "cyb_mmic_wire_transfer_loss-no")
 
         # Have You or any physician in Your group received any complaints or claims or been the subject in litigation involving matters of privacy injury, identity theft, denial of service attacks, computer virus infections, theft of information, damage to third-party networks or Your customer's ability to rely on Your network?
 
@@ -258,9 +258,9 @@ class PAF():
         PAF.Page_Elements(self).cyb_mmic_data_security_encrypted_yes.click()
         PAF.Page_Elements(self).cyb_mmic_credit_card_data_yes.click()
         PAF.Page_Elements(self).cyb_mmic_credit_card_data_compliant_yes.click()
-        PAF.Page_Elements(self).cyb_mmic_wire_transfer_protocols_yes.click()
+        # PAF.Page_Elements(self).cyb_mmic_wire_transfer_protocols_yes.click()
         PAF.Page_Elements(self).cyb_mmic_records_exceed_20000_no.click()
-        PAF.Page_Elements(self).cyb_mmic_wire_transfer_loss_no.click()
+        # PAF.Page_Elements(self).cyb_mmic_wire_transfer_loss_no.click()
         PAF.Page_Elements(self).cyb_mmic_cyber_complaints_litigation_no.click()
         PAF.Page_Elements(self).cyb_mmic_aware_compromised_security_no.click()
         PAF.Page_Elements(self).cyb_mmic_non_renewed_extention_cyb_no.click()
@@ -297,10 +297,10 @@ class PAF():
         PAF.Page_Elements(self).cyb_mmic_data_security_yes.click()
         PAF.Page_Elements(self).cyb_mmic_data_security_encrypted_yes.click()
         PAF.Page_Elements(self).cyb_mmic_credit_card_data_no.click()
-        #PAF.Page_Elements(self).cyb_mmic_credit_card_data_compliant_yes.click()
-        PAF.Page_Elements(self).cyb_mmic_wire_transfer_protocols_yes.click()
+        # PAF.Page_Elements(self).cyb_mmic_credit_card_data_compliant_yes.click()
+        # PAF.Page_Elements(self).cyb_mmic_wire_transfer_protocols_yes.click()
         PAF.Page_Elements(self).cyb_mmic_records_exceed_20000_no.click()
-        PAF.Page_Elements(self).cyb_mmic_wire_transfer_loss_no.click()
+        # PAF.Page_Elements(self).cyb_mmic_wire_transfer_loss_no.click()
         PAF.Page_Elements(self).cyb_mmic_cyber_complaints_litigation_no.click()
         PAF.Page_Elements(self).cyb_mmic_aware_compromised_security_no.click()
         PAF.Page_Elements(self).cyb_mmic_non_renewed_extention_cyb_no.click()
@@ -338,9 +338,9 @@ class PAF():
         PAF.Page_Elements(self).cyb_mmic_data_security_encrypted_yes.click()
         PAF.Page_Elements(self).cyb_mmic_credit_card_data_yes.click()
         PAF.Page_Elements(self).cyb_mmic_credit_card_data_compliant_yes.click()
-        PAF.Page_Elements(self).cyb_mmic_wire_transfer_protocols_yes.click()
+        # PAF.Page_Elements(self).cyb_mmic_wire_transfer_protocols_yes.click()
         PAF.Page_Elements(self).cyb_mmic_records_exceed_20000_no.click()
-        PAF.Page_Elements(self).cyb_mmic_wire_transfer_loss_no.click()
+        # PAF.Page_Elements(self).cyb_mmic_wire_transfer_loss_no.click()
         PAF.Page_Elements(self).cyb_mmic_cyber_complaints_litigation_no.click()
         PAF.Page_Elements(self).cyb_mmic_aware_compromised_security_no.click()
         PAF.Page_Elements(self).cyb_mmic_non_renewed_extention_cyb_no.click()
@@ -348,5 +348,5 @@ class PAF():
 
     # Ask Dev to create ID for next button
     def click_next(self):
-        next_button = self.driver.find_element(By.XPATH, "//form[@id='rate-adjustment-form']/div[2]/div[5]/a/span[2]/span/span")
+        next_button = self.driver.find_element(By.XPATH, "//form[@id='primary']/div[2]/div[5]/a/span[2]/span/span")
         next_button.click()

@@ -13,8 +13,4 @@ class Insured_Information():
         next_button = self.driver.find_element(By.NAME, "submit")
         next_button.click()
 
-    def click_return_to_Admin_Interface(self):
-        return_to_admin_interface = self.driver.find_element(By.LINK_TEXT, "Return to Admin Interface")
-        return_to_admin_interface.click()
-
 

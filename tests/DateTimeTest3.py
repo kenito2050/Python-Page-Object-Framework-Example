@@ -1,4 +1,5 @@
 from datetime import datetime
+import time
 from dateutil.relativedelta import relativedelta
 from datetime import timedelta
 from urllib.parse import urlparse, parse_qs
@@ -14,6 +15,7 @@ previous_year = last_year.year
 
 #
 current_date = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+date_today = time.strftime("%m/%d/%Y")
 date_plus_4_days = datetime.now() + relativedelta(days=4)
 
 month = date_plus_4_days.strftime('%B')

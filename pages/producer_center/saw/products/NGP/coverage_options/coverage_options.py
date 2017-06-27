@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-class Coverage_Options():
+class PCI_Coverage_Options():
 
     def __init__(self, driver):
         self.driver = driver

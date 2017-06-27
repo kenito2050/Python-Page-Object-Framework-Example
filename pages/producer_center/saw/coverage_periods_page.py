@@ -20,16 +20,21 @@ class CoveragePeriods():
 
         return self
 
-    def enter_current_date_as_effective_date(self):
+    def enter_current_date_as_effective_date(self, date_today):
 
         # Declare Date variables
         current_date = datetime.now().strftime("%m-%d-%Y")
         #current_date = datetime.now()
 
+
+        CoveragePeriods.PageElements(self).date_effective_start.click()
+        CoveragePeriods.PageElements(self).date_effective_start.clear()
+        CoveragePeriods.PageElements(self).date_effective_start.send_keys(date_today)
+
         # Declare effective start date field; Enter current Date
-        effective_start_date_field = self.driver.find_element(By.ID, "date_effective_start")
-        effective_start_date_field.clear()
-        effective_start_date_field.send_keys(current_date)
+        # effective_start_date_field = self.driver.find_element(By.ID, "date_effective_start")
+        # effective_start_date_field.clear()
+        # effective_start_date_field.send_keys(current_date)
 
     def enter_ad_hoc_effective_date(self, ad_hoc_effectiveDate):
 

@@ -6,6 +6,7 @@ from faker import address
 from faker import company
 from faker import name
 from selenium import webdriver
+import time
 
 from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.producer_center.client_search_page import ClientSearch
@@ -13,10 +14,10 @@ from pages.producer_center.my_policies.my_policies_screens.active_policies impor
 from pages.producer_center.navigation_bar import Navigation_Bar
 from pages.producer_center.client_contact_page import ClientContact
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
-from pages.producer_center.saw.products.CYB_MICA.insured_information.insured_information import Insured_Information
-from pages.producer_center.saw.products.CYB_MICA.PAF.PAF import PAF
-from pages.producer_center.saw.products.CYB_MICA.coverage_options.coverage_options import Coverage_Options
-from pages.producer_center.saw.products.CYB_MICA.select_option.select_option import Select_Option
+from pages.producer_center.saw.products.LTC.insured_information.insured_information import Insured_Information
+from pages.producer_center.saw.products.LTC.PAF.PAF import PAF
+from pages.producer_center.saw.products.LTC.coverage_options.coverage_options import Coverage_Options
+from pages.producer_center.saw.products.LTC.select_option.select_option import Select_Option
 from pages.producer_center.saw.quote_review import Quote_Review
 from pages.producer_center.saw.invoice import Invoice
 from pages.producer_center.saw.confirm_order_details import Confirm_Order_Details
@@ -44,7 +45,7 @@ class CreateQuote(unittest.TestCase):
 
         # Create "Fake" Variables
         #state = frandom.us_state()
-        state = "California"
+        state = "Florida"
         #state = Create_Insured_Address.return_alabama(state_value)
         first_name = name.first_name()
         last_name = name.last_name()
@@ -60,7 +61,7 @@ class CreateQuote(unittest.TestCase):
         city = StateCapitals.return_state_capital(state)
         postal_code = ZipCodes.return_zip_codes(state)
 
-        revenue = "1000000"
+        bed_count = "7"
         total_num_records = '1 to 100,000'
         doctor_count = "5"
 
@@ -101,10 +102,13 @@ class CreateQuote(unittest.TestCase):
         # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
         #contract_class_value = "74"
 
-        effectiveDate_June_1 = "06/01/2017"
+        # Date Variables
+
+        date_today = time.strftime("%m/%d/%Y")
+        effectiveDate_July_1 = "07/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcrel.wn.nasinsurance.com/"
+        baseURL = "https://svcdemo8.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -122,14 +126,14 @@ class CreateQuote(unittest.TestCase):
         ap.click_submit_new_application_as_agent()
 
         pp = ProductsAndPrograms(driver)
-        pp.click_CYB_MICA()
+        pp.click_LTC()
 
         # The following lines added on 5-15-17 work
-        pp.click_contract_class_drop_down_select_contract_class(contract_class)
+        #pp.click_contract_class_drop_down_select_contract_class(contract_class)
         #pp.select_contract_class_dropdown()
 
         #pp.select_contract_class(contract_class)  # Script Ends Here
-        pp.click_continue_on_contract_class_modal_after_selecting_contract_class()
+        #pp.click_continue_on_contract_class_modal_after_selecting_contract_class()
 
         cs = ClientSearch(driver)
         cs.input_bogus_client_data(postal_code)
@@ -150,21 +154,23 @@ class CreateQuote(unittest.TestCase):
         cc.click_next()
 
         cp = CoveragePeriods(driver)
-        #cp.enter_june_1st_as_effective_date(effectiveDate_June_1)
+        # cp.enter_ad_hoc_effective_date(effectiveDate_July_1)
+        cp.enter_current_date_as_effective_date(date_today)
+
         cp.click_next()
-        saw_ii = Insured_Information(driver)
-        saw_ii.enter_physician_count(doctor_count)
-        saw_ii.click_next()
+        #saw_ii = Insured_Information(driver)
+        #saw_ii.enter_physician_count(doctor_count)
+        #saw_ii.click_next()
         saw_PAF = PAF(driver)
 
 
         ### Choose PCI / No PCI Workflow in this block  ###
         ###                                             ###
         # PCI Work Flow
-        # saw_PAF.create_quote_PCI_DSS_No_DQ(revenue)
+        saw_PAF.create_quote_include_HNOA(bed_count)
 
         # NO PCI Work Flow
-        saw_PAF.create_quote_No_PCI_DSS_No_DQ(revenue)
+        # saw_PAF.create_quote_NO_HNOA(bed_count)
 
 
         # Click Next on PAF screen
@@ -181,7 +187,7 @@ class CreateQuote(unittest.TestCase):
         # saw_CC.select_MEDEFENSE_Plus_Only()
         # saw_CC.select_Cyber_Liability_Only()
         # saw_CC.select_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits()
-        # saw_CC.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits()
+        saw_CC.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits()
         # saw_CC.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits()
         # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_Combined()
         # saw_CC.select_MEDEFENSE_Plus_and Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits()
@@ -192,7 +198,7 @@ class CreateQuote(unittest.TestCase):
 
         # saw_CC.select_MEDEFENSE_Plus_Only()
         # saw_CC.select_Cyber_Liability_Only_No_PCI()
-        saw_CC.select_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
+        # saw_CC.select_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
         # saw_CC.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_No_PCI()
         # saw_CC.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
         # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_Combined_No_PCI()

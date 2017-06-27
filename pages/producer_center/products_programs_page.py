@@ -48,6 +48,10 @@ class ProductsAndPrograms():
         EO_MISC_link = self.driver.find_element(By.ID, "Miscellaneous E&O_start")
         EO_MISC_link.click()
 
+    def click_LTC(self):
+        LTC_link = self.driver.find_element(By.ID, "Long Term Care PL/GL_start")
+        LTC_link.click()
+
     def click_NGP(self):
 
         #ProductsAndPrograms.Page_Elements(self).click_NGP()

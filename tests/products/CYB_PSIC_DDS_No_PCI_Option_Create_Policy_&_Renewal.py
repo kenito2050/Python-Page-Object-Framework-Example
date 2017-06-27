@@ -15,6 +15,8 @@ from pages.producer_center.client_contact_page import ClientContact
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
 from pages.producer_center.saw.products.CYB_PSIC_DDS.insured_information.insured_information import Insured_Information
 from pages.producer_center.saw.products.CYB_PSIC_DDS.PAF.PAF import PAF
+from pages.producer_center.saw.products.CYB_PSIC_DDS.coverage_options.PCI_coverage_options import PCI_Coverage_Options
+from pages.producer_center.saw.products.CYB_PSIC_DDS.coverage_options.No_PCI_coverage_options import No_PCI_Coverage_Options
 from pages.producer_center.saw.products.CYB_PSIC_DDS.coverage_options.coverage_options import Coverage_Options
 from pages.producer_center.saw.products.CYB_PSIC_DDS.select_option.select_option import Select_Option
 from pages.producer_center.saw.quote_review import Quote_Review
@@ -55,7 +57,7 @@ class CreateQuote(unittest.TestCase):
         #city = "Cerritos"
         #postal_code = "90623"
 
-        company_name_string = "QA Test" + " " + "-" + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
+        company_name_string = "QA Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
         address_value = address.street_address()
         city = StateCapitals.return_state_capital(state)
         postal_code = ZipCodes.return_zip_codes(state)
@@ -159,44 +161,65 @@ class CreateQuote(unittest.TestCase):
         saw_ii.click_next()
         saw_PAF = PAF(driver)
 
+        ### Quote Creation Section  ###
+        ###                         ###
 
-        ### Choose PCI / No PCI Workflow in this block  ###
-        ###                                             ###
-        # PCI Work Flow
-        saw_PAF.create_quote_PCI_DSS_No_DQ(revenue)
+        # Create Quote with PCI Option
+        # saw_PAF.create_quote_PCI_DSS_No_DQ(revenue)
 
-        # NO PCI Work Flow
-        # saw_PAF.create_quote_No_PCI_DSS_No_DQ(revenue)
+        # Create Quote with NO PCI Option
+        saw_PAF.create_quote_No_PCI_DSS_No_DQ(revenue)
 
+        # Create Quote that Triggers DQ
+        # saw_PAF.create_quote_trigger_DQ(revenue)
 
-        # Click Next on PAF screen
+        # Click Next on PAF
         saw_PAF.click_next()
 
-        # Coverage Options Screen
+        #### This section determines if PCI / Non-PCI Coverage Options display
+        saw_CC_PCI = PCI_Coverage_Options(driver)
+        saw_CC_No_PCI = No_PCI_Coverage_Options(driver)
+
+        #### This class is for generic objects that display on the Coverage Options page
         saw_CC = Coverage_Options(driver)
+
+        # saw_CC.select_all_deselect_all()
 
         ### Choose PCI / No PCI Options in this block   ###
         ###                                             ###
 
         ### PCI Options ###
 
-        # saw_CC.select_Regulatory_Proceedings_Only_Enhanced_250K_limit()
-        # saw_CC.select_Regulatory_Proceedings_Only_Enhanced_500K_limit()
-        # saw_CC.select_Regulatory_Proceedings_Only_Enhanced_1MM_limit()
+        # saw_CC_PCI.select_Regulatory_Proceedings_Only_Enhanced_250K_limit()
+        # saw_CC_PCI.select_Regulatory_Proceedings_Only_Enhanced_500K_limit()
+        # saw_CC_PCI.select_Regulatory_Proceedings_Only_Enhanced_1MM_limit()
 
-        # saw_CC.select_Network_Security_Privacy_Only_Enhanced_250K_limit()
-        # saw_CC.select_Network_Security_Privacy_Only_Enhanced_500K_limit()
-        # saw_CC.select_Network_Security_Privacy_Only_Enhanced_1MM_limit()
+        # saw_CC_PCI.select_Network_Security_Privacy_Only_Enhanced_250K_limit()
+        # saw_CC_PCI.select_Network_Security_Privacy_Only_Enhanced_500K_limit()
+        # saw_CC_PCI.select_Network_Security_Privacy_Only_Enhanced_1MM_limit()
 
-        # saw_CC.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_Enhanced_250K_limit()
-        # saw_CC.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_Enhanced_500K_limit()
-        # saw_CC.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_Enhanced_1MM_limit()
+        # saw_CC_PCI.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_Enhanced_250K()
+        # saw_CC_PCI.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_Enhanced_500K()
+        # saw_CC_PCI.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_Enhanced_1MM()
 
         ### No PCI Options ###
 
-        saw_CC.select_all_deselect_all()
+        # saw_CC_No_PCI.select_Regulatory_Proceedings_Only_Enhanced_250K_limit()
+        # saw_CC_No_PCI.select_Regulatory_Proceedings_Only_Enhanced_500K_limit()
+        # saw_CC_No_PCI.select_Regulatory_Proceedings_Only_Enhanced_1MM_limit()
+
+        # saw_CC_No_PCI.select_Network_Security_Privacy_Only_Enhanced_No_PCI_250K_limit()
+        # saw_CC_No_PCI.select_Network_Security_Privacy_Only_Enhanced_No_PCI_500K_limit()
+        saw_CC_No_PCI.select_Network_Security_Privacy_Only_Enhanced_No_PCI_1MM_limit()
+
+        # saw_CC_No_PCI.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_Enhanced_No_PCI_250K_limit()
+        # saw_CC_No_PCI.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_Enhanced_No_PCI_500K_limit()
+        # saw_CC_No_PCI.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_Enhanced_No_PCI_1MM_limit()
+
+        # saw_CC.select_all_deselect_all()
 
         saw_CC.proceed_to_quote()
+
         saw_summary = Summary(driver)
         saw_summary.click_generate_quote()
         saw_quote_review = Quote_Review(driver)

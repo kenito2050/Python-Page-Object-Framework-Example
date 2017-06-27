@@ -6,6 +6,7 @@ from faker import address
 from faker import company
 from faker import name
 from selenium import webdriver
+import time
 
 from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.producer_center.client_search_page import ClientSearch
@@ -15,6 +16,8 @@ from pages.producer_center.client_contact_page import ClientContact
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
 from pages.producer_center.saw.products.CYB_MMIC.insured_information.insured_information import Insured_Information
 from pages.producer_center.saw.products.CYB_MMIC.PAF.PAF import PAF
+from pages.producer_center.saw.products.CYB_MMIC.coverage_options.PCI_coverage_options import PCI_Coverage_Options
+from pages.producer_center.saw.products.CYB_MMIC.coverage_options.No_PCI_coverage_options import No_PCI_Coverage_Options
 from pages.producer_center.saw.products.CYB_MMIC.coverage_options.coverage_options import Coverage_Options
 from pages.producer_center.saw.products.CYB_MMIC.select_option.select_option import Select_Option
 from pages.producer_center.saw.quote_review import Quote_Review
@@ -24,13 +27,16 @@ from pages.producer_center.saw.confirm_and_issue import Confirm_and_Issue
 from pages.producer_center.saw.thank_you_page import Thank_You_Page
 from pages.producer_center.saw.summary import Summary
 from pages.service_center.agents_page import AgentsPage
+from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.applications_page import ApplicationsPage
+from pages.service_center.application_screens.application_screens import Application_Screens
+from pages.service_center.application_screens.details import App_Details
+from pages.service_center.application_screens.effective_periods import Effective_Periods
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
 from pages.service_center.policies_page import PoliciesPage
 from pages.service_center.policy_screens.policy_screens import Policy_Screens
 from pages.service_center.policy_screens.details import Details
-from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.subjectivities import Subjectivities
 from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
@@ -101,7 +107,8 @@ class CreateQuote(unittest.TestCase):
         # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
         #contract_class_value = "74"
 
-        effectiveDate_June_1 = "06/01/2017"
+        date_today = time.strftime("%m/%d/%Y")
+        ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
         baseURL = "https://svcdemo9.wn.nasinsurance.com/"
@@ -149,11 +156,45 @@ class CreateQuote(unittest.TestCase):
         cc.click_next()
 
         cp = CoveragePeriods(driver)
-        #cp.enter_june_1st_as_effective_date(effectiveDate_June_1)
+        cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
         cp.click_next()
         saw_ii = Insured_Information(driver)
         saw_ii.enter_physician_count(doctor_count)
         saw_ii.click_next()
+
+        ## This section commented out
+        ## Section to update Creation Date
+
+        ## Return to Admin Interface / Set Creation Date
+        # saw_ii.click_return_to_Admin_Interface()
+        #
+        # # Navigate to Application Details page
+        # current_url_2 = driver.current_url
+        # slashparts = current_url_2.split('/')
+        # # Now join back the first three sections 'http:', '' and 'example.com'
+        # base_url_2 = '/'.join(slashparts[:3]) + '/'
+        #
+        # app_details_string = "?c=app.view&id="
+        # # app_subjectivities_string = "?c=app.track_subjectivities&id="
+        #
+        # application_details_screen = base_url_2 + app_details_string + application_id
+        #
+        # # Navigate to Application Subjectivities Screen
+        # driver.get(application_details_screen)
+        #
+        # app_details = App_Details(driver)
+        #
+        # # Update the Create Date to the Ad Hoc Effective Date Value
+        # app_details.update_create_date(ad_hoc_effectiveDate)
+        #
+        # # Click Update Button
+        # app_details.click_update_button()
+        #
+        # # Click on Agent Link to return to Producer Center
+        # app_details.click_agent_text_link()
+
+        # Continue filling out the PAF
+
         saw_PAF = PAF(driver)
 
         ### Quote Creation Section  ###
@@ -171,45 +212,75 @@ class CreateQuote(unittest.TestCase):
         # Click Next on PAF
         saw_PAF.click_next()
 
+        #### This section determines if PCI / Non-PCI Coverage Options display
+        saw_CC_PCI = PCI_Coverage_Options(driver)
+        saw_CC_No_PCI = No_PCI_Coverage_Options(driver)
+
+        #### This class is for generic objects that display on the Coverage Options page
         saw_CC = Coverage_Options(driver)
 
-        #saw_CC.select_all_deselect_all()
-
+        # saw_CC.select_all_deselect_all()
 
         ### Choose PCI / No PCI Options in this block   ###
         ###                                             ###
 
         ### PCI Options ###
 
-        # saw_CC.select_e_MD_and_MEDEFENSE_Separate_Limits_500K_limit()
-        # saw_CC.select_e_MD_and_MEDEFENSE_Separate_Limits_1MM_limit()
+        # saw_CC_PCI.select_MEDEFENSE_Plus_Only_500K()
+        # saw_CC_PCI.select_MEDEFENSE_Plus_Only_1MM()
+        # saw_CC_PCI.select_MEDEFENSE_with_50K_Disciplinary_500K()
+        # saw_CC_PCI.select_MEDEFENSE_with_50K_Disciplinary_1MM()
+        # saw_CC_PCI.select_eMD_500K()
+        # saw_CC_PCI.select_eMD_1MM()
+        # saw_CC_PCI.select_eMD_Higher_Limits_2MM()
+        saw_CC_PCI.select_eMD_Higher_Limits_3MM()
+        # saw_CC_PCI.select_eMD_MEDEFENSE_Plus_500K()
+        # saw_CC_PCI.select_eMD_MEDEFENSE_Plus_1MM()
+        # saw_CC_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_2MM()
+        # saw_CC_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_3MM()
+        # saw_CC_PCI.select_eMD_and_MEDEFENSE_with_50k_Disciplinary_500K()
+        # saw_CC_PCI.select_eMD_and_MEDEFENSE_with_50k_Disciplinary_1MM()
+        # saw_CC_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_with_50k_Disciplinary_2MM()
+        # saw_CC_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_with_50k_Disciplinary_3MM()
+        # saw_CC_PCI.select_eMD_and_MEDEFENSE_Separate_Limits_500K()
+        # saw_CC_PCI.select_eMD_and_MEDEFENSE_Separate_Limits_1MM()
+        # saw_CC_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_Separate_Limits_2MM()
+        # saw_CC_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_Separate_Limits_3MM()
+        # saw_CC_PCI.select_eMD_and_MEDEFENSE_with_50k_Disciplinary_Separate_Limits_500K()
+        # saw_CC_PCI.select_eMD_and_MEDEFENSE_with_50k_Disciplinary_Separate_Limits_1MM()
+        # saw_CC_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_with_50k_Disciplinary_Separate_Limits_2MM()
+        # saw_CC_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_with_50k_Disciplinary_Separate_Limits_3MM()
 
-        # saw_CC.select_e_MD_and_MEDEFENSE_with_50k_Disciplinary_Separate_Limits_500K_limit()
-        # saw_CC.select_e_MD_and_MEDEFENSE_with_50k_Disciplinary_Separate_Limits_1MM_limit()
+        ### NON-PCI Options ###
 
-        # saw_CC.select_MEDEFENSE_with_50K_Disciplinary_500K_limit() ## Not working
-        # saw_CC.select_MEDEFENSE_with_50K_Disciplinary_1MM_limit()
+        # saw_CC_No_PCI.select_MEDEFENSE_Plus_Only_500K()
+        # saw_CC_No_PCI.select_MEDEFENSE_Plus_Only_1MM()
+        # saw_CC_No_PCI.select_MEDEFENSE_with_50K_Disciplinary_500K()
+        # saw_CC_No_PCI.select_MEDEFENSE_with_50K_Disciplinary_1MM()
+        # saw_CC_No_PCI.select_eMD_without_PCI_DSS_Liability_500K()
+        # saw_CC_No_PCI.select_eMD_without_PCI_DSS_Liability_1MM()
+        # saw_CC_No_PCI.select_MD_Higher_Limits_without_PCI_DSS_Liability_2MM()
+        # saw_CC_No_PCI.select_eMD_Higher_Limits_without_PCI_DSS_Liability_3MM()
+        # saw_CC_No_PCI.select_eMD_and_MEDEFENSE_without_PCI_DSS_Liability_500K()
+        # saw_CC_No_PCI.select_eMD_and_MEDEFENSE_without_PCI_DSS_Liability_1MM()
+        # saw_CC_No_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_without_PCI_DSS_Liability_2MM()
+        # saw_CC_No_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_without_PCI_DSS_Liability_3MM()
+        # saw_CC_No_PCI.select_eMD_and_MEDEFENSE_with_50k_Disciplinary_without_PCI_DSS_Liability_500K()
+        # saw_CC_No_PCI.select_eMD_and_MEDEFENSE_with_50k_Disciplinary_without_PCI_DSS_Liability_1MM()
+        # saw_CC_No_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_with_50k_Disciplinary_without_PCI_DSS_Liability_2MM()
+        # saw_CC_No_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_with_50k_Disciplinary_without_PCI_DSS_Liability_3MM()
+        # saw_CC_No_PCI.select_eMD_and_MEDEFENSE_Separate_Limits_without_PCI_DSS_Liability_500K()
+        # saw_CC_No_PCI.select_eMD_and_MEDEFENSE_Separate_Limits_without_PCI_DSS_Liability_1MM()
+        # saw_CC_No_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_Separate_Limits_without_PCI_DSS_Liability_2MM()
+        # saw_CC_No_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_Separate_Limits_without_PCI_DSS_Liability_3MM()
+        # saw_CC_No_PCI.select_eMD_and_MEDEFENSE_with_50k_Disciplinary_Separate_Limits_without_PCI_DSS_Liability_500K()
+        # saw_CC_No_PCI.select_eMD_and_MEDEFENSE_with_50k_Disciplinary_Separate_Limits_without_PCI_DSS_Liability_1MM()
+        # saw_CC_No_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_with_50k_Disciplinary_Separate_Limits_without_PCI_DSS_Liability_2MM()
+        # saw_CC_No_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_with_50k_Disciplinary_Separate_Limits_without_PCI_DSS_Liability_3MM()
 
-        # saw_CC.select_MEDEFENSE_with_50K_Disciplinary_500K_limit()
-        # saw_CC.select_MEDEFENSE_with_50K_Disciplinary_1MM_limit()
-
-        # saw_CC.select_MEDEFENSE_Only_500K_limit()
-        # saw_CC.select_MEDEFENSE_Only_1MM_limit()
-
-        # saw_CC.select_e_MD_and_MEDEFENSE_500K_limit()
-        # saw_CC.select_e_MD_and_MEDEFENSE_1MM_limit()
-
-        # saw_CC.select_e_MD_500K_limit()
-        # saw_CC.select_e_MD_1MM_limit()
-
-        ### NO PCI Options ###
-
-        # saw_CC.select_MEDEFENSE_with_50K_Disciplinary_500K_limit()
-        # saw_CC.select_MEDEFENSE_with_50K_Disciplinary_1MM_limit()
-        # saw_CC.select_MEDEFENSE_Only_500K_limit()
-        # saw_CC.select_MEDEFENSE_Only_1MM_limit()
-
+        # Click Proceed to Quote
         saw_CC.proceed_to_quote()
+
         saw_summary = Summary(driver)
         saw_summary.click_generate_quote()
         saw_quote_review = Quote_Review(driver)
@@ -249,16 +320,16 @@ class CreateQuote(unittest.TestCase):
         #app_page.click_application_id_link(application_id)
 
         # Navigate to Application Details page
-        new_current_url = driver.current_url
-        slashparts = new_current_url.split('/')
+        current_url_3 = driver.current_url
+        slashparts = current_url_3.split('/')
         # Now join back the first three sections 'http:', '' and 'example.com'
-        new_base_url = '/'.join(slashparts[:3]) + '/'
+        base_url_3 = '/'.join(slashparts[:3]) + '/'
 
         app_details_string = "?c=app.view&id="
         app_subjectivities_string = "?c=app.track_subjectivities&id="
 
-        application_details_screen = new_base_url + app_details_string + application_id
-        application_subjectivites_screen = new_base_url + app_subjectivities_string + application_id
+        application_details_screen = base_url_3 + app_details_string + application_id
+        application_subjectivites_screen = base_url_3 + app_subjectivities_string + application_id
 
         # Navigate to Application Subjectivities Screen
         driver.get(application_subjectivites_screen)
