@@ -5,6 +5,7 @@ from faker import address
 from faker import company
 from faker import name
 from selenium import webdriver
+import time
 
 from pages.producer_center.ballpark.ballpark_Indication import BallPark_Indication
 from pages.producer_center.ballpark.ballpark_PAF import BallPark_PAF
@@ -35,7 +36,7 @@ class CreateQuote(unittest.TestCase):
         city = StateCapitals.return_state_capital(state)
         postal_code = ZipCodes.return_zip_codes(state)
 
-        revenue = "50000001"
+        revenue = "1000000"
 
         # Access XML to retrieve login credentials
         tree = ET.parse('resources.xml')
@@ -54,7 +55,7 @@ class CreateQuote(unittest.TestCase):
         # 3,0 = Preferred Agent             -- Preferred Agent - Preferred Agency
         # 4,0 = TMLT Test User              -- Account to Test COMM2 Scenarios
         # 5,0 = QA Agent                    -- QA Agent
-        # 6,0 = Janice Quinn                -- Janice Quinn - Boston Retail
+        # 6,0 = 2nd Preferred Agent         -- 2nd Preferred Agent - ABC Insurance
 
         # TODO: NEED TO FIX SO THAT SCRIPT USES STRING VALUE CONTAINED IN contract_class variable
         # Access XML to retrieve contract_class
@@ -65,24 +66,25 @@ class CreateQuote(unittest.TestCase):
         # For List of Contract Classes, See Contract_Classes.xml
         tree = ET.parse('Contract_Classes.xml')
         contract_classes_XML = tree.getroot()
-        contract_class = (contract_classes_XML[0][43].text)
+        contract_class = (contract_classes_XML[0][63].text)
 
         # NOTE: For contract_classes.py, the array count starts at 1
         # Array will be 1 - 74
         contract_class_int_value = ContractClasses.return_contract_class_values(contract_class)
 
-        # Retail Sales          - 57
-        # Online Retailer       - 46
-        # Restaurant            - 56
-        # Misc Consultant       - 43
-        # Hospitality           - 30
-        # Title/Escrow Services - 63
-
         # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
-        #contract_class_value = "74"
+        # 'Accounting, Auditing, and Bookkeeping': '1',
+        #'Business Consulting': '7',
+        #'Online Retailer': '46'
+        #'Retail Sales': '57'
+        #'Title/Escrow Services': '63'
+
+        # Date Variables
+        date_today = time.strftime("%m/%d/%Y")
+        ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcdemo2.wn.nasinsurance.com/"
+        baseURL = "https://svcdemo4.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -109,6 +111,15 @@ class CreateQuote(unittest.TestCase):
         bp_PAF.click_ballpark_button()
 
         bp_PAF.select_NGP_USPRO()
+        time.sleep(3)
+
+        # Enter Ad Hoc Effective Date
+        bp_PAF.enter_effective_date(ad_hoc_effectiveDate)
+
+        # Enter Today's Date as Effective Date
+        # bp_PAF.enter_current_date(date_today)
+
+        time.sleep(3)
         bp_PAF.enter_revenue(revenue)
         bp_PAF.click_ballpark_button()
 
@@ -126,7 +137,7 @@ class CreateQuote(unittest.TestCase):
         driver.switch_to.window(driver.window_handles[0])
 
         # Close First Window (Service Center)
-        #driver.close()
+        # driver.close()
 
         # Wait
         driver.implicitly_wait(3)

@@ -5,6 +5,7 @@ from faker import address
 from faker import company
 from faker import name
 from selenium import webdriver
+import time
 
 from pages.producer_center.ballpark.ballpark_Indication import BallPark_Indication
 from pages.producer_center.ballpark.ballpark_PAF import BallPark_PAF
@@ -36,6 +37,7 @@ class CreateQuote(unittest.TestCase):
         postal_code = ZipCodes.return_zip_codes(state)
 
         revenue = "9000000"
+        staff_count = "5"
 
         # Access XML to retrieve login credentials
         tree = ET.parse('resources.xml')
@@ -65,18 +67,16 @@ class CreateQuote(unittest.TestCase):
         # For List of Contract Classes, See Contract_Classes.xml
         tree = ET.parse('Contract_Classes.xml')
         contract_classes_XML = tree.getroot()
-        contract_class = (contract_classes_XML[0][57].text)
+        contract_class = (contract_classes_XML[0][35].text)
         # Contract Class - 35 - Legal Services
 
         # NOTE: For contract_classes.py, the array count starts at 1
         # Array will be 1 - 74
         contract_class_int_value = ContractClasses.return_contract_class_values(contract_class)
 
-        # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
-        # 'Accounting, Auditing, and Bookkeeping': '1',
-        #'Online Retailer': '46'
-        #'Retail Sales': '57'
-        #'Title/Escrow Services': '63'
+        # Date Variables
+        date_today = time.strftime("%m/%d/%Y")
+        ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
         baseURL = "https://svcdemo4.wn.nasinsurance.com/"
@@ -104,7 +104,16 @@ class CreateQuote(unittest.TestCase):
         bp_PAF.select_contract_class(contract_class)
         bp_PAF.click_ballpark_button()
 
-        bp_PAF.select_NGP()
+        bp_PAF.select_NGP_OBLIC()
+        time.sleep(3)
+
+        # Enter Ad Hoc Effective Date
+        # bp_PAF.enter_effective_date(ad_hoc_effectiveDate)
+
+        # Enter Today's Date as Effective Date
+        bp_PAF.enter_current_date(date_today)
+
+        time.sleep(3)
         bp_PAF.enter_revenue(revenue)
         bp_PAF.click_ballpark_button()
 
@@ -122,7 +131,7 @@ class CreateQuote(unittest.TestCase):
         driver.switch_to.window(driver.window_handles[0])
 
         # Close First Window (Service Center)
-        #driver.close()
+        # driver.close()
 
         # Wait
         driver.implicitly_wait(3)

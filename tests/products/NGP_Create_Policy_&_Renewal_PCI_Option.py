@@ -6,6 +6,7 @@ from faker import address
 from faker import company
 from faker import name
 from selenium import webdriver
+import time
 
 from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.producer_center.client_search_page import ClientSearch
@@ -13,10 +14,12 @@ from pages.producer_center.my_policies.my_policies_screens.active_policies impor
 from pages.producer_center.navigation_bar import Navigation_Bar
 from pages.producer_center.client_contact_page import ClientContact
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
-from pages.producer_center.saw.products.CYB_MICA.insured_information.insured_information import Insured_Information
-from pages.producer_center.saw.products.CYB_MICA.PAF.PAF import PAF
-from pages.producer_center.saw.products.CYB_MICA.coverage_options.coverage_options import Coverage_Options
-from pages.producer_center.saw.products.CYB_MICA.select_option.select_option import Select_Option
+from pages.producer_center.saw.products.NGP.insured_information.insured_information import Insured_Information
+from pages.producer_center.saw.products.NGP.PAF.PAF import PAF
+from pages.producer_center.saw.products.NGP.coverage_options.PCI_coverage_options import PCI_Coverage_Options
+from pages.producer_center.saw.products.NGP.coverage_options.No_PCI_coverage_options import No_PCI_Coverage_Options
+from pages.producer_center.saw.products.NGP.coverage_options.coverage_options import Coverage_Options
+from pages.producer_center.saw.products.NGP.select_option.select_option import Select_Option
 from pages.producer_center.saw.quote_review import Quote_Review
 from pages.producer_center.saw.invoice import Invoice
 from pages.producer_center.saw.confirm_order_details import Confirm_Order_Details
@@ -33,7 +36,7 @@ from pages.service_center.policy_screens.details import Details
 from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.subjectivities import Subjectivities
-from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
+from utilities.contract_classes.contract_classes import ContractClasses
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
 
@@ -62,7 +65,6 @@ class CreateQuote(unittest.TestCase):
 
         revenue = "1000000"
         total_num_records = '1 to 100,000'
-        doctor_count = "5"
 
         # Access XML to retrieve login credentials
         tree = ET.parse('resources.xml')
@@ -90,21 +92,27 @@ class CreateQuote(unittest.TestCase):
         # I have inserted a placeholder element at 0 -- Ken
         # Array will be 1 - 74
         # For List of Contract Classes, See Contract_Classes.xml
-        tree = ET.parse('Contract_Classes_Medical.xml')
+        tree = ET.parse('Contract_Classes.xml')
         contract_classes_XML = tree.getroot()
-        contract_class = (contract_classes_XML[0][1].text)
+        contract_class = (contract_classes_XML[0][63].text)
+
+        #'Online Retailer': '46'
+        #'Retail Sales': '57'
+        #'Title/Escrow Services': '63'
 
         # NOTE: For contract_classes.py, the array count starts at 1
         # Array will be 1 - 74
-        contract_class_int_value = ContractClasses_Medical.return_contract_class_values(contract_class)
+        contract_class_int_value = ContractClasses.return_contract_class_values(contract_class)
 
         # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
         #contract_class_value = "74"
 
-        effectiveDate_June_1 = "06/01/2017"
+        # Date Variables
+        date_today = time.strftime("%m/%d/%Y")
+        ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcrel.wn.nasinsurance.com/"
+        baseURL = "https://svcdemo4.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -122,14 +130,18 @@ class CreateQuote(unittest.TestCase):
         ap.click_submit_new_application_as_agent()
 
         pp = ProductsAndPrograms(driver)
-        pp.click_CYB_MICA()
+        pp.click_NGP()
 
-        # The following lines added on 5-15-17 work
-        pp.click_contract_class_drop_down_select_contract_class(contract_class)
-        #pp.select_contract_class_dropdown()
+        pp.click_contract_class_modal()
+        pp.select_contract_class_dropdown()
 
-        #pp.select_contract_class(contract_class)  # Script Ends Here
-        pp.click_continue_on_contract_class_modal_after_selecting_contract_class()
+        # These next (2) lines work
+        pp.select_contract_class(contract_class_int_value)
+        pp.click_continue_on_contract_class_modal()
+
+        # These next (2) Lines are NOT working
+        #pp.select_contract_class_use_string(contract_class)
+        #pp.select_contract_class_use_string()
 
         cs = ClientSearch(driver)
         cs.input_bogus_client_data(postal_code)
@@ -150,59 +162,98 @@ class CreateQuote(unittest.TestCase):
         cc.click_next()
 
         cp = CoveragePeriods(driver)
-        #cp.enter_june_1st_as_effective_date(effectiveDate_June_1)
+
+        # Enter an Ad Hoc Effective Date
+        # cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
+
+        # Enter Today's Date as Effective Date
+        cp.enter_current_date_as_effective_date(date_today)
+
         cp.click_next()
         saw_ii = Insured_Information(driver)
-        saw_ii.enter_physician_count(doctor_count)
+        saw_ii.enter_annual_revenue()
         saw_ii.click_next()
         saw_PAF = PAF(driver)
 
+        ### Quote Creation Section  ###
+        ###                         ###
 
-        ### Choose PCI / No PCI Workflow in this block  ###
-        ###                                             ###
-        # PCI Work Flow
-        # saw_PAF.create_quote_PCI_DSS_No_DQ(revenue)
+        # Create Quote with PCI Option
+        saw_PAF.create_quote_PCI_DSS_No_DQ(total_num_records)
 
-        # NO PCI Work Flow
-        saw_PAF.create_quote_No_PCI_DSS_No_DQ(revenue)
+        # Create Quote with NO PCI Option
+        # saw_PAF.create_quote_No_PCI_DSS_No_DQ(total_num_records)
+
+        # Create Quote that Triggers DQ
 
 
-        # Click Next on PAF screen
+        # Click Next on PAF Screen
         saw_PAF.click_next()
 
-        # Coverage Options Screen
+        #### This section determines if PCI / Non-PCI Coverage Options display
+        saw_CC_PCI = PCI_Coverage_Options(driver)
+        saw_CC_No_PCI = No_PCI_Coverage_Options(driver)
+
+        #### This class is for generic objects that display on the Coverage Options page
         saw_CC = Coverage_Options(driver)
+
+        # saw_CC.select_all_deselect_all()
 
         ### Choose PCI / No PCI Options in this block   ###
         ###                                             ###
 
         ### PCI Options ###
 
-        # saw_CC.select_MEDEFENSE_Plus_Only()
-        # saw_CC.select_Cyber_Liability_Only()
-        # saw_CC.select_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits()
-        # saw_CC.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits()
-        # saw_CC.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits()
-        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_Combined()
-        # saw_CC.select_MEDEFENSE_Plus_and Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits()
-        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits()
-        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits()
+        # saw_CC_PCI.select_250K_limit_500_Deductible()
+        # saw_CC_PCI.select_250K_limit_1K_Deductible()
+        # saw_CC_PCI.select_250K_limit_2pt5K_Deductible()
+        # saw_CC_PCI.select_250K_limit_5K_Deductible()
+        # saw_CC_PCI.select_250K_limit_10K_Deductible()
+        # saw_CC_PCI.select_250K_limit_25K_Deductible()
+        # saw_CC_PCI.select_500K_limit_500_Deductible()
+        # saw_CC_PCI.select_500K_limit_1K_Deductible()
+        # saw_CC_PCI.select_500K_limit_2pt5K_Deductible()
+        # saw_CC_PCI.select_500K_limit_5K_Deductible()
+        # saw_CC_PCI.select_500K_limit_10K_Deductible()
+        # saw_CC_PCI.select_500K_limit_25K_Deductible()
+        # saw_CC_PCI.select_1MM_limit_500_Deductible()
+        # saw_CC_PCI.select_1MM_limit_1K_Deductible()
+        saw_CC_PCI.select_1MM_limit_2pt5K_Deductible()
+        # saw_CC_PCI.select_1MM_limit_5K_Deductible()
+        # saw_CC_PCI.select_1MM_limit_10K_Deductible()
+        # saw_CC_PCI.select_1MM_limit_25K_Deductible()
+        # saw_CC_PCI.select_250K_500K_1MM_2MM_limit_500_Deductible()
+        # saw_CC_PCI.select_250K_500K_limit_500_Deductible()
+        # saw_CC_PCI.select_250K_500K_1MM_2MM_limit_2pt5K_Deductible()
 
-        ### No PCI Options ###
+        ### No-PCI Options ###
 
-        # saw_CC.select_MEDEFENSE_Plus_Only()
-        # saw_CC.select_Cyber_Liability_Only_No_PCI()
-        saw_CC.select_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
-        # saw_CC.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_No_PCI()
-        # saw_CC.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
-        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_Combined_No_PCI()
-        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
-        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
-        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_No_PCI()
+        # saw_CC_No_PCI.select_250K_limit_500_Deductible()
+        # saw_CC_No_PCI.select_250K_limit_1K_Deductible()
+        # saw_CC_No_PCI.select_250K_limit_2pt5K_Deductible()
+        # saw_CC_No_PCI.select_250K_limit_5K_Deductible()
+        # saw_CC_No_PCI.select_250K_limit_10K_Deductible()
+        # saw_CC_No_PCI.select_250K_limit_25K_Deductible()
+        # saw_CC_No_PCI.select_500K_limit_500_Deductible()
+        # saw_CC_No_PCI.select_500K_limit_1K_Deductible()
+        # saw_CC_No_PCI.select_500K_limit_2pt5K_Deductible()
+        # saw_CC_No_PCI.select_500K_limit_5K_Deductible()
+        # saw_CC_No_PCI.select_500K_limit_10K_Deductible()
+        # saw_CC_No_PCI.select_500K_limit_25K_Deductible()
+        # saw_CC_No_PCI.select_1MM_limit_500_Deductible()
+        # saw_CC_No_PCI.select_1MM_limit_1K_Deductible()
+        # saw_CC_No_PCI.select_1MM_limit_2pt5K_Deductible()
+        # saw_CC_No_PCI.select_1MM_limit_5K_Deductible()
+        # saw_CC_No_PCI.select_1MM_limit_10K_Deductible()
+        # saw_CC_No_PCI.select_1MM_limit_25K_Deductible()
+        # saw_CC_No_PCI.select_250K_500K_1MM_2MM_limit_500_Deductible()
+        # saw_CC_No_PCI.select_250K_500K_limit_500_Deductible()
+        # saw_CC_No_PCI.select_250K_500K_1MM_2MM_limit_2pt5K_Deductible()
 
         #saw_CC.select_all_deselect_all()
 
         saw_CC.proceed_to_quote()
+
         saw_summary = Summary(driver)
         saw_summary.click_generate_quote()
         saw_quote_review = Quote_Review(driver)
@@ -222,6 +273,8 @@ class CreateQuote(unittest.TestCase):
         # This works on DEV
         # TODO: FIX redirection; should redirect back to Service Center
         saw_confirm_issue.click_return_to_Admin_Interface()
+
+        time.sleep(2)
 
         #This section is necessary ONLY on STAGE
         # Call Login methods from Pages.home.login_page.py

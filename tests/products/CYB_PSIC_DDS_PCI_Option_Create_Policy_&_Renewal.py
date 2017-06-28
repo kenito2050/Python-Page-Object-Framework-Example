@@ -6,6 +6,7 @@ from faker import address
 from faker import company
 from faker import name
 from selenium import webdriver
+import time
 
 from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.producer_center.client_search_page import ClientSearch
@@ -103,6 +104,8 @@ class CreateQuote(unittest.TestCase):
         # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
         #contract_class_value = "74"
 
+        # Date Variables
+        date_today = time.strftime("%m/%d/%Y")
         ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
@@ -154,7 +157,13 @@ class CreateQuote(unittest.TestCase):
         cc.click_next()
 
         cp = CoveragePeriods(driver)
+
+        # Enter an Ad Hoc Effective Date
         cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
+
+        # Enter Today's Date as Effective Date
+        # cp.enter_current_date_as_effective_date(date_today)
+
         cp.click_next()
         saw_ii = Insured_Information(driver)
         saw_ii.enter_physician_count(doctor_count)
@@ -239,6 +248,8 @@ class CreateQuote(unittest.TestCase):
         # This works on DEV
         # TODO: FIX redirection; should redirect back to Service Center
         saw_confirm_issue.click_return_to_Admin_Interface()
+
+        time.sleep(2)
 
         #This section is necessary ONLY on STAGE
         # Call Login methods from Pages.home.login_page.py

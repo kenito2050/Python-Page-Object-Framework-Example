@@ -37,7 +37,7 @@ class CreateQuote(unittest.TestCase):
         postal_code = ZipCodes.return_zip_codes(state)
 
         revenue = "9000000"
-        doctor_count = "5"
+        staff_count = "5"
 
         # Access XML to retrieve login credentials
         tree = ET.parse('resources.xml')
@@ -79,6 +79,8 @@ class CreateQuote(unittest.TestCase):
         # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
         #contract_class_value = "74"
 
+        # Date Variables
+        date_today = time.strftime("%m/%d/%Y")
         ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
@@ -109,10 +111,16 @@ class CreateQuote(unittest.TestCase):
 
         bp_PAF.select_CYB_PSIC_DDS()
         time.sleep(3)
+
+        # Enter Ad Hoc Effective Date
         bp_PAF.enter_effective_date(ad_hoc_effectiveDate)
+
+        # Enter Today's Date as Effective Date
+        # bp_PAF.enter_current_date(date_today)
+
         time.sleep(3)
         bp_PAF.click_doctor_count_field()
-        bp_PAF.enter_doctor_count(doctor_count)
+        bp_PAF.enter_doctor_count(staff_count)
         bp_PAF.click_ballpark_button()
 
         bp_Indication = BallPark_Indication(driver)

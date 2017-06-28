@@ -5,6 +5,7 @@ from faker import address
 from faker import company
 from faker import name
 from selenium import webdriver
+import time
 
 from pages.producer_center.ballpark.ballpark_Indication import BallPark_Indication
 from pages.producer_center.ballpark.ballpark_PAF import BallPark_PAF
@@ -78,6 +79,10 @@ class CreateQuote(unittest.TestCase):
         #'Retail Sales': '57'
         #'Title/Escrow Services': '63'
 
+        # Date Variables
+        date_today = time.strftime("%m/%d/%Y")
+        ad_hoc_effectiveDate = "07/01/2017"
+
         # Initialize Driver; Launch URL
         baseURL = "https://svcdemo4.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
@@ -106,6 +111,15 @@ class CreateQuote(unittest.TestCase):
         bp_PAF.click_ballpark_button()
 
         bp_PAF.select_NGP()
+        time.sleep(3)
+
+        # Enter Ad Hoc Effective Date
+        bp_PAF.enter_effective_date(ad_hoc_effectiveDate)
+
+        # Enter Today's Date as Effective Date
+        # bp_PAF.enter_current_date(date_today)
+
+        time.sleep(3)
         bp_PAF.enter_revenue(revenue)
         bp_PAF.click_ballpark_button()
 
@@ -123,7 +137,7 @@ class CreateQuote(unittest.TestCase):
         driver.switch_to.window(driver.window_handles[0])
 
         # Close First Window (Service Center)
-        #driver.close()
+        # driver.close()
 
         # Wait
         driver.implicitly_wait(3)

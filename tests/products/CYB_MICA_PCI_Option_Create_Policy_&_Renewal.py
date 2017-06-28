@@ -6,23 +6,26 @@ from faker import address
 from faker import company
 from faker import name
 from selenium import webdriver
+import time
 
-from pages.producer_center.client_contact_page import ClientContact
+from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.producer_center.client_search_page import ClientSearch
 from pages.producer_center.my_policies.my_policies_screens.active_policies import active_policies
 from pages.producer_center.navigation_bar import Navigation_Bar
-from pages.producer_center.products_programs_page import ProductsAndPrograms
+from pages.producer_center.client_contact_page import ClientContact
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
-from pages.producer_center.saw.products.NGP.PAF.PAF import PAF
-from pages.producer_center.saw.products.NGP.confirm_and_issue.confirm_and_issue import Confirm_and_Issue
-from pages.producer_center.saw.products.NGP.confirm_order_details.confirm_order_details import Confirm_Order_Details
-from pages.producer_center.saw.products.NGP.coverage_options.coverage_options import Coverage_Options
-from pages.producer_center.saw.products.NGP.insured_information.insured_information import Insured_Information
-from pages.producer_center.saw.products.NGP.invoice.invoice import Invoice
-from pages.producer_center.saw.products.NGP.quote_review.quote_review import Quote_Review
-from pages.producer_center.saw.products.NGP.select_option.select_option import Select_Option
-from pages.producer_center.saw.products.NGP.summary.summary import Summary
+from pages.producer_center.saw.products.CYB_MICA.insured_information.insured_information import Insured_Information
+from pages.producer_center.saw.products.CYB_MICA.PAF.PAF import PAF
+from pages.producer_center.saw.products.CYB_MICA.coverage_options.PCI_coverage_options import PCI_Coverage_Options
+from pages.producer_center.saw.products.CYB_MICA.coverage_options.No_PCI_coverage_options import No_PCI_Coverage_Options
+from pages.producer_center.saw.products.CYB_MICA.coverage_options.coverage_options import Coverage_Options
+from pages.producer_center.saw.products.CYB_MICA.select_option.select_option import Select_Option
+from pages.producer_center.saw.quote_review import Quote_Review
+from pages.producer_center.saw.invoice import Invoice
+from pages.producer_center.saw.confirm_order_details import Confirm_Order_Details
+from pages.producer_center.saw.confirm_and_issue import Confirm_and_Issue
 from pages.producer_center.saw.thank_you_page import Thank_You_Page
+from pages.producer_center.saw.summary import Summary
 from pages.service_center.agents_page import AgentsPage
 from pages.service_center.applications_page import ApplicationsPage
 from pages.service_center.login_page import LoginPage
@@ -33,7 +36,7 @@ from pages.service_center.policy_screens.details import Details
 from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.subjectivities import Subjectivities
-from utilities.contract_classes.contract_classes import ContractClasses
+from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
 
@@ -49,14 +52,20 @@ class CreateQuote(unittest.TestCase):
         first_name = name.first_name()
         last_name = name.last_name()
         company_name = company.company_name()
-        #company_name_string = company_name
-        company_name_string = "QA Test" + " " + "-" + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
+
+        #company_name_string = "QA Test - The Lance Armstrong Live Strong Company"
+        #address_value = "7021 Cerritos Ave"
+        #city = "Cerritos"
+        #postal_code = "90623"
+
+        company_name_string = "QA Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
         address_value = address.street_address()
         city = StateCapitals.return_state_capital(state)
         postal_code = ZipCodes.return_zip_codes(state)
 
         revenue = "1000000"
         total_num_records = '1 to 100,000'
+        doctor_count = "5"
 
         # Access XML to retrieve login credentials
         tree = ET.parse('resources.xml')
@@ -67,14 +76,15 @@ class CreateQuote(unittest.TestCase):
         # Access XML to retrieve the agent to search for
         tree = ET.parse('Agents.xml')
         agents = tree.getroot()
-        agent = (agents[0][0].text)
+        agent = (agents[5][0].text)
 
-        # 0,0 = Wholesale Agent     -- Wholesale Agent
-        # 1,0 = Retail Agent        -- Retail Agent
-        # 2,0 = Preferred Agent     -- Preferred Agent
-        # 3,0 = COMM 2 Test Agent   -- COMM 2 Test Agent
-        # 4,0 = QA Agent            -- QA Agent
-        # 5,0 = Janice Quinn        -- Janice Quinn
+        # 0,0 = Crump Tester                -- Wholesale Agent - Crump Insurance Services, Boston - Test Account
+        # 1,0 = Susan Leeming - TEST        -- Sub Agent of Wholesale Agency
+        # 2,0 = Chad Robin                  -- Chad Robin Retail Agent - Robin Insurance
+        # 3,0 = Preferred Agent             -- Preferred Agent - Preferred Agency
+        # 4,0 = TMLT Test User              -- Account to Test COMM2 Scenarios
+        # 5,0 = QA Agent                    -- QA Agent
+        # 6,0 = Janice Quinn                -- 2nd Preferred Agent - ABC Insurance
 
         # TODO: NEED TO FIX SO THAT SCRIPT USES STRING VALUE CONTAINED IN contract_class variable
         # Access XML to retrieve contract_class
@@ -83,24 +93,22 @@ class CreateQuote(unittest.TestCase):
         # I have inserted a placeholder element at 0 -- Ken
         # Array will be 1 - 74
         # For List of Contract Classes, See Contract_Classes.xml
-        tree = ET.parse('Contract_Classes.xml')
+        tree = ET.parse('Contract_Classes_Medical.xml')
         contract_classes_XML = tree.getroot()
-        contract_class = (contract_classes_XML[0][63].text)
+        contract_class = (contract_classes_XML[0][1].text)
 
         # NOTE: For contract_classes.py, the array count starts at 1
         # Array will be 1 - 74
-        contract_class_int_value = ContractClasses.return_contract_class_values(contract_class)
+        contract_class_int_value = ContractClasses_Medical.return_contract_class_values(contract_class)
 
         # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
+        #contract_class_value = "74"
 
-        # 'Accounting, Auditing, and Bookkeeping': '1',
-        #'Business Consulting': '7',
-        #'Online Retailer': '46'
-        #'Retail Sales': '57'
-        #'Title/Escrow Services': '63'
+        date_today = time.strftime("%m/%d/%Y")
+        ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://service.wn.nasinsurance.com/"
+        baseURL = "https://svcrel.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -118,17 +126,14 @@ class CreateQuote(unittest.TestCase):
         ap.click_submit_new_application_as_agent()
 
         pp = ProductsAndPrograms(driver)
-        pp.click_NGP()
-        pp.click_contract_class_modal()
-        pp.select_contract_class_dropdown()
+        pp.click_CYB_MICA()
 
-        # These next (2) lines work
-        pp.select_contract_class(contract_class_int_value)
-        pp.click_continue_on_contract_class_modal()
+        # The following lines added on 5-15-17 work
+        pp.click_contract_class_drop_down_select_contract_class(contract_class)
+        #pp.select_contract_class_dropdown()
 
-        # These next (2) Lines are NOT working
-        #pp.select_contract_class_use_string(contract_class)
-        #pp.select_contract_class_use_string()
+        #pp.select_contract_class(contract_class)  # Script Ends Here
+        pp.click_continue_on_contract_class_modal_after_selecting_contract_class()
 
         cs = ClientSearch(driver)
         cs.input_bogus_client_data(postal_code)
@@ -143,57 +148,72 @@ class CreateQuote(unittest.TestCase):
         # Get the Application ID from URL -- THIS WORKS
         current_url = driver.current_url
         first_url_string = urlparse(current_url)
-        query_dict_1 = parse_qs(first_url_string.query)
-        application_id = (query_dict_1['app_id'][0])
+        query_dict = parse_qs(first_url_string.query)
+        application_id = (query_dict['app_id'][0])
 
         cc.click_next()
 
         cp = CoveragePeriods(driver)
-        #cp.enter_current_date_as_effective_date()
+        #cp.enter_june_1st_as_effective_date(effectiveDate_June_1)
         cp.click_next()
         saw_ii = Insured_Information(driver)
-        saw_ii.enter_annual_revenue()
+        saw_ii.enter_physician_count(doctor_count)
         saw_ii.click_next()
         saw_PAF = PAF(driver)
+        ### Quote Creation Section  ###
+        ###                         ###
 
-        saw_PAF.create_quote_PCI_DSS_No_DQ(total_num_records)
-        # saw_PAF.create_quote_No_PCI_DSS_No_DQ(total_num_records)
-        # saw_PAF.create_quote_trigger_DQ(total_num_records)
+        # Create Quote with PCI Option
+        saw_PAF.create_quote_PCI_DSS_No_DQ(revenue)
 
+        # Create Quote with NO PCI Option
+        # saw_PAF.create_quote_No_PCI_DSS_No_DQ(revenue)
 
+        # Create Quote that Triggers DQ
+        # saw_PAF.create_quote_trigger_DQ(revenue)
+
+        # Click Next on PAF
         saw_PAF.click_next()
+
+        #### This section determines if PCI / Non-PCI Coverage Options display
+        saw_CC_PCI = PCI_Coverage_Options(driver)
+        saw_CC_No_PCI = No_PCI_Coverage_Options(driver)
+
+        #### This class is for generic objects that display on the Coverage Options page
         saw_CC = Coverage_Options(driver)
-        # saw_CC.select_PCI_DSS_limits_deductibles_on_coverage_options()
 
-        saw_CC.select_250K_500K_1MM_2MM_limit_2pt5K_Deductible()
+        # saw_CC.select_all_deselect_all()
 
-        # saw_CC.select_250K_limit_500_Deductible()
-        # saw_CC.select_250K_limit_1K_Deductible()
-        # saw_CC.select_250K_limit_2pt5K_Deductible()
-        # saw_CC.select_250K_limit_5K_Deductible()
-        # saw_CC.select_250K_limit_10K_Deductible()
-        # saw_CC.select_250K_limit_25K_Deductible()
+        ### Choose PCI / No PCI Options in this block   ###
+        ###                                             ###
 
-        # saw_CC.select_500K_limit_500_Deductible()
-        # saw_CC.select_500K_limit_1K_Deductible()
-        # saw_CC.select_500K_limit_2pt5K_Deductible()
-        # saw_CC.select_500K_limit_5K_Deductible()
-        # saw_CC.select_500K_limit_10K_Deductible()
-        # saw_CC.select_500K_limit_25K_Deductible()
+        ### PCI Options ###
 
-        # saw_CC.select_1MM_limit_500_Deductible()
-        # saw_CC.select_1MM_limit_1K_Deductible()
-        # saw_CC.select_1MM_limit_2pt5K_Deductible()
-        # saw_CC.select_1MM_limit_5K_Deductible()
-        # saw_CC.select_1MM_limit_10K_Deductible()
-        # saw_CC.select_1MM_limit_25K_Deductible()
+        ### PCI Options ###
 
-        # saw_CC.select_2MM_limit_500_Deductible()
-        # saw_CC.select_2MM_limit_1K_Deductible()
-        # saw_CC.select_2MM_limit_2pt5K_Deductible()
-        # saw_CC.select_2MM_limit_5K_Deductible()
-        # saw_CC.select_2MM_limit_10K_Deductible()
-        # saw_CC.select_2MM_limit_25K_Deductible()
+        # saw_CC_PCI.select_MEDEFENSE_Plus_Only()
+        # saw_CC_PCI.select_Cyber_Liability_Only()
+        # saw_CC_PCI.select_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits()
+        # saw_CC_PCI.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits()
+        saw_CC_PCI.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits()
+        # saw_CC_PCI.select_MEDEFENSE_Plus_and_Cyber_Liability_Combined()
+        # saw_CC_PCI.select_MEDEFENSE_Plus_and Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits()
+        # saw_saw_CC_PCI.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits()
+        # saw_CC_PCI.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits()
+
+        ### No PCI Options ###
+
+        # saw_CC_No_PCI.select_MEDEFENSE_Plus_Only()
+        # saw_CC_No_PCI.select_Cyber_Liability_Only_No_PCI()
+        # saw_CC_No_PCI.select_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
+        # saw_CC_No_PCI.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_No_PCI()
+        # saw_CC_No_PCI.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
+        # saw_CC_No_PCI.select_MEDEFENSE_Plus_and_Cyber_Liability_Combined_No_PCI()
+        # saw_CC_No_PCI.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
+        # saw_CC_No_PCI.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
+        # saw_CC_No_PCI.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_No_PCI()
+
+        #saw_CC.select_all_deselect_all()
 
         saw_CC.proceed_to_quote()
         saw_summary = Summary(driver)
@@ -216,6 +236,8 @@ class CreateQuote(unittest.TestCase):
         # TODO: FIX redirection; should redirect back to Service Center
         saw_confirm_issue.click_return_to_Admin_Interface()
 
+        time.sleep(2)
+
         #This section is necessary ONLY on STAGE
         # Call Login methods from Pages.home.login_page.py
         #lp = LoginPage(driver)
@@ -235,25 +257,26 @@ class CreateQuote(unittest.TestCase):
         #app_page.click_application_id_link(application_id)
 
         # Navigate to Application Details page
-        new_current_url_1 = driver.current_url
-        slashparts_1 = new_current_url_1.split('/')
+        new_current_url = driver.current_url
+        slashparts = new_current_url.split('/')
         # Now join back the first three sections 'http:', '' and 'example.com'
-        new_base_url_1 = '/'.join(slashparts_1[:3]) + '/'
+        new_base_url = '/'.join(slashparts[:3]) + '/'
 
-        # URL strings for Subjectivities
         app_details_string = "?c=app.view&id="
         app_subjectivities_string = "?c=app.track_subjectivities&id="
 
-        application_details_screen = new_base_url_1 + app_details_string + application_id
-        application_subjectivites_screen = new_base_url_1 + app_subjectivities_string + application_id
+        application_details_screen = new_base_url + app_details_string + application_id
+        application_subjectivites_screen = new_base_url + app_subjectivities_string + application_id
 
         # Navigate to Application Subjectivities Screen
         driver.get(application_subjectivites_screen)
 
         # Approve Subjectivities
+        # Added Anna's Subjectivities Code 5-15-17
         sub = Subjectivities(driver)
-        sub.change_open_subjectivities_to_received()
-        sub.select_yes_to_subjectivities_met()
+        sub.set_all_subjectivities_to_recieved()
+        #sub.change_open_subjectivities_to_received()
+        #sub.select_yes_to_subjectivities_met()
         sub.click_submit()
         sub.click_agent_link()
 
@@ -316,50 +339,7 @@ class CreateQuote(unittest.TestCase):
         # Click Policy
         ap.click_policy_link(policy_text)
 
-        # Click Renewal Link
-
-        # This section commented out
-        # Click the Policy Link on Thank You Page -- Need to pass policy number value; Currently not working
-        # thank_you = Thank_You_Page(driver)
-
-        # Retrieve and Store Policy Number
-        # policy_number = thank_you.retrieve_store_policy_number()
-        ## push it to class
-        # self.policy_number = policy_number
-
-        # Click on Policy Link
-        # thank_you.click_policy_link()
-
-        # Get the Policy ID from URL -- This code works
-        # current_url_policy = driver.current_url
-        # second_url_string = urlparse(current_url_policy)
-        # query_dict_2 = parse_qs(second_url_string.query)
-        # policy_string = (query_dict_2['id'][0])
-        # policy_id = policy_string[:-4]
-        # Return to Admin Interface
-        # saw_confirm_issue.click_return_to_Admin_Interface()
-
-        # Click Policies
-        # nb.click_policies()
-
-        # URL Strings for ALL Policies
-        # new_current_url_2 = driver.current_url
-        # slashparts_2 = new_current_url_2.split('/')
-        # Now join back the first three sections 'http:', '' and 'example.com'
-        # new_base_url_2 = '/'.join(slashparts_2[:3]) + '/'
-        # all_policies_string = '?c=policy_list.list&type=all'
-        # policy_view_string = 'index.php?c=policy.view&id='
-
-        # Problem: In Demo 9, URL String differs
-        # Navigate to Policy Details Screen of Policy that was just created
-        # policies_all_screen = new_base_url_2 + all_policies_string
-        # policy_details_screen = new_base_url_2 + policy_view_string + policy_id
-        # driver.get(policy_details_screen)
-
-        # policies_page = PoliciesPage(driver)
-        # Enter Policy Number and Click Search
-        # policies_page.enter_policy_name(policy_number)
-        # policies_page.click_search_button()
+        # Code works up to this point
 
         # Wait
         driver.implicitly_wait(3)

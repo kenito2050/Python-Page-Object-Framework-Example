@@ -133,6 +133,20 @@ class BallPark_PAF():
         zip_code = self.driver.find_element(By.ID, "zip")
         zip_code.click()
 
+    def enter_current_date(self, date_today):
+        # wait = WebDriverWait(self.driver, 10)
+        # wait.until(EC.presence_of_element_located((By.ID, 'effective-date')))
+
+        effective_date = self.driver.find_element(By.ID, "effective-date")
+        effective_date.click()
+        effective_date.clear()
+        effective_date.send_keys(date_today)
+
+        # Click Zip Code Field (Popup calendar should disappear)
+
+        zip_code = self.driver.find_element(By.ID, "zip")
+        zip_code.click()
+
     def enter_revenue(self, revenue):
         revenue_field = self.driver.find_element(By.ID, "annual_revenue_current_year")
         revenue_field.send_keys(revenue)
@@ -141,7 +155,7 @@ class BallPark_PAF():
         doctor_count_field = self.driver.find_element(By.ID, "physician_count")
         doctor_count_field.click()
 
-    def enter_doctor_count(self, doctor_count):
+    def enter_doctor_count(self, staff_count):
         physician_count = self.driver.find_element(By.ID, "physician_count")
-        physician_count.send_keys(doctor_count)
+        physician_count.send_keys(staff_count)
 

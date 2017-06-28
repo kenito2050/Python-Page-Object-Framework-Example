@@ -103,9 +103,8 @@ class CreateQuote(unittest.TestCase):
         #contract_class_value = "74"
 
         # Date Variables
-
         date_today = time.strftime("%m/%d/%Y")
-        effectiveDate_July_1 = "07/01/2017"
+        ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
         baseURL = "https://svcdemo8.wn.nasinsurance.com/"
@@ -154,7 +153,11 @@ class CreateQuote(unittest.TestCase):
         cc.click_next()
 
         cp = CoveragePeriods(driver)
-        # cp.enter_ad_hoc_effective_date(effectiveDate_July_1)
+
+        # Enter an Ad Hoc Effective Date
+        # cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
+
+        # Enter Today's Date as Effective Date
         cp.enter_current_date_as_effective_date(date_today)
 
         cp.click_next()
@@ -228,6 +231,8 @@ class CreateQuote(unittest.TestCase):
         # This works on DEV
         # TODO: FIX redirection; should redirect back to Service Center
         saw_confirm_issue.click_return_to_Admin_Interface()
+
+        time.sleep(2)
 
         #This section is necessary ONLY on STAGE
         # Call Login methods from Pages.home.login_page.py
