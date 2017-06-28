@@ -124,7 +124,7 @@ class PAF():
         PAF.Page_Elements(self).ngp_oblic_cyber_complaints_litigation_no.click()
         PAF.Page_Elements(self).ngp_oblic_compromised_security_no.click()
         PAF.Page_Elements(self).ngp_oblic_non_renewed_extention_cyb_no.click()
-        PAF.Page_Elements(self).next_button.click()
+        #PAF.Page_Elements(self).next_button.click()
 
     def create_quote_No_PCI_DSS_No_DQ(self):
         PAF.Page_Elements(self).ngp_oblic_existing_insured_yes.click()
@@ -146,7 +146,7 @@ class PAF():
         PAF.Page_Elements(self).ngp_oblic_cyber_complaints_litigation_no.click()
         PAF.Page_Elements(self).ngp_oblic_compromised_security_no.click()
         PAF.Page_Elements(self).ngp_oblic_non_renewed_extention_cyb_no.click()
-        PAF.Page_Elements(self).next_button.click()
+        #PAF.Page_Elements(self).next_button.click()
 
 
     def old_create_quote_NO_PCI_DSS(self):
@@ -205,3 +205,6 @@ class PAF():
         pci_dss_compliant_no.click()
         complaints_litigation_no.click()
         regulatory_investigation_no.click()
+
+    def click_next(self):
+        PAF.Page_Elements(self).next_button.click()

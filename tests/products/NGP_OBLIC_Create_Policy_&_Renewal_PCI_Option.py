@@ -8,9 +8,11 @@ from faker import name
 from selenium import webdriver
 import time
 
-from pages.producer_center.client_contact_page import ClientContact
-from pages.producer_center.client_search_page import ClientSearch
 from pages.producer_center.products_programs_page import ProductsAndPrograms
+from pages.producer_center.client_search_page import ClientSearch
+from pages.producer_center.my_policies.my_policies_screens.active_policies import active_policies
+from pages.producer_center.navigation_bar import Navigation_Bar
+from pages.producer_center.client_contact_page import ClientContact
 
 # Begin Generic SAW Pages
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
@@ -19,20 +21,27 @@ from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
 # Begin Product Specific Pages - SAW Pages
 from pages.producer_center.saw.products.NGP_OBLIC.insured_information.insured_information import Insured_Information
 from pages.producer_center.saw.products.NGP_OBLIC.PAF.PAF import PAF
+from pages.producer_center.saw.products.NGP_OBLIC.coverage_options.PCI_coverage_options import PCI_Coverage_Options
+from pages.producer_center.saw.products.NGP_OBLIC.coverage_options.No_PCI_coverage_options import No_PCI_Coverage_Options
 from pages.producer_center.saw.products.NGP_OBLIC.coverage_options.coverage_options import Coverage_Options
 from pages.producer_center.saw.products.NGP_OBLIC.select_option.select_option import Select_Option
 
 # Continue Generic SAW Pages
 from pages.producer_center.saw.quote_review import Quote_Review
+from pages.producer_center.saw.invoice import Invoice
 from pages.producer_center.saw.confirm_order_details import Confirm_Order_Details
 from pages.producer_center.saw.confirm_and_issue import Confirm_and_Issue
-from pages.producer_center.saw.invoice import Invoice
+from pages.producer_center.saw.thank_you_page import Thank_You_Page
 from pages.producer_center.saw.summary import Summary
-
 from pages.service_center.agents_page import AgentsPage
 from pages.service_center.applications_page import ApplicationsPage
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
+from pages.service_center.policies_page import PoliciesPage
+from pages.service_center.policy_screens.policy_screens import Policy_Screens
+from pages.service_center.policy_screens.details import Details
+from pages.service_center.agent_screens.agent_details import Agent_Details
+from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.subjectivities import Subjectivities
 from utilities.contract_classes.contract_classes import ContractClasses
 from utilities.state_capitals.state_capitals import StateCapitals
@@ -57,7 +66,7 @@ class CreateQuote(unittest.TestCase):
         city = StateCapitals.return_state_capital(state)
         postal_code = ZipCodes.return_zip_codes(state)
 
-        revenue = "10000001"
+        revenue = "1000000"
         total_num_records = '1 to 100,000'
 
         # 1 to 100,000
@@ -115,7 +124,7 @@ class CreateQuote(unittest.TestCase):
         ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://service.wn.nasinsurance.com/"
+        baseURL = "https://svcrel.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -174,11 +183,47 @@ class CreateQuote(unittest.TestCase):
         saw_ii.enter_annual_revenue(revenue)
         saw_ii.click_next()
         saw_PAF = PAF(driver)
-        #saw_PAF.create_quote_PCI_DSS_No_DQ()
-        saw_PAF.create_quote_No_PCI_DSS_No_DQ()
+        ### Quote Creation Section  ###
+        ###                         ###
+
+        # Create Quote with PCI Option
+        saw_PAF.create_quote_PCI_DSS_No_DQ()
+
+        # Create Quote with NO PCI Option
+        # saw_PAF.create_quote_No_PCI_DSS_No_DQ()
+
+        # Create Quote that Triggers DQ
+
+        # Click Next on PAF Screen
+        saw_PAF.click_next()
+
+        #### This section determines if PCI / Non-PCI Coverage Options display
+        saw_CC_PCI = PCI_Coverage_Options(driver)
+        saw_CC_No_PCI = No_PCI_Coverage_Options(driver)
+
+        #### This class is for generic objects that display on the Coverage Options page
         saw_CC = Coverage_Options(driver)
-        #saw_CC.select_PCI_DSS_option_limits_deductibles_on_coverage_options()
-        saw_CC.select_NO_PCI_DSS_option_limits_deductibles_on_coverage_options()
+
+        saw_CC.select_all_deselect_all()
+
+        ### Choose PCI / No PCI Options in this block   ###
+        ###                                             ###
+
+        ### PCI Options ###
+
+        # saw_CC_PCI.select_250K_limit_0_Deductible()
+        saw_CC_PCI.select_250K_limit_0_Deductible()
+        # saw_CC_PCI.select_1MM_limit_0_Deductible()
+
+        ### No-PCI Options ###
+
+        # saw_CC_No_PCI.select_250K_limit_0_Deductible()
+        # saw_CC_No_PCI.select_250K_limit_0_Deductible()
+        # saw_CC_No_PCI.select_1MM_limit_0_Deductible()
+
+        ### Commented out next line; Moved Proceed to Quote button Call into the PIC / Non-PCI Methods
+        # saw_CC.proceed_to_quote()
+
         saw_summary = Summary(driver)
         saw_summary.click_generate_quote()
         saw_quote_review = Quote_Review(driver)
@@ -201,7 +246,7 @@ class CreateQuote(unittest.TestCase):
 
         time.sleep(2)
 
-        #This section is necessary ONLY on STAGE
+        # This section is necessary ONLY on STAGE
         # Call Login methods from Pages.home.login_page.py
         #lp = LoginPage(driver)
         #lp.login(username, password)
@@ -245,6 +290,62 @@ class CreateQuote(unittest.TestCase):
         # Return to Producer Center; Issue Policy
         saw_confirm_issue.input_signature()
         saw_confirm_issue.click_accept_terms_issue_policy()
+        # Retrieve Policy Number of Policy that was issued; Policy Number stored in policy_text
+        thank_you = Thank_You_Page(driver)
+        policy_text = thank_you.retrieve_store_policy_number()
+
+        # Return to Admin Interface
+        saw_confirm_issue.click_return_to_Admin_Interface()
+
+        # Click on Policies link; Navigate to Policy that was just issued
+        nb.click_policies()
+
+        pp = PoliciesPage(driver)
+        # On Policies Page, Click All link
+        pp.click_all_link()
+
+        # Enter Policy Number & Click Search
+        pp.enter_policy_name(policy_text)
+        pp.click_search_button()
+
+        # Click on the Policy link, Open Policy Details
+        pp.click_policy_link(policy_text)
+
+        # Click Effective Periods
+        ps = Policy_Screens(driver)
+        ps.click_Effective_Periods()
+
+        # Change Effective Periods Dates to allow renewals
+        ep = Effective_Periods(driver)
+        ep.change_dates_expire_policy_allow_renewal()
+        ep.click_update_dates()
+
+        # Click Details link to display the Policy Details screen
+        ps.click_Details()
+
+        # On Details Screen, Click on the Agent that issued the Policy
+        details = Details(driver)
+        details.click_agent_link(agent)
+
+        # Agent Details Screen Displays
+        ag = Agent_Details(driver)
+
+        # Click "Submit New Application as" link
+        ag.click_submit_new_application_as_agent()
+
+        # Click My Policies on Navigation Bar
+        pnb = Navigation_Bar(driver)
+        pnb.click_my_policies()
+
+        # Locate Policy that was issued
+        ap = active_policies(driver)
+        ap.enter_policy_name(policy_text)
+        ap.click_search_button()
+
+        # Click Policy
+        ap.click_policy_link(policy_text)
+
+        # Code works up to this point
 
         # Wait
         driver.implicitly_wait(3)

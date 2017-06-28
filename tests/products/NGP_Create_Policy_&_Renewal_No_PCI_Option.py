@@ -171,7 +171,7 @@ class CreateQuote(unittest.TestCase):
 
         cp.click_next()
         saw_ii = Insured_Information(driver)
-        saw_ii.enter_annual_revenue()
+        saw_ii.enter_annual_revenue(revenue)
         saw_ii.click_next()
         saw_PAF = PAF(driver)
 
