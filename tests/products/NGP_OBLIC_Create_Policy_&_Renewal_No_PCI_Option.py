@@ -218,7 +218,7 @@ class CreateQuote(unittest.TestCase):
         ### No-PCI Options ###
 
         # saw_CC_No_PCI.select_250K_limit_0_Deductible()
-        # saw_CC_No_PCI.select_500K_limit_0_Deductible()
+        saw_CC_No_PCI.select_500K_limit_0_Deductible()
         # saw_CC_No_PCI.select_1MM_limit_0_Deductible()
 
         ### Commented out next line; Moved Proceed to Quote button Call into the PIC / Non-PCI Methods

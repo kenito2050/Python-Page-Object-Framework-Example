@@ -47,7 +47,6 @@ from utilities.contract_classes.contract_classes import ContractClasses
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
 
-
 class CreateQuote(unittest.TestCase):
 
     def login_search_for_agent_create_quote(self):
@@ -212,7 +211,7 @@ class CreateQuote(unittest.TestCase):
         ### PCI Options ###
 
         # saw_CC_PCI.select_250K_limit_0_Deductible()
-        # saw_CC_PCI.select_500K_limit_0_Deductible()
+        saw_CC_PCI.select_500K_limit_0_Deductible()
         # saw_CC_PCI.select_1MM_limit_0_Deductible()
 
         ### No-PCI Options ###

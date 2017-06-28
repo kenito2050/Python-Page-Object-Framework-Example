@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <data>
-    <user type= "admin">
+    <user type= "admin1">
         <username>admin.14</username>
         <password>Admin234ty</password>
     </user >
-    <user type= "staff">
-        <username>qatest2000</username>
-        <password>M210H8</password>
+    <user type= "admin2">
+        <username>admin.14</username>
+        <password>LetMe1N15</password>
     </user >
 </data>
