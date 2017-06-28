@@ -77,6 +77,16 @@ class BallPark_PAF():
 
         cb_CYB_PSIC_MD.click()
 
+    def select_LTC(self):
+        # Ballpark Product Identifiers
+
+        # TODO: Move these identifiers into a separate class
+
+        # NGP Cyber Liability - product - list - item - 74
+        cb_LTC = self.driver.find_element(By.ID, "product-list-item-32")
+
+        cb_LTC.click()
+
     def select_NGP(self):
         # Ballpark Product Identifiers
 
@@ -150,6 +160,10 @@ class BallPark_PAF():
     def enter_revenue(self, revenue):
         revenue_field = self.driver.find_element(By.ID, "annual_revenue_current_year")
         revenue_field.send_keys(revenue)
+
+    def enter_bed_count(self, bed_count):
+        bed_count_field = self.driver.find_element(By.ID, 'bed_count')
+        bed_count_field.send_keys(bed_count)
 
     def click_doctor_count_field(self):
         doctor_count_field = self.driver.find_element(By.ID, "physician_count")
