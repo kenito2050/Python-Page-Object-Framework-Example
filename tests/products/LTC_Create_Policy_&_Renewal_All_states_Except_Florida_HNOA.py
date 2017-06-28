@@ -16,6 +16,8 @@ from pages.producer_center.client_contact_page import ClientContact
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
 from pages.producer_center.saw.products.LTC.insured_information.insured_information import Insured_Information
 from pages.producer_center.saw.products.LTC.PAF.PAF import PAF
+from pages.producer_center.saw.products.LTC.coverage_options.HNOA_coverage_options import HNOA_Coverage_Options
+from pages.producer_center.saw.products.LTC.coverage_options.No_HNOA_coverage_options import No_HNOA_Coverage_Options
 from pages.producer_center.saw.products.LTC.coverage_options.coverage_options import Coverage_Options
 from pages.producer_center.saw.products.LTC.select_option.select_option import Select_Option
 from pages.producer_center.saw.quote_review import Quote_Review
@@ -45,7 +47,7 @@ class CreateQuote(unittest.TestCase):
 
         # Create "Fake" Variables
         #state = frandom.us_state()
-        state = "Florida"
+        state = "California"
         #state = Create_Insured_Address.return_alabama(state_value)
         first_name = name.first_name()
         last_name = name.last_name()
@@ -61,7 +63,7 @@ class CreateQuote(unittest.TestCase):
         city = StateCapitals.return_state_capital(state)
         postal_code = ZipCodes.return_zip_codes(state)
 
-        bed_count = "7"
+        bed_count = "5"
         total_num_records = '1 to 100,000'
         doctor_count = "5"
 
@@ -166,48 +168,32 @@ class CreateQuote(unittest.TestCase):
         #saw_ii.click_next()
         saw_PAF = PAF(driver)
 
-
-        ### Choose PCI / No PCI Workflow in this block  ###
+        ### Choose HNOA / No HNOA  ###
         ###                                             ###
-        # PCI Work Flow
+        # HNOA Work Flow
         saw_PAF.create_quote_include_HNOA(bed_count)
 
-        # NO PCI Work Flow
+        # NO HNOA Work Flow
         # saw_PAF.create_quote_NO_HNOA(bed_count)
-
 
         # Click Next on PAF screen
         saw_PAF.click_next()
 
-        # Coverage Options Screen
+        #### This section determines if PCI / Non-PCI Coverage Options display
+        saw_CC_HNOA = HNOA_Coverage_Options(driver)
+        saw_CC_No_HNOA = No_HNOA_Coverage_Options(driver)
+
+        #### This class is for generic objects that display on the Coverage Options page
         saw_CC = Coverage_Options(driver)
 
-        ### Choose PCI / No PCI Options in this block   ###
+        ### Choose HNOA / No No HNOA Options in this block   ###
         ###                                             ###
 
-        ### PCI Options ###
+        ### Include HNOA Option ###
+        saw_CC_HNOA.select_LTC_Include_HNOA_1MM_3MM_Limit()
 
-        # saw_CC.select_MEDEFENSE_Plus_Only()
-        # saw_CC.select_Cyber_Liability_Only()
-        # saw_CC.select_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits()
-        saw_CC.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits()
-        # saw_CC.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits()
-        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_Combined()
-        # saw_CC.select_MEDEFENSE_Plus_and Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits()
-        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits()
-        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits()
-
-        ### No PCI Options ###
-
-        # saw_CC.select_MEDEFENSE_Plus_Only()
-        # saw_CC.select_Cyber_Liability_Only_No_PCI()
-        # saw_CC.select_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
-        # saw_CC.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_No_PCI()
-        # saw_CC.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
-        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_Combined_No_PCI()
-        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
-        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
-        # saw_CC.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_No_PCI()
+        ### Do Not Include HNOA Option ###
+        # saw_CC_No_HNOA.select_LTC_No_HNOA_1MM_3MM_Limit()
 
         #saw_CC.select_all_deselect_all()
 
