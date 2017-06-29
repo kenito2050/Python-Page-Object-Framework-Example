@@ -9,6 +9,8 @@ from selenium import webdriver
 import time
 
 from pages.producer_center.client_contact_page import ClientContact
+from pages.producer_center.my_policies.my_policies_screens.active_policies import active_policies
+from pages.producer_center.navigation_bar import Navigation_Bar
 from pages.producer_center.client_search_page import ClientSearch
 from pages.producer_center.products_programs_page import ProductsAndPrograms
 
@@ -26,6 +28,7 @@ from pages.producer_center.saw.products.EO_MISC.select_option.select_option impo
 from pages.producer_center.saw.quote_review import Quote_Review
 from pages.producer_center.saw.confirm_order_details import Confirm_Order_Details
 from pages.producer_center.saw.confirm_and_issue import Confirm_and_Issue
+from pages.producer_center.saw.thank_you_page import Thank_You_Page
 from pages.producer_center.saw.invoice import Invoice
 from pages.producer_center.saw.summary import Summary
 
@@ -33,6 +36,11 @@ from pages.service_center.agents_page import AgentsPage
 from pages.service_center.applications_page import ApplicationsPage
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
+from pages.service_center.policies_page import PoliciesPage
+from pages.service_center.policy_screens.policy_screens import Policy_Screens
+from pages.service_center.policy_screens.details import Details
+from pages.service_center.agent_screens.agent_details import Agent_Details
+from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.subjectivities import Subjectivities
 from utilities.contract_classes.contract_classes_EO_MISC import ContractClasses
 from utilities.state_capitals.state_capitals import StateCapitals
@@ -174,9 +182,90 @@ class CreateQuote(unittest.TestCase):
         saw_PAF.create_quote_No_DQ()
         saw_PAF.click_next()
         saw_CC = Coverage_Options(driver)
-        saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_option_limits_deductibles()
+
+        # saw_CC.select_Netguard_Plus_option_limits_deductibles()
+
+        # Miscellaneous E&O with NetGuard™ Plus Section
+
+        # saw_CC.select_Netguard_Plus_500K_500K_with_25K_NGP_1K_Deductible()
+        # saw_CC.select_Netguard_Plus_500K_500K_with_100K_NGP_1K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_1MM_with_25K_NGP_1K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_1MM_with_100K_NGP_1K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_2MM_with_25K_NGP_1K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_2MM_with_100K_NGP_1K_Deductible()
+        # saw_CC.select_Netguard_Plus_500K_500K_with_25K_NGP_2pt5K_Deductible()
+        # saw_CC.select_Netguard_Plus_500K_500K_with_100K_NGP_2pt5K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_1MM_with_25K_NGP_2pt5K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_1MM_with_100K_NGP_2pt5K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_2MM_with_25K_NGP_2pt5K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_2MM_with_100K_NGP_2pt5K_Deductible()
+        # saw_CC.select_Netguard_Plus_500K_500K_with_25K_NGP_5K_Deductible()
+        # saw_CC.select_Netguard_Plus_500K_500K_with_100K_NGP_5K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_1MM_with_25K_NGP_5K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_1MM_with_100K_NGP_5K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_2MM_with_25K_NGP_5K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_2MM_with_100K_NGP_5K_Deductible()
+        # saw_CC.select_Netguard_Plus_500K_500K_with_25K_NGP_10K_Deductible()
+        # saw_CC.select_Netguard_Plus_500K_500K_with_100K_NGP_10K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_1MM_with_25K_NGP_10K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_1MM_with_100K_NGP_10K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_2MM_with_25K_NGP_10K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_2MM_with_100K_NGP_10K_Deductible()
+        # saw_CC.select_Netguard_Plus_500K_500K_with_25K_NGP_15K_Deductible()
+        # saw_CC.select_Netguard_Plus_500K_500K_with_100K_NGP_15K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_1MM_with_25K_NGP_15K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_1MM_with_100K_NGP_15K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_2MM_with_25K_NGP_15K_Deductible()
+        # saw_CC.select_Netguard_Plus_1MM_2MM_with_100K_NGP_15K_Deductible()
+
+        # Miscellaneous E&O with NetGuard™ Plus and Additional Claims Expenses Section
+
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_25K_NGP_1K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_100K_NGP_1K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_25K_NGP_1K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_100K_NGP_1K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_25K_NGP_1K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_100K_NGP_1K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_25K_NGP_2pt5K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_100K_NGP_2pt5K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_25K_NGP_2pt5K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_100K_NGP_2pt5K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_25K_NGP_2pt5K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_100K_NGP_2pt5K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_25K_NGP_5K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_100K_NGP_5K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_25K_NGP_5K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_100K_NGP_5K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_25K_NGP_5K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_100K_NGP_5K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_25K_NGP_10K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_100K_NGP_10K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_25K_NGP_10K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_100K_NGP_10K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_25K_NGP_10K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_100K_NGP_10K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_25K_NGP_15K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_100K_NGP_15K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_25K_NGP_15K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_100K_NGP_15K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_25K_NGP_15K_Deductible()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_100K_NGP_15K_Deductible()
+
+        # First Dollar Defense Scenarios
+
+        # saw_CC.select_Netguard_Plus_500K_500K_with_25K_NGP_1K_Deductible_1st_Dollar_Defense()
+        # saw_CC.select_Netguard_Plus_500K_500K_with_100K_NGP_2pt5K_Deductible_1st_Dollar_Defense()
+        # saw_CC.select_Netguard_Plus_1MM_1MM_with_25K_NGP_5K_Deductible_1st_Dollar_Defense()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_25K_NGP_5K_Deductible_1st_Dollar_Defense()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_100K_NGP_10K_Deductible_1st_Dollar_Defense()
+        saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_25K_NGP_15K_Deductible_1st_Dollar_Defense()
+
+        # Next line commented out, it is not working - 6-28-17 Ken
+        # saw_CC.proceed_to_quote()
+
         saw_summary = Summary(driver)
         saw_summary.click_generate_quote()
+
         saw_quote_review = Quote_Review(driver)
         saw_quote_review.click_select_option()
         saw_select_option = Select_Option(driver)
@@ -192,7 +281,6 @@ class CreateQuote(unittest.TestCase):
 
         # At this point, script is re-directed to service center login screen
         # This works on DEV
-        # TODO: FIX redirection; should redirect back to Service Center
         saw_confirm_issue.click_return_to_Admin_Interface()
 
         time.sleep(2)
@@ -241,6 +329,63 @@ class CreateQuote(unittest.TestCase):
         # Return to Producer Center; Issue Policy
         saw_confirm_issue.input_signature()
         saw_confirm_issue.click_accept_terms_issue_policy()
+
+        # Retrieve Policy Number of Policy that was issued; Policy Number stored in policy_text
+        thank_you = Thank_You_Page(driver)
+        policy_text = thank_you.retrieve_store_policy_number()
+
+        # Return to Admin Interface
+        saw_confirm_issue.click_return_to_Admin_Interface()
+
+        # Click on Policies link; Navigate to Policy that was just issued
+        nb.click_policies()
+
+        pp = PoliciesPage(driver)
+        # On Policies Page, Click All link
+        pp.click_all_link()
+
+        # Enter Policy Number & Click Search
+        pp.enter_policy_name(policy_text)
+        pp.click_search_button()
+
+        # Click on the Policy link, Open Policy Details
+        pp.click_policy_link(policy_text)
+
+        # Click Effective Periods
+        ps = Policy_Screens(driver)
+        ps.click_Effective_Periods()
+
+        # Change Effective Periods Dates to allow renewals
+        ep = Effective_Periods(driver)
+        ep.change_dates_expire_policy_allow_renewal()
+        ep.click_update_dates()
+
+        # Click Details link to display the Policy Details screen
+        ps.click_Details()
+
+        # On Details Screen, Click on the Agent that issued the Policy
+        details = Details(driver)
+        details.click_agent_link(agent)
+
+        # Agent Details Screen Displays
+        ag = Agent_Details(driver)
+
+        # Click "Submit New Application as" link
+        ag.click_submit_new_application_as_agent()
+
+        # Click My Policies on Navigation Bar
+        pnb = Navigation_Bar(driver)
+        pnb.click_my_policies()
+
+        # Locate Policy that was issued
+        ap = active_policies(driver)
+        ap.enter_policy_name(policy_text)
+        ap.click_search_button()
+
+        # Click Policy
+        ap.click_policy_link(policy_text)
+
+        # Code works up to this point
 
         # Wait
         driver.implicitly_wait(3)
