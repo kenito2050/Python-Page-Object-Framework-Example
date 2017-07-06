@@ -65,7 +65,7 @@ class CreateQuote(unittest.TestCase):
 
         bed_count = "5"
         total_num_records = '1 to 100,000'
-        doctor_count = "5"
+        doctor_count = "7"
 
         # Access XML to retrieve login credentials
         tree = ET.parse('resources.xml')
@@ -109,7 +109,7 @@ class CreateQuote(unittest.TestCase):
         ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcdemo8.wn.nasinsurance.com/"
+        baseURL = "https://service.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -120,6 +120,7 @@ class CreateQuote(unittest.TestCase):
         # Call Login methods from Pages.home.login_page.py
         lp = LoginPage(driver)
         lp.login(username, password)
+        lp.click_login_button()
         nb = NavigationBar(driver)
         nb.click_agents()
         ap = AgentsPage(driver)
@@ -209,7 +210,7 @@ class CreateQuote(unittest.TestCase):
         # saw_CC_No_HNOA.select_LTC_No_HNOA_1MM_2MM_Limit()
         # saw_CC_No_HNOA.select_LTC_No_HNOA_1MM_3MM_Limit()
 
-        #saw_CC.select_all_deselect_all()
+        # saw_CC.select_all_deselect_all()
 
         saw_CC.proceed_to_quote()
         saw_summary = Summary(driver)

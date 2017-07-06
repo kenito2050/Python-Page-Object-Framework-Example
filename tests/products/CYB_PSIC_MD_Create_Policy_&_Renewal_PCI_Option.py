@@ -95,7 +95,7 @@ class CreateQuote(unittest.TestCase):
         # For List of Contract Classes, See Contract_Classes.xml
         tree = ET.parse('Contract_Classes_Medical.xml')
         contract_classes_XML = tree.getroot()
-        contract_class = (contract_classes_XML[0][1].text)
+        contract_class = (contract_classes_XML[0][2].text)
 
         # NOTE: For contract_classes.py, the array count starts at 1
         # Array will be 1 - 74
@@ -109,7 +109,7 @@ class CreateQuote(unittest.TestCase):
         ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcdemo3.wn.nasinsurance.com/"
+        baseURL = "https://service.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -120,6 +120,7 @@ class CreateQuote(unittest.TestCase):
         # Call Login methods from Pages.home.login_page.py
         lp = LoginPage(driver)
         lp.login(username, password)
+        lp.click_login_button()
         nb = NavigationBar(driver)
         nb.click_agents()
         ap = AgentsPage(driver)
@@ -157,10 +158,10 @@ class CreateQuote(unittest.TestCase):
         cp = CoveragePeriods(driver)
 
         # Enter an Ad Hoc Effective Date
-        cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
+        # cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
 
         # Enter Today's Date as Effective Date
-        # cp.enter_current_date_as_effective_date(date_today)
+        cp.enter_current_date_as_effective_date(date_today)
 
         cp.click_next()
         saw_ii = Insured_Information(driver)
@@ -202,12 +203,12 @@ class CreateQuote(unittest.TestCase):
         # saw_CC_PCI.select_Regulatory_Proceedings_Only_1MM_limit()
 
         # saw_CC_PCI.select_Network_Security_Privacy_Only_250K_limit()
-        saw_CC_PCI.select_Network_Security_Privacy_Only_500K_limit()
+        # saw_CC_PCI.select_Network_Security_Privacy_Only_500K_limit()
         # saw_CC_PCI.select_Network_Security_Privacy_Only_1MM_limit()
 
         # saw_CC_PCI.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_250K_limit()
         # saw_CC_PCI.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_500K_limit()
-        # saw_CC_PCI.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_1MM_limit()
+        saw_CC_PCI.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_1MM_limit()
 
         ### No PCI Options ###
 

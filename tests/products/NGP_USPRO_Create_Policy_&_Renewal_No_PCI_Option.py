@@ -70,7 +70,7 @@ class CreateQuote(unittest.TestCase):
         tree = ET.parse('resources.xml')
         login_credentials = tree.getroot()
         username = (login_credentials[0][0].text)
-        password = (login_credentials[1][1].text)
+        password = (login_credentials[0][1].text)
 
         # Access XML to retrieve the agent to search for
         tree = ET.parse('Agents.xml')
@@ -126,6 +126,7 @@ class CreateQuote(unittest.TestCase):
         # Call Login methods from Pages.home.login_page.py
         lp = LoginPage(driver)
         lp.login(username, password)
+        lp.click_login_button()
         nb = NavigationBar(driver)
         nb.click_agents()
         ap = AgentsPage(driver)

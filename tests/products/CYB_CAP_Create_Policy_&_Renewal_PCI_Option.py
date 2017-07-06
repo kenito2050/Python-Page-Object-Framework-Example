@@ -8,30 +8,24 @@ from faker import name
 from selenium import webdriver
 import time
 
-from pages.producer_center.client_contact_page import ClientContact
+from pages.producer_center.products_programs_page import ProductsAndPrograms
+from pages.producer_center.client_search_page import ClientSearch
 from pages.producer_center.my_policies.my_policies_screens.active_policies import active_policies
 from pages.producer_center.navigation_bar import Navigation_Bar
-from pages.producer_center.client_search_page import ClientSearch
-from pages.producer_center.products_programs_page import ProductsAndPrograms
-
-# Begin Generic SAW Pages
+from pages.producer_center.client_contact_page import ClientContact
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
-
-##### CHANGE THESE VALUES WHEN CREATING A NEW PRODUCT
-# Begin Product Specific Pages - SAW Pages
-from pages.producer_center.saw.products.EO_MISC.insured_information.insured_information import Insured_Information
-from pages.producer_center.saw.products.EO_MISC.PAF.PAF import PAF
-from pages.producer_center.saw.products.EO_MISC.coverage_options.coverage_options import Coverage_Options
-from pages.producer_center.saw.products.EO_MISC.select_option.select_option import Select_Option
-
-# Continue Generic SAW Pages
+from pages.producer_center.saw.products.CYB_CAP.insured_information.insured_information import Insured_Information
+from pages.producer_center.saw.products.CYB_CAP.PAF.PAF import PAF
+from pages.producer_center.saw.products.CYB_CAP.coverage_options.PCI_coverage_options import PCI_Coverage_Options
+from pages.producer_center.saw.products.CYB_CAP.coverage_options.No_PCI_coverage_options import No_PCI_Coverage_Options
+from pages.producer_center.saw.products.CYB_CAP.coverage_options.coverage_options import Coverage_Options
+from pages.producer_center.saw.products.CYB_CAP.select_option.select_option import Select_Option
 from pages.producer_center.saw.quote_review import Quote_Review
+from pages.producer_center.saw.invoice import Invoice
 from pages.producer_center.saw.confirm_order_details import Confirm_Order_Details
 from pages.producer_center.saw.confirm_and_issue import Confirm_and_Issue
 from pages.producer_center.saw.thank_you_page import Thank_You_Page
-from pages.producer_center.saw.invoice import Invoice
 from pages.producer_center.saw.summary import Summary
-
 from pages.service_center.agents_page import AgentsPage
 from pages.service_center.applications_page import ApplicationsPage
 from pages.service_center.login_page import LoginPage
@@ -42,7 +36,7 @@ from pages.service_center.policy_screens.details import Details
 from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.subjectivities import Subjectivities
-from utilities.contract_classes.contract_classes_EO_MISC import ContractClasses
+from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
 
@@ -55,24 +49,23 @@ class CreateQuote(unittest.TestCase):
         #state = frandom.us_state()
         state = "California"
         #state = Create_Insured_Address.return_alabama(state_value)
-
         first_name = name.first_name()
         last_name = name.last_name()
         company_name = company.company_name()
-        #company_name_string = company_name
-        company_name_string = "QA Test" + " " + "-" + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
+
+        #company_name_string = "QA Test - The Lance Armstrong Live Strong Company"
+        #address_value = "7021 Cerritos Ave"
+        #city = "Cerritos"
+        #postal_code = "90623"
+
+        company_name_string = "QA Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
         address_value = address.street_address()
         city = StateCapitals.return_state_capital(state)
         postal_code = ZipCodes.return_zip_codes(state)
 
-        revenue = "1750000"
+        revenue = "1000000"
         total_num_records = '1 to 100,000'
-
-        # 1 to 100,000
-        # 100,001 to 250,000
-        # 250,001 to 500,000
-        # Over 500,000
-        # Uncertain
+        doctor_count = "5"
 
         # Access XML to retrieve login credentials
         tree = ET.parse('resources.xml')
@@ -87,11 +80,11 @@ class CreateQuote(unittest.TestCase):
 
         # 0,0 = Crump Tester                -- Wholesale Agent - Crump Insurance Services, Boston - Test Account
         # 1,0 = Susan Leeming - TEST        -- Sub Agent of Wholesale Agency
-        # 2,0 = Retail Agent                -- Retail Agent - Boston Retail Insurance
+        # 2,0 = Chad Robin                  -- Chad Robin Retail Agent - Robin Insurance
         # 3,0 = Preferred Agent             -- Preferred Agent - Preferred Agency
         # 4,0 = TMLT Test User              -- Account to Test COMM2 Scenarios
         # 5,0 = QA Agent                    -- QA Agent
-        # 6,0 = Janice Quinn                -- Janice Quinn - Boston Retail
+        # 6,0 = Janice Quinn                -- 2nd Preferred Agent - ABC Insurance
 
         # TODO: NEED TO FIX SO THAT SCRIPT USES STRING VALUE CONTAINED IN contract_class variable
         # Access XML to retrieve contract_class
@@ -100,27 +93,27 @@ class CreateQuote(unittest.TestCase):
         # I have inserted a placeholder element at 0 -- Ken
         # Array will be 1 - 74
         # For List of Contract Classes, See Contract_Classes.xml
-        tree = ET.parse('Contract_Classes_EO_MISC.xml')
+        tree = ET.parse('Contract_Classes_Medical.xml')
         contract_classes_XML = tree.getroot()
-        contract_class = (contract_classes_XML[0][6].text)
+        contract_class = (contract_classes_XML[0][1].text)
 
-        # Admin / Office Support (3) - 1
-        # Ad Agency (2)              - 2
-        # Arbitrator / Mediator (1)  - 6
+        # <option value="0">Placeholder</option>
+        # <option value="1">Medical Group</option>
+        # <option value="2">Office of Physician</option>
+        # <option value="3">Offices of Dentists</option>
 
         # NOTE: For contract_classes.py, the array count starts at 1
         # Array will be 1 - 74
-        contract_class_int_value = ContractClasses.return_contract_class_values(contract_class)
+        contract_class_int_value = ContractClasses_Medical.return_contract_class_values(contract_class)
 
         # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
         #contract_class_value = "74"
 
-        # Date Variables
         date_today = time.strftime("%m/%d/%Y")
         ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://service.wn.nasinsurance.com/"
+        baseURL = "https://svcdemo5.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -139,10 +132,9 @@ class CreateQuote(unittest.TestCase):
         ap.click_submit_new_application_as_agent()
 
         pp = ProductsAndPrograms(driver)
-        pp.click_EO_MISC()
+        pp.click_CYB_CAP()
 
-        # These next (2) lines commented out
-
+        # The following lines added on 5-15-17 work
         pp.click_contract_class_drop_down_select_contract_class(contract_class)
         #pp.select_contract_class_dropdown()
 
@@ -168,105 +160,70 @@ class CreateQuote(unittest.TestCase):
         cc.click_next()
 
         cp = CoveragePeriods(driver)
-
-        # Enter an Ad Hoc Effective Date
-        # cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
-
-        # Enter Today's Date as Effective Date
-        cp.enter_current_date_as_effective_date(date_today)
-
+        #cp.enter_june_1st_as_effective_date(effectiveDate_June_1)
         cp.click_next()
         saw_ii = Insured_Information(driver)
-        saw_ii.enter_annual_revenue(revenue)
+        saw_ii.enter_physician_count(doctor_count)
         saw_ii.click_next()
         saw_PAF = PAF(driver)
-        saw_PAF.create_quote_No_DQ()
+        ### Quote Creation Section  ###
+        ###                         ###
+
+        # Create Quote with PCI Option
+        saw_PAF.create_quote_PCI_DSS_No_DQ(revenue)
+
+        # Create Quote with NO PCI Option
+        # saw_PAF.create_quote_No_PCI_DSS_No_DQ(revenue)
+
+        # Create Quote that Triggers DQ
+        # saw_PAF.create_quote_trigger_DQ(revenue)
+
+        # Click Next on PAF
         saw_PAF.click_next()
+
+        #### This section determines if PCI / Non-PCI Coverage Options display
+        saw_CC_PCI = PCI_Coverage_Options(driver)
+        saw_CC_No_PCI = No_PCI_Coverage_Options(driver)
+
+        #### This class is for generic objects that display on the Coverage Options page
         saw_CC = Coverage_Options(driver)
 
-        # saw_CC.select_Netguard_Plus_option_limits_deductibles()
+        # saw_CC.select_all_deselect_all()
 
-        # Miscellaneous E&O with NetGuard™ Plus Section
+        ### Choose PCI / No PCI Options in this block   ###
+        ###                                             ###
 
-        # saw_CC.select_Netguard_Plus_500K_500K_with_25K_NGP_1K_Deductible()
-        # saw_CC.select_Netguard_Plus_500K_500K_with_100K_NGP_1K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_1MM_with_25K_NGP_1K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_1MM_with_100K_NGP_1K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_2MM_with_25K_NGP_1K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_2MM_with_100K_NGP_1K_Deductible()
-        # saw_CC.select_Netguard_Plus_500K_500K_with_25K_NGP_2pt5K_Deductible()
-        # saw_CC.select_Netguard_Plus_500K_500K_with_100K_NGP_2pt5K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_1MM_with_25K_NGP_2pt5K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_1MM_with_100K_NGP_2pt5K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_2MM_with_25K_NGP_2pt5K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_2MM_with_100K_NGP_2pt5K_Deductible()
-        # saw_CC.select_Netguard_Plus_500K_500K_with_25K_NGP_5K_Deductible()
-        # saw_CC.select_Netguard_Plus_500K_500K_with_100K_NGP_5K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_1MM_with_25K_NGP_5K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_1MM_with_100K_NGP_5K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_2MM_with_25K_NGP_5K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_2MM_with_100K_NGP_5K_Deductible()
-        # saw_CC.select_Netguard_Plus_500K_500K_with_25K_NGP_10K_Deductible()
-        # saw_CC.select_Netguard_Plus_500K_500K_with_100K_NGP_10K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_1MM_with_25K_NGP_10K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_1MM_with_100K_NGP_10K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_2MM_with_25K_NGP_10K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_2MM_with_100K_NGP_10K_Deductible()
-        # saw_CC.select_Netguard_Plus_500K_500K_with_25K_NGP_15K_Deductible()
-        # saw_CC.select_Netguard_Plus_500K_500K_with_100K_NGP_15K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_1MM_with_25K_NGP_15K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_1MM_with_100K_NGP_15K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_2MM_with_25K_NGP_15K_Deductible()
-        # saw_CC.select_Netguard_Plus_1MM_2MM_with_100K_NGP_15K_Deductible()
+        ### PCI Options ###
 
-        # Miscellaneous E&O with NetGuard™ Plus and Additional Claims Expenses Section
+        ### PCI Options ###
 
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_25K_NGP_1K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_100K_NGP_1K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_25K_NGP_1K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_100K_NGP_1K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_25K_NGP_1K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_100K_NGP_1K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_25K_NGP_2pt5K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_100K_NGP_2pt5K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_25K_NGP_2pt5K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_100K_NGP_2pt5K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_25K_NGP_2pt5K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_100K_NGP_2pt5K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_25K_NGP_5K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_100K_NGP_5K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_25K_NGP_5K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_100K_NGP_5K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_25K_NGP_5K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_100K_NGP_5K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_25K_NGP_10K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_100K_NGP_10K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_25K_NGP_10K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_100K_NGP_10K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_25K_NGP_10K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_100K_NGP_10K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_25K_NGP_15K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_100K_NGP_15K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_25K_NGP_15K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_100K_NGP_15K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_25K_NGP_15K_Deductible()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_2MM_with_100K_NGP_15K_Deductible()
+        # saw_CC_PCI.select_MEDEFENSE_Plus_Only()
+        # saw_CC_PCI.select_Cyber_Liability_Only()
+        # saw_CC_PCI.select_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits()
+        # saw_CC_PCI.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits()
+        saw_CC_PCI.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits()
+        # saw_CC_PCI.select_MEDEFENSE_Plus_and_Cyber_Liability_Combined()
+        # saw_CC_PCI.select_MEDEFENSE_Plus_and Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits()
+        # saw_saw_CC_PCI.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits()
+        # saw_CC_PCI.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits()
 
-        # First Dollar Defense Scenarios
+        ### No PCI Options ###
 
-        # saw_CC.select_Netguard_Plus_500K_500K_with_25K_NGP_1K_Deductible_1st_Dollar_Defense()
-        # saw_CC.select_Netguard_Plus_500K_500K_with_100K_NGP_2pt5K_Deductible_1st_Dollar_Defense()
-        # saw_CC.select_Netguard_Plus_1MM_1MM_with_25K_NGP_5K_Deductible_1st_Dollar_Defense()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_25K_NGP_5K_Deductible_1st_Dollar_Defense()
-        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_100K_NGP_10K_Deductible_1st_Dollar_Defense()
-        saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_25K_NGP_15K_Deductible_1st_Dollar_Defense()
+        # saw_CC_No_PCI.select_MEDEFENSE_Plus_Only()
+        # saw_CC_No_PCI.select_Cyber_Liability_Only_No_PCI()
+        # saw_CC_No_PCI.select_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
+        # saw_CC_No_PCI.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_No_PCI()
+        # saw_CC_No_PCI.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
+        # saw_CC_No_PCI.select_MEDEFENSE_Plus_and_Cyber_Liability_Combined_No_PCI()
+        # saw_CC_No_PCI.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
+        # saw_CC_No_PCI.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits_No_PCI()
+        # saw_CC_No_PCI.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_No_PCI()
 
-        # Next line commented out, it is not working - 6-28-17 Ken
-        # saw_CC.proceed_to_quote()
+        #saw_CC.select_all_deselect_all()
 
+        saw_CC.proceed_to_quote()
         saw_summary = Summary(driver)
         saw_summary.click_generate_quote()
-
         saw_quote_review = Quote_Review(driver)
         saw_quote_review.click_select_option()
         saw_select_option = Select_Option(driver)
@@ -282,11 +239,12 @@ class CreateQuote(unittest.TestCase):
 
         # At this point, script is re-directed to service center login screen
         # This works on DEV
+        # TODO: FIX redirection; should redirect back to Service Center
         saw_confirm_issue.click_return_to_Admin_Interface()
 
         time.sleep(2)
 
-        # This section is necessary ONLY on STAGE
+        #This section is necessary ONLY on STAGE
         # Call Login methods from Pages.home.login_page.py
         #lp = LoginPage(driver)
         #lp.login(username, password)
@@ -320,6 +278,7 @@ class CreateQuote(unittest.TestCase):
         driver.get(application_subjectivites_screen)
 
         # Approve Subjectivities
+        # Added Anna's Subjectivities Code 5-15-17
         sub = Subjectivities(driver)
         sub.set_all_subjectivities_to_recieved()
         #sub.change_open_subjectivities_to_received()

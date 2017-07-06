@@ -109,7 +109,7 @@ class CreateQuote(unittest.TestCase):
 
         # Date Variables
         date_today = time.strftime("%m/%d/%Y")
-        ad_hoc_effectiveDate = "07/01/2017"
+        ad_hoc_effectiveDate = "09/01/2017"
 
         # Initialize Driver; Launch URL
         baseURL = "https://svcdemo4.wn.nasinsurance.com/"
@@ -123,6 +123,7 @@ class CreateQuote(unittest.TestCase):
         # Call Login methods from Pages.home.login_page.py
         lp = LoginPage(driver)
         lp.login(username, password)
+        lp.click_login_button()
         nb = NavigationBar(driver)
         nb.click_agents()
         ap = AgentsPage(driver)
@@ -164,10 +165,10 @@ class CreateQuote(unittest.TestCase):
         cp = CoveragePeriods(driver)
 
         # Enter an Ad Hoc Effective Date
-        # cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
+        cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
 
         # Enter Today's Date as Effective Date
-        cp.enter_current_date_as_effective_date(date_today)
+        # cp.enter_current_date_as_effective_date(date_today)
 
         cp.click_next()
         saw_ii = Insured_Information(driver)

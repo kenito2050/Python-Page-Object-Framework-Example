@@ -108,7 +108,7 @@ class CreateQuote(unittest.TestCase):
         ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcrel.wn.nasinsurance.com/"
+        baseURL = "https://service.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -119,6 +119,7 @@ class CreateQuote(unittest.TestCase):
         # Call Login methods from Pages.home.login_page.py
         lp = LoginPage(driver)
         lp.login(username, password)
+        lp.click_login_button()
         nb = NavigationBar(driver)
         nb.click_agents()
         ap = AgentsPage(driver)

@@ -26,6 +26,11 @@ class ProductsAndPrograms():
 
     # Products
 
+    def click_CYB_CAP(self):
+
+        CYB_CAP_link = self.driver.find_element(By.ID, "CyberRisk™ Liability/Medefense Plus_start")
+        CYB_CAP_link.click()
+
     def click_CYB_PSIC_DDS(self):
         CYB_PSIC_DDS_link = self.driver.find_element(By.ID, "PSIC Regulatory Proceedings and Network Security & Privacy Coverage for Dentists_start")
         CYB_PSIC_DDS_link.click()

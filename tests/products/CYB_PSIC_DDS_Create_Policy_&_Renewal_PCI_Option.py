@@ -63,7 +63,7 @@ class CreateQuote(unittest.TestCase):
         city = StateCapitals.return_state_capital(state)
         postal_code = ZipCodes.return_zip_codes(state)
 
-        revenue = "1000000"
+        revenue = "10000000"
         total_num_records = '1 to 100,000'
         doctor_count = "5"
 
@@ -109,7 +109,7 @@ class CreateQuote(unittest.TestCase):
         ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcdemo2.wn.nasinsurance.com/"
+        baseURL = "https://service.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -120,6 +120,7 @@ class CreateQuote(unittest.TestCase):
         # Call Login methods from Pages.home.login_page.py
         lp = LoginPage(driver)
         lp.login(username, password)
+        lp.click_login_button()
         nb = NavigationBar(driver)
         nb.click_agents()
         ap = AgentsPage(driver)
@@ -159,10 +160,10 @@ class CreateQuote(unittest.TestCase):
         cp = CoveragePeriods(driver)
 
         # Enter an Ad Hoc Effective Date
-        cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
+        # cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
 
         # Enter Today's Date as Effective Date
-        # cp.enter_current_date_as_effective_date(date_today)
+        cp.enter_current_date_as_effective_date(date_today)
 
         cp.click_next()
         saw_ii = Insured_Information(driver)
@@ -204,12 +205,12 @@ class CreateQuote(unittest.TestCase):
         # saw_CC_PCI.select_Regulatory_Proceedings_Only_Enhanced_1MM_limit()
 
         # saw_CC_PCI.select_Network_Security_Privacy_Only_Enhanced_250K_limit()
-        saw_CC_PCI.select_Network_Security_Privacy_Only_Enhanced_500K_limit()
+        # saw_CC_PCI.select_Network_Security_Privacy_Only_Enhanced_500K_limit()
         # saw_CC_PCI.select_Network_Security_Privacy_Only_Enhanced_1MM_limit()
 
         # saw_CC_PCI.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_Enhanced_250K()
         # saw_CC_PCI.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_Enhanced_500K()
-        # saw_CC_PCI.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_Enhanced_1MM()
+        saw_CC_PCI.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_Enhanced_1MM()
 
         ### No PCI Options ###
 

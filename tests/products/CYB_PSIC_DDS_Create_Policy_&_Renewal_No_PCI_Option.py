@@ -109,7 +109,7 @@ class CreateQuote(unittest.TestCase):
         ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcdemo2.wn.nasinsurance.com/"
+        baseURL = "https://svcrel.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -120,6 +120,7 @@ class CreateQuote(unittest.TestCase):
         # Call Login methods from Pages.home.login_page.py
         lp = LoginPage(driver)
         lp.login(username, password)
+        lp.click_login_button()
         nb = NavigationBar(driver)
         nb.click_agents()
         ap = AgentsPage(driver)
@@ -218,12 +219,12 @@ class CreateQuote(unittest.TestCase):
         # saw_CC_No_PCI.select_Regulatory_Proceedings_Only_Enhanced_1MM_limit()
 
         # saw_CC_No_PCI.select_Network_Security_Privacy_Only_Enhanced_No_PCI_250K_limit()
-        saw_CC_No_PCI.select_Network_Security_Privacy_Only_Enhanced_No_PCI_500K_limit()
+        # saw_CC_No_PCI.select_Network_Security_Privacy_Only_Enhanced_No_PCI_500K_limit()
         # saw_CC_No_PCI.select_Network_Security_Privacy_Only_Enhanced_No_PCI_1MM_limit()
 
         # saw_CC_No_PCI.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_Enhanced_No_PCI_250K_limit()
         # saw_CC_No_PCI.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_Enhanced_No_PCI_500K_limit()
-        # saw_CC_No_PCI.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_Enhanced_No_PCI_1MM_limit()
+        saw_CC_No_PCI.select_Regulatory_Proceedings_and_Network_Security_Privacy_Combined_Enhanced_No_PCI_1MM_limit()
 
         # saw_CC.select_all_deselect_all()
 

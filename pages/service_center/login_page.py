@@ -30,6 +30,9 @@ class LoginPage():
         LoginPage.Page_Elements(self).password_clear_field.clear()
         LoginPage.Page_Elements(self).password_password_field.send_keys(password)
         self.driver.implicitly_wait(10)
+
+
+    def click_login_button(self):
         LoginPage.Page_Elements(self).submit_button.click()
 
     def login_old(self, username, password):

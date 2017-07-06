@@ -81,7 +81,7 @@ class CreateQuote(unittest.TestCase):
         ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcdemo8.wn.nasinsurance.com/"
+        baseURL = "https://svcrel.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -92,6 +92,7 @@ class CreateQuote(unittest.TestCase):
         # Call Login methods from Pages.home.login_page.py
         lp = LoginPage(driver)
         lp.login(username, password)
+        lp.click_login_button()
         nb = NavigationBar(driver)
         nb.click_agents()
         ap = AgentsPage(driver)
@@ -111,10 +112,10 @@ class CreateQuote(unittest.TestCase):
         time.sleep(3)
 
         # Enter Ad Hoc Effective Date
-        bp_PAF.enter_effective_date(ad_hoc_effectiveDate)
+        # bp_PAF.enter_effective_date(ad_hoc_effectiveDate)
 
         # Enter Today's Date as Effective Date
-        # bp_PAF.enter_current_date(date_today)
+        bp_PAF.enter_current_date(date_today)
 
         time.sleep(3)
         bp_PAF.enter_bed_count(bed_count)
