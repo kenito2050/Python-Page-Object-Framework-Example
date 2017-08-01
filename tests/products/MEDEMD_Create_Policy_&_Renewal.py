@@ -108,8 +108,8 @@ class CreateQuote(unittest.TestCase):
                 state = sh.cell_value(i, 8)
                 revenue = str(round(sh.cell_value(i, 9)))
                 staff_count = str(round(sh.cell_value(i, 10)))
-                limit = sh.cell_value(i, 11)
-                deductible = str(round(sh.cell_value(i, 12)))
+                OLD_scenario = sh.cell_value(i, 11)
+                OLD_scenario_number = str(round(sh.cell_value(i, 12)))
 
             # Else, the cell is empty
             # End the Loop
