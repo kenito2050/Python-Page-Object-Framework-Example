@@ -4,8 +4,9 @@ class ContractClasses_Medical(dict):
 
         # Data Dictionary of Contract Classes
         contract_class_values={
-        'Medical Group': '1',
-        'Office of Physician': '2',
-        'Offices of Dentists': '3',
+        'Healthcare Facilities': '1',
+        'Medical Group': '2',
+        'Office of Physician': '3',
+        'Offices of Dentists': '4',
         }
         return contract_class_values[contract_class]

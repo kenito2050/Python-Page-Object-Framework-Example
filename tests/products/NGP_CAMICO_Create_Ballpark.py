@@ -15,6 +15,7 @@ from pages.service_center.agents_page import AgentsPage
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
 from utilities.contract_classes.contract_classes import ContractClasses
+from utilities.Environments.Environments import Environments
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
 
@@ -22,6 +23,16 @@ from utilities.zip_codes.zip_codes import ZipCodes
 class CreateQuote(unittest.TestCase):
 
     def login_search_for_agent_create_quote(self):
+
+        ## Determine Test Environment to run scripts
+
+        ## Read in value from test_environment.xml
+        tree = ET.parse('test_environment.xml')
+        test_environment  = tree.getroot()
+        environment =(test_environment[0][0].text)
+
+        ## Select Appropriate URL based on the Environment Value from above
+        baseURL  = Environments.return_environments(environment)
 
         # Create "Fake" Variables
         #state = frandom.us_state()
@@ -36,7 +47,7 @@ class CreateQuote(unittest.TestCase):
         city = StateCapitals.return_state_capital(state)
         postal_code = ZipCodes.return_zip_codes(state)
 
-        revenue = "20,000,001"
+        revenue = "20,000,000"
 
         # Access XML to retrieve login credentials
         tree = ET.parse('resources.xml')
@@ -84,7 +95,7 @@ class CreateQuote(unittest.TestCase):
         ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcdemo1.wn.nasinsurance.com/"
+        # baseURL = "https://svcdemo1.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL

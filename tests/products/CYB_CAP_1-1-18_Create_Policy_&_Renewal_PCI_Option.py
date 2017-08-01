@@ -36,6 +36,7 @@ from pages.service_center.policy_screens.details import Details
 from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.subjectivities import Subjectivities
+from utilities.Environments.Environments import Environments
 from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
@@ -44,6 +45,16 @@ from utilities.zip_codes.zip_codes import ZipCodes
 class CreateQuote(unittest.TestCase):
 
     def login_search_for_agent_create_quote(self):
+
+        ## Determine Test Environment to run scripts
+
+        ## Read in value from test_environment.xml
+        tree = ET.parse('test_environment.xml')
+        test_environment  = tree.getroot()
+        environment =(test_environment[0][0].text)
+
+        ## Select Appropriate URL based on the Environment Value from above
+        baseURL  = Environments.return_environments(environment)
 
         # Create "Fake" Variables
         #state = frandom.us_state()
@@ -65,7 +76,7 @@ class CreateQuote(unittest.TestCase):
 
         revenue = "1000000"
         total_num_records = '1 to 100,000'
-        doctor_count = "5"
+        doctor_count = "6"
 
         # Access XML to retrieve login credentials
         tree = ET.parse('resources.xml')
@@ -113,7 +124,7 @@ class CreateQuote(unittest.TestCase):
         ad_hoc_effectiveDate = "01/01/2018"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcdemo5.wn.nasinsurance.com/"
+        # baseURL = "https://svcdemo5.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -196,7 +207,8 @@ class CreateQuote(unittest.TestCase):
 
         ### PCI Options ###
 
-        saw_CC_PCI.select_CyberRisk_Only_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime()
+        # saw_CC_PCI.select_CyberRisk_Only_with_Cyber_Crime_Only()
+        # saw_CC_PCI.select_CyberRisk_Only_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime()
         # saw_CC_PCI.select_Medefense_Plus_Only()
         # saw_CC_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit()
         # saw_CC_PCI.select_Medefense_Plus_and_CyberRisk_with_Cyber_Crime_Combined_Shared_Limits()
@@ -206,11 +218,12 @@ class CreateQuote(unittest.TestCase):
         # saw_CC_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit_and_CyberRisk_Combined_Shared_Limits_with_Cyber_Crime()
         # saw_CC_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit_and_CyberRisk_Combined_Shared_Limits_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime()
         # saw_CC_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit_and_CyberRisk_Combined_Shared_Limits_with_Cyber_Crime()
-        # saw_CC_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit_and_CyberRisk_Combined_Separate_Limits_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime()
+        saw_CC_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit_and_CyberRisk_Combined_Separate_Limits_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime()
 
 
          ### No PCI Options ###
 
+        # saw_CC_No_PCI.select_CyberRisk_Only_with_Cyber_Crime_Only_No_PCI()
         # saw_CC_No_PCI.select_CyberRisk_Only_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime_No_PCI()
         # saw_CC_No_PCI.select_Medefense_Plus_Only()
         # saw_CC_No_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit()

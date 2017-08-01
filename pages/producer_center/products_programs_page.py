@@ -57,11 +57,19 @@ class ProductsAndPrograms():
         LTC_link = self.driver.find_element(By.ID, "Long Term Care PL/GL_start")
         LTC_link.click()
 
+    def click_MEDEMD(self):
+        MEDEMD_link = self.driver.find_element(By.ID, "e-MD™ Cyber and MEDEFENSE™ Plus_start")
+        MEDEMD_link.click()
+
     def click_NGP(self):
 
         #ProductsAndPrograms.Page_Elements(self).click_NGP()
         NGP_link = self.driver.find_element(By.ID, "Cyber Liability_start")
         NGP_link.click()
+
+    def click_NGP_CAMICO(self):
+        NGP_CAMICO_link = self.driver.find_element(By.ID, "CAMICO Cyber Liability_start")
+        NGP_CAMICO_link.click()
 
     def click_NGP_OBLIC(self):
         NGP_OBLIC_link = self.driver.find_element(By.ID, "OBLIC Cyber Liability_start")

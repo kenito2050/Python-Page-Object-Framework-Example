@@ -36,6 +36,7 @@ from pages.service_center.policy_screens.details import Details
 from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.subjectivities import Subjectivities
+from utilities.Environments.Environments import Environments
 from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
@@ -44,6 +45,16 @@ from utilities.zip_codes.zip_codes import ZipCodes
 class CreateQuote(unittest.TestCase):
 
     def login_search_for_agent_create_quote(self):
+
+        ## Determine Test Environment to run scripts
+
+        ## Read in value from test_environment.xml
+        tree = ET.parse('test_environment.xml')
+        test_environment  = tree.getroot()
+        environment =(test_environment[0][0].text)
+
+        ## Select Appropriate URL based on the Environment Value from above
+        baseURL  = Environments.return_environments(environment)
 
         # Create "Fake" Variables
         #state = frandom.us_state()
@@ -110,10 +121,10 @@ class CreateQuote(unittest.TestCase):
         #contract_class_value = "74"
 
         date_today = time.strftime("%m/%d/%Y")
-        ad_hoc_effectiveDate = "07/01/2017"
+        ad_hoc_effectiveDate = "01/01/2018"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcdemo5.wn.nasinsurance.com/"
+        # baseURL = "https://svcdemo5.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -160,7 +171,8 @@ class CreateQuote(unittest.TestCase):
         cc.click_next()
 
         cp = CoveragePeriods(driver)
-        #cp.enter_june_1st_as_effective_date(effectiveDate_June_1)
+        cp.enter_current_date_as_effective_date(date_today)
+        # cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
         cp.click_next()
         saw_ii = Insured_Information(driver)
         saw_ii.enter_physician_count(doctor_count)
@@ -188,24 +200,25 @@ class CreateQuote(unittest.TestCase):
         #### This class is for generic objects that display on the Coverage Options page
         saw_CC = Coverage_Options(driver)
 
-        # saw_CC.select_all_deselect_all()
+        saw_CC.select_all_deselect_all()
 
         ### Choose PCI / No PCI Options in this block   ###
         ###                                             ###
 
         ### PCI Options ###
 
-        ### PCI Options ###
+        # saw_CC_PCI.select_CyberRisk_Only_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime()
+        # saw_CC_PCI.select_Medefense_Plus_Only()
+        # saw_CC_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit()
+        # saw_CC_PCI.select_Medefense_Plus_and_CyberRisk_with_Cyber_Crime_Combined_Shared_Limits()
+        # saw_CC_PCI.select_Medefense_Plus_and_CyberRisk_Combined_Shared_Limits_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime()
+        # saw_CC_PCI.select_Medefense_Plus_and_CyberRisk_Combined_Separate_Limits_with_Cyber_Crime()
+        # saw_CC_PCI.select_Medefense_Plus_and_CyberRisk_Combined_Separate_Limits_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime()
+        # saw_CC_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit_and_CyberRisk_Combined_Shared_Limits_with_Cyber_Crime
+        # saw_CC_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit_and_CyberRisk_Combined_Shared_Limits_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime
+        # saw_CC_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit_and_CyberRisk_Combined_Shared_Limits_with_Cyber_Crime()
+        # saw_CC_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit_and_CyberRisk_Combined_Separate_Limits_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime()
 
-        # saw_CC_PCI.select_MEDEFENSE_Plus_Only()
-        # saw_CC_PCI.select_Cyber_Liability_Only()
-        # saw_CC_PCI.select_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits()
-        # saw_CC_PCI.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits()
-        saw_CC_PCI.select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits()
-        # saw_CC_PCI.select_MEDEFENSE_Plus_and_Cyber_Liability_Combined()
-        # saw_CC_PCI.select_MEDEFENSE_Plus_and Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits()
-        # saw_saw_CC_PCI.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits()
-        # saw_CC_PCI.select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits()
 
         ### No PCI Options ###
 
@@ -222,6 +235,7 @@ class CreateQuote(unittest.TestCase):
         #saw_CC.select_all_deselect_all()
 
         saw_CC.proceed_to_quote()
+
         saw_summary = Summary(driver)
         saw_summary.click_generate_quote()
         saw_quote_review = Quote_Review(driver)

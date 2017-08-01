@@ -43,6 +43,7 @@ from pages.service_center.policy_screens.details import Details
 from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.subjectivities import Subjectivities
+from utilities.Environments.Environments import Environments
 from utilities.contract_classes.contract_classes import ContractClasses
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
@@ -50,6 +51,16 @@ from utilities.zip_codes.zip_codes import ZipCodes
 class CreateQuote(unittest.TestCase):
 
     def login_search_for_agent_create_quote(self):
+
+        ## Determine Test Environment to run scripts
+
+        ## Read in value from test_environment.xml
+        tree = ET.parse('test_environment.xml')
+        test_environment  = tree.getroot()
+        environment =(test_environment[0][0].text)
+
+        ## Select Appropriate URL based on the Environment Value from above
+        baseURL  = Environments.return_environments(environment)
 
         # Create "Fake" Variables
         #state = frandom.us_state()
@@ -123,7 +134,7 @@ class CreateQuote(unittest.TestCase):
         ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcrel.wn.nasinsurance.com/"
+        # baseURL = "https://svcrel.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -145,7 +156,7 @@ class CreateQuote(unittest.TestCase):
         pp.click_NGP_OBLIC()
 
         # These next (2) lines commented out
-        # NGP_OBLIC DOES NOT prompt user for Contract Class
+        # NGP_CAMICO DOES NOT prompt user for Contract Class
 
         #pp.click_contract_class_modal()
         #pp.select_contract_class_dropdown()
@@ -183,6 +194,8 @@ class CreateQuote(unittest.TestCase):
         saw_ii.enter_annual_revenue(revenue)
         saw_ii.click_next()
         saw_PAF = PAF(driver)
+
+
         ### Quote Creation Section  ###
         ###                         ###
 

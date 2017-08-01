@@ -19,11 +19,11 @@ class App_Details():
 
         return self
 
-    def update_create_date(self, ad_hoc_effectiveDate):
+    def update_create_date(self, ad_hoc_Date):
 
         App_Details.Page_Elements(self).create_date_field.click()
         App_Details.Page_Elements(self).create_date_field.clear()
-        App_Details.Page_Elements(self).create_date_field.send_keys(ad_hoc_effectiveDate)
+        App_Details.Page_Elements(self).create_date_field.send_keys(ad_hoc_Date)
         App_Details.Page_Elements(self).create_date_field.send_keys(Keys.TAB)
 
         time.sleep(2)

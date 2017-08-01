@@ -47,6 +47,7 @@ from pages.service_center.policy_screens.details import Details
 from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.subjectivities import Subjectivities
+from utilities.Environments.Environments import Environments
 from utilities.contract_classes.contract_classes import ContractClasses
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
@@ -55,15 +56,29 @@ class CreateQuote(unittest.TestCase):
 
     def login_search_for_agent_create_quote(self):
 
+        ## Determine Test Environment to run scripts
+
+        ## Read in value from test_environment.xml
+        tree = ET.parse('test_environment.xml')
+        test_environment  = tree.getroot()
+        environment =(test_environment[0][0].text)
+
+        ## Select Appropriate URL based on the Environment Value from above
+        baseURL  = Environments.return_environments(environment)
 
         # Test Scenarios
 
-        # 1 - PCI_50K_embedded_limit
-        # 2 - PCI_100K_embedded_limit
-        # 3 - No_PCI_50K_embedded_limit
-        # 4 - No_PCI_100K_embedded_limit
+        # 1 - PCI_50K_embedded_limit_CPA_Count_10
+        # 2 - PCI_100K_embedded_limit_CPA_Count_10
+        # 3 - No_PCI_50K_embedded_limit_CPA_Count_10
+        # 4 - No_PCI_100K_embedded_limit_CPA_Count_10
+        # 5 - PCI_50K_embedded_limit_CPA_Count_11
+        # 6 - PCI_100K_embedded_limit_CPA_Count_11
+        # 7 - No_PCI_50K_embedded_limit_CPA_Count_11
+        # 8 - No_PCI_100K_embedded_limit_CPA_Count_11
 
-        test_scenario = "4"
+        test_scenario = "3"
+
         # Create "Fake" Variables
         #state = frandom.us_state()
         state = "California"
@@ -80,7 +95,7 @@ class CreateQuote(unittest.TestCase):
 
         revenue = "20,000,000"
         total_num_records = '1 to 100,000'
-        cpa_count = "5"
+        cpa_count = "11"
 
         # 1 to 100,000
         # 100,001 to 250,000
@@ -136,8 +151,10 @@ class CreateQuote(unittest.TestCase):
         date_today = time.strftime("%m/%d/%Y")
         ad_hoc_effectiveDate = "07/01/2017"
 
+
+
         # Initialize Driver; Launch URL
-        baseURL = "https://svcdemo1.wn.nasinsurance.com/"
+        # baseURL = "https://svcdemo1.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL

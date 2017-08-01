@@ -13,6 +13,7 @@ from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.service_center.agents_page import AgentsPage
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
+from utilities.Environments.Environments import Environments
 from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
@@ -22,6 +23,16 @@ import time
 class CreateQuote(unittest.TestCase):
 
     def login_search_for_agent_create_quote(self):
+
+        ## Determine Test Environment to run scripts
+
+        ## Read in value from test_environment.xml
+        tree = ET.parse('test_environment.xml')
+        test_environment  = tree.getroot()
+        environment =(test_environment[0][0].text)
+
+        ## Select Appropriate URL based on the Environment Value from above
+        baseURL  = Environments.return_environments(environment)
 
         # Create "Fake" Variables
         #state = frandom.us_state()
@@ -84,7 +95,7 @@ class CreateQuote(unittest.TestCase):
         ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://service.wn.nasinsurance.com/"
+        # baseURL = "https://service.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL

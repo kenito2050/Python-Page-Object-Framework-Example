@@ -36,12 +36,23 @@ class BallPark_PAF():
         ballpark_button = self.driver.find_element(By.CSS_SELECTOR, "span.text-button-ds > span")
         ballpark_button.click()
 
+        # Ballpark Product Identifiers
+
+        # TODO: Move these identifiers into a separate class
+
+    def select_CYB_CAP(self):
+
+        # CYB_CAP - product - list - item - 33
+        cb_CYB_CAP = self.driver.find_element(By.ID, "product-list-item-33")
+
+        cb_CYB_CAP.click()
+
     def select_CYB_MMIC(self):
         # Ballpark Product Identifiers
 
         # TODO: Move these identifiers into a separate class
 
-        # CYB_MMIC - product - list - item - 74
+        # CYB_MMIC - product - list - item - 21
         cb_CYB_MMIC = self.driver.find_element(By.ID, "product-list-item-21")
 
         cb_CYB_MMIC.click()
@@ -106,6 +117,16 @@ class BallPark_PAF():
         cb_NGP = self.driver.find_element(By.ID, "product-list-item-74")
 
         cb_NGP.click()
+
+    def select_NGP_CAMICO(self):
+        # Ballpark Product Identifiers
+
+        # TODO: Move these identifiers into a separate class
+
+        # NGP Cyber Liability - product - list - item - 74
+        cb_NGP_CAMICO = self.driver.find_element(By.ID, "product-list-item-109")
+
+        cb_NGP_CAMICO.click()
 
     def select_NGP_OBLIC(self):
         # Ballpark Product Identifiers

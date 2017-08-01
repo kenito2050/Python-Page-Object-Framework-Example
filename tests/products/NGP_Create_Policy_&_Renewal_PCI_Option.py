@@ -36,6 +36,7 @@ from pages.service_center.policy_screens.details import Details
 from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.subjectivities import Subjectivities
+from utilities.Environments.Environments import Environments
 from utilities.contract_classes.contract_classes import ContractClasses
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
@@ -44,6 +45,16 @@ from utilities.zip_codes.zip_codes import ZipCodes
 class CreateQuote(unittest.TestCase):
 
     def login_search_for_agent_create_quote(self):
+
+        ## Determine Test Environment to run scripts
+
+        ## Read in value from test_environment.xml
+        tree = ET.parse('test_environment.xml')
+        test_environment  = tree.getroot()
+        environment =(test_environment[0][0].text)
+
+        ## Select Appropriate URL based on the Environment Value from above
+        baseURL  = Environments.return_environments(environment)
 
         # Create "Fake" Variables
         #state = frandom.us_state()
@@ -112,7 +123,7 @@ class CreateQuote(unittest.TestCase):
         ad_hoc_effectiveDate = "09/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://svcdemo4.wn.nasinsurance.com/"
+        # baseURL = "https://service.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -281,7 +292,7 @@ class CreateQuote(unittest.TestCase):
         # Call Login methods from Pages.home.login_page.py
         #lp = LoginPage(driver)
         #lp.login(username, password)
-        #nb = NavigationBar(driver)
+        # nb = NavigationBar(driver)
 
         # Click Applications link on Navigation Bar
         nb.click_applications()

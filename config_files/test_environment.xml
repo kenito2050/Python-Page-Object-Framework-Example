@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<data>
+    <TestEnvironment One ="">
+        <Server>Demo3</Server>
+    </TestEnvironment>
+</data>
+
+<!--
+            'Demo1': 'https://svcdemo1.wn.nasinsurance.com/',
+            'Demo2': 'https://svcdemo2.wn.nasinsurance.com/',
+            'Demo3': 'https://svcdemo3.wn.nasinsurance.com/',
+            'Demo4': 'https://svcdemo4.wn.nasinsurance.com/',
+            'Demo5': 'https://svcdemo5.wn.nasinsurance.com/',
+            'Demo6': 'https://svcdemo6.wn.nasinsurance.com/',
+            'Demo7': 'https://svcdemo7.wn.nasinsurance.com/',
+            'Demo8': 'https://svcdemo8.wn.nasinsurance.com/',
+            'Demo9': 'https://svcdemo9.wn.nasinsurance.com/',
+            'Fix': 'https://svcfix.wn.nasinsurance.com/',
+            'Stage': 'https://svcrel.wn.nasinsurance.com/',
+            'QA': 'https://svcqa.wn.nasinsurance.com/',
+            'Live': 'https://service.wn.nasinsurance.com/'
+-->

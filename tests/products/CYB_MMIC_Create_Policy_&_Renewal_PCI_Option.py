@@ -39,6 +39,7 @@ from pages.service_center.policy_screens.policy_screens import Policy_Screens
 from pages.service_center.policy_screens.details import Details
 from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.subjectivities import Subjectivities
+from utilities.Environments.Environments import Environments
 from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
@@ -48,9 +49,19 @@ class CreateQuote(unittest.TestCase):
 
     def login_search_for_agent_create_quote(self):
 
+        ## Determine Test Environment to run scripts
+
+        ## Read in value from test_environment.xml
+        tree = ET.parse('test_environment.xml')
+        test_environment  = tree.getroot()
+        environment =(test_environment[0][0].text)
+
+        ## Select Appropriate URL based on the Environment Value from above
+        baseURL  = Environments.return_environments(environment)
+
         # Create "Fake" Variables
         #state = frandom.us_state()
-        state = "California"
+        state = "North Carolina"
         #state = Create_Insured_Address.return_alabama(state_value)
         first_name = name.first_name()
         last_name = name.last_name()
@@ -68,7 +79,7 @@ class CreateQuote(unittest.TestCase):
 
         revenue = "100000001"
         total_num_records = '1 to 100,000'
-        doctor_count = "6"
+        doctor_count = "26"
 
         # Access XML to retrieve login credentials
         tree = ET.parse('resources.xml')
@@ -112,7 +123,7 @@ class CreateQuote(unittest.TestCase):
         ad_hoc_effectiveDate = "07/01/2017"
 
         # Initialize Driver; Launch URL
-        baseURL = "https://service.wn.nasinsurance.com/"
+        # baseURL = "https://service.wn.nasinsurance.com/"
         driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
 
         # Maximize Window; Launch URL
@@ -234,13 +245,13 @@ class CreateQuote(unittest.TestCase):
 
         ### PCI Options ###
 
-        # saw_CC_PCI.select_MEDEFENSE_Plus_Only_500K()
+        saw_CC_PCI.select_MEDEFENSE_Plus_Only_500K()
         # saw_CC_PCI.select_MEDEFENSE_Plus_Only_1MM()
         # saw_CC_PCI.select_MEDEFENSE_with_50K_Disciplinary_500K()
         # saw_CC_PCI.select_MEDEFENSE_with_50K_Disciplinary_1MM()
         # saw_CC_PCI.select_eMD_500K()
         # saw_CC_PCI.select_eMD_1MM()
-        saw_CC_PCI.select_eMD_Higher_Limits_2MM()
+        # saw_CC_PCI.select_eMD_Higher_Limits_2MM()
         # saw_CC_PCI.select_eMD_Higher_Limits_3MM()
         # saw_CC_PCI.select_eMD_MEDEFENSE_Plus_500K()
         # saw_CC_PCI.select_eMD_MEDEFENSE_Plus_1MM()
