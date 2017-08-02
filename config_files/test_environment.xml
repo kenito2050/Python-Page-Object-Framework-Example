@@ -3,9 +3,15 @@
     <TestEnvironment One ="">
         <Server>Demo3</Server>
     </TestEnvironment>
+
+    <TestType One ="">
+        <Test_Run_Type>Sanity</Test_Run_Type>
+    </TestType>
 </data>
 
 <!--
+            Environments
+
             'Demo1': 'https://svcdemo1.wn.nasinsurance.com/',
             'Demo2': 'https://svcdemo2.wn.nasinsurance.com/',
             'Demo3': 'https://svcdemo3.wn.nasinsurance.com/',
@@ -20,3 +26,13 @@
             'QA': 'https://svcqa.wn.nasinsurance.com/',
             'Live': 'https://service.wn.nasinsurance.com/'
 -->
+
+<!--
+            Test Run Types
+
+            Regression
+            Smoke
+            Sanity
+-->
+
+
