@@ -61,6 +61,10 @@ class ProductsAndPrograms():
         MEDEMD_link = self.driver.find_element(By.ID, "e-MD™ Cyber and MEDEFENSE™ Plus_start")
         MEDEMD_link.click()
 
+    def click_MED_NCMIC(self):
+        MED_NCMIC_link = self.driver.find_element(By.ID, "NCMIC MEDEFENSE™ Plus_start")
+        MED_NCMIC_link.click()
+
     def click_NGP(self):
 
         #ProductsAndPrograms.Page_Elements(self).click_NGP()

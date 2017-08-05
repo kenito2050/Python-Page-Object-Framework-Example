@@ -17,13 +17,12 @@ from pages.producer_center.my_policies.my_policies_screens.active_policies impor
 from pages.producer_center.navigation_bar import Navigation_Bar
 from pages.producer_center.client_contact_page import ClientContact
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
-from pages.producer_center.saw.products.MEDEMD.insured_information.insured_information import Insured_Information
-from pages.producer_center.saw.products.MEDEMD.insured_information.Healthcare_Facilities.insured_information import Insured_Information_Healthcare_Facilities
-from pages.producer_center.saw.products.MEDEMD.PAF.PAF import PAF
-from pages.producer_center.saw.products.MEDEMD.coverage_options.PCI_coverage_options import PCI_Coverage_Options
-from pages.producer_center.saw.products.MEDEMD.coverage_options.No_PCI_coverage_options import No_PCI_Coverage_Options
-from pages.producer_center.saw.products.MEDEMD.coverage_options.coverage_options import Coverage_Options
-from pages.producer_center.saw.products.MEDEMD.select_option.select_option import Select_Option
+from pages.producer_center.saw.products.MED_NCMIC.insured_information.insured_information import Insured_Information
+from pages.producer_center.saw.products.MED_NCMIC.PAF.PAF import PAF
+from pages.producer_center.saw.products.MED_NCMIC.coverage_options.PCI_coverage_options import PCI_Coverage_Options
+from pages.producer_center.saw.products.MED_NCMIC.coverage_options.No_PCI_coverage_options import No_PCI_Coverage_Options
+from pages.producer_center.saw.products.MED_NCMIC.coverage_options.coverage_options import Coverage_Options
+from pages.producer_center.saw.products.MED_NCMIC.select_option.select_option import Select_Option
 from pages.producer_center.saw.quote_review import Quote_Review
 from pages.producer_center.saw.invoice import Invoice
 from pages.producer_center.saw.confirm_order_details import Confirm_Order_Details
@@ -50,7 +49,7 @@ class CreateQuote(unittest.TestCase):
 
     def login_search_for_agent_create_quote(self):
 
-        Product = "MEDEMD"
+        Product = "MED_NCMIC"
 
         ## Directory Locations
 
@@ -268,7 +267,7 @@ class CreateQuote(unittest.TestCase):
             ap.click_submit_new_application_as_agent()
 
             pp = ProductsAndPrograms(driver)
-            pp.click_MEDEMD()
+            pp.click_MED_NCMIC()
 
             # The following lines added on 5-15-17 work
             pp.click_contract_class_drop_down_select_contract_class(contract_class)
@@ -316,28 +315,13 @@ class CreateQuote(unittest.TestCase):
             # Instantiate Insured Information
 
             saw_ii = Insured_Information(driver)
-            saw_ii_HCF = Insured_Information_Healthcare_Facilities(driver)
-
-            if contract_class == "Healthcare Facilities":
-                saw_ii_HCF.enter_physician_count(staff_count)
-                saw_ii_HCF.enter_annual_revenue(revenue)
-                saw_ii_HCF.click_next()
-            else:
-                saw_ii.enter_physician_count(staff_count)
-                saw_ii.click_next()
+            saw_ii.enter_physician_count(staff_count)
+            saw_ii.click_next()
 
             saw_PAF = PAF(driver)
 
-            #### If / ELSE Section to Determine how PAF is completed
-
-            if test_scenario_number == "1":
-                saw_PAF.create_quote_PCI_DSS_No_DQ_HealthCare_Facilities(revenue)
-            elif test_scenario_number == "2":
-                saw_PAF.create_quote_PCI_DSS_No_DQ_Not_HealthCare_Facilities(revenue)
-            elif test_scenario_number == "3":
-                saw_PAF.create_quote_No_PCI_DSS_No_DQ_HealthCare_Facilities(revenue)
-            elif test_scenario_number == "4":
-                saw_PAF.create_quote_No_PCI_DSS_No_DQ_Not_HealthCare_Facilities(revenue)
+            # Fill out PAF, No DQ
+            saw_PAF.create_quote_PCI_DSS_No_DQ(revenue)
 
             # Click Next on PAF Screen
             saw_PAF.click_next()
@@ -347,46 +331,27 @@ class CreateQuote(unittest.TestCase):
 
             ### Declare instances of Coverage Options
 
-            saw_CC_PCI_50k = PCI_50k_Coverage_Options(driver)
-            saw_CC_PCI_100k = PCI_100k_Coverage_Options(driver)
-            saw_CC_No_PCI_50k = No_PCI_50k_Coverage_Options(driver)
-            saw_CC_No_PCI_100k = No_PCI_100k_Coverage_Options(driver)
-
             #### This class is for generic objects that display on the Coverage Options page
             saw_CC = Coverage_Options(driver)
 
             #### If / ELSE to Determine which Coverage Options are selected based on Test Scenario
 
-            if test_scenario_number == "1":
-                saw_CC_PCI_50k.select_all_deselect_all()
-                saw_CC_PCI_50k.select_NetGuard_Plus_PCI_1MM_limit_0_Deductible_50k_embedded()
-            elif test_scenario_number == "2":
-                saw_CC_PCI_100k.select_all_deselect_all()
-                saw_CC_PCI_100k.select_NetGuard_Plus_PCI_1MM_limit_0_Deductible_100k_embedded()
-            elif test_scenario_number == "3":
-                saw_CC_No_PCI_50k.select_all_deselect_all()
-                saw_CC_No_PCI_50k.select_NetGuard_Plus_No_PCI_1MM_limit_0_Deductible_50k_embedded()
-            elif test_scenario_number == "4":
-                saw_CC_No_PCI_100k.select_all_deselect_all()
-                saw_CC_No_PCI_100k.select_NetGuard_Plus_No_PCI_1MM_limit_0_Deductible_100k_embedded()
-
-            # saw_CC.select_all_deselect_all()
-
-            ### Choose PCI / No PCI Options in this block   ###
-            ###                                             ###
-
-            ### PCI Options ###
-            # select_NetGuard_Plus_1MM_limit_0_Deductible_50k_embedded
-
-            # saw_CC_PCI.select_250K_limit_0_Deductible()
-            # saw_CC_PCI.select_500K_limit_0_Deductible()
-            # saw_CC_PCI.select_1MM_limit_0_Deductible()
-
-            ### No-PCI Options ###
-
-            # saw_CC_No_PCI.select_250K_limit_0_Deductible()
-            # saw_CC_No_PCI.select_500K_limit_0_Deductible()
-            # saw_CC_No_PCI.select_1MM_limit_0_Deductible()
+            if _OLD_scenario_number == "1":
+                saw_CC.select_all_deselect_all()
+                saw_CC.select_MeDefense_100K_100K_Limit_0_Deduct()
+                saw_CC.click_proceed_to_quote()
+            elif _OLD_scenario_number == "2":
+                saw_CC.select_all_deselect_all()
+                saw_CC.select_MeDefense_250K_250K_Limit_0_Deduct()
+                saw_CC.click_proceed_to_quote()
+            elif _OLD_scenario_number == "3":
+                saw_CC.select_all_deselect_all()
+                saw_CC.select_MeDefense_500K_500K_Limit_0_Deduct()
+                saw_CC.click_proceed_to_quote()
+            elif _OLD_scenario_number == "4":
+                saw_CC.select_all_deselect_all()
+                saw_CC.select_MeDefense_1MM_1MM_Limit_0_Deduct()
+                saw_CC.click_proceed_to_quote()
 
             ### Commented out next line; Moved Proceed to Quote button Call into the PCI / Non-PCI Methods
             # saw_CC.proceed_to_quote()

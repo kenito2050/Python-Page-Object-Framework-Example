@@ -8,6 +8,9 @@ from faker import name
 from selenium import webdriver
 import time
 
+import os
+import xlrd
+
 from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.producer_center.client_search_page import ClientSearch
 from pages.producer_center.my_policies.my_policies_screens.active_policies import active_policies
@@ -48,13 +51,39 @@ class CreateQuote(unittest.TestCase):
 
         ## Determine Test Environment to run scripts
 
+        Product = "NGP_CAMICO"
+
+        ## Directory Locations
+
+        tests_directory = os.path.abspath(os.pardir)
+        framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
+        config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
+        test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
+        test_results_directory = os.path.abspath(
+            os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
+
+        # Determine the Test Run Type
+        # Get Test Run Type Text from config file
+        tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
+        test_environment = tree.getroot()
+        test_run_type = (test_environment[1][0].text)
+        test_run_type_value = ''
+
+        # If / Else to convert test_run_type text to a value
+        if test_run_type == "Regression":
+            test_run_type_value = '1'
+        elif test_run_type == "Smoke":
+            test_run_type_value = '2'
+        elif test_run_type == "Sanity":
+            test_run_type_value = '3'
+
         ## Read in value from test_environment.xml
-        tree = ET.parse('test_environment.xml')
-        test_environment  = tree.getroot()
-        environment =(test_environment[0][0].text)
+        tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
+        test_environment = tree.getroot()
+        environment = (test_environment[0][0].text)
 
         ## Select Appropriate URL based on the Environment Value from above
-        baseURL  = Environments.return_environments(environment)
+        baseURL = Environments.return_environments(environment)
 
         # Create "Fake" Variables
         #state = frandom.us_state()

@@ -8,5 +8,6 @@ class ContractClasses_Medical(dict):
         'Medical Group': '2',
         'Office of Physician': '3',
         'Offices of Dentists': '4',
+        'Chiropractors': '5',
         }
         return contract_class_values[contract_class]
