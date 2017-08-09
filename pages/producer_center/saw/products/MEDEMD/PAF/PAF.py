@@ -392,7 +392,7 @@ class PAF():
         PAF.Page_Elements(self).data_security_yes.click()
         PAF.Page_Elements(self).data_security_encrypted_yes.click()
         PAF.Page_Elements(self).credit_card_data_no.click()
-        # PAF.Page_Elements(self).credit_card_data_compliant_yes.click()
+        #PAF.Page_Elements(self).credit_card_data_compliant_yes.click()
         # PAF.Page_Elements(self).wire_transfer_protocols_yes.click()
         PAF.Page_Elements(self).records_exceed_20000_no.click()
         # PAF.Page_Elements(self).wire_transfer_loss_no.click()
