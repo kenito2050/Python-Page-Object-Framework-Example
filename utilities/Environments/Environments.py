@@ -4,6 +4,7 @@ class Environments(dict):
 
         # Data Dictionary of Environments
         environments={
+            'Dev': 'https://svcdev.wn.nasinsurance.com/',
             'Demo1': 'https://svcdemo1.wn.nasinsurance.com/',
             'Demo2': 'https://svcdemo2.wn.nasinsurance.com/',
             'Demo3': 'https://svcdemo3.wn.nasinsurance.com/',

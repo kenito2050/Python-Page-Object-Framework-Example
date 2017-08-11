@@ -1,49 +1,43 @@
-import os
-import time
 import unittest
 from urllib.parse import urlparse, parse_qs
 from xml.etree import ElementTree as ET
 
-import xlrd
 from faker import address
 from faker import company
 from faker import name
 from selenium import webdriver
+import time
 
-from pages.producer_center.client_contact_page import ClientContact
+import os
+import xlrd
+
+from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.producer_center.client_search_page import ClientSearch
 from pages.producer_center.my_policies.my_policies_screens.active_policies import active_policies
 from pages.producer_center.navigation_bar import Navigation_Bar
-from pages.producer_center.products_programs_page import ProductsAndPrograms
-from pages.producer_center.saw.confirm_and_issue import Confirm_and_Issue
-from pages.producer_center.saw.confirm_order_details import Confirm_Order_Details
+from pages.producer_center.client_contact_page import ClientContact
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
-from pages.producer_center.saw.invoice import Invoice
-from pages.producer_center.saw.products.MEDEMD.PAF.PAF import PAF
-from pages.producer_center.saw.products.MEDEMD.coverage_options.coverage_options import Coverage_Options
-from pages.producer_center.saw.products.MEDEMD.coverage_options.Healthcare_Facilities.PCI.HCF_PCI_Coverage_options_10MM_or_Less import HCF_PCI_Coverage_Options_10MM_or_Less
-from pages.producer_center.saw.products.MEDEMD.coverage_options.Healthcare_Facilities.PCI.HCF_PCI_coverage_options_10MM_to_25MM import HCF_PCI_Coverage_Options_10MM_to_25MM
-from pages.producer_center.saw.products.MEDEMD.coverage_options.Healthcare_Facilities.PCI.HCF_PCI_coverage_options_25MM_or_Greater import HCF_PCI_Coverage_Options_25MM_or_Greater
-from pages.producer_center.saw.products.MEDEMD.coverage_options.Healthcare_Facilities.No_PCI.HCF_No_PCI_coverage_options_10MM_or_Less import HCF_No_PCI_Coverage_Options_10MM_or_Less
-from pages.producer_center.saw.products.MEDEMD.coverage_options.Healthcare_Facilities.No_PCI.HCF_NoPCI_Coverage_options_10MM_to_25MM import HCF_No_PCI_Coverage_Options_10MM_to_25MM
-from pages.producer_center.saw.products.MEDEMD.coverage_options.Healthcare_Facilities.No_PCI.HCF_NoPCI_Coverage_options_25MM_or_Greater import HCF_No_PCI_Coverage_Options_25MM_or_Greater
-from pages.producer_center.saw.products.MEDEMD.coverage_options.Non_Healthcare_Facilities.Non_HCF_PCI_coverage_options import Non_HCF_PCI_Coverage_Options
-from pages.producer_center.saw.products.MEDEMD.coverage_options.Non_Healthcare_Facilities.Non_HCF_No_PCI_coverage_options import Non_HCF_No_PCI_Coverage_Options
-from pages.producer_center.saw.products.MEDEMD.insured_information.Healthcare_Facilities.insured_information import Insured_Information_Healthcare_Facilities
-from pages.producer_center.saw.products.MEDEMD.insured_information.insured_information import Insured_Information
-from pages.producer_center.saw.products.MEDEMD.select_option.select_option import Select_Option
+from pages.producer_center.saw.products.CYB_LAMMICO.insured_information.insured_information import Insured_Information
+from pages.producer_center.saw.products.CYB_LAMMICO.PAF.PAF import PAF
+from pages.producer_center.saw.products.CYB_LAMMICO.coverage_options.PCI_coverage_options import PCI_Coverage_Options
+from pages.producer_center.saw.products.CYB_LAMMICO.coverage_options.No_PCI_coverage_options import No_PCI_Coverage_Options
+from pages.producer_center.saw.products.CYB_LAMMICO.coverage_options.coverage_options import Coverage_Options
+from pages.producer_center.saw.products.CYB_LAMMICO.select_option.select_option import Select_Option
 from pages.producer_center.saw.quote_review import Quote_Review
-from pages.producer_center.saw.summary import Summary
+from pages.producer_center.saw.invoice import Invoice
+from pages.producer_center.saw.confirm_order_details import Confirm_Order_Details
+from pages.producer_center.saw.confirm_and_issue import Confirm_and_Issue
 from pages.producer_center.saw.thank_you_page import Thank_You_Page
-from pages.service_center.agent_screens.agent_details import Agent_Details
+from pages.producer_center.saw.summary import Summary
 from pages.service_center.agents_page import AgentsPage
 from pages.service_center.applications_page import ApplicationsPage
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
 from pages.service_center.policies_page import PoliciesPage
-from pages.service_center.policy_screens.details import Details
-from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.policy_screens.policy_screens import Policy_Screens
+from pages.service_center.policy_screens.details import Details
+from pages.service_center.agent_screens.agent_details import Agent_Details
+from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.subjectivities import Subjectivities
 from utilities.Environments.Environments import Environments
 from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
@@ -55,7 +49,7 @@ class CreateQuote(unittest.TestCase):
 
     def login_search_for_agent_create_quote(self):
 
-        Product = "MEDEMD"
+        Product = "CYB_LAMMICO"
 
         ## Directory Locations
 
@@ -63,7 +57,8 @@ class CreateQuote(unittest.TestCase):
         framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
         config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
         test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
-        test_results_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
+        test_results_directory = os.path.abspath(
+            os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
 
         # Determine the Test Run Type
         # Get Test Run Type Text from config file
@@ -94,13 +89,10 @@ class CreateQuote(unittest.TestCase):
         global limit
         global deductible
         global _OLD_scenario
-        global revenue_tier
+        global _OLD_scenario_number
 
 
         # Open Test Scenario Workbook; Instantiate worksheet object
-        # 0 - First Worksheet
-        # 1 - Second Worksheet...etc
-
         wb = xlrd.open_workbook(os.path.join(test_case_directory, Product + '.xlsx'))
         sh = wb.sheet_by_index(0)
 
@@ -126,13 +118,12 @@ class CreateQuote(unittest.TestCase):
             # If / Else Section to check if a test needs to be run
             #### CODE NOT WORKING YET - Ken 8-2-17
             #### Program is running ALL rows & NOT skipping rows
-
-            # if test_run_type_value == 3 and sanity_check == "0":
-            #         continue
-            # if test_run_type_value == 2 and smoke_check == "0":
-            #         continue
-            # if test_run_type_value == 1 and regression_check == "0":
-            #         continue
+            if test_run_type_value == 3 and sanity_check == "0":
+                    continue
+            if test_run_type_value == 2 and smoke_check == "0":
+                    continue
+            if test_run_type_value == 1 and regression_check == "0":
+                    continue
 
 
             # Check to see if cell is NOT empty
@@ -150,8 +141,7 @@ class CreateQuote(unittest.TestCase):
                 revenue = str(round(sh.cell_value(i, 9)))
                 staff_count = str(round(sh.cell_value(i, 10)))
                 _OLD_scenario = sh.cell_value(i, 11)
-                revenue_tier = str(round(sh.cell_value(i, 12)))
-
+                _OLD_scenario_number = str(round(sh.cell_value(i, 12)))
 
             # Else, the cell is empty
             # End the Loop
@@ -181,18 +171,6 @@ class CreateQuote(unittest.TestCase):
             # state = frandom.us_state()
             # state = "California"
             # state = Create_Insured_Address.return_alabama(state_value)
-
-            # Determine the Revenue Tier for this Test Scenario
-            ### THIS SECTION NOT WORKING
-
-            # if revenue < "10,000,000":
-            #     revenue_tier = 1
-            # elif revenue == "10,000,000":
-            #     revenue_tier = 1
-            # elif revenue > "25,000,000":
-            #     revenue_tier = 3
-            # else:
-            #     revenue_tier = 2
 
             first_name = name.first_name()
             last_name = name.last_name()
@@ -288,7 +266,7 @@ class CreateQuote(unittest.TestCase):
             ap.click_submit_new_application_as_agent()
 
             pp = ProductsAndPrograms(driver)
-            pp.click_MEDEMD()
+            pp.click_CYB_LAMMICO()
 
             # The following lines added on 5-15-17 work
             pp.click_contract_class_drop_down_select_contract_class(contract_class)
@@ -336,28 +314,20 @@ class CreateQuote(unittest.TestCase):
             # Instantiate Insured Information
 
             saw_ii = Insured_Information(driver)
-            saw_ii_HCF = Insured_Information_Healthcare_Facilities(driver)
-
-            if contract_class == "Healthcare Facilities":
-                saw_ii_HCF.enter_physician_count(staff_count)
-                saw_ii_HCF.enter_annual_revenue(revenue)
-                saw_ii_HCF.click_next()
-            else:
-                saw_ii.enter_physician_count(staff_count)
-                saw_ii.click_next()
+            saw_ii.enter_physician_count(staff_count)
+            saw_ii.click_next()
 
             saw_PAF = PAF(driver)
 
             #### If / ELSE Section to Determine how PAF is completed
 
+            # Scenario 1: PCI Options
+            # Scenario 2: No PCI Options
+
             if test_scenario_number == "1":
-                saw_PAF.create_quote_PCI_DSS_No_DQ_HealthCare_Facilities(revenue)
+                saw_PAF.create_quote_PCI_DSS_No_DQ(revenue)
             elif test_scenario_number == "2":
-                saw_PAF.create_quote_PCI_DSS_No_DQ_Not_HealthCare_Facilities(revenue)
-            elif test_scenario_number == "3":
-                saw_PAF.create_quote_No_PCI_DSS_No_DQ_HealthCare_Facilities(revenue)
-            elif test_scenario_number == "4":
-                saw_PAF.create_quote_No_PCI_DSS_No_DQ_Not_HealthCare_Facilities(revenue)
+                saw_PAF.create_quote_No_PCI_DSS_No_DQ(revenue)
 
             # Click Next on PAF Screen
             saw_PAF.click_next()
@@ -367,72 +337,30 @@ class CreateQuote(unittest.TestCase):
 
             ### Declare instances of Coverage Options
 
-            HCF_PCI_options_10MM_or_less = HCF_PCI_Coverage_Options_10MM_or_Less(driver)
-            HCF_PCI_options_10MM_to_25MM = HCF_PCI_Coverage_Options_10MM_to_25MM(driver)
-            HCF_PCI_options_25MM_or_Greater = HCF_PCI_Coverage_Options_25MM_or_Greater(driver)
-            HCF_No_PCI_options_10MM_or_less = HCF_No_PCI_Coverage_Options_10MM_or_Less(driver)
-            HCF_No_PCI_options_10MM_to_25MM = HCF_No_PCI_Coverage_Options_10MM_to_25MM(driver)
-            HCF_No_PCI_options_25MM_or_Greater = HCF_No_PCI_Coverage_Options_25MM_or_Greater(driver)
-            Non_HCF_PCI_options = Non_HCF_PCI_Coverage_Options(driver)
-            Non_HCF_No_PCI_options = Non_HCF_No_PCI_Coverage_Options(driver)
-
             #### This class is for generic objects that display on the Coverage Options page
             saw_CC = Coverage_Options(driver)
 
-
-            ### Clear All selections on Coverage Options Screen
-            saw_CC.select_all_deselect_all()
-
             #### If / ELSE to Determine which Coverage Options are selected based on Test Scenario
-            ####
 
-            ### Declare the Coverage Options Driver Variable
+            if _OLD_scenario_number == "1":
+                saw_CC.select_all_deselect_all()
+                saw_CC.select_MeDefense_100K_100K_Limit_0_Deduct()
+                saw_CC.click_proceed_to_quote()
+            elif _OLD_scenario_number == "2":
+                saw_CC.select_all_deselect_all()
+                saw_CC.select_MeDefense_250K_250K_Limit_0_Deduct()
+                saw_CC.click_proceed_to_quote()
+            elif _OLD_scenario_number == "3":
+                saw_CC.select_all_deselect_all()
+                saw_CC.select_MeDefense_500K_500K_Limit_0_Deduct()
+                saw_CC.click_proceed_to_quote()
+            elif _OLD_scenario_number == "4":
+                saw_CC.select_all_deselect_all()
+                saw_CC.select_MeDefense_1MM_1MM_Limit_0_Deduct()
+                saw_CC.click_proceed_to_quote()
 
-            ### This section tests to see if the correct test scenario is executed, given the test_scenario_number & revenue tier
-            ### TODO: Read the values from the OLD_Scenario variable; Run that scenario
-
-            if test_scenario_number == "1" and revenue_tier == "1":
-                saw_CC_in_use = HCF_PCI_Coverage_Options_10MM_or_Less(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-                # saw_CC_in_use.select_MEDEFENSE_Plus_Only_1MM_1MM_limit_2pt5K_Deduct()
-
-            elif test_scenario_number == "1" and revenue_tier == "2":
-                saw_CC_in_use = HCF_PCI_Coverage_Options_10MM_to_25MM(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-                # saw_CC_in_use.select_Medefense_Plus_and_eMD_Higher_Limits_With_PCI_and_Cyber_Crime_Combined_3MM_3MM_100K_250K_limit_5K_Deduct()
-
-            elif test_scenario_number == "1" and revenue_tier == "3":
-                saw_CC_in_use = HCF_PCI_Coverage_Options_25MM_or_Greater(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-                # saw_CC_in_use.select_Medefense_Plus_and_eMD_Higher_Limits_With_PCI_and_Cyber_Crime_Combined_3MM_3MM_100K_250K_limit_10K_Deduct()
-
-            elif test_scenario_number == "3" and revenue_tier == "1":
-                saw_CC_in_use = HCF_No_PCI_Coverage_Options_10MM_or_Less(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-                # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_Without_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_2pt5K_Deduct()
-
-            elif test_scenario_number == "3" and revenue_tier == "2":
-                saw_CC_in_use = HCF_No_PCI_Coverage_Options_10MM_to_25MM(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-                # saw_CC_in_use.select_Medefense_Plus_and_eMD_Higher_Limits_Without_PCI_and_Cyber_Crime_Combined_2MM_2MM_100K_250K_limit_5K_Deduct()
-
-            elif test_scenario_number == "3" and revenue_tier == "3":
-                saw_CC_in_use = HCF_No_PCI_Coverage_Options_25MM_or_Greater(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-                # saw_CC_in_use.select_Medefense_Plus_and_eMD_Higher_Limits_Without_PCI_and_Cyber_Crime_Combined_3MM_3MM_100K_250K_limit_10K_Deduct()
-
-            elif test_scenario_number == "2":
-                saw_CC_in_use = Non_HCF_PCI_Coverage_Options(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-                # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_With_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()
-
-            elif test_scenario_number == "4":
-                saw_CC_in_use = Non_HCF_No_PCI_Coverage_Options(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-                # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_Without_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()
-
-            ### FIXED: Renamed method proceed_to_quote to click_proceed_to_quote; This code now works
-            saw_CC.click_proceed_to_quote()
+            ### Commented out next line; Moved Proceed to Quote button Call into the PCI / Non-PCI Methods
+            # saw_CC.proceed_to_quote()
 
             saw_summary = Summary(driver)
             saw_summary.click_generate_quote()

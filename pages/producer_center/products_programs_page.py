@@ -27,9 +27,12 @@ class ProductsAndPrograms():
     # Products
 
     def click_CYB_CAP(self):
-
         CYB_CAP_link = self.driver.find_element(By.ID, "CyberRisk™ Liability/Medefense Plus_start")
         CYB_CAP_link.click()
+
+    def click_CYB_LAMMICO(self):
+        CYB_LAMMICO_link = self.driver.find_element(By.ID, "LAMMICO MEDEFENSE™ Plus and Cyber Liability_start")
+        CYB_LAMMICO_link.click()
 
     def click_CYB_PSIC_DDS(self):
         CYB_PSIC_DDS_link = self.driver.find_element(By.ID, "PSIC Regulatory Proceedings and Network Security & Privacy Coverage for Dentists_start")
@@ -40,12 +43,10 @@ class ProductsAndPrograms():
         CYB_PSIC_MD_link.click()
 
     def click_CYB_MMIC(self):
-
         CYB_MMIC_link = self.driver.find_element(By.ID, "MMNC e-MD™ and MEDEFENSE™ Plus_start")
         CYB_MMIC_link.click()
 
     def click_CYB_MICA(self):
-
         CYB_MICA_link = self.driver.find_element(By.ID, "MICA e-Med Protection Plus_start")
         CYB_MICA_link.click()
 
@@ -66,8 +67,6 @@ class ProductsAndPrograms():
         MED_NCMIC_link.click()
 
     def click_NGP(self):
-
-        #ProductsAndPrograms.Page_Elements(self).click_NGP()
         NGP_link = self.driver.find_element(By.ID, "Cyber Liability_start")
         NGP_link.click()
 
