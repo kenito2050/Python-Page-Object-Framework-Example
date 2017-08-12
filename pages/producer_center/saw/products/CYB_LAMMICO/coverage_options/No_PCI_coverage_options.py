@@ -7,128 +7,74 @@ class No_PCI_Coverage_Options():
 
     def PageElements(self):
 
-        # MEDEFENSE™
+        # MEDEFENSE™ Plus Only
 
         # Limits
-        # 100K/100K
-        self.option_768_limit_3024 = self.driver.find_element(By.ID, "option-658-limit-2753")
+        # 1MM/1MM
+        self.option_789_limit_3095 = self.driver.find_element(By.ID, "option-789-limit-3095")
 
         # Deductibles
-        # $1,500
-        self.option_658_deductible_1186 = self.driver.find_element(By.ID, "option-658-deductible-1186")
+        # $0
+        self.option_789_deductible_1242 = self.driver.find_element(By.ID, "option-789-deductible-1242")
 
         # Cyber Liability Only - No PCI
 
         # Limits
         # 1MM/1MM
-        self.option_667_limit_2760 = self.driver.find_element(By.ID, "option-667-limit-2760")
+        self.option_796_limit_3100 = self.driver.find_element(By.ID, "option-796-limit-3100")
 
         # Deductibles
-        # $0
-        self.option_667_deductible_1189 = self.driver.find_element(By.ID, "option-667-deductible-1189")
+        # $0 / $2,500
+        self.option_796_deductible_1247 = self.driver.find_element(By.ID, "option-796-deductible-1247")
 
-        # Cyber Liability with Breach Event Costs Outside the Limits - No PCI
+        # MEDEFENSE™ Plus with $100,000 Medical Board Proceedings Sublimit
+
+        # Limits
+        # 1MM/100K/1MM
+        self.option_790_limit_3096 = self.driver.find_element(By.ID, "option-790-limit-3096")
+
+        # Deductibles
+        # $0/$1,000
+        self.option_790_deductible_1243 = self.driver.find_element(By.ID, "option-790-deductible-1243")
+
+        # MEDEFENSE™ Plus and Cyber Liability - No PCI
 
         # Limits
         # 1MM/1MM
-        self.option_668_limit_2760 = self.driver.find_element(By.ID, "option-668-limit-2760")
+        self.option_797_limit_3101 = self.driver.find_element(By.ID, "option-797-limit-3101")
 
         # Deductibles
-        # $0
-        self.option_668_deductible_1189 = self.driver.find_element(By.ID, "option-668-deductible-1189")
+        # $0/$2,500
+        self.option_797_deductible_1248 = self.driver.find_element(By.ID, "option-797-deductible-1248")
 
-        # Cyber Liability with Claims Expenses Outside the Limits - No PCI
+        # MEDEFENSE™ Plus with $100K Medical Board Proceedings Sublimit and Cyber Liability - No PCI
 
         # Limits
-        # 1MM/1MM
-        self.option_669_limit_2761 = self.driver.find_element(By.ID, "option-669-limit-2761")
+        # 1MM/100K/1MM
+        self.option_798_limit_3102 = self.driver.find_element(By.ID, "option-798-limit-3102")
 
         # Deductibles
-        # $0
-        self.option_669_deductible_1189 = self.driver.find_element(By.ID, "option-669-deductible-1189")
-
-        # Cyber Liability with Claims Expenses Outside the Limits and with Breach Event Costs Outside the Limits - No PCI
-
-        # Limits
-        # 1MM/1MM
-        self.option_670_limit_2761 = self.driver.find_element(By.ID, "option-670-limit-2761")
-
-        # Deductibles
-        # $0
-        self.option_670_deductible_1189 = self.driver.find_element(By.ID, "option-670-deductible-1189")
-
-        # MEDEFENSE™ Plus and Cyber Liability Combined - No PCI
-
-        # Limits
-        # 1MM/1MM
-        self.option_671_limit_2762 = self.driver.find_element(By.ID, "option-671-limit-2762")
-
-        # Deductibles
-        # $1,500 / $0
-        self.option_671_deductible_1190 = self.driver.find_element(By.ID, "option-671-deductible-1190")
-
-        # MEDEFENSE™ Plus and Cyber Liability with Breach Event Costs Outside the Limits - No PCI
-
-        # Limits
-        # 1MM/1MM
-        self.option_672_limit_2762 = self.driver.find_element(By.ID, "option-672-limit-2762")
-
-        # Deductibles
-        # $1,500 / $0
-        self.option_672_deductible_1190 = self.driver.find_element(By.ID, "option-672-deductible-1190")
-
-        # MEDEFENSE™ Plus and Cyber Liability with Breach Event Costs Outside the Limits - No PCI
-
-        # Limits
-        # 1MM/1MM
-        self.option_673_limit_2763 = self.driver.find_element(By.ID, "option-673-limit-2763")
-
-        # Deductibles
-        # $1,500 / $0
-        self.option_673_deductible_1190 = self.driver.find_element(By.ID, "option-673-deductible-1190")
-
-        # MEDEFENSE™ Plus and Cyber Liability with Claims Expenses Outside the Limits - No PCI
-
-        # Limits
-        # 1MM/1MM
-        self.option_674_limit_2763 = self.driver.find_element(By.ID, "option-674-limit-2763")
-
-        # Deductibles
-        # $1,500 / $0
-        self.option_674_deductible_1190 = self.driver.find_element(By.ID, "option-674-deductible-1190")
+        # $0/$1,000/$2,500
+        self.option_798_deductible_1249 = self.driver.find_element(By.ID, "option-798-deductible-1249")
 
         return self
 
-    def select_Cyber_Liability_Only_No_PCI(self):
-        No_PCI_Coverage_Options.PageElements(self).option_667_limit_2760.click()
-        No_PCI_Coverage_Options.PageElements(self).option_667_deductible_1189.click()
+    def select_MEDEFENSE_Plus_Only_1MM_1MM_limit_0_Deduct(self):
+        No_PCI_Coverage_Options.PageElements(self).option_789_limit_3095.click()
+        No_PCI_Coverage_Options.PageElements(self).option_789_deductible_1242.click()
 
-    def select_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits_No_PCI(self):
-        No_PCI_Coverage_Options.PageElements(self).option_668_limit_2760.click()
-        No_PCI_Coverage_Options.PageElements(self).option_668_deductible_1189.click()
+    def select_Cyber_Liability_Only_No_PCI_1MM_1MM_limit_0_2pt5K_Deduct(self):
+        No_PCI_Coverage_Options.PageElements(self).option_796_limit_3100.click()
+        No_PCI_Coverage_Options.PageElements(self).option_796_deductible_1247.click()
 
-    def select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_No_PCI(self):
-        No_PCI_Coverage_Options.PageElements(self).option_669_limit_2761.click()
-        No_PCI_Coverage_Options.PageElements(self).option_669_deductible_1189.click()
+    def select_MEDEFENSE_Plus_with_100K_Medical_Board_Proceedings_Sublimit_1MM_100K_1M_limit_0_1K_Deduct(self):
+        No_PCI_Coverage_Options.PageElements(self).option_790_limit_3096.click()
+        No_PCI_Coverage_Options.PageElements(self).option_790_deductible_1243.click()
 
-    def select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits_No_PCI(
-            self):
-        No_PCI_Coverage_Options.PageElements(self).option_670_limit_2761.click()
-        No_PCI_Coverage_Options.PageElements(self).option_670_deductible_1189.click()
+    def select_MEDEFENSE_Plus_and_Cyber_Liability_No_PCI_1MM_1M_limit_0_2pt5K_Deduct(self):
+        No_PCI_Coverage_Options.PageElements(self).option_797_limit_3101.click()
+        No_PCI_Coverage_Options.PageElements(self).option_797_deductible_1248.click()
 
-    def select_MEDEFENSE_Plus_and_Cyber_Liability_Combined_No_PCI(self):
-        No_PCI_Coverage_Options.PageElements(self).option_671_limit_2762.click()
-        No_PCI_Coverage_Options.PageElements(self).option_671_deductible_1190.click()
-
-    def select_MEDEFENSE_Plus_and_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits_No_PCI(self):
-        No_PCI_Coverage_Options.PageElements(self).option_672_limit_2762.click()
-        No_PCI_Coverage_Options.PageElements(self).option_672_deductible_1190.click()
-
-    def select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_No_PCI(self):
-        No_PCI_Coverage_Options.PageElements(self).option_673_limit_2763.click()
-        No_PCI_Coverage_Options.PageElements(self).option_673_deductible_1190.click()
-
-    def select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits_No_PCI(
-            self):
-        No_PCI_Coverage_Options.PageElements(self).option_674_limit_2763.click()
-        No_PCI_Coverage_Options.PageElements(self).option_674_deductible_1190.click()
+    def select_MEDEFENSE_Plus_with_100K_Medical_Board_Proceedings_Sublimit_and_Cyber_Liability_No_PCI_1MM_1M_limit_0_2pt5K_Deduct(self):
+        No_PCI_Coverage_Options.PageElements(self).option_798_limit_3102.click()
+        No_PCI_Coverage_Options.PageElements(self).option_798_deductible_1249.click()

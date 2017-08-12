@@ -241,7 +241,7 @@ class CreateQuote(unittest.TestCase):
 
             # Date Variables
             date_today = time.strftime("%m/%d/%Y")
-            ad_hoc_effectiveDate = "08/01/2017"
+            ad_hoc_effectiveDate = "01/01/2018"
 
             # Initialize Driver; Launch URL
             # baseURL = "https://svcdemo1.wn.nasinsurance.com/"
@@ -307,7 +307,7 @@ class CreateQuote(unittest.TestCase):
             # cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
 
             # Enter Today's Date as Effective Date
-            cp.enter_current_date_as_effective_date(date_today)
+            cp.enter_current_date_as_effective_date(ad_hoc_effectiveDate)
 
             cp.click_next()
 
@@ -335,32 +335,27 @@ class CreateQuote(unittest.TestCase):
             ## Coverage Options Section  ###
             ##                           ###
 
-            ### Declare instances of Coverage Options
-
             #### This class is for generic objects that display on the Coverage Options page
             saw_CC = Coverage_Options(driver)
 
-            #### If / ELSE to Determine which Coverage Options are selected based on Test Scenario
+            ### Clear All selections on Coverage Options Screen
+            saw_CC.select_all_deselect_all()
 
-            if _OLD_scenario_number == "1":
-                saw_CC.select_all_deselect_all()
-                saw_CC.select_MeDefense_100K_100K_Limit_0_Deduct()
-                saw_CC.click_proceed_to_quote()
-            elif _OLD_scenario_number == "2":
-                saw_CC.select_all_deselect_all()
-                saw_CC.select_MeDefense_250K_250K_Limit_0_Deduct()
-                saw_CC.click_proceed_to_quote()
-            elif _OLD_scenario_number == "3":
-                saw_CC.select_all_deselect_all()
-                saw_CC.select_MeDefense_500K_500K_Limit_0_Deduct()
-                saw_CC.click_proceed_to_quote()
-            elif _OLD_scenario_number == "4":
-                saw_CC.select_all_deselect_all()
-                saw_CC.select_MeDefense_1MM_1MM_Limit_0_Deduct()
-                saw_CC.click_proceed_to_quote()
+            ### Declare instances of Coverage Options
+
+            ## If Test Scenario = 1, Use PCI Options
+            ## Else if Test Scenario = 2, Use Non-PCI Options
+
+            if test_scenario_number == "1":
+                saw_CC_in_use = PCI_Coverage_Options(driver)
+                getattr(saw_CC_in_use, _OLD_scenario)()
+
+            elif test_scenario_number == "2":
+                saw_CC_in_use = No_PCI_Coverage_Options(driver)
+                getattr(saw_CC_in_use, _OLD_scenario)()
 
             ### Commented out next line; Moved Proceed to Quote button Call into the PCI / Non-PCI Methods
-            # saw_CC.proceed_to_quote()
+            saw_CC.click_proceed_to_quote()
 
             saw_summary = Summary(driver)
             saw_summary.click_generate_quote()
