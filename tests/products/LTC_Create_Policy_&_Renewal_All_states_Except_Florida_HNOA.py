@@ -112,7 +112,7 @@ class CreateQuote(unittest.TestCase):
         # 1,0 = Susan Leeming - TEST        -- Sub Agent of Wholesale Agency
         # 2,0 = Chad Robin                  -- Chad Robin Retail Agent - Robin Insurance
         # 3,0 = Preferred Agent             -- Preferred Agent - Preferred Agency
-        # 4,0 = TMLT Test User              -- Account to Test COMM2 Scenarios
+        # 4,0 = CYB_TMLT Test User              -- Account to Test COMM2 Scenarios
         # 5,0 = QA Agent                    -- QA Agent
         # 6,0 = Janice Quinn                -- 2nd Preferred Agent - ABC Insurance
 

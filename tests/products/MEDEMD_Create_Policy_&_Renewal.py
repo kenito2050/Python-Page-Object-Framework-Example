@@ -119,21 +119,20 @@ class CreateQuote(unittest.TestCase):
                 empty_cell = False
 
 
-            regression_check = sh.cell_value(i, 3)
-            smoke_check = sh.cell_value(i, 4)
-            sanity_check = sh.cell_value(i, 5)
+            regression_check = round(sh.cell_value(i, 3))
+            smoke_check = round(sh.cell_value(i, 4))
+            sanity_check = round(sh.cell_value(i, 5))
 
             # If / Else Section to check if a test needs to be run
             #### CODE NOT WORKING YET - Ken 8-2-17
             #### Program is running ALL rows & NOT skipping rows
 
-            # if test_run_type_value == 3 and sanity_check == "0":
-            #         continue
-            # if test_run_type_value == 2 and smoke_check == "0":
-            #         continue
-            # if test_run_type_value == 1 and regression_check == "0":
-            #         continue
-
+            if (test_run_type_value == 3 and sanity_check == 0):
+                    continue
+            elif (test_run_type_value == 2 and smoke_check == 0):
+                    continue
+            elif (test_run_type_value == 1 and regression_check == 0):
+                    continue
 
             # Check to see if cell is NOT empty
             # If cell is not empty, read in the values
@@ -141,9 +140,9 @@ class CreateQuote(unittest.TestCase):
                 test_summary = sh.cell_value(i, 0)
                 test_scenario = sh.cell_value(i, 1)
                 test_scenario_number = str(round(sh.cell_value(i, 2)))
-                regression = sh.cell_value(i, 3)
-                smoke = sh.cell_value(i, 4)
-                sanity = sh.cell_value(i, 5)
+                regression = round(sh.cell_value(i, 3))
+                smoke = round(sh.cell_value(i, 4))
+                sanity = round(sh.cell_value(i, 5))
                 contract_class = sh.cell_value(i, 6)
                 agent = sh.cell_value(i, 7)
                 state = sh.cell_value(i, 8)
@@ -228,7 +227,7 @@ class CreateQuote(unittest.TestCase):
             # 1,0 = Susan Leeming - TEST        -- Sub Agent of Wholesale Agency
             # 2,0 = Retail Agent                -- Retail Agent - Boston Retail Insurance
             # 3,0 = Preferred Agent             -- Preferred Agent - Preferred Agency
-            # 4,0 = TMLT Test User              -- Account to Test COMM2 Scenarios
+            # 4,0 = CYB_TMLT Test User              -- Account to Test COMM2 Scenarios
             # 5,0 = QA Agent                    -- QA Agent
             # 6,0 = Janice Quinn                -- Janice Quinn - Boston Retail
 

@@ -42,6 +42,10 @@ class ProductsAndPrograms():
         CYB_PSIC_MD_link = self.driver.find_element(By.ID, "PSIC Regulatory Proceedings and Network Security & Privacy Coverage for Physicians_start")
         CYB_PSIC_MD_link.click()
 
+    def click_CYB_LSA(self):
+        CYB_LSA_link = self.driver.find_element(By.ID, "LSA Cyber Liability / Medefense™ Plus_start")
+        CYB_LSA_link.click()
+
     def click_CYB_MMIC(self):
         CYB_MMIC_link = self.driver.find_element(By.ID, "MMNC e-MD™ and MEDEFENSE™ Plus_start")
         CYB_MMIC_link.click()
@@ -49,6 +53,10 @@ class ProductsAndPrograms():
     def click_CYB_MICA(self):
         CYB_MICA_link = self.driver.find_element(By.ID, "MICA e-Med Protection Plus_start")
         CYB_MICA_link.click()
+
+    def click_CYB_TMLT(self):
+        CYB_TMLT_link = self.driver.find_element(By.ID, "TMLT Cyber Liability / Medefense™ Plus_start")
+        CYB_TMLT_link.click()
 
     def click_EO_MISC(self):
         EO_MISC_link = self.driver.find_element(By.ID, "Miscellaneous E&O_start")

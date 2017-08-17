@@ -206,7 +206,7 @@ class CreateQuote(unittest.TestCase):
             # 1,0 = Susan Leeming - TEST        -- Sub Agent of Wholesale Agency
             # 2,0 = Retail Agent                -- Retail Agent - Boston Retail Insurance
             # 3,0 = Preferred Agent             -- Preferred Agent - Preferred Agency
-            # 4,0 = TMLT Test User              -- Account to Test COMM2 Scenarios
+            # 4,0 = CYB_TMLT Test User              -- Account to Test COMM2 Scenarios
             # 5,0 = QA Agent                    -- QA Agent
             # 6,0 = Janice Quinn                -- Janice Quinn - Boston Retail
 
@@ -304,10 +304,10 @@ class CreateQuote(unittest.TestCase):
             cp = CoveragePeriods(driver)
 
             # Enter an Ad Hoc Effective Date
-            # cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
+            cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
 
             # Enter Today's Date as Effective Date
-            cp.enter_current_date_as_effective_date(ad_hoc_effectiveDate)
+            # cp.enter_current_date_as_effective_date(date_today)
 
             cp.click_next()
 
