@@ -1,3 +1,4 @@
+import datetime
 import os
 import time
 import unittest
@@ -19,10 +20,12 @@ from pages.producer_center.saw.confirm_and_issue import Confirm_and_Issue
 from pages.producer_center.saw.confirm_order_details import Confirm_Order_Details
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
 from pages.producer_center.saw.invoice import Invoice
-from pages.producer_center.saw.products.CYB_TMLT.PAF.PAF import PAF
-from pages.producer_center.saw.products.CYB_TMLT.coverage_options.coverage_options import Coverage_Options
-from pages.producer_center.saw.products.CYB_TMLT.coverage_options.PCI_coverage_options import PCI_Coverage_Options
+from pages.producer_center.saw.products.CYB_TMLT.PAF.After_Sep_6_2017.PAF_after_Sep_6_2017 import PAF_after_Sep_6_2017
+from pages.producer_center.saw.products.CYB_TMLT.PAF.Before_Sep_6_2017.PAF_before_Sep_6_2017 import PAF_before_Sep_6_2017
+from pages.producer_center.saw.products.CYB_TMLT.PAF.PAF_generic import PAF_generic
 from pages.producer_center.saw.products.CYB_TMLT.coverage_options.No_PCI_coverage_options import No_PCI_Coverage_Options
+from pages.producer_center.saw.products.CYB_TMLT.coverage_options.PCI_coverage_options import PCI_Coverage_Options
+from pages.producer_center.saw.products.CYB_TMLT.coverage_options.coverage_options import Coverage_Options
 from pages.producer_center.saw.products.CYB_TMLT.insured_information.insured_information import Insured_Information
 from pages.producer_center.saw.products.CYB_TMLT.select_option.select_option import Select_Option
 from pages.producer_center.saw.quote_review import Quote_Review
@@ -75,6 +78,7 @@ class CreateQuote(unittest.TestCase):
 
         global test_summary
         global test_scenario
+        global effective_date
         global test_scenario_number
         global regression
         global smoke
@@ -132,17 +136,18 @@ class CreateQuote(unittest.TestCase):
             if empty_cell == False:
                 test_summary = sh.cell_value(i, 0)
                 test_scenario = sh.cell_value(i, 1)
-                test_scenario_number = str(round(sh.cell_value(i, 2)))
-                regression = round(sh.cell_value(i, 3))
-                smoke = round(sh.cell_value(i, 4))
-                sanity = round(sh.cell_value(i, 5))
-                contract_class = sh.cell_value(i, 6)
-                agent = sh.cell_value(i, 7)
-                state = sh.cell_value(i, 8)
-                revenue = str(round(sh.cell_value(i, 9)))
-                staff_count = str(round(sh.cell_value(i, 10)))
-                _OLD_scenario = sh.cell_value(i, 11)
-                revenue_tier = str(round(sh.cell_value(i, 12)))
+                effective_date = sh.cell_value(i, 2)
+                test_scenario_number = str(round(sh.cell_value(i, 3)))
+                regression = round(sh.cell_value(i, 4))
+                smoke = round(sh.cell_value(i, 5))
+                sanity = round(sh.cell_value(i, 6))
+                contract_class = sh.cell_value(i, 7)
+                agent = sh.cell_value(i, 8)
+                state = sh.cell_value(i, 9)
+                revenue = str(round(sh.cell_value(i, 10)))
+                staff_count = str(round(sh.cell_value(i, 11)))
+                _OLD_scenario = sh.cell_value(i, 12)
+                revenue_tier = str(round(sh.cell_value(i, 13)))
 
 
             # Else, the cell is empty
@@ -255,7 +260,13 @@ class CreateQuote(unittest.TestCase):
 
             # Date Variables
             date_today = time.strftime("%m/%d/%Y")
-            ad_hoc_effectiveDate = "08/01/2017"
+            ad_hoc_effectiveDate = "09/06/2017"
+
+            # Convert effective_date value to format MM/DD/YYYY
+            d = xlrd.xldate_as_tuple(int(effective_date), 0)
+            # convert date tuple in mm-dd-yyyy format
+            d = datetime.datetime(*(d[0:3]))
+            effective_date_formatted = d.strftime("%m/%d/%Y")
 
             # Initialize Driver; Launch URL
             # baseURL = "https://svcdemo1.wn.nasinsurance.com/"
@@ -318,30 +329,41 @@ class CreateQuote(unittest.TestCase):
             cp = CoveragePeriods(driver)
 
             # Enter an Ad Hoc Effective Date
-            # cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
+            cp.enter_ad_hoc_effective_date(effective_date_formatted)
 
             # Enter Today's Date as Effective Date
-            cp.enter_current_date_as_effective_date(date_today)
+            # cp.enter_current_date_as_effective_date(date_today)
 
             cp.click_next()
 
             # Instantiate Insured Information
-
             saw_ii = Insured_Information(driver)
             saw_ii.enter_physician_count(staff_count)
             saw_ii.click_next()
 
-            saw_PAF = PAF(driver)
+            # Assign PAF instances driver
+            saw_PAF_generic = PAF_generic(driver)
+            saw_PAF_after_Sep_6_2017 = PAF_after_Sep_6_2017(driver)
+            saw_PAF_before_Sep_6_2017 = PAF_before_Sep_6_2017(driver)
 
             #### If / ELSE Section to Determine how PAF is completed
 
-            if test_scenario_number == "1":
-                saw_PAF.create_quote_PCI_DSS_No_DQ(revenue)
-            elif test_scenario_number == "2":
-                saw_PAF.create_quote_No_PCI_DSS_No_DQ(revenue)
+            # 1 - Medical Group or Office of Physician, with PCI option, After Sep 6, 2017
+            # 2 - Medical Group or Office of Physician, NO PCI option, After Sep 6, 2017
+            # 3 - Medical Group or Office of Physician, with PCI option, Before Sep 6, 2017
+            # 4 - Medical Group or Office of Physician, NO PCI option, Before Sep 6, 2017
 
-            # Click Next on PAF Screen
-            saw_PAF.click_next()
+            if test_scenario_number == "1":
+                saw_PAF_after_Sep_6_2017.create_quote_PCI_DSS_No_DQ(revenue)
+            elif test_scenario_number == "2":
+                saw_PAF_after_Sep_6_2017.create_quote_No_PCI_DSS_No_DQ(revenue)
+            elif test_scenario_number == "3":
+                saw_PAF_before_Sep_6_2017.create_quote_PCI_DSS_No_DQ(revenue)
+            elif test_scenario_number == "4":
+                saw_PAF_before_Sep_6_2017.create_quote_No_PCI_DSS_No_DQ(revenue)
+
+            saw_PAF_generic.click_next_button()
+
 
             ## Coverage Options Section  ###
             ##                           ###

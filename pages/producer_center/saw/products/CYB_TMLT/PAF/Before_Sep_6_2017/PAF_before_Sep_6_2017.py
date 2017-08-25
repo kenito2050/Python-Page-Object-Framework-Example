@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 
 from selenium.webdriver.common.by import By
 
-class PAF():
+class PAF_before_Sep_6_2017():
 
     def __init__(self, driver):
         self.driver = driver
@@ -10,7 +10,6 @@ class PAF():
     #Page Elements
 
     def Page_Elements(self):
-
         # Current or prospective PSIC insured?
         self.existing_insured_yes = self.driver.find_element(By.ID, "cyb_tmlt_existing_insured-yes")
 
@@ -55,7 +54,8 @@ class PAF():
 
         # Do Your billings from federal and state health care programs, such as Medicare and Medicaid, exceed an average of $2,000,000 per physician in Your group?
 
-        self.billings_exceed_two_million_yes = self.driver.find_element(By.ID, "cyb_tmlt_billings_exceed_one_million-yes")
+        self.billings_exceed_two_million_yes = self.driver.find_element(By.ID,
+                                                                        "cyb_tmlt_billings_exceed_one_million-yes")
 
         self.billings_exceed_two_million_no = self.driver.find_element(By.ID, "cyb_tmlt_billings_exceed_one_million-no")
 
@@ -67,9 +67,11 @@ class PAF():
 
         # Have You or any physician in Your group ever been placed on pre-payment review with regard to Medicare/Medicaid billing practices or utilization of Medicare/Medicaid services?
 
-        self.audited_investigated_medicare_yes = self.driver.find_element(By.ID, "cyb_tmlt_audited_investigated_medicare-yes")
+        self.audited_investigated_medicare_yes = self.driver.find_element(By.ID,
+                                                                          "cyb_tmlt_audited_investigated_medicare-yes")
 
-        self.audited_investigated_medicare_no = self.driver.find_element(By.ID, "cyb_tmlt_audited_investigated_medicare-no")
+        self.audited_investigated_medicare_no = self.driver.find_element(By.ID,
+                                                                         "cyb_tmlt_audited_investigated_medicare-no")
 
         # Have You or any physician in Your group ever had to refund amounts to Public and/or Private payers in excess of $10,000?
 
@@ -93,7 +95,8 @@ class PAF():
 
         # Been involved in Stark/anti-kickback investigation?
 
-        self.anti_kickback_investigation_yes = self.driver.find_element(By.ID, "cyb_tmlt_anti_kickback_investigation-yes")
+        self.anti_kickback_investigation_yes = self.driver.find_element(By.ID,
+                                                                        "cyb_tmlt_anti_kickback_investigation-yes")
 
         self.anti_kickback_investigation_no = self.driver.find_element(By.ID, "cyb_tmlt_anti_kickback_investigation-no")
 
@@ -209,7 +212,8 @@ class PAF():
 
         # Have You or any physician in Your group received any complaints or claims or been the subject in litigation involving matters of privacy injury, identity theft, denial of service attacks, computer virus infections, theft of information, damage to third-party networks or Your customer's ability to rely on Your network?
 
-        self.cyber_complaints_litigation_yes = self.driver.find_element(By.ID, "cyb_tmlt_cyber_complaints_litigation-yes")
+        self.cyber_complaints_litigation_yes = self.driver.find_element(By.ID,
+                                                                        "cyb_tmlt_cyber_complaints_litigation-yes")
 
         self.cyber_complaints_litigation_no = self.driver.find_element(By.ID, "cyb_tmlt_cyber_complaints_litigation-no")
 
@@ -228,87 +232,85 @@ class PAF():
         return self
 
     def create_quote_PCI_DSS_No_DQ(self, revenue):
-
-        PAF.Page_Elements(self).existing_insured_yes.click()
-        PAF.Page_Elements(self).external_policy_number.send_keys("A111111111")
-        PAF.Page_Elements(self).operation_commence_date.send_keys("01-01-2001")
-        PAF.Page_Elements(self).operations_description.send_keys("QA TEST")
-        PAF.Page_Elements(self).annual_revenue_current_year.send_keys(revenue)
-        PAF.Page_Elements(self).annual_revenue_one_year_ago.send_keys(revenue)
-        PAF.Page_Elements(self).subsidiary_inclusion_no.click()
-        PAF.Page_Elements(self).coverage_for_other_entity_no.click()
-        PAF.Page_Elements(self).utilize_cpt_manual_yes.click()
-        PAF.Page_Elements(self).billings_exceed_two_million_no.click()
-        PAF.Page_Elements(self).audited_investigated_no.click()
-        PAF.Page_Elements(self).audited_investigated_medicare_no.click()
-        PAF.Page_Elements(self).refund_excess_10_thousand_no.click()
-        PAF.Page_Elements(self).accused_billing_errors_no.click()
-        PAF.Page_Elements(self).investigated_sanctioned_no.click()
-        PAF.Page_Elements(self).anti_kickback_investigation_no.click()
-        PAF.Page_Elements(self).sued_deselected_payer_no.click()
-        PAF.Page_Elements(self).investigated_emtala_no.click()
-        PAF.Page_Elements(self).investigated_hipaa_no.click()
-        PAF.Page_Elements(self).voluntary_disclosure_no.click()
-        PAF.Page_Elements(self).non_renewed_extention_no.click()
-        PAF.Page_Elements(self).regulatory_investigation_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).existing_insured_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).external_policy_number.send_keys("A111111111")
+        PAF_before_Sep_6_2017.Page_Elements(self).operation_commence_date.send_keys("01-01-2001")
+        PAF_before_Sep_6_2017.Page_Elements(self).operations_description.send_keys("QA TEST")
+        PAF_before_Sep_6_2017.Page_Elements(self).annual_revenue_current_year.send_keys(revenue)
+        PAF_before_Sep_6_2017.Page_Elements(self).annual_revenue_one_year_ago.send_keys(revenue)
+        PAF_before_Sep_6_2017.Page_Elements(self).subsidiary_inclusion_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).coverage_for_other_entity_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).utilize_cpt_manual_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).billings_exceed_two_million_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).audited_investigated_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).audited_investigated_medicare_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).refund_excess_10_thousand_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).accused_billing_errors_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).investigated_sanctioned_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).anti_kickback_investigation_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).sued_deselected_payer_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).investigated_emtala_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).investigated_hipaa_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).voluntary_disclosure_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).non_renewed_extention_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).regulatory_investigation_no.click()
 
         # Cyber Liability Questions
-        PAF.Page_Elements(self).hipaa_compliance_program_yes.click()
-        PAF.Page_Elements(self).platform_security_yes.click()
-        PAF.Page_Elements(self).patient_information_yes.click()
-        PAF.Page_Elements(self).data_security_yes.click()
-        PAF.Page_Elements(self).data_security_encrypted_yes.click()
-        PAF.Page_Elements(self).credit_card_data_yes.click()
-        PAF.Page_Elements(self).credit_card_data_compliant_yes.click()
-        PAF.Page_Elements(self).wire_transfer_protocols_yes.click()
-        PAF.Page_Elements(self).records_exceed_20000_no.click()
-        PAF.Page_Elements(self).wire_transfer_loss_no.click()
-        PAF.Page_Elements(self).cyber_complaints_litigation_no.click()
-        PAF.Page_Elements(self).aware_compromised_security_no.click()
-        PAF.Page_Elements(self).non_renewed_extention_cyb_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).hipaa_compliance_program_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).platform_security_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).patient_information_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).data_security_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).data_security_encrypted_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).credit_card_data_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).credit_card_data_compliant_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).wire_transfer_protocols_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).records_exceed_20000_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).wire_transfer_loss_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).cyber_complaints_litigation_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).aware_compromised_security_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).non_renewed_extention_cyb_no.click()
 
     def create_quote_No_PCI_DSS_No_DQ(self, revenue):
-
-        PAF.Page_Elements(self).existing_insured_yes.click()
-        PAF.Page_Elements(self).external_policy_number.send_keys("A111111111")
-        PAF.Page_Elements(self).operation_commence_date.send_keys("01-01-2001")
-        PAF.Page_Elements(self).operations_description.send_keys("QA TEST")
-        PAF.Page_Elements(self).annual_revenue_current_year.send_keys(revenue)
-        PAF.Page_Elements(self).annual_revenue_one_year_ago.send_keys(revenue)
-        PAF.Page_Elements(self).subsidiary_inclusion_no.click()
-        PAF.Page_Elements(self).coverage_for_other_entity_no.click()
-        PAF.Page_Elements(self).utilize_cpt_manual_yes.click()
-        PAF.Page_Elements(self).billings_exceed_two_million_no.click()
-        PAF.Page_Elements(self).audited_investigated_no.click()
-        PAF.Page_Elements(self).audited_investigated_medicare_no.click()
-        PAF.Page_Elements(self).refund_excess_10_thousand_no.click()
-        PAF.Page_Elements(self).accused_billing_errors_no.click()
-        PAF.Page_Elements(self).investigated_sanctioned_no.click()
-        PAF.Page_Elements(self).anti_kickback_investigation_no.click()
-        PAF.Page_Elements(self).sued_deselected_payer_no.click()
-        PAF.Page_Elements(self).investigated_emtala_no.click()
-        PAF.Page_Elements(self).investigated_hipaa_no.click()
-        PAF.Page_Elements(self).voluntary_disclosure_no.click()
-        PAF.Page_Elements(self).non_renewed_extention_no.click()
-        PAF.Page_Elements(self).regulatory_investigation_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).existing_insured_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).external_policy_number.send_keys("A111111111")
+        PAF_before_Sep_6_2017.Page_Elements(self).operation_commence_date.send_keys("01-01-2001")
+        PAF_before_Sep_6_2017.Page_Elements(self).operations_description.send_keys("QA TEST")
+        PAF_before_Sep_6_2017.Page_Elements(self).annual_revenue_current_year.send_keys(revenue)
+        PAF_before_Sep_6_2017.Page_Elements(self).annual_revenue_one_year_ago.send_keys(revenue)
+        PAF_before_Sep_6_2017.Page_Elements(self).subsidiary_inclusion_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).coverage_for_other_entity_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).utilize_cpt_manual_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).billings_exceed_two_million_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).audited_investigated_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).audited_investigated_medicare_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).refund_excess_10_thousand_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).accused_billing_errors_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).investigated_sanctioned_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).anti_kickback_investigation_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).sued_deselected_payer_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).investigated_emtala_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).investigated_hipaa_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).voluntary_disclosure_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).non_renewed_extention_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).regulatory_investigation_no.click()
 
         # Cyber Liability Questions
-        PAF.Page_Elements(self).hipaa_compliance_program_yes.click()
-        PAF.Page_Elements(self).platform_security_yes.click()
-        PAF.Page_Elements(self).patient_information_yes.click()
-        PAF.Page_Elements(self).data_security_yes.click()
-        PAF.Page_Elements(self).data_security_encrypted_yes.click()
-        PAF.Page_Elements(self).credit_card_data_no.click()
-        #PAF.Page_Elements(self).credit_card_data_compliant_yes.click()
-        PAF.Page_Elements(self).wire_transfer_protocols_yes.click()
-        PAF.Page_Elements(self).records_exceed_20000_no.click()
-        PAF.Page_Elements(self).wire_transfer_loss_no.click()
-        PAF.Page_Elements(self).cyber_complaints_litigation_no.click()
-        PAF.Page_Elements(self).aware_compromised_security_no.click()
-        PAF.Page_Elements(self).non_renewed_extention_cyb_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).hipaa_compliance_program_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).platform_security_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).patient_information_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).data_security_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).data_security_encrypted_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).credit_card_data_no.click()
+        # PAF_generic.Page_Elements(self).credit_card_data_compliant_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).wire_transfer_protocols_yes.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).records_exceed_20000_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).wire_transfer_loss_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).cyber_complaints_litigation_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).aware_compromised_security_no.click()
+        PAF_before_Sep_6_2017.Page_Elements(self).non_renewed_extention_cyb_no.click()
 
     #TODO
     # Ask Dev to create ID for next button
-    def click_next(self):
+    def click_next_button(self):
         next_button = self.driver.find_element(By.XPATH, "//form[@id='rate-adjustment-form']/div[2]/div[4]/a/span[2]")
         next_button.click()
