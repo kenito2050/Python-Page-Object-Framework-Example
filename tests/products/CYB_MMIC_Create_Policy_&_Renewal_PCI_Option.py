@@ -61,7 +61,7 @@ class CreateQuote(unittest.TestCase):
 
         # Create "Fake" Variables
         #state = frandom.us_state()
-        state = "North Carolina"
+        state = "California"
         #state = Create_Insured_Address.return_alabama(state_value)
         first_name = name.first_name()
         last_name = name.last_name()
@@ -245,7 +245,7 @@ class CreateQuote(unittest.TestCase):
 
         ### PCI Options ###
 
-        saw_CC_PCI.select_MEDEFENSE_Plus_Only_500K()
+        # saw_CC_PCI.select_MEDEFENSE_Plus_Only_500K()
         # saw_CC_PCI.select_MEDEFENSE_Plus_Only_1MM()
         # saw_CC_PCI.select_MEDEFENSE_with_50K_Disciplinary_500K()
         # saw_CC_PCI.select_MEDEFENSE_with_50K_Disciplinary_1MM()
@@ -256,7 +256,7 @@ class CreateQuote(unittest.TestCase):
         # saw_CC_PCI.select_eMD_MEDEFENSE_Plus_500K()
         # saw_CC_PCI.select_eMD_MEDEFENSE_Plus_1MM()
         # saw_CC_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_2MM()
-        # saw_CC_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_3MM()
+        saw_CC_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_3MM()
         # saw_CC_PCI.select_eMD_and_MEDEFENSE_with_50k_Disciplinary_500K()
         # saw_CC_PCI.select_eMD_and_MEDEFENSE_with_50k_Disciplinary_1MM()
         # saw_CC_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_with_50k_Disciplinary_2MM()

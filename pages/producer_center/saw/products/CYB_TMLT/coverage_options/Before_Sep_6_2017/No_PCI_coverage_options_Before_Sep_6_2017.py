@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-class No_PCI_Coverage_Options():
+class No_PCI_Coverage_Options_Before_Sep_6_2017():
 
     def __init__(self, driver):
         self.driver = driver
@@ -99,35 +99,35 @@ class No_PCI_Coverage_Options():
         return self
 
     def select_Cyber_Liability_Only_No_PCI(self):
-        No_PCI_Coverage_Options.PageElements(self).option_667_limit_2760.click()
-        No_PCI_Coverage_Options.PageElements(self).option_667_deductible_1189.click()
+        No_PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_667_limit_2760.click()
+        No_PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_667_deductible_1189.click()
 
     def select_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits_No_PCI(self):
-        No_PCI_Coverage_Options.PageElements(self).option_668_limit_2760.click()
-        No_PCI_Coverage_Options.PageElements(self).option_668_deductible_1189.click()
+        No_PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_668_limit_2760.click()
+        No_PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_668_deductible_1189.click()
 
     def select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_No_PCI(self):
-        No_PCI_Coverage_Options.PageElements(self).option_669_limit_2761.click()
-        No_PCI_Coverage_Options.PageElements(self).option_669_deductible_1189.click()
+        No_PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_669_limit_2761.click()
+        No_PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_669_deductible_1189.click()
 
     def select_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits_No_PCI(
             self):
-        No_PCI_Coverage_Options.PageElements(self).option_670_limit_2761.click()
-        No_PCI_Coverage_Options.PageElements(self).option_670_deductible_1189.click()
+        No_PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_670_limit_2761.click()
+        No_PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_670_deductible_1189.click()
 
     def select_MEDEFENSE_Plus_and_Cyber_Liability_Combined_No_PCI(self):
-        No_PCI_Coverage_Options.PageElements(self).option_671_limit_2762.click()
-        No_PCI_Coverage_Options.PageElements(self).option_671_deductible_1190.click()
+        No_PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_671_limit_2762.click()
+        No_PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_671_deductible_1190.click()
 
     def select_MEDEFENSE_Plus_and_Cyber_Liability_with_Breach_Event_Costs_Outside_the_Limits_No_PCI(self):
-        No_PCI_Coverage_Options.PageElements(self).option_672_limit_2762.click()
-        No_PCI_Coverage_Options.PageElements(self).option_672_deductible_1190.click()
+        No_PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_672_limit_2762.click()
+        No_PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_672_deductible_1190.click()
 
     def select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_No_PCI(self):
-        No_PCI_Coverage_Options.PageElements(self).option_673_limit_2763.click()
-        No_PCI_Coverage_Options.PageElements(self).option_673_deductible_1190.click()
+        No_PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_673_limit_2763.click()
+        No_PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_673_deductible_1190.click()
 
     def select_MEDEFENSE_Plus_and_Cyber_Liability_with_Claims_Expenses_Outside_the_Limits_and_with_Breach_Event_Costs_Outside_the_Limits_No_PCI(
             self):
-        No_PCI_Coverage_Options.PageElements(self).option_674_limit_2763.click()
-        No_PCI_Coverage_Options.PageElements(self).option_674_deductible_1190.click()
+        No_PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_674_limit_2763.click()
+        No_PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_674_deductible_1190.click()

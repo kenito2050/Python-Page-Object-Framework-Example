@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-class PCI_Coverage_Options():
+class PCI_Coverage_Options_Before_Sep_6_2017():
 
     def __init__(self, driver):
         self.driver = driver
@@ -144,45 +144,45 @@ class PCI_Coverage_Options():
 
 
     def select_CyberRisk_with_Cyber_Crime_Only(self):
-        PCI_Coverage_Options.PageElements(self).option_435_limit_1920.click()
-        PCI_Coverage_Options.PageElements(self).option_435_deductible_772.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_435_limit_1920.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_435_deductible_772.click()
 
     def select_CyberRisk_Only_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime(self):
-        PCI_Coverage_Options.PageElements(self).option_436_limit_1942.click()
-        PCI_Coverage_Options.PageElements(self).option_436_deductible_772.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_436_limit_1942.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_436_deductible_772.click()
 
     def select_Medefense_Plus_Only(self):
-        PCI_Coverage_Options.PageElements(self).option_309_limit_1523.click()
-        PCI_Coverage_Options.PageElements(self).option_309_deductible_54.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_309_limit_1523.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_309_deductible_54.click()
 
     def select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit(self):
-        PCI_Coverage_Options.PageElements(self).option_310_limit_1528.click()
-        PCI_Coverage_Options.PageElements(self).option_310_deductible_195.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_310_limit_1528.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_310_deductible_195.click()
 
     def select_Medefense_Plus_and_CyberRisk_with_Cyber_Crime_Combined_Shared_Limits(self):
-        PCI_Coverage_Options.PageElements(self).option_431_limit_1923.click()
-        PCI_Coverage_Options.PageElements(self).option_431_deductible_773.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_431_limit_1923.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_431_deductible_773.click()
 
     def select_Medefense_Plus_and_CyberRisk_Combined_Shared_Limits_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime(self):
-        PCI_Coverage_Options.PageElements(self).option_437_limit_1945.click()
-        PCI_Coverage_Options.PageElements(self).option_437_deductible_773.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_437_limit_1945.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_437_deductible_773.click()
 
     def select_Medefense_Plus_and_CyberRisk_Combined_Separate_Limits_with_Cyber_Crime(self):
-        PCI_Coverage_Options.PageElements(self).option_432_limit_1929.click()
-        PCI_Coverage_Options.PageElements(self).option_432_deductible_773.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_432_limit_1929.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_432_deductible_773.click()
 
     def select_Medefense_Plus_and_CyberRisk_Combined_Separate_Limits_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime(self):
-        PCI_Coverage_Options.PageElements(self).option_438_limit_1952.click()
-        PCI_Coverage_Options.PageElements(self).option_438_deductible_773.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_438_limit_1952.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_438_deductible_773.click()
 
     def select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit_and_CyberRisk_Combined_Shared_Limits_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime(self):
-        PCI_Coverage_Options.PageElements(self).option_439_limit_1955.click()
-        PCI_Coverage_Options.PageElements(self).option_439_deductible_759.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_439_limit_1955.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_439_deductible_759.click()
 
     def select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit_and_CyberRisk_Combined_Shared_Limits_with_Cyber_Crime(self):
-        PCI_Coverage_Options.PageElements(self).option_434_limit_1939.click()
-        PCI_Coverage_Options.PageElements(self).option_434_deductible_759.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_434_limit_1939.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_434_deductible_759.click()
 
     def select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit_and_CyberRisk_Combined_Separate_Limits_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime(self):
-        PCI_Coverage_Options.PageElements(self).option_440_limit_1962.click()
-        PCI_Coverage_Options.PageElements(self).option_440_deductible_759.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_440_limit_1962.click()
+        PCI_Coverage_Options_Before_Sep_6_2017.PageElements(self).option_440_deductible_759.click()
