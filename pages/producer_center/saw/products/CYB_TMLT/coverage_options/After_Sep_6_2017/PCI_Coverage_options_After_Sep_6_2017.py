@@ -45,7 +45,7 @@ class PCI_Coverage_Options_After_Sep_6_2017():
 
         # Limits
         # 3MM/3MM
-        self.option_819_limit_3139 = self.driver.find_element(By.ID, "option-819-limit-3139")
+        self.option_827_limit_3144 = self.driver.find_element(By.ID, "option-827-limit-3144")
 
         # Deductibles
         # $0/$0/$2,500
@@ -108,7 +108,7 @@ class PCI_Coverage_Options_After_Sep_6_2017():
         PCI_Coverage_Options_After_Sep_6_2017.PageElements(self).option_824_deductible_1279.click()
 
     def select_3M_Cyber_Liability_Only_1MM_1MM_limit_0_2pt5K_Deduct(self):
-        PCI_Coverage_Options_After_Sep_6_2017.PageElements(self).option_819_limit_3139.click()
+        PCI_Coverage_Options_After_Sep_6_2017.PageElements(self).option_827_limit_3144.click()
         PCI_Coverage_Options_After_Sep_6_2017.PageElements(self).option_827_deductible_1279.click()
 
     def select_1M_Cyber_Liability_and_Medefense_Plus_1MM_1MM_limit_0_0_2pt5K_Deduct(self):

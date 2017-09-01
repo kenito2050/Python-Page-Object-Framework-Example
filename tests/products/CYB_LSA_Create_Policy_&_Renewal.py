@@ -23,8 +23,10 @@ from pages.producer_center.saw.invoice import Invoice
 from pages.producer_center.saw.products.CYB_LSA.PAF.After_Sep_6_2017.PAF_after_Sep_6_2017 import PAF_after_Sep_6_2017
 from pages.producer_center.saw.products.CYB_LSA.PAF.Before_Sep_6_2017.PAF_before_Sep_6_2017 import PAF_before_Sep_6_2017
 from pages.producer_center.saw.products.CYB_LSA.PAF.PAF_generic import PAF_generic
-from pages.producer_center.saw.products.CYB_LSA.coverage_options.No_PCI_coverage_options import No_PCI_Coverage_Options
-from pages.producer_center.saw.products.CYB_LSA.coverage_options.PCI_coverage_options import PCI_Coverage_Options
+from pages.producer_center.saw.products.CYB_LSA.coverage_options.Before_Sep_6_2017.PCI_coverage_options_Before_Sep_6_2017 import PCI_Coverage_Options_Before_Sep_6_2017
+from pages.producer_center.saw.products.CYB_LSA.coverage_options.Before_Sep_6_2017.No_PCI_coverage_options_Before_Sep_6_2017 import No_PCI_Coverage_Options_Before_Sep_6_2017
+from pages.producer_center.saw.products.CYB_LSA.coverage_options.After_Sep_6_2017.PCI_Coverage_options_After_Sep_6_2017 import PCI_Coverage_Options_After_Sep_6_2017
+from pages.producer_center.saw.products.CYB_LSA.coverage_options.After_Sep_6_2017.No_PCI_Coverage_options_After_Sep_6_2017 import No_PCI_Coverage_Options_After_Sep_6_2017
 from pages.producer_center.saw.products.CYB_LSA.coverage_options.coverage_options import Coverage_Options
 from pages.producer_center.saw.products.CYB_LSA.insured_information.insured_information import Insured_Information
 from pages.producer_center.saw.products.CYB_LSA.select_option.select_option import Select_Option
@@ -364,21 +366,21 @@ class CreateQuote(unittest.TestCase):
 
             saw_PAF_generic.click_next_button()
 
-
             ## Coverage Options Section  ###
             ##                           ###
 
             ### Declare instances of Coverage Options
 
-            PCI_options = PCI_Coverage_Options(driver)
-            No_PCI_options = No_PCI_Coverage_Options(driver)
+            PCI_options_Before_Sep_6_2017 = PCI_Coverage_Options_Before_Sep_6_2017(driver)
+            No_PCI_options_Before_Sep_6_2017 = No_PCI_Coverage_Options_Before_Sep_6_2017(driver)
+            PCI_options_After_Sep_6_2017 = PCI_Coverage_Options_After_Sep_6_2017(driver)
+            No_PCI_options_After_Sep_6_2017 = No_PCI_Coverage_Options_After_Sep_6_2017(driver)
 
             #### This class is for generic objects that display on the Coverage Options page
             saw_CC = Coverage_Options(driver)
 
-
             ### Clear All selections on Coverage Options Screen
-            saw_CC.select_all_deselect_all()
+            # saw_CC.select_all_deselect_all()
 
             #### If / ELSE to Determine which Coverage Options are selected based on Test Scenario
             ####
@@ -389,15 +391,24 @@ class CreateQuote(unittest.TestCase):
             ### TODO: Read the values from the OLD_Scenario variable; Run that scenario
 
             if test_scenario_number == "1":
-                saw_CC_in_use = PCI_Coverage_Options(driver)
+                saw_CC_in_use = PCI_Coverage_Options_After_Sep_6_2017(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
                 # saw_CC_in_use.select_MEDEFENSE_Plus_Only_1MM_1MM_limit_2pt5K_Deduct()
 
             elif test_scenario_number == "2":
-                saw_CC_in_use = No_PCI_Coverage_Options(driver)
+                saw_CC_in_use = No_PCI_Coverage_Options_After_Sep_6_2017(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
                 # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_With_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()
 
+            elif test_scenario_number == "3":
+                saw_CC_in_use = PCI_Coverage_Options_Before_Sep_6_2017(driver)
+                getattr(saw_CC_in_use, _OLD_scenario)()
+                # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_With_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()
+
+            elif test_scenario_number == "4":
+                saw_CC_in_use = No_PCI_Coverage_Options_Before_Sep_6_2017(driver)
+                getattr(saw_CC_in_use, _OLD_scenario)()
+                # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_With_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()
 
 
             ### FIXED: Renamed method proceed_to_quote to click_proceed_to_quote; This code now works
