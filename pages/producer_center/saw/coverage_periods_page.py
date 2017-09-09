@@ -11,6 +11,8 @@ class CoveragePeriods():
 
         self.date_effective_start = self.driver.find_element(By.ID, "date_effective_start")
 
+        self.return_to_Admin = self.driver.find_element(By.LINK_TEXT, "Return to Admin Interface")
+
         return self
 
 
@@ -51,10 +53,12 @@ class CoveragePeriods():
         ##effective_start_date_field.clear()
         ##effective_start_date_field.send_keys(current_date)
 
-
     def click_has_existing_coverage(self):
         placeholder = "this is placeholder"
 
     def click_next(self):
         next_button = self.driver.find_element(By.XPATH, "//form[@id='primary-epli-form']/div[4]/a/span[2]/span/span")
         next_button.click()
+
+    def click_return_to_Admin_Interface(self):
+        CoveragePeriods.PageElements(self).return_to_Admin.click()

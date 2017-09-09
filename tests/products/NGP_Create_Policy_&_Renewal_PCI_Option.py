@@ -80,8 +80,8 @@ class CreateQuote(unittest.TestCase):
         # Access XML to retrieve login credentials
         tree = ET.parse('resources.xml')
         login_credentials = tree.getroot()
-        username = (login_credentials[0][0].text)
-        password = (login_credentials[0][1].text)
+        username = (login_credentials[1][0].text)
+        password = (login_credentials[1][1].text)
 
         # Access XML to retrieve the agent to search for
         tree = ET.parse('Agents.xml')
@@ -176,10 +176,10 @@ class CreateQuote(unittest.TestCase):
         cp = CoveragePeriods(driver)
 
         # Enter an Ad Hoc Effective Date
-        cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
+        # cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
 
         # Enter Today's Date as Effective Date
-        # cp.enter_current_date_as_effective_date(date_today)
+        cp.enter_current_date_as_effective_date(date_today)
 
         cp.click_next()
         saw_ii = Insured_Information(driver)

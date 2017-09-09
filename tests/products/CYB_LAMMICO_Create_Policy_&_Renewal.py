@@ -304,10 +304,10 @@ class CreateQuote(unittest.TestCase):
             cp = CoveragePeriods(driver)
 
             # Enter an Ad Hoc Effective Date
-            cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
+            # cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
 
             # Enter Today's Date as Effective Date
-            # cp.enter_current_date_as_effective_date(date_today)
+            cp.enter_current_date_as_effective_date(date_today)
 
             cp.click_next()
 

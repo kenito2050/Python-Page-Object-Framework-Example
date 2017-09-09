@@ -26,9 +26,17 @@ class ProductsAndPrograms():
 
     # Products
 
+    def click_CYB_AAO(self):
+        CYB_AAO_link = self.driver.find_element(By.ID, "AAO Broad Regulatory Protection Plus and e-MD™_start")
+        CYB_AAO_link.click()
+
     def click_CYB_CAP(self):
         CYB_CAP_link = self.driver.find_element(By.ID, "CyberRisk™ Liability/Medefense Plus_start")
         CYB_CAP_link.click()
+
+    def click_CYB_OMIC(self):
+        CYB_OMIC_link = self.driver.find_element(By.ID, "OMIC Broad Regulatory Protection Plus and e-MD™_start")
+        CYB_OMIC_link.click()
 
     def click_CYB_LAMMICO(self):
         CYB_LAMMICO_link = self.driver.find_element(By.ID, "LAMMICO MEDEFENSE™ Plus and Cyber Liability_start")

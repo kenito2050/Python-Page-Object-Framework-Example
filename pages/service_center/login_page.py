@@ -35,6 +35,7 @@ class LoginPage():
     def click_login_button(self):
         LoginPage.Page_Elements(self).submit_button.click()
 
+
     def login_old(self, username, password):
 
         #self.driver.input("blah")

@@ -133,6 +133,9 @@ class CreateQuote(unittest.TestCase):
         # Call Login methods from Pages.home.login_page.py
         lp = LoginPage(driver)
         lp.login(username, password)
+
+        driver.save_screenshot("screenshot.png")
+
         lp.click_login_button()
         nb = NavigationBar(driver)
         nb.click_agents()
