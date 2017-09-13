@@ -19,14 +19,14 @@ class No_PCI_Doctor_Count_2_Broad_Reg_Protect_Combined():
 
         # Deductibles
         # $0
-        self.option_851_deductible_762 = self.driver.find_element(By.ID, "option-452-deductible-762")
+        self.option_851_deductible_1297 = self.driver.find_element(By.ID, "option-851-deductible-1297")
 
         return self
 
     def select_Broad_Regulatory_Protection_Plus_and_eMD_Combined_Only_No_PCI_500K_1MM_limit_0_Deduct(self):
         No_PCI_Doctor_Count_2_Broad_Reg_Protect_Combined.PageElements(self).option_851_limit_3176.click()
-        No_PCI_Doctor_Count_2_Broad_Reg_Protect_Combined.PageElements(self).option_851_deductible_762.click()
+        No_PCI_Doctor_Count_2_Broad_Reg_Protect_Combined.PageElements(self).option_851_deductible_1297.click()
 
     def select_Broad_Regulatory_Protection_Plus_and_eMD_Combined_Only_No_PCI_1MM_2MM_limit_0_Deduct(self):
         No_PCI_Doctor_Count_2_Broad_Reg_Protect_Combined.PageElements(self).option_851_limit_3171.click()
-        No_PCI_Doctor_Count_2_Broad_Reg_Protect_Combined.PageElements(self).option_851_deductible_762.click()
+        No_PCI_Doctor_Count_2_Broad_Reg_Protect_Combined.PageElements(self).option_851_deductible_1297.click()

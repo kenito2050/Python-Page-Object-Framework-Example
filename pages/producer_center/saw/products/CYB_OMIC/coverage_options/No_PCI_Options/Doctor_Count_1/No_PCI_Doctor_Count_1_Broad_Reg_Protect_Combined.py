@@ -19,7 +19,7 @@ class No_PCI_Doctor_Count_1_Broad_Reg_Protect_Combined():
 
         # Deductibles
         # $0
-        self.option_851_deductible_762 = self.driver.find_element(By.ID, "option-452-deductible-762")
+        self.option_851_deductible_762 = self.driver.find_element(By.ID, "option-851-deductible-1297")
 
         return self
 
