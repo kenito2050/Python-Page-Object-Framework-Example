@@ -12,7 +12,7 @@ class PAF():
         # Return to Admin Link
         self.return_to_Admin = self.driver.find_element(By.LINK_TEXT, "Return to Admin Interface")
 
-        # Current or prospective CYB_AAO insured?
+        # Current or prospective CYB_aao insured?
         # self.existing_insured_yes = self.driver.find_element(By.ID, "cyb_aao_existing_insured-yes")
         #
         # self.existing_insured_no = self.driver.find_element(By.ID, "cyb_aao_existing_insured-no")
