@@ -62,6 +62,10 @@ class ProductsAndPrograms():
         CYB_MICA_link = self.driver.find_element(By.ID, "MICA e-Med Protection Plus_start")
         CYB_MICA_link.click()
 
+    def click_CYB_USI(self):
+        CYB_USI_link = self.driver.find_element(By.ID, "PrivaSafe with MEDEFENSE™ Plus_start")
+        CYB_USI_link.click()
+
     def click_CYB_TMLT(self):
         CYB_TMLT_link = self.driver.find_element(By.ID, "TMLT Cyber Liability / Medefense™ Plus_start")
         CYB_TMLT_link.click()
