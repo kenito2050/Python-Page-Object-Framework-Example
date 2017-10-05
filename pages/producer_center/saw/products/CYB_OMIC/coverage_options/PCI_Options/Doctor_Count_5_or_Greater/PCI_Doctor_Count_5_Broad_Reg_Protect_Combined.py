@@ -11,10 +11,10 @@ class PCI_Doctor_Count_5_Broad_Reg_Protect_Combined():
 
         # Limits
 
-        # 500K/2.5MM
-        self.option_452_limit_1999 = self.driver.find_element(By.ID, "option-452-limit-1999")
+        # 500K/5MM
+        self.option_452_limit_2004 = self.driver.find_element(By.ID, "option-452-limit-2004")
 
-        # 1MM/4MM
+        # 1MM/5MM
         self.option_452_limit_1994 = self.driver.find_element(By.ID, "option-452-limit-1994")
 
         # Deductibles
@@ -24,7 +24,7 @@ class PCI_Doctor_Count_5_Broad_Reg_Protect_Combined():
         return self
 
     def select_Broad_Regulatory_Protection_Plus_and_eMD_Combined_Only_500K_2_pt_5_MM_limit_0_Deduct(self):
-        PCI_Doctor_Count_5_Broad_Reg_Protect_Combined.PageElements(self).option_452_limit_1999.click()
+        PCI_Doctor_Count_5_Broad_Reg_Protect_Combined.PageElements(self).option_452_limit_2004.click()
         PCI_Doctor_Count_5_Broad_Reg_Protect_Combined.PageElements(self).option_452_deductible_762.click()
 
     def select_Broad_Regulatory_Protection_Plus_and_eMD_Combined_Only_1MM_5MM_limit_0_Deduct(self):

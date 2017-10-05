@@ -94,9 +94,21 @@ class ProductsAndPrograms():
         NGP_CAMICO_link = self.driver.find_element(By.ID, "CAMICO Cyber Liability_start")
         NGP_CAMICO_link.click()
 
+    def click_NGP_HUB(self):
+        NGP_HUB_link = self.driver.find_element(By.ID, "HUB International NetGuard™ Plus_start")
+        NGP_HUB_link.click()
+
     def click_NGP_OBLIC(self):
         NGP_OBLIC_link = self.driver.find_element(By.ID, "OBLIC Cyber Liability_start")
         NGP_OBLIC_link.click()
+
+    def click_NGP_RTS(self):
+        NGP_RTS_link = self.driver.find_element(By.ID, "R-T Specialty Cyber Liability_start")
+        NGP_RTS_link.click()
+
+    def click_NGP_USI(self):
+        NGP_USI_link = self.driver.find_element(By.ID, "PrivaSafe Cyber Liability_start")
+        NGP_USI_link.click()
 
     def click_NGP_USPRO(self):
         NGP_USPRO_link = self.driver.find_element(By.ID, "US Pro Cyber Liability_start")

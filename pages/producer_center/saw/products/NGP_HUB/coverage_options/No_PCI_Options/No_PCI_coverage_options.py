@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-class No_PCI_Coverage_Options_eMD_Higher_Limits():
+class No_PCI_Coverage_Options():
 
     def __init__(self, driver):
         self.driver = driver
@@ -68,25 +68,25 @@ class No_PCI_Coverage_Options_eMD_Higher_Limits():
         return self
 
     def select_eMD_Only_No_PCI_500K_1MM_limit_0_Deduct(self):
-        No_PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_850_limit_3169.click()
-        No_PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_850_deductible_1296.click()
+        No_PCI_Coverage_Options.PageElements(self).option_850_limit_3169.click()
+        No_PCI_Coverage_Options.PageElements(self).option_850_deductible_1296.click()
 
     def select_eMD_Only_No_PCI_1MM_1MM_limit_0_Deduct(self):
-        No_PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_850_limit_3168.click()
-        No_PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_850_deductible_1296.click()
+        No_PCI_Coverage_Options.PageElements(self).option_850_limit_3168.click()
+        No_PCI_Coverage_Options.PageElements(self).option_850_deductible_1296.click()
 
     def select_2M_eMD_Only_No_PCI_2MM_2MM_limit_0_Deduct(self):
-        No_PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_856_limit_3196.click()
-        No_PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_856_deductible_1296.click()
+        No_PCI_Coverage_Options.PageElements(self).option_856_limit_3196.click()
+        No_PCI_Coverage_Options.PageElements(self).option_856_deductible_1296.click()
 
     def select_3M_eMD_Only_No_PCI_3MM_3MM_limit_0_Deduct(self):
-        No_PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_858_limit_3201.click()
-        No_PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_858_deductible_1296.click()
+        No_PCI_Coverage_Options.PageElements(self).option_858_limit_3201.click()
+        No_PCI_Coverage_Options.PageElements(self).option_858_deductible_1296.click()
 
     def select_2M_Broad_Regulatory_Protection_Plus_and_eMD_Combined_No_PCI_2MM_2MM_limit_0_Deduct(self):
-        No_PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_857_limit_3257.click()
-        No_PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_857_deductible_1297.click()
+        No_PCI_Coverage_Options.PageElements(self).option_857_limit_3257.click()
+        No_PCI_Coverage_Options.PageElements(self).option_857_deductible_1297.click()
 
     def select_3M_Broad_Regulatory_Protection_Plus_and_eMD_Combined_No_PCI_3MM_3MM_limit_0_Deduct(self):
-        No_PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_859_limit_3263.click()
-        No_PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_859_deductible_1297.click()
+        No_PCI_Coverage_Options.PageElements(self).option_859_limit_3263.click()
+        No_PCI_Coverage_Options.PageElements(self).option_859_deductible_1297.click()

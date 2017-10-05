@@ -105,11 +105,14 @@ class CreateQuote(unittest.TestCase):
         # For List of Contract Classes, See Contract_Classes.xml
         tree = ET.parse('Contract_Classes.xml')
         contract_classes_XML = tree.getroot()
-        contract_class = (contract_classes_XML[0][63].text)
+        contract_class = (contract_classes_XML[0][52].text)
 
-        #'Online Retailer': '46'
-        #'Retail Sales': '57'
+        #'Business Consulting': '7',
         #'Title/Escrow Services': '63'
+        #'Property Managers': '50',
+        #'Real Estate Agents': '52',
+        #'Real Estate Operators and Lessors': '54',
+        #'Real Estate Investment/Private Equity Firms': '53',
 
         # NOTE: For contract_classes.py, the array count starts at 1
         # Array will be 1 - 74
@@ -197,7 +200,6 @@ class CreateQuote(unittest.TestCase):
         # saw_PAF.create_quote_No_PCI_DSS_No_DQ(total_num_records)
 
         # Create Quote that Triggers DQ
-
 
         # Click Next on PAF Screen
         saw_PAF.click_next()

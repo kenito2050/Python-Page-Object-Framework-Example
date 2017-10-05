@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-class PCI_Coverage_Options_eMD_Higher_Limits():
+class PCI_Coverage_Options():
 
     def __init__(self, driver):
         self.driver = driver
@@ -71,25 +71,25 @@ class PCI_Coverage_Options_eMD_Higher_Limits():
         return self
 
     def select_eMD_Only_500K_1MM_limit_0_Deduct(self):
-        PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_451_limit_1989.click()
-        PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_451_deductible_763.click()
+        PCI_Coverage_Options.PageElements(self).option_451_limit_1989.click()
+        PCI_Coverage_Options.PageElements(self).option_451_deductible_763.click()
 
     def select_eMD_Only_1MM_1MM_limit_0_Deduct(self):
-        PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_451_limit_1988.click()
-        PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_451_deductible_763.click()
+        PCI_Coverage_Options.PageElements(self).option_451_limit_1988.click()
+        PCI_Coverage_Options.PageElements(self).option_451_deductible_763.click()
 
     def select_2M_eMD_Only_2MM_2MM_limit_0_Deduct(self):
-        PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_852_limit_3186.click()
-        PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_852_deductible_763.click()
+        PCI_Coverage_Options.PageElements(self).option_852_limit_3186.click()
+        PCI_Coverage_Options.PageElements(self).option_852_deductible_763.click()
 
     def select_3M_eMD_Only_3MM_3MM_limit_0_Deduct(self):
-        PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_853_limit_3187.click()
-        PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_853_deductible_763.click()
+        PCI_Coverage_Options.PageElements(self).option_853_limit_3187.click()
+        PCI_Coverage_Options.PageElements(self).option_853_deductible_763.click()
 
     def select_2M_Broad_Regulatory_Protection_Plus_and_eMD_Combined_2MM_2MM_limit_0_Deduct(self):
-        PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_854_limit_3256.click()
-        PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_854_deductible_1297.click()
+        PCI_Coverage_Options.PageElements(self).option_854_limit_3256.click()
+        PCI_Coverage_Options.PageElements(self).option_854_deductible_1297.click()
 
     def select_3M_Broad_Regulatory_Protection_Plus_and_eMD_Combined_3MM_3MM_limit_0_Deduct(self):
-        PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_855_limit_3262.click()
-        PCI_Coverage_Options_eMD_Higher_Limits.PageElements(self).option_855_deductible_762.click()
+        PCI_Coverage_Options.PageElements(self).option_855_limit_3262.click()
+        PCI_Coverage_Options.PageElements(self).option_855_deductible_762.click()

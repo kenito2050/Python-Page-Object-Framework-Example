@@ -53,7 +53,7 @@ class CreateQuote(unittest.TestCase):
         tree = ET.parse('resources.xml')
         login_credentials = tree.getroot()
         username = (login_credentials[0][0].text)
-        password = (login_credentials[0][1].text)
+        password = (login_credentials[1][1].text)
 
         # Access XML to retrieve the agent to search for
         tree = ET.parse('Agents.xml')
@@ -77,18 +77,19 @@ class CreateQuote(unittest.TestCase):
         # For List of Contract Classes, See Contract_Classes.xml
         tree = ET.parse('Contract_Classes.xml')
         contract_classes_XML = tree.getroot()
-        contract_class = (contract_classes_XML[0][63].text)
+        contract_class = (contract_classes_XML[0][53].text)
 
         # NOTE: For contract_classes.py, the array count starts at 1
         # Array will be 1 - 74
         contract_class_int_value = ContractClasses.return_contract_class_values(contract_class)
 
-        # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
-        # 'Accounting, Auditing, and Bookkeeping': '1',
         #'Business Consulting': '7',
-        #'Online Retailer': '46'
-        #'Retail Sales': '57'
+        # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
         #'Title/Escrow Services': '63'
+        #'Property Managers': '50',
+        #'Real Estate Agents': '52',
+        #'Real Estate Operators and Lessors': '54',
+        #'Real Estate Investment/Private Equity Firms': '53',
 
         # Date Variables
         date_today = time.strftime("%m/%d/%Y")
