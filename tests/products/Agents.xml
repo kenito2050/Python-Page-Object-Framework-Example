@@ -29,7 +29,11 @@
     </Test>
 
     <Test Eight ="Login_Search_for_Great_Test_Agent_Create_Quote">
-        <Agent>Great Test Agent</Agent>
+        <Agent>Casey Holsworth</Agent>
+    </Test>
+
+    <Test Nine ="Login_Search_for_Great_Test_Agent_Create_Quote">
+        <Agent>Melissa Lichty</Agent>
     </Test>
 
 </data>

@@ -70,9 +70,9 @@ from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
 
 
-class CreateQuote(unittest.TestCase):
+class CreateQuote():
 
-    def login_search_for_agent_create_quote(self):
+    def test_login_search_for_agent_create_quote(self):
 
         Product = "CYB_AAO"
 
@@ -137,19 +137,19 @@ class CreateQuote(unittest.TestCase):
                 empty_cell = False
 
 
-            regression_check = sh.cell_value(i, 3)
-            smoke_check = sh.cell_value(i, 4)
-            sanity_check = sh.cell_value(i, 5)
+            # regression_check = sh.cell_value(i, 3)
+            # smoke_check = sh.cell_value(i, 4)
+            # sanity_check = sh.cell_value(i, 5)
 
             # If / Else Section to check if a test needs to be run
             #### CODE NOT WORKING YET - Ken 8-2-17
             #### Program is running ALL rows & NOT skipping rows
-            if test_run_type_value == 3 and sanity_check == "0":
-                    continue
-            if test_run_type_value == 2 and smoke_check == "0":
-                    continue
-            if test_run_type_value == 1 and regression_check == "0":
-                    continue
+            # if test_run_type_value == 3 and sanity_check == "0":
+            #         continue
+            # if test_run_type_value == 2 and smoke_check == "0":
+            #         continue
+            # if test_run_type_value == 1 and regression_check == "0":
+            #         continue
 
 
             # Check to see if cell is NOT empty
@@ -664,7 +664,5 @@ class CreateQuote(unittest.TestCase):
 
             i += 1
 
-            print(test_scenario_number, test_scenario, agent, state, revenue, staff_count)
-
 cq = CreateQuote()
-cq.login_search_for_agent_create_quote()
+cq.test_login_search_for_agent_create_quote()

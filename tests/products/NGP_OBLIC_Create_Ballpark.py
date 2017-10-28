@@ -20,9 +20,9 @@ from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
 
 
-class CreateQuote(unittest.TestCase):
+class CreateQuote():
 
-    def login_search_for_agent_create_quote(self):
+    def test_login_search_for_agent_create_quote(self):
 
         ## Determine Test Environment to run scripts
 
@@ -152,4 +152,4 @@ class CreateQuote(unittest.TestCase):
         driver.quit()
 
 cq = CreateQuote()
-cq.login_search_for_agent_create_quote()
+cq.test_login_search_for_agent_create_quote()

@@ -161,8 +161,7 @@ class ProductsAndPrograms():
         continue_button_contract_class_modal_NGP_USPRO.click()
 
     def click_continue_on_contract_class_modal_after_selecting_contract_class(self):
-        continue_button_contract_class_modal_ = self.driver.find_element(By.XPATH,
-                                                                                  "//div[@id='pcs-product-class']/form/div[2]/a/span[2]/span/span")
+        continue_button_contract_class_modal_ = self.driver.find_element(By.XPATH,"//div[@id='pcs-product-class']/form/div[2]/a/span[2]/span/span")
         continue_button_contract_class_modal_.click()
 
 

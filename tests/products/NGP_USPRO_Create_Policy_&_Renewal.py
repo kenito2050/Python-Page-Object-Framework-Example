@@ -53,9 +53,9 @@ from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
 
 
-class CreateQuote(unittest.TestCase):
+class CreateQuote():
 
-    def login_search_for_agent_create_quote(self):
+    def test_login_search_for_agent_create_quote(self):
 
         Product = "NGP_USPRO"
 
@@ -191,7 +191,7 @@ class CreateQuote(unittest.TestCase):
             tree = ET.parse('resources.xml')
             login_credentials = tree.getroot()
             username = (login_credentials[0][0].text)
-            password = (login_credentials[1][1].text)
+            password = (login_credentials[0][1].text)
 
             # Access XML to retrieve the agent to search for
             # tree = ET.parse('Agents.xml')
@@ -564,4 +564,4 @@ class CreateQuote(unittest.TestCase):
             i += 1
 
 cq = CreateQuote()
-cq.login_search_for_agent_create_quote()
+cq.test_login_search_for_agent_create_quote()

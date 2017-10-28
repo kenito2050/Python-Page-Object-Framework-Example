@@ -10,8 +10,8 @@ from pages.producer_center.client_contact_page import ClientContact
 from pages.producer_center.client_search_page import ClientSearch
 from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
-from pages.producer_center.saw.products.NGP.PAF.PAF import PAF
-from pages.producer_center.saw.products.NGP.insured_information.insured_information import Insured_Information
+from pages.producer_center.saw.products.NGP_old.PAF.PAF import PAF
+from pages.producer_center.saw.products.NGP_old.insured_information.insured_information import Insured_Information
 from pages.service_center.agents_page import AgentsPage
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar

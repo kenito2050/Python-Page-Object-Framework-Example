@@ -15,7 +15,6 @@ class Insured_Information():
         return self
 
     def enter_annual_revenue(self, revenue):
-
         Insured_Information.PageElements(self).annual_revenue.send_keys(revenue)
 
     def click_next(self):
@@ -23,3 +22,5 @@ class Insured_Information():
 
     def click_return_to_Admin_Interface(self):
         Insured_Information.PageElements(self).return_to_Admin.click()
+
+

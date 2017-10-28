@@ -36,6 +36,7 @@ from pages.producer_center.saw.thank_you_page import Thank_You_Page
 from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.agents_page import AgentsPage
 from pages.service_center.applications_page import ApplicationsPage
+from pages.service_center.application_screens.details import App_Details
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
 from pages.service_center.policies_page import PoliciesPage
@@ -49,9 +50,9 @@ from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
 
 
-class CreateQuote(unittest.TestCase):
+class CreateQuote():
 
-    def login_search_for_agent_create_quote(self):
+    def test_login_search_for_agent_create_quote(self):
 
         Product = "CYB_LSA"
 
@@ -118,20 +119,20 @@ class CreateQuote(unittest.TestCase):
                 empty_cell = False
 
 
-            regression_check = round(sh.cell_value(i, 3))
-            smoke_check = round(sh.cell_value(i, 4))
-            sanity_check = round(sh.cell_value(i, 5))
+            # regression_check = round(sh.cell_value(i, 3))
+            # smoke_check = round(sh.cell_value(i, 4))
+            # sanity_check = round(sh.cell_value(i, 5))
 
             # If / Else Section to check if a test needs to be run
             #### CODE NOT WORKING YET - Ken 8-2-17
             #### Program is running ALL rows & NOT skipping rows
 
-            if (test_run_type_value == 3 and sanity_check == 0):
-                    continue
-            elif (test_run_type_value == 2 and smoke_check == 0):
-                    continue
-            elif (test_run_type_value == 1 and regression_check == 0):
-                    continue
+            # if (test_run_type_value == 3 and sanity_check == 0):
+            #         continue
+            # elif (test_run_type_value == 2 and smoke_check == 0):
+            #         continue
+            # elif (test_run_type_value == 1 and regression_check == 0):
+            #         continue
 
             # Check to see if cell is NOT empty
             # If cell is not empty, read in the values
@@ -216,7 +217,7 @@ class CreateQuote(unittest.TestCase):
             tree = ET.parse('resources.xml')
             login_credentials = tree.getroot()
             username = (login_credentials[0][0].text)
-            password = (login_credentials[0][1].text)
+            password = (login_credentials[1][1].text)
 
             # Access XML to retrieve the agent to search for
             # tree = ET.parse('Agents.xml')
@@ -330,11 +331,40 @@ class CreateQuote(unittest.TestCase):
 
             cp = CoveragePeriods(driver)
 
+            cp.click_return_to_Admin_Interface()
+
+            # Navigate to Application Details page
+            current_url_2 = driver.current_url
+            slashparts = current_url_2.split('/')
+            # Now join back the first three sections 'http:', '' and 'example.com'
+            base_url_2 = '/'.join(slashparts[:3]) + '/'
+
+            app_details_string = "?c=app.view&id="
+            # app_subjectivities_string = "?c=app.track_subjectivities&id="
+
+            application_details_screen = base_url_2 + app_details_string + application_id
+
+            # Navigate to Application Subjectivities Screen
+            driver.get(application_details_screen)
+
+            app_details = App_Details(driver)
+
+            # Update the Create Date to the Ad Hoc Effective Date Value
+            app_details.update_create_date(effective_date_formatted)
+
+            # Click Update Button
+            app_details.click_update_button()
+
+            # Click on Agent Link to return to Producer Center
+            app_details.click_agent_text_link()
+
+            # Return to Coverage Periods screen
+
             # Enter an Ad Hoc Effective Date
             cp.enter_ad_hoc_effective_date(effective_date_formatted)
 
             # Enter Today's Date as Effective Date
-            # cp.enter_current_date_as_effective_date(date_today)
+            #cp.enter_current_date_as_effective_date(date_today)
 
             cp.click_next()
 
@@ -547,7 +577,5 @@ class CreateQuote(unittest.TestCase):
 
             i += 1
 
-            print(test_scenario_number, test_scenario, agent, state, revenue, staff_count)
-
 cq = CreateQuote()
-cq.login_search_for_agent_create_quote()
+cq.test_login_search_for_agent_create_quote()

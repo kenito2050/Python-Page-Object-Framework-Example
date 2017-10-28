@@ -16,50 +16,50 @@ class PAF():
         self.operations_description = self.driver.find_element(By.ID, "operation_nature")
 
         # total number of customer and/or employee records
-        self.total_records = self.driver.find_element(By.ID, "ngp_rts_total_records")
+        self.total_records = self.driver.find_element(By.ID, "ngp_total_records")
 
         # Does the Applicant use anti-virus software and a securely configured firewall to protect their network?
-        self.platform_security_yes = self.driver.find_element(By.ID, "ngp_rts_platform_security-yes")
+        self.platform_security_yes = self.driver.find_element(By.ID, "ngp_platform_security-yes")
 
-        self.platform_security_no = self.driver.find_element(By.ID, "ngp_rts_platform_security-no")
+        self.platform_security_no = self.driver.find_element(By.ID, "ngp_platform_security-no")
 
         # If Your organization stores personal information on portable devices, including laptops, cell phones, PDAs, back-up tapes, USB thumb drivers and external hard drives, is such data encrypted to industry standards
-        self.data_security_yes = self.driver.find_element(By.ID, "ngp_rts_data_security-yes")
+        self.data_security_yes = self.driver.find_element(By.ID, "ngp_data_storage-yes")
 
-        self.data_security_no = self.driver.find_element(By.ID, "ngp_rts_data_security-no")
+        self.data_security_no = self.driver.find_element(By.ID, "ngp_data_storage-no")
 
         # If "Yes", is such data encrypted to industry standards
 
-        self.data_security_standards_yes = self.driver.find_element(By.ID, "ngp_rts_data_security_standards-yes")
+        self.data_security_standards_yes = self.driver.find_element(By.ID, "ngp_data_security_standards-yes")
 
-        self.data_security_standards_no = self.driver.find_element(By.ID, "ngp_rts_data_security_standards-no")
+        self.data_security_standards_no = self.driver.find_element(By.ID, "ngp_data_security_standards-no")
 
         # Does the applicant utilize a cloud provider to store data
 
-        self.cloud_provider_yes = self.driver.find_element(By.ID, "ngp_rts_cloud_provider-yes")
+        self.cloud_provider_yes = self.driver.find_element(By.ID, "ngp_cloud_provider-yes")
 
-        self.cloud_provider_no = self.driver.find_element(By.ID, "ngp_rts_cloud_provider-no")
+        self.cloud_provider_no = self.driver.find_element(By.ID, "ngp_cloud_provider-no")
 
         # Please name the cloud provider
-        self.cloud_provider_detail = self.driver.find_element(By.ID, "ngp_rts_cloud_provider_detail")
+        self.cloud_provider_detail = self.driver.find_element(By.ID, "ngp_cloud_provider_detail")
 
         # Are you PCI-DSS Compliant
-        self.pci_dss_compliant_yes = self.driver.find_element(By.ID, "ngp_rts_pci_dss_compliant-yes")
+        self.pci_dss_compliant_yes = self.driver.find_element(By.ID, "ngp_pci_dss_compliant-yes")
 
-        self.pci_dss_compliant_no = self.driver.find_element(By.ID, "ngp_rts_pci_dss_compliant-no")
+        self.pci_dss_compliant_no = self.driver.find_element(By.ID, "ngp_pci_dss_compliant-no")
 
-        # pci_dss_compliant_na = self.driver.find_element(By.ID, "ngp_rts_pci_dss_compliant-na")
+        # pci_dss_compliant_na = self.driver.find_element(By.ID, "ngp_pci_dss_compliant-na")
 
         # Has the Applicant or any other person or entity proposed for this insurance received any complaints or claims, or been the subject in litigation, involving matters of privacy injury, identity theft, denial of service attacks, computer virus infections, theft of information, damage to third party networks, or the ability of customers to rely on the Applicant's network
 
-        self.complaints_litigation_yes = self.driver.find_element(By.ID, "ngp_rts_complaints_litigation-yes")
+        self.complaints_litigation_yes = self.driver.find_element(By.ID, "ngp_complaints_litigation-yes")
 
-        self.complaints_litigation_no = self.driver.find_element(By.ID, "ngp_rts_complaints_litigation-no")
+        self.complaints_litigation_no = self.driver.find_element(By.ID, "ngp_complaints_litigation-no")
 
         # Is the Applicant or any other person or entity proposed for this insurance aware of or have knowledge of any act, events, circumstances or incidents that may give rise to complaints or claims involving matters of privacy injury, identity theft, denial of service attacks, computer virus infections, theft of information, damage to third party networks, or the ability of customers' to rely on the Applicant's network
-        self.regulatory_investigation_yes = self.driver.find_element(By.ID, "ngp_rts_regulatory_investigation-yes")
+        self.regulatory_investigation_yes = self.driver.find_element(By.ID, "ngp_regulatory_investigation-yes")
 
-        self.regulatory_investigation_no = self.driver.find_element(By.ID, "ngp_rts_regulatory_investigation-no")
+        self.regulatory_investigation_no = self.driver.find_element(By.ID, "ngp_regulatory_investigation-no")
 
 
 

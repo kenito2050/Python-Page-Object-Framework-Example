@@ -14,12 +14,12 @@ from pages.producer_center.my_policies.my_policies_screens.active_policies impor
 from pages.producer_center.navigation_bar import Navigation_Bar
 from pages.producer_center.client_contact_page import ClientContact
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
-from pages.producer_center.saw.products.NGP.insured_information.insured_information import Insured_Information
-from pages.producer_center.saw.products.NGP.PAF.PAF import PAF
-from pages.producer_center.saw.products.NGP.coverage_options.PCI_coverage_options import PCI_Coverage_Options
-from pages.producer_center.saw.products.NGP.coverage_options.No_PCI_coverage_options import No_PCI_Coverage_Options
-from pages.producer_center.saw.products.NGP.coverage_options.coverage_options import Coverage_Options
-from pages.producer_center.saw.products.NGP.select_option.select_option import Select_Option
+from pages.producer_center.saw.products.NGP_old.insured_information.insured_information import Insured_Information
+from pages.producer_center.saw.products.NGP_old.PAF.PAF import PAF
+from pages.producer_center.saw.products.NGP_old.coverage_options.PCI_coverage_options import PCI_Coverage_Options
+from pages.producer_center.saw.products.NGP_old.coverage_options.No_PCI_coverage_options import No_PCI_Coverage_Options
+from pages.producer_center.saw.products.NGP_old.coverage_options.coverage_options import Coverage_Options
+from pages.producer_center.saw.products.NGP_old.select_option.select_option import Select_Option
 from pages.producer_center.saw.quote_review import Quote_Review
 from pages.producer_center.saw.invoice import Invoice
 from pages.producer_center.saw.confirm_order_details import Confirm_Order_Details
@@ -42,9 +42,9 @@ from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
 
 
-class CreateQuote(unittest.TestCase):
+class CreateQuote():
 
-    def login_search_for_agent_create_quote(self):
+    def test_login_search_for_agent_create_quote(self):
 
         ## Determine Test Environment to run scripts
 
@@ -398,4 +398,4 @@ class CreateQuote(unittest.TestCase):
         driver.quit()
 
 cq = CreateQuote()
-cq.login_search_for_agent_create_quote()
+cq.test_login_search_for_agent_create_quote()

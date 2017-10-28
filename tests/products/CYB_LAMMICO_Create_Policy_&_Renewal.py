@@ -47,7 +47,7 @@ from utilities.zip_codes.zip_codes import ZipCodes
 
 class CreateQuote(unittest.TestCase):
 
-    def login_search_for_agent_create_quote(self):
+    def test_login_search_for_agent_create_quote(self):
 
         Product = "CYB_LAMMICO"
 
@@ -493,4 +493,4 @@ class CreateQuote(unittest.TestCase):
             print(test_scenario_number, test_scenario, agent, state, revenue, staff_count)
 
 cq = CreateQuote()
-cq.login_search_for_agent_create_quote()
+cq.test_login_search_for_agent_create_quote()

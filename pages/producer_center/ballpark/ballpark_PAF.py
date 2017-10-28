@@ -63,7 +63,7 @@ class BallPark_PAF():
 
         # TODO: Move these identifiers into a separate class
 
-        # NGP Cyber Liability - product - list - item - 74
+        # NGP_old Cyber Liability - product - list - item - 74
         cb_CYB_MICA = self.driver.find_element(By.ID, "product-list-item-70")
 
         cb_CYB_MICA.click()
@@ -73,7 +73,7 @@ class BallPark_PAF():
 
         # TODO: Move these identifiers into a separate class
 
-        # NGP Cyber Liability - product - list - item - 67
+        # NGP_old Cyber Liability - product - list - item - 67
         cb_CYB_PSIC_DDS = self.driver.find_element(By.ID, "product-list-item-67")
 
         cb_CYB_PSIC_DDS.click()
@@ -83,7 +83,7 @@ class BallPark_PAF():
 
         # TODO: Move these identifiers into a separate class
 
-        # NGP Cyber Liability - product - list - item - 66
+        # NGP_old Cyber Liability - product - list - item - 66
         cb_CYB_PSIC_MD = self.driver.find_element(By.ID, "product-list-item-66")
 
         cb_CYB_PSIC_MD.click()
@@ -103,7 +103,7 @@ class BallPark_PAF():
 
         # TODO: Move these identifiers into a separate class
 
-        # NGP Cyber Liability - product - list - item - 74
+        # NGP_old Cyber Liability - product - list - item - 74
         cb_LTC = self.driver.find_element(By.ID, "product-list-item-32")
 
         cb_LTC.click()
@@ -113,7 +113,7 @@ class BallPark_PAF():
 
         # TODO: Move these identifiers into a separate class
 
-        # NGP Cyber Liability - product - list - item - 74
+        # NGP_old Cyber Liability - product - list - item - 74
         cb_NGP = self.driver.find_element(By.ID, "product-list-item-74")
 
         cb_NGP.click()
@@ -123,7 +123,7 @@ class BallPark_PAF():
 
         # TODO: Move these identifiers into a separate class
 
-        # NGP Cyber Liability - product - list - item - 74
+        # NGP_old Cyber Liability - product - list - item - 74
         cb_NGP_CAMICO = self.driver.find_element(By.ID, "product-list-item-109")
 
         cb_NGP_CAMICO.click()
@@ -133,7 +133,7 @@ class BallPark_PAF():
 
         # TODO: Move these identifiers into a separate class
 
-        # NGP Cyber Liability - product - list - item - 74
+        # NGP_old Cyber Liability - product - list - item - 74
         cb_NGP_OBLIC = self.driver.find_element(By.ID, "product-list-item-86")
 
         cb_NGP_OBLIC.click()

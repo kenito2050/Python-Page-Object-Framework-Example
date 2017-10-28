@@ -44,9 +44,9 @@ from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
 
 
-class CreateQuote(unittest.TestCase):
+class CreateQuote():
 
-    def login_search_for_agent_create_quote(self):
+    def test_login_search_for_agent_create_quote(self):
 
         Product = "LTC"
 
@@ -249,7 +249,7 @@ class CreateQuote(unittest.TestCase):
         # TODO: FIX redirection; should redirect back to Service Center
         saw_confirm_issue.click_return_to_Admin_Interface()
 
-        time.sleep(2)
+        time.sleep(3)
 
         #This section is necessary ONLY on STAGE
         # Call Login methods from Pages.home.login_page.py
@@ -361,4 +361,4 @@ class CreateQuote(unittest.TestCase):
         driver.quit()
 
 cq = CreateQuote()
-cq.login_search_for_agent_create_quote()
+cq.test_login_search_for_agent_create_quote()
