@@ -1,4 +1,5 @@
 import unittest
+import os
 from urllib.parse import urlparse, parse_qs
 from xml.etree import ElementTree as ET
 
@@ -49,12 +50,27 @@ class CreateQuote():
 
     def test_login_search_for_agent_create_quote(self):
 
+        ## Directory Locations
+
+        tests_directory = os.path.abspath(os.pardir)
+        framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
+        config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
+        test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
+        test_results_directory = os.path.abspath(
+            os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
+
+        # Determine the Test Run Type
+        # Get Test Run Type Text from config file
+        tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
+        test_environment = tree.getroot()
+        test_run_type = (test_environment[1][0].text)
+
         ## Determine Test Environment to run scripts
 
         ## Read in value from test_environment.xml
-        tree = ET.parse('test_environment.xml')
-        test_environment  = tree.getroot()
-        environment =(test_environment[0][0].text)
+        tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
+        test_environment = tree.getroot()
+        environment = (test_environment[0][0].text)
 
         ## Select Appropriate URL based on the Environment Value from above
         baseURL  = Environments.return_environments(environment)

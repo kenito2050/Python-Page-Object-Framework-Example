@@ -20,17 +20,19 @@ from pages.producer_center.saw.confirm_and_issue import Confirm_and_Issue
 from pages.producer_center.saw.confirm_order_details import Confirm_Order_Details
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
 from pages.producer_center.saw.invoice import Invoice
-from pages.producer_center.saw.products.NGP.PAF.PAF import PAF
+from pages.producer_center.saw.products.NGP_USPRO_AZIONE.PAF.PAF import PAF
+
+### Generic Coverage Options Classes
+from pages.producer_center.saw.products.NGP_USPRO_AZIONE.coverage_options.coverage_options import Coverage_Options
 
 ### PCI Coverage Options Classes
-from pages.producer_center.saw.products.NGP.coverage_options.PCI_Options.PCI_coverage_options import PCI_Coverage_Options
+from pages.producer_center.saw.products.NGP_USPRO_AZIONE.coverage_options.PCI_Options.PCI_coverage_options import PCI_Coverage_Options
 
 ### Non PCI Coverage Options Classes
-from pages.producer_center.saw.products.NGP.coverage_options.No_PCI_Options.No_PCI_coverage_options import No_PCI_Coverage_Options
+from pages.producer_center.saw.products.NGP_USPRO_AZIONE.coverage_options.No_PCI_Options.No_PCI_coverage_options import No_PCI_Coverage_Options
 
-from pages.producer_center.saw.products.NGP.coverage_options.coverage_options import Coverage_Options
-from pages.producer_center.saw.products.NGP.insured_information.insured_information import Insured_Information
-from pages.producer_center.saw.products.NGP.select_option.select_option import Select_Option
+from pages.producer_center.saw.products.NGP_USPRO_AZIONE.insured_information.insured_information import Insured_Information
+from pages.producer_center.saw.products.NGP_USPRO_AZIONE.select_option.select_option import Select_Option
 from pages.producer_center.saw.quote_review import Quote_Review
 from pages.producer_center.saw.summary import Summary
 from pages.producer_center.saw.thank_you_page import Thank_You_Page
@@ -55,7 +57,7 @@ class CreateQuote():
 
     def test_login_search_for_agent_create_quote(self):
 
-        Product = "NGP"
+        Product = "NGP_USPRO_AZIONE"
 
         ## Directory Locations
 
@@ -189,7 +191,7 @@ class CreateQuote():
             tree = ET.parse('resources.xml')
             login_credentials = tree.getroot()
             username = (login_credentials[0][0].text)
-            password = (login_credentials[1][1].text)
+            password = (login_credentials[0][1].text)
 
             # Access XML to retrieve the agent to search for
             # tree = ET.parse('Agents.xml')
@@ -266,11 +268,22 @@ class CreateQuote():
             ap.click_submit_new_application_as_agent()
 
             pp = ProductsAndPrograms(driver)
-            pp.click_NGP()
+            pp.click_NGP_USPRO_AZIONE()
 
-            # The following lines added on 10-09-17 work
+            # The following lines added on 5-15-17 work
             pp.click_contract_class_drop_down_select_contract_class(contract_class)
-            pp.click_continue_on_contract_class_modal()
+            # pp.select_contract_class_dropdown()
+
+            # pp.select_contract_class(contract_class)  # Script Ends Here
+            pp.click_continue_on_contract_class_modal_after_selecting_contract_class()
+
+            # These next (2) lines commented out
+            # No prompt for Contract Class
+
+            # pp.click_contract_class_modal()
+            # pp.select_contract_class_dropdown()
+            # pp.select_contract_class(contract_class_int_value)
+            # pp.click_continue_on_contract_class_modal()
 
             cs = ClientSearch(driver)
             cs.input_bogus_client_data(postal_code)
@@ -278,8 +291,11 @@ class CreateQuote():
             cs.enter_new_client_name_address(company_name_string, address_value, city, state)
             cc = ClientContact(driver)
 
+            # TODO:
+            # Code now parses URL String & retrieves application ID
+            # cc.parse_url_get_app_id()
+
             # Get the Application ID from URL -- THIS WORKS
-            # Code parses URL String & retrieves application ID
             current_url = driver.current_url
             first_url_string = urlparse(current_url)
             query_dict = parse_qs(first_url_string.query)
@@ -290,8 +306,6 @@ class CreateQuote():
             cp = CoveragePeriods(driver)
 
             cp.click_return_to_Admin_Interface()
-
-            time.sleep(3)
 
             # Navigate to Application Details page
             current_url_2 = driver.current_url
@@ -397,19 +411,19 @@ class CreateQuote():
             saw_CC = Coverage_Options(driver)
 
             ### Clear All selections on Coverage Options Screen
-            saw_CC.select_all_deselect_all()
+            # saw_CC.select_all_deselect_all()
 
             ### If / Then Block to determine which instance of Coverage Options to use
 
             ### PCI & Non-PCI Test Scenarios
 
             ### PCI Scenarios
-            if test_scenario_number == "1":
+            if test_scenario == "1":
                 saw_CC_in_use = PCI_Coverage_Options(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
 
             ### Non-PCI Scenarios
-            elif test_scenario_number == "2":
+            elif test_scenario == "2":
                 saw_CC_in_use = No_PCI_Coverage_Options(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
 

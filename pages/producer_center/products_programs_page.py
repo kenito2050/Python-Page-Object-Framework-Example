@@ -114,6 +114,10 @@ class ProductsAndPrograms():
         NGP_USPRO_link = self.driver.find_element(By.ID, "US Pro Cyber Liability_start")
         NGP_USPRO_link.click()
 
+    def click_NGP_USPRO_AZIONE(self):
+        NGP_USPRO_AZIONE_link = self.driver.find_element(By.ID, "AZIONE Cyber Liability_start")
+        NGP_USPRO_AZIONE_link.click()
+
     # Declare and Click Contract Class Modal
     def click_contract_class_modal(self):
         contract_class_modal = self.driver.find_element(By.ID, "pcs-product-class")
