@@ -70,6 +70,10 @@ class ProductsAndPrograms():
         CYB_TMLT_link = self.driver.find_element(By.ID, "TMLT Cyber Liability / Medefense™ Plus_start")
         CYB_TMLT_link.click()
 
+    def click_DAYSPA(self):
+        DAYSPA_link = self.driver.find_element(By.ID, "Day Spa PL/GL_start")
+        DAYSPA_link.click()
+
     def click_EO_MISC(self):
         EO_MISC_link = self.driver.find_element(By.ID, "Miscellaneous E&O_start")
         EO_MISC_link.click()

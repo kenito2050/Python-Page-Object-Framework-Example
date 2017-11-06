@@ -125,10 +125,10 @@ class PAF():
 
         return self
 
-    def create_quote_include_HNOA(self, bed_count):
+    def create_quote_include_HNOA(self):
 
         PAF.Page_Elements(self).operation_commence_date.send_keys("01-01-2001")
-        PAF.Page_Elements(self).bed_count.send_keys(bed_count)
+        # PAF.Page_Elements(self).bed_count.send_keys(bed_count)
         PAF.Page_Elements(self).facility_license_number.send_keys("A1111111")
         PAF.Page_Elements(self).additional_insured_no.click()
         PAF.Page_Elements(self).ltc_licensed_yes.click()
@@ -154,9 +154,9 @@ class PAF():
         PAF.Page_Elements(self).ltc_review_reports_detail.send_keys("Quarterly")
         PAF.Page_Elements(self).ltc_vehicle_prior_claims_no.click()
 
-    def create_quote_NO_HNOA(self, bed_count):
+    def create_quote_NO_HNOA(self):
         PAF.Page_Elements(self).operation_commence_date.send_keys("01-01-2001")
-        PAF.Page_Elements(self).bed_count.send_keys(bed_count)
+        # PAF.Page_Elements(self).bed_count.send_keys(bed_count)
         PAF.Page_Elements(self).facility_license_number.send_keys("A1111111")
         PAF.Page_Elements(self).additional_insured_no.click()
         PAF.Page_Elements(self).ltc_licensed_yes.click()

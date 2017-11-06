@@ -48,7 +48,7 @@ from pages.service_center.subjectivities import Subjectivities
 from utilities.Environments.Environments import Environments
 from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
-from utilities.zip_codes.zip_codes import ZipCodes
+from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
 
 
 class CreateQuote():
@@ -216,7 +216,7 @@ class CreateQuote():
             tree = ET.parse('resources.xml')
             login_credentials = tree.getroot()
             username = (login_credentials[0][0].text)
-            password = (login_credentials[0][1].text)
+            password = (login_credentials[1][1].text)
 
             # Access XML to retrieve the agent to search for
             # tree = ET.parse('Agents.xml')

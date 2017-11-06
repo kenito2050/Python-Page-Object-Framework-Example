@@ -16,8 +16,8 @@ from pages.producer_center.client_contact_page import ClientContact
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
 from pages.producer_center.saw.products.LTC.insured_information.insured_information import Insured_Information
 from pages.producer_center.saw.products.LTC.PAF.PAF import PAF
-from pages.producer_center.saw.products.LTC.coverage_options.Florida.HNOA_coverage_options import HNOA_Coverage_Options
-from pages.producer_center.saw.products.LTC.coverage_options.Florida.No_HNOA_coverage_options import No_HNOA_Coverage_Options
+from pages.producer_center.saw.products.LTC.coverage_options.Florida.FloridaHNOA_coverage_options import Florida_HNOA_Coverage_Options
+from pages.producer_center.saw.products.LTC.coverage_options.Florida.FloridaNo_HNOA_coverage_options import Florida_No_HNOA_Coverage_Options
 from pages.producer_center.saw.products.LTC.coverage_options.coverage_options import Coverage_Options
 from pages.producer_center.saw.products.LTC.select_option.select_option import Select_Option
 from pages.producer_center.saw.quote_review import Quote_Review
@@ -39,7 +39,7 @@ from pages.service_center.subjectivities import Subjectivities
 from utilities.Environments.Environments import Environments
 from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
-from utilities.zip_codes.zip_codes import ZipCodes
+from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
 
 
 class CreateQuote():
@@ -192,8 +192,8 @@ class CreateQuote():
         saw_PAF.click_next()
 
         #### This section determines if HNOA Option displays
-        saw_CC_HNOA = HNOA_Coverage_Options(driver)
-        saw_CC_No_HNOA = No_HNOA_Coverage_Options(driver)
+        saw_CC_HNOA = Florida_HNOA_Coverage_Options(driver)
+        saw_CC_No_HNOA = Florida_No_HNOA_Coverage_Options(driver)
 
         #### This class is for generic objects that display on the Coverage Options page
         saw_CC = Coverage_Options(driver)

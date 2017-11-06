@@ -34,7 +34,7 @@ from pages.service_center.policy_screens.policy_screens import Policy_Screens
 from pages.service_center.policy_screens.details import Details
 from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.policy_screens.effective_periods import Effective_Periods
-from pages.service_center.subjectivities import Subjectivities
+from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
 
 global test_summary
 global test_scenario

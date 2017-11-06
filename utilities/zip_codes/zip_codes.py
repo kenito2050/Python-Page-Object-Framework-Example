@@ -12,7 +12,7 @@ class ZipCodes(dict):
             'Colorado': '80123',#Denver
             'Connecticut': '06101',#Hartford
             'Delaware': '19901',#Dover
-            'Florida': '32301',#Tallahassee
+            'Florida': '33018',#Miami
             'Georgia': '30301',#Atlanta
             'Hawaii': '96813',#Honolulu
             'Idaho': '83701',#Boise
@@ -41,7 +41,7 @@ class ZipCodes(dict):
             'Ohio': '43085',#Columbus
             'Oklahoma': '73101',#Oklahoma City
             'Oregon': '97301',#Salem
-            'Pennsylvania': '17101',#Harrisburg
+            'Pennsylvania': '19019',#Philadelphia
             'Rhode Island': '02901',#Providence
             'South Carolina': '29201',#Columbia
             'South Dakota': '57501',#Pierre
