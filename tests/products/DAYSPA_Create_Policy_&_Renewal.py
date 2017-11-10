@@ -20,6 +20,8 @@ from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
 from pages.producer_center.saw.products.DAYSPA.insured_information.insured_information import Insured_Information
 from pages.producer_center.saw.products.DAYSPA.PAF.PAF import PAF
 from pages.producer_center.saw.products.DAYSPA.coverage_options.coverage_options import Coverage_Options
+from pages.producer_center.saw.products.DAYSPA.coverage_options.Product_Liability.Product_Liability_coverage_options import Product_Liability_Coverage_Options
+from pages.producer_center.saw.products.DAYSPA.coverage_options.No_Product_Liability.No_Product_Liability_coverage_options import No_Product_Liability_Coverage_Options
 from pages.producer_center.saw.products.DAYSPA.select_option.select_option import Select_Option
 from pages.producer_center.saw.quote_review import Quote_Review
 from pages.producer_center.saw.invoice import Invoice
@@ -167,27 +169,9 @@ class CreateQuote():
         password = (login_credentials[0][1].text)
 
         # Access XML to retrieve the agent to search for
-        tree = ET.parse('Agents.xml')
-        agents = tree.getroot()
-        agent = (agents[5][0].text)
-
-        # TODO: NEED TO FIX SO THAT SCRIPT USES STRING VALUE CONTAINED IN contract_class variable
-        # Access XML to retrieve contract_class
-
-        # NOTE: For XML, the array count starts at 0
-        # I have inserted a placeholder element at 0 -- Ken
-        # Array will be 1 - 74
-        # For List of Contract Classes, See Contract_Classes.xml
-        tree = ET.parse('Contract_Classes_Medical.xml')
-        contract_classes_XML = tree.getroot()
-        contract_class = (contract_classes_XML[0][1].text)
-
-        # NOTE: For contract_classes.py, the array count starts at 1
-        # Array will be 1 - 74
-        contract_class_int_value = ContractClasses_Medical.return_contract_class_values(contract_class)
-
-        # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
-        #contract_class_value = "74"
+        # tree = ET.parse('Agents.xml')
+        # agents = tree.getroot()
+        # agent = (agents[5][0].text)
 
         # Date Variables
         date_today = time.strftime("%m/%d/%Y")
@@ -251,7 +235,7 @@ class CreateQuote():
         # cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
 
         # Enter Today's Date as Effective Date
-        cp.enter_current_date_as_effective_date(effective_date_formatted)
+        cp.enter_current_date_as_effective_date(date_today)
 
         cp.click_next()
         saw_ii = Insured_Information(driver)
@@ -261,20 +245,41 @@ class CreateQuote():
         saw_PAF = PAF(driver)
 
         # Fill out PAF
-        saw_PAF.create_quote(years_in_business, number_procedures, revenue_last_year, revenue_upcoming_year)
+
+        # Else / If to determine how PAF will be filled in
+        # test_scenario 1, No Product Liability
+        # test_scenario 2, Product Liability
+
+        if test_scenario == "1":
+            saw_PAF.create_quote_No_Product_Liability(years_in_business, number_procedures, revenue_last_year, revenue_upcoming_year, effective_date_formatted)
+        elif test_scenario == "2":
+            saw_PAF.create_quote_Product_Liability(years_in_business, number_procedures, revenue_last_year, revenue_upcoming_year, effective_date_formatted)
+
+        # saw_PAF.create_quote_No_Product_Liability(years_in_business, number_procedures, revenue_last_year, revenue_upcoming_year, effective_date_formatted)
+
+        # saw_PAF.create_quote_Product_Liability(years_in_business, number_procedures, revenue_last_year, revenue_upcoming_year, effective_date_formatted)
 
         # Click Next on PAF screen
         saw_PAF.click_next()
 
-        saw_CC_in_use = Coverage_Options(driver)
-        getattr(saw_CC_in_use, _OLD_scenario)()
-
         #### This class is for generic objects that display on the Coverage Options page
         saw_CC = Coverage_Options(driver)
 
-        #saw_CC.select_all_deselect_all()
+        saw_CC.select_all_deselect_all()
 
-        saw_CC.proceed_to_quote()
+        # No Product Liability
+        if test_scenario_number == "1":
+            saw_CC_in_use = No_Product_Liability_Coverage_Options(driver)
+            getattr(saw_CC_in_use, _OLD_scenario)()
+
+        # Product Liability
+        elif test_scenario_number == "2":
+            saw_CC_in_use = Product_Liability_Coverage_Options(driver)
+            getattr(saw_CC_in_use, _OLD_scenario)()
+
+
+        saw_CC.click_proceed_to_quote()
+
         saw_summary = Summary(driver)
         saw_summary.click_generate_quote()
         saw_quote_review = Quote_Review(driver)

@@ -18,7 +18,7 @@ class PAF():
         self.sell_products_no = self.driver.find_element(By.ID, "sell_products-no")
 
         # Estimated number of procedures in the next 12 months?
-        self.procedure_count = self.driver.find_element(By.ID, "procedure-count")
+        self.procedure_count = self.driver.find_element(By.ID, "procedure_count")
 
         # Total Gross Revenue:
 
@@ -36,7 +36,7 @@ class PAF():
         # Does the Application conduct pre-employment screenings and/or any other necessary investigations and credentialing prior to hiring any staff?
         self.pre_employment_screen_investigation_credentialing_yes = self.driver.find_element(By.ID, "pre_employment_screen_investigation_credentialing-yes")
 
-        self.pre_employment_screen_investigation_credentialing_yes = self.driver.find_element(By.ID, "pre_employment_screen_investigation_credentialing-no")
+        self.pre_employment_screen_investigation_credentialing_no = self.driver.find_element(By.ID, "pre_employment_screen_investigation_credentialing-no")
 
         # Does the Applicant have a written/formalized risk management/quality assurance program
 
@@ -115,7 +115,7 @@ class PAF():
         # Have you or any current partners or predecessors in business EVER been declined, cancelled or non-renewed for Professional Liability Insurance?
         self.dayspa_professional_liability_insurance_yes = self.driver.find_element(By.ID, "dayspa_professional_liability_insurance-yes")
 
-        self.dayspa_professional_liability_insurance_no = self.driver.find_element(By.ID, "dayspa_professional_liability_insurance-yes")
+        self.dayspa_professional_liability_insurance_no = self.driver.find_element(By.ID, "dayspa_professional_liability_insurance-no")
 
         # Have you or any current partners or predecessors in business EVER been declined, cancelled or non-renewed for Professional Liability Insurance?
         self.dayspa_claim_yes = self.driver.find_element(By.ID, "dayspa_claim-yes")
@@ -132,9 +132,24 @@ class PAF():
 
         self.dayspa_professional_liability_expiring_no = self.driver.find_element(By.ID, "dayspa_professional_liability_expiring-no")
 
+        # Field Displays if Selecting Yes to Above Question
+        # If the expiring policy is claims-made, what is the retroactive date?
+
+        self.dayspa_expiring_poliy_retroactive_date = self.driver.find_element(By.ID, "dayspa_expiring_poliy_retroactive_date")
+
         return self
 
-    def create_quote(self, years_in_business, number_procedures, revenue_last_year, revenue_upcoming_year):
+    def Hidden_Page_Elements(self):
+
+        # Only Displays when Do You Sell Products = Yes
+
+        # Do you label them in your own name
+        self.label_products_yes = self.driver.find_element(By.ID, "label_products-yes")
+        self.label_products_no = self.driver.find_element(By.ID, "label_products-no")
+
+        return self
+
+    def create_quote_No_Product_Liability(self, years_in_business, number_procedures, revenue_last_year, revenue_upcoming_year, effective_date_formatted):
 
         PAF.Page_Elements(self).business_years_count.send_keys(years_in_business)
         PAF.Page_Elements(self).sell_products_no.click()
@@ -158,7 +173,36 @@ class PAF():
         PAF.Page_Elements(self).dayspa_professional_liability_insurance_no.click()
         PAF.Page_Elements(self).dayspa_claim_no.click()
         PAF.Page_Elements(self).dayspa_professional_liability_claim_no.click()
-        PAF.Page_Elements(self).dayspa_professional_liability_expiring_no.click()
+        PAF.Page_Elements(self).dayspa_professional_liability_expiring_yes.click()
+        PAF.Page_Elements(self).dayspa_expiring_poliy_retroactive_date.send_keys(effective_date_formatted)
+
+    def create_quote_Product_Liability(self, years_in_business, number_procedures, revenue_last_year, revenue_upcoming_year, effective_date_formatted):
+
+        PAF.Page_Elements(self).business_years_count.send_keys(years_in_business)
+        PAF.Page_Elements(self).sell_products_yes.click()
+        PAF.Hidden_Page_Elements(self).label_products_yes.click()
+        PAF.Page_Elements(self).procedure_count.send_keys(number_procedures)
+        PAF.Page_Elements(self).annual_revenue_last_policy_year.send_keys(revenue_last_year)
+        PAF.Page_Elements(self).annual_revenue_next_12_months.send_keys(revenue_upcoming_year)
+        PAF.Page_Elements(self).criminal_check_yes.click()
+        PAF.Page_Elements(self).pre_employment_screen_investigation_credentialing_yes.click()
+        PAF.Page_Elements(self).risk_management_quality_assurance_yes.click()
+        PAF.Page_Elements(self).incident_report_yes.click()
+        PAF.Page_Elements(self).dayspa_disciplinary_investigative_reprimand_no.click()
+        PAF.Page_Elements(self).dayspa_convict_act_no.click()
+        PAF.Page_Elements(self).dayspa_alcohol_drug_no.click()
+        PAF.Page_Elements(self).dayspa_license_special_terms_no.click()
+        PAF.Page_Elements(self).dayspa_sauna_steam_room_no.click()
+        PAF.Page_Elements(self).dayspa_soaking_pools_no.click()
+        PAF.Page_Elements(self).dayspa_showers_no.click()
+        PAF.Page_Elements(self).dayspa_cryotherapy_no.click()
+        PAF.Page_Elements(self).dayspa_tanning_service_no.click()
+        PAF.Page_Elements(self).dayspa_chemical_solution_strength_exceed_30_percent_no.click()
+        PAF.Page_Elements(self).dayspa_professional_liability_insurance_no.click()
+        PAF.Page_Elements(self).dayspa_claim_no.click()
+        PAF.Page_Elements(self).dayspa_professional_liability_claim_no.click()
+        PAF.Page_Elements(self).dayspa_professional_liability_expiring_yes.click()
+        PAF.Page_Elements(self).dayspa_expiring_poliy_retroactive_date.send_keys(effective_date_formatted)
 
 
     #TODO

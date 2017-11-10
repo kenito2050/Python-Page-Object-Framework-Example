@@ -189,7 +189,7 @@ class CreateQuote():
             tree = ET.parse('resources.xml')
             login_credentials = tree.getroot()
             username = (login_credentials[0][0].text)
-            password = (login_credentials[1][1].text)
+            password = (login_credentials[0][1].text)
 
             # Access XML to retrieve the agent to search for
             # tree = ET.parse('Agents.xml')
