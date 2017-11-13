@@ -180,7 +180,7 @@ class PAF():
 
         PAF.Page_Elements(self).business_years_count.send_keys(years_in_business)
         PAF.Page_Elements(self).sell_products_yes.click()
-        PAF.Hidden_Page_Elements(self).label_products_yes.click()
+        PAF.Hidden_Page_Elements(self).label_products_no.click()
         PAF.Page_Elements(self).procedure_count.send_keys(number_procedures)
         PAF.Page_Elements(self).annual_revenue_last_policy_year.send_keys(revenue_last_year)
         PAF.Page_Elements(self).annual_revenue_next_12_months.send_keys(revenue_upcoming_year)
