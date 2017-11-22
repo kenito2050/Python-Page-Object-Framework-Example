@@ -15,12 +15,16 @@ class Unittest_login_create_quote(unittest.TestCase):
 
     def setUp(self):
 
-        self.driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
+        ## Directory Locations
+        tests_directory = os.path.abspath(os.pardir)
+        framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
+        config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
+
+        self.driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
     def test_login(self):
 
         ## Directory Locations
-
         tests_directory = os.path.abspath(os.pardir)
         framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
         config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
