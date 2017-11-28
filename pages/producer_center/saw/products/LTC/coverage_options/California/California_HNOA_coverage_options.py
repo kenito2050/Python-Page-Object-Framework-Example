@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-class LA_County_HNOA_Coverage_Options():
+class California_HNOA_Coverage_Options():
 
     def __init__(self, driver):
         self.driver = driver
@@ -22,9 +22,9 @@ class LA_County_HNOA_Coverage_Options():
         return self
 
     def select_LTC_Include_HNOA_1MM_3MM_Limit_1K_Deduct(self):
-        LA_County_HNOA_Coverage_Options.PageElements(self).option_902_limit_180.click()
-        LA_County_HNOA_Coverage_Options.PageElements(self).option_902_deductible_49.click()
-        LA_County_HNOA_Coverage_Options.PageElements(self).ltc_hnoa_endt_selected.click()
+        California_HNOA_Coverage_Options.PageElements(self).option_902_limit_180.click()
+        California_HNOA_Coverage_Options.PageElements(self).option_902_deductible_49.click()
+        California_HNOA_Coverage_Options.PageElements(self).ltc_hnoa_endt_selected.click()
 
     def select_all_deselect_all(self):
         select_deselect_all = self.driver.find_element(By.ID, "select-deselect-all")

@@ -23,8 +23,8 @@ from pages.producer_center.saw.products.LTC.coverage_options.Florida.FloridaHNOA
 from pages.producer_center.saw.products.LTC.coverage_options.Florida.FloridaNo_HNOA_coverage_options import Florida_No_HNOA_Coverage_Options
 from pages.producer_center.saw.products.LTC.coverage_options.HNOA_coverage_options import HNOA_Coverage_Options
 from pages.producer_center.saw.products.LTC.coverage_options.No_HNOA_coverage_options import No_HNOA_Coverage_Options
-from pages.producer_center.saw.products.LTC.coverage_options.LA_County.LA_County_HNOA_coverage_options import LA_County_HNOA_Coverage_Options
-from pages.producer_center.saw.products.LTC.coverage_options.LA_County.LA_County_No_HNOA_coverage_options import LA_County_No_HNOA_Coverage_Options
+from pages.producer_center.saw.products.LTC.coverage_options.California.California_HNOA_coverage_options import California_HNOA_Coverage_Options
+from pages.producer_center.saw.products.LTC.coverage_options.California.California_No_HNOA_coverage_options import California_No_HNOA_Coverage_Options
 from pages.producer_center.saw.products.LTC.coverage_options.coverage_options import Coverage_Options
 from pages.producer_center.saw.products.LTC.select_option.select_option import Select_Option
 from pages.producer_center.saw.quote_review import Quote_Review
@@ -272,8 +272,10 @@ class CreateQuote():
         # Test Scenarios
         # 1 - Florida - HNOA
         # 2 - Florida - NOHOA
-        # 3 - Outside Florida - HNOA
-        # 4 - Outside Florida - NOHNOA
+        # 3 - Rest of Country - HNOA
+        # 4 - Rest of Country - NOHNOA
+        # 5 - California - HNOA
+        # 6 - California - NOHNOA
 
         if test_scenario == "1":
             saw_CC_in_use = Florida_HNOA_Coverage_Options(driver)
@@ -292,11 +294,11 @@ class CreateQuote():
             getattr(saw_CC_in_use, _OLD_scenario)()
 
         elif test_scenario == "5":
-            saw_CC_in_use = LA_County_HNOA_Coverage_Options(driver)
+            saw_CC_in_use = California_HNOA_Coverage_Options(driver)
             getattr(saw_CC_in_use, _OLD_scenario)()
 
         elif test_scenario == "6":
-            saw_CC_in_use = LA_County_No_HNOA_Coverage_Options(driver)
+            saw_CC_in_use = California_No_HNOA_Coverage_Options(driver)
             getattr(saw_CC_in_use, _OLD_scenario)()
 
         #### This class is for generic objects that display on the Coverage Options page
