@@ -302,53 +302,42 @@ class Unittest_login_create_quote(unittest.TestCase):
         ### Clear All selections on Coverage Options Screen
         saw_CC.select_all_deselect_all()
 
-        #### If / ELSE to Determine which Coverage Options are selected based on Test Scenario
+        #### If / ELSE to Determine which Coverage Options are selected based on Test Scenario Number and revenue tier
         ####
-
-        ### Declare the Coverage Options Driver Variable
-
         ### This section tests to see if the correct test scenario is executed, given the test_scenario_number & revenue tier
-        ### TODO: Read the values from the OLD_Scenario variable; Run that scenario
+        ### Read the values from the OLD_Scenario variable; Run that scenario
 
         if test_scenario_number == "1" and revenue_tier == "1":
             saw_CC_in_use = HCF_PCI_Coverage_Options_10MM_or_Less(self.driver)
             getattr(saw_CC_in_use, _OLD_scenario)()
-            # saw_CC_in_use.select_MEDEFENSE_Plus_Only_1MM_1MM_limit_2pt5K_Deduct()
 
         elif test_scenario_number == "1" and revenue_tier == "2":
             saw_CC_in_use = HCF_PCI_Coverage_Options_10MM_to_25MM(self.driver)
             getattr(saw_CC_in_use, _OLD_scenario)()
-            # saw_CC_in_use.select_Medefense_Plus_and_eMD_Higher_Limits_With_PCI_and_Cyber_Crime_Combined_3MM_3MM_100K_250K_limit_5K_Deduct()
 
         elif test_scenario_number == "1" and revenue_tier == "3":
             saw_CC_in_use = HCF_PCI_Coverage_Options_25MM_or_Greater(self.driver)
             getattr(saw_CC_in_use, _OLD_scenario)()
-            # saw_CC_in_use.select_Medefense_Plus_and_eMD_Higher_Limits_With_PCI_and_Cyber_Crime_Combined_3MM_3MM_100K_250K_limit_10K_Deduct()
 
         elif test_scenario_number == "3" and revenue_tier == "1":
             saw_CC_in_use = HCF_No_PCI_Coverage_Options_10MM_or_Less(self.driver)
             getattr(saw_CC_in_use, _OLD_scenario)()
-            # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_Without_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_2pt5K_Deduct()
 
         elif test_scenario_number == "3" and revenue_tier == "2":
             saw_CC_in_use = HCF_No_PCI_Coverage_Options_10MM_to_25MM(self.driver)
             getattr(saw_CC_in_use, _OLD_scenario)()
-            # saw_CC_in_use.select_Medefense_Plus_and_eMD_Higher_Limits_Without_PCI_and_Cyber_Crime_Combined_2MM_2MM_100K_250K_limit_5K_Deduct()
 
         elif test_scenario_number == "3" and revenue_tier == "3":
             saw_CC_in_use = HCF_No_PCI_Coverage_Options_25MM_or_Greater(self.driver)
             getattr(saw_CC_in_use, _OLD_scenario)()
-            # saw_CC_in_use.select_Medefense_Plus_and_eMD_Higher_Limits_Without_PCI_and_Cyber_Crime_Combined_3MM_3MM_100K_250K_limit_10K_Deduct()
 
         elif test_scenario_number == "2":
             saw_CC_in_use = Non_HCF_PCI_Coverage_Options(self.driver)
             getattr(saw_CC_in_use, _OLD_scenario)()
-            # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_With_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()
 
         elif test_scenario_number == "4":
             saw_CC_in_use = Non_HCF_No_PCI_Coverage_Options(self.driver)
             getattr(saw_CC_in_use, _OLD_scenario)()
-            # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_Without_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()
 
         ### FIXED: Renamed method proceed_to_quote to click_proceed_to_quote; This code now works
         saw_CC.click_proceed_to_quote()
