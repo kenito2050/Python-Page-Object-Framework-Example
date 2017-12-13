@@ -7,20 +7,23 @@ class Coverage_Options():
 
     def PageElements(self):
 
+
+        # Online Seller Suspension
+
         # Limits
-        # $250K/$250K
-        self.option_518_limit_887 = self.driver.find_element(By.ID, "option-518-limit-887")
+        # $25K/$25K
+        self.option_904_limit_3529 = self.driver.find_element(By.ID, "option-904-limit-3529")
 
-        # $500K/$500K
-        self.option_518_limit_580 = self.driver.find_element(By.ID, "option-518-limit-580")
+        # $50K/$50K
+        self.option_904_limit_3530 = self.driver.find_element(By.ID, "option-904-limit-3530")
 
-        # $1MM/1MM
-        self.option_518_limit_579 = self.driver.find_element(By.ID, "option-518-limit-579")
+        # $100K/100K
+        self.option_904_limit_3531 = self.driver.find_element(By.ID, "option-904-limit-3531")
 
         # Deductibles
 
-        # $5,000
-        self.option_518_deductible_177 = self.driver.find_element(By.ID, "option-518-deductible-177")
+        # None
+        self.option_904_deductible_1408 = self.driver.find_element(By.ID, "option-904-deductible-1408")
 
 
 
@@ -36,18 +39,17 @@ class Coverage_Options():
         return self
 
 
-    def select_Tenant_Discrimination_Legal_Expense_Loss_Reimbursement_Insurance_250K_limit_5K_Deduct(self):
-        Coverage_Options.PageElements(self).option_518_limit_887.click()
-        Coverage_Options.PageElements(self).option_518_deductible_177.click()
+    def select_Online_Seller_Suspension_25K_limit_0_Deduct(self):
+        Coverage_Options.PageElements(self).option_904_limit_3529.click()
+        Coverage_Options.PageElements(self).option_904_deductible_1408.click()
 
-    def select_Tenant_Discrimination_Legal_Expense_Loss_Reimbursement_Insurance_500K_limit_5K_Deduct(self):
-        Coverage_Options.PageElements(self).option_518_limit_580.click()
-        Coverage_Options.PageElements(self).option_518_deductible_177.click()
+    def select_Online_Seller_Suspension_50K_limit_0_Deduct(self):
+        Coverage_Options.PageElements(self).option_904_limit_3530.click()
+        Coverage_Options.PageElements(self).option_904_deductible_1408.click()
 
-    def select_Tenant_Discrimination_Legal_Expense_Loss_Reimbursement_Insurance_1MM_limit_5K_Deduct(self):
-        Coverage_Options.PageElements(self).option_518_limit_579.click()
-        Coverage_Options.PageElements(self).option_518_deductible_177.click()
-
+    def select_Online_Seller_Suspension_100K_limit_0_Deduct(self):
+        Coverage_Options.PageElements(self).option_904_limit_3531.click()
+        Coverage_Options.PageElements(self).option_904_deductible_1408.click()
 
     def select_all_deselect_all(self):
         Coverage_Options.PageElements(self).select_deselect_all.click()
