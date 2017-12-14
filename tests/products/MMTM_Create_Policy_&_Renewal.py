@@ -306,7 +306,7 @@ class CreateQuote(unittest.TestCase):
 
             # Revenue Under 500K
             if test_scenario_number == "1" or test_scenario_number == "2" or test_scenario_number == "3" or test_scenario_number == "4":
-                saw_CC_in_use = Coverage_Options(driver)
+                saw_CC_in_use = Coverage_Options_Revenue_Under_500K(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
 
             # Scenarios 1 - 4 Work
