@@ -22,6 +22,10 @@ from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
 from pages.producer_center.saw.invoice import Invoice
 from pages.producer_center.saw.products.MMTM.PAF.PAF import PAF
 from pages.producer_center.saw.products.MMTM.coverage_options.coverage_options import Coverage_Options
+from pages.producer_center.saw.products.MMTM.coverage_options.coverage_options_Revenue_Under_500K import Coverage_Options_Revenue_Under_500K
+from pages.producer_center.saw.products.MMTM.coverage_options.coverage_options_Revenue_Between_500k_1MM import Coverage_Options_Revenue_Between_500k_1MM
+from pages.producer_center.saw.products.MMTM.coverage_options.coverage_options_Revenue_Between_1MM_2pt5MM import Coverage_Options_Revenue_Between_1MM_2pt5MM
+from pages.producer_center.saw.products.MMTM.coverage_options.coverage_options_Revenue_Over_2pt5MM import Coverage_Options_Revenue_Over_2pt5MM
 from pages.producer_center.saw.products.MMTM.insured_information.insured_information import Insured_Information
 from pages.producer_center.saw.products.MMTM.select_option.select_option import Select_Option
 from pages.producer_center.saw.quote_review import Quote_Review
@@ -163,7 +167,7 @@ class CreateQuote(unittest.TestCase):
             last_name = name.last_name()
             company_name = company.company_name()
             # company_name_string = company_name
-            company_name_string = "QA Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
+            company_name_string = "QA Test" + " " + "-" + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
             address_value = address.street_address()
             city = StateCapitals.return_state_capital(state)
             postal_code = ZipCodes.return_zip_codes(state)
@@ -280,7 +284,7 @@ class CreateQuote(unittest.TestCase):
 
             saw_PAF = PAF(driver)
 
-            if test_scenario_number == "1":
+            if test_scenario_number == "1" or test_scenario_number == "5" or test_scenario_number == "6" or test_scenario_number == "7":
                 saw_PAF.create_quote_individual(online_vendor, merchant_id, positive_feedback_rating_percent)
             elif test_scenario_number == "2":
                 saw_PAF.create_quote_corporation(online_vendor, merchant_id, positive_feedback_rating_percent)
@@ -298,11 +302,32 @@ class CreateQuote(unittest.TestCase):
             #### This class is for generic objects that display on the Coverage Options page
             saw_CC = Coverage_Options(driver)
 
-            #### Script complete up to this Point
+            # saw_CC.select_all_deselect_all()
 
-            # Next line uses the text in the _OLD_scenario column (in Excel Spreadsheet) as
-            # the method name
-            getattr(saw_CC, _OLD_scenario)()
+            # Revenue Under 500K
+            if test_scenario_number == "1" or test_scenario_number == "2" or test_scenario_number == "3" or test_scenario_number == "4":
+                saw_CC_in_use = Coverage_Options(driver)
+                getattr(saw_CC_in_use, _OLD_scenario)()
+
+            # Scenarios 1 - 4 Work
+            # Scenarios 5 - 7, Not Working
+            # Get Message Atribute Not Found
+
+            # Revenue between 500K - 1MM
+            elif test_scenario_number == "5":
+                saw_CC_in_use = Coverage_Options_Revenue_Between_500k_1MM(driver)
+                getattr(saw_CC_in_use, _OLD_scenario)()
+                # saw_CC_in_use.select_Online_Seller_Suspension_250K_limit_0_Deduct()
+
+            # Revenue between 1MM - 2.5MM
+            elif test_scenario_number == "6":
+                saw_CC_in_use = Coverage_Options_Revenue_Between_1MM_2pt5MM(driver)
+                getattr(saw_CC_in_use, _OLD_scenario)()
+
+            # Revenue Over 2.5MM
+            elif test_scenario_number == "7":
+                saw_CC_in_use = Coverage_Options_Revenue_Over_2pt5MM(driver)
+                getattr(saw_CC_in_use, _OLD_scenario)()
 
             ### Clear All selections on Coverage Options Screen
             # saw_CC.select_all_deselect_all()
