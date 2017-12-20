@@ -100,8 +100,8 @@ class CreateQuote():
         # Access XML to retrieve login credentials
         tree = ET.parse('resources.xml')
         login_credentials = tree.getroot()
-        username = (login_credentials[0][0].text)
-        password = (login_credentials[0][1].text)
+        username = (login_credentials[1][0].text)
+        password = (login_credentials[1][1].text)
 
         # Access XML to retrieve the agent to search for
         tree = ET.parse('Agents.xml')
@@ -263,7 +263,7 @@ class CreateQuote():
 
         # saw_CC_PCI.select_MEDEFENSE_Plus_Only_500K()
         # saw_CC_PCI.select_MEDEFENSE_Plus_Only_1MM()
-        # saw_CC_PCI.select_MEDEFENSE_with_50K_Disciplinary_500K()
+        saw_CC_PCI.select_MEDEFENSE_with_50K_Disciplinary_500K()
         # saw_CC_PCI.select_MEDEFENSE_with_50K_Disciplinary_1MM()
         # saw_CC_PCI.select_eMD_500K()
         # saw_CC_PCI.select_eMD_1MM()
@@ -272,7 +272,7 @@ class CreateQuote():
         # saw_CC_PCI.select_eMD_MEDEFENSE_Plus_500K()
         # saw_CC_PCI.select_eMD_MEDEFENSE_Plus_1MM()
         # saw_CC_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_2MM()
-        saw_CC_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_3MM()
+        # saw_CC_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_3MM()
         # saw_CC_PCI.select_eMD_and_MEDEFENSE_with_50k_Disciplinary_500K()
         # saw_CC_PCI.select_eMD_and_MEDEFENSE_with_50k_Disciplinary_1MM()
         # saw_CC_PCI.select_eMD_Higher_Limits_and_MEDEFENSE_with_50k_Disciplinary_2MM()

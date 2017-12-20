@@ -78,6 +78,10 @@ class ProductsAndPrograms():
         EO_MISC_link = self.driver.find_element(By.ID, "Miscellaneous E&O_start")
         EO_MISC_link.click()
 
+    def click_LEXR_TENANT(self):
+        LEXR_TENANT_link = self.driver.find_element(By.ID, "Tenant Discrimination Legal Expense and Loss Reimbursement Insurance_start")
+        LEXR_TENANT_link.click()
+
     def click_LTC(self):
         LTC_link = self.driver.find_element(By.ID, "Long Term Care PL/GL_start")
         LTC_link.click()
@@ -89,6 +93,10 @@ class ProductsAndPrograms():
     def click_MED_NCMIC(self):
         MED_NCMIC_link = self.driver.find_element(By.ID, "NCMIC MEDEFENSE™ Plus_start")
         MED_NCMIC_link.click()
+
+    def click_MMTM(self):
+        MMTM_link = self.driver.find_element(By.ID, "NAS Momentum_start")
+        MMTM_link.click()
 
     def click_NGP(self):
         NGP_link = self.driver.find_element(By.ID, "Cyber Liability_start")

@@ -1,4 +1,7 @@
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class NavigationBar():
 
@@ -16,6 +19,8 @@ class NavigationBar():
         self.staff_link = self.driver.find_element(By.LINK_TEXT, "Staff")
         self.admins_link = self.driver.find_element(By.LINK_TEXT, "Admins")
         self.products_link = self.driver.find_element(By.LINK_TEXT, "Products")
+        self.logout = self.driver.find_element(By.LINK_TEXT, "Logout")
+
 
         return self
 
@@ -54,3 +59,14 @@ class NavigationBar():
     def click_products(self):
         #products_link = self.driver.find_element(By.LINK_TEXT, "Products")
         NavigationBar.Page_Elements(self).products_link.click()
+
+    def click_logout(self):
+        # products_link = self.driver.find_element(By.LINK_TEXT, "Logout")
+        NavigationBar.Page_Elements(self).logout.click()
+
+    def logout_Exists(self):
+        try:
+            logout = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "Logout")))
+            logout.click()
+        finally:
+            self.driver.quit()

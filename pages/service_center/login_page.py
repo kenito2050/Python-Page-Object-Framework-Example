@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 import time
@@ -35,6 +36,23 @@ class LoginPage():
 
     def click_login_button(self):
         LoginPage.Page_Elements(self).submit_button.click()
+
+    def test_assert_text_in_url(self):
+        # Assert that certain text is in the url
+        current_url = self.driver.current_url
+        assert "c=home.updates" in current_url
+
+        # Assert Logout is Present
+    def assertElementIsPresentByXPath(self, xpath, msg=None):
+        try:
+            self.driver.find_element_by_xpath(xpath)
+            self.driver.assertTrue(True, msg)
+        except NoSuchElementException:
+            self.driver.assertTrue(False, msg)
+
+    def test_element_exists(self):
+        self.assertElementIsPresentByXPath("//h4[contains(text(),'Time Range')][1]")
+
 
 
     def login_new(self, username, password):

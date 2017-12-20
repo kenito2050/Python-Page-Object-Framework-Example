@@ -156,6 +156,48 @@ class PAF():
         PAF.Page_Elements(self).seller_account_online_no.click()
         PAF.Page_Elements(self).online_seller_issues_no.click()
 
+    def create_quote_revenue_between_500K_1MM(self, online_vendor, merchant_id, positive_feedback_rating_percent):
+        PAF.Page_Elements(self).individual.click()
+        PAF.Page_Elements(self).online_vendor_platform.send_keys(online_vendor)
+        PAF.Page_Elements(self).merchant_id.send_keys(merchant_id)
+        PAF.Page_Elements(self).cogs_15_percent.click()
+        PAF.Page_Elements(self).years_in_business_2_years.click()
+        PAF.Page_Elements(self).positive_feedback_rating.send_keys(positive_feedback_rating_percent)
+        PAF.Page_Elements(self).inventory_purchase_yes.click()
+        PAF.Page_Elements(self).amazon_fulfill_yes.click()
+        PAF.Page_Elements(self).seller_account_inquiry_no.click()
+        PAF.Page_Elements(self).seller_account_suspension_no.click()
+        PAF.Page_Elements(self).seller_account_online_no.click()
+        PAF.Page_Elements(self).online_seller_issues_no.click()
+
+    def create_quote_revenue_between_1MM_2pt5MM(self, online_vendor, merchant_id, positive_feedback_rating_percent):
+        PAF.Page_Elements(self).individual.click()
+        PAF.Page_Elements(self).online_vendor_platform.send_keys(online_vendor)
+        PAF.Page_Elements(self).merchant_id.send_keys(merchant_id)
+        PAF.Page_Elements(self).cogs_15_percent.click()
+        PAF.Page_Elements(self).years_in_business_2_years.click()
+        PAF.Page_Elements(self).positive_feedback_rating.send_keys(positive_feedback_rating_percent)
+        PAF.Page_Elements(self).inventory_purchase_yes.click()
+        PAF.Page_Elements(self).amazon_fulfill_yes.click()
+        PAF.Page_Elements(self).seller_account_inquiry_no.click()
+        PAF.Page_Elements(self).seller_account_suspension_no.click()
+        PAF.Page_Elements(self).seller_account_online_no.click()
+        PAF.Page_Elements(self).online_seller_issues_no.click()
+
+    def create_quote_revenue_over_2pt5MM(self, online_vendor, merchant_id, positive_feedback_rating_percent):
+        PAF.Page_Elements(self).individual.click()
+        PAF.Page_Elements(self).online_vendor_platform.send_keys(online_vendor)
+        PAF.Page_Elements(self).merchant_id.send_keys(merchant_id)
+        PAF.Page_Elements(self).cogs_15_percent.click()
+        PAF.Page_Elements(self).years_in_business_2_years.click()
+        PAF.Page_Elements(self).positive_feedback_rating.send_keys(positive_feedback_rating_percent)
+        PAF.Page_Elements(self).inventory_purchase_yes.click()
+        PAF.Page_Elements(self).amazon_fulfill_yes.click()
+        PAF.Page_Elements(self).seller_account_inquiry_no.click()
+        PAF.Page_Elements(self).seller_account_suspension_no.click()
+        PAF.Page_Elements(self).seller_account_online_no.click()
+        PAF.Page_Elements(self).online_seller_issues_no.click()
+
     # Ask Dev to create ID for next button
     def click_next(self):
         next_button = self.driver.find_element(By.XPATH, "//form[@id='rate-adjustment-form']/div[3]/div[3]/a/span[2]/span/span")

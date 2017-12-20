@@ -68,7 +68,7 @@ class CreateQuote():
         # Get Test Run Type Text from config file
         tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
         test_environment = tree.getroot()
-        test_run_type = (test_environment[1][0].text)
+        test_run_type = (test_environment[0][0].text)
         test_run_type_value = ''
 
         # If / Else to convert test_run_type text to a value
@@ -217,7 +217,7 @@ class CreateQuote():
             tree = ET.parse('resources.xml')
             login_credentials = tree.getroot()
             username = (login_credentials[0][0].text)
-            password = (login_credentials[1][1].text)
+            password = (login_credentials[0][1].text)
 
             # Access XML to retrieve the agent to search for
             # tree = ET.parse('Agents.xml')

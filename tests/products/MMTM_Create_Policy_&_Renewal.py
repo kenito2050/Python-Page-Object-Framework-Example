@@ -61,8 +61,8 @@ class CreateQuote(unittest.TestCase):
         test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
         test_results_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
 
-        # Determine the Test Run Type
-        # Get Test Run Type Text from config file
+        # Determine the Test Environment
+        # Get Test Environment value from config file
         tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
         test_environment = tree.getroot()
         test_run_type = (test_environment[1][0].text)
@@ -305,6 +305,7 @@ class CreateQuote(unittest.TestCase):
             # saw_CC.select_all_deselect_all()
 
             # Revenue Under 500K
+            # Select 25K, 50K or 100K limits
             if test_scenario_number == "1" or test_scenario_number == "2" or test_scenario_number == "3" or test_scenario_number == "4":
                 saw_CC_in_use = Coverage_Options_Revenue_Under_500K(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
@@ -314,20 +315,25 @@ class CreateQuote(unittest.TestCase):
             # Get Message Atribute Not Found
 
             # Revenue between 500K - 1MM
+            # Select 250K limit
             elif test_scenario_number == "5":
                 saw_CC_in_use = Coverage_Options_Revenue_Between_500k_1MM(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
                 # saw_CC_in_use.select_Online_Seller_Suspension_250K_limit_0_Deduct()
 
             # Revenue between 1MM - 2.5MM
+            # Select 500K limit
             elif test_scenario_number == "6":
                 saw_CC_in_use = Coverage_Options_Revenue_Between_1MM_2pt5MM(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
+                # saw_CC_in_use.select_Online_Seller_Suspension_500K_limit_0_Deduct()
 
             # Revenue Over 2.5MM
+            # Select 1MM limit
             elif test_scenario_number == "7":
                 saw_CC_in_use = Coverage_Options_Revenue_Over_2pt5MM(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
+                # saw_CC_in_use.select_Online_Seller_Suspension_1MM_limit_0_Deduct()
 
             ### Clear All selections on Coverage Options Screen
             # saw_CC.select_all_deselect_all()

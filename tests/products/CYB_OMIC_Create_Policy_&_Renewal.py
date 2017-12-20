@@ -666,7 +666,7 @@ class CreateQuote():
 
             i += 1
 
-            print(test_scenario_number, test_scenario, agent, state, revenue, staff_count)
+            # print(test_scenario_number, test_scenario, agent, state, revenue, staff_count)
 
 cq = CreateQuote()
 cq.test_login_search_for_agent_create_quote()
