@@ -1,3 +1,4 @@
+import csv
 import datetime
 import os
 import time
@@ -14,6 +15,9 @@ from selenium import webdriver
 from pages.customer_center.Landing_Page.Login import Login
 from pages.customer_center.Landing_Page.Account_Creation import Account_Creation
 from pages.customer_center.Insured_Information.Insured_Information import Insured_Information
+from pages.customer_center.PAF.PAF import PAF
+from pages.customer_center.Signature.Signature import Signature
+from pages.customer_center.Signature.Signature_View_Signed_Forms import Signature_View_Signed_Forms
 
 from utilities.Environments.Environments import Environments
 from utilities.state_capitals.state_capitals import StateCapitals
@@ -22,7 +26,7 @@ from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
 
 class CreateAccount():
 
-    def create_account(self):
+    def create_account_quote(self):
 
         Product = "MMTM_Customer_Center"
 
@@ -42,7 +46,6 @@ class CreateAccount():
 
         global test_summary
         global test_scenario_number
-        global test_scenario
         global password
         global address_1
         global address_2
@@ -82,19 +85,18 @@ class CreateAccount():
             if empty_cell == False:
                 test_summary = sh.cell_value(i, 0)
                 test_scenario_number = str(round(sh.cell_value(i, 1)))
-                test_scenario = sh.cell_value(i, 2)
-                password = sh.cell_value(i, 3)
-                address_1 = sh.cell_value(i, 4)
-                address_2 = sh.cell_value(i, 5)
-                city = sh.cell_value(i, 6)
-                state = sh.cell_value(i, 7)
-                postal_code = str(round(sh.cell_value(i, 8)))
-                revenue = str(round(sh.cell_value(i, 9)))
-                effective_date = sh.cell_value(i, 10)
-                online_vendor = str((sh.cell_value(i, 11)))
-                merchant_id = str((sh.cell_value(i, 12)))
-                positive_feedback_rating = str(round(sh.cell_value(i, 13)))
-                _OLD_scenario = str((sh.cell_value(i, 14)))
+                password = sh.cell_value(i, 2)
+                address_1 = sh.cell_value(i, 3)
+                address_2 = sh.cell_value(i, 4)
+                city = sh.cell_value(i, 5)
+                state = sh.cell_value(i, 6)
+                postal_code = str((sh.cell_value(i, 7)))
+                revenue = str(round(sh.cell_value(i, 8)))
+                effective_date = sh.cell_value(i, 9)
+                online_vendor = str((sh.cell_value(i, 10)))
+                merchant_id = str((sh.cell_value(i, 11)))
+                positive_feedback_rating = str(round(sh.cell_value(i, 12)))
+                _OLD_scenario = str((sh.cell_value(i, 13)))
 
             # Else, the cell is empty
             # End the Loop
@@ -135,6 +137,10 @@ class CreateAccount():
             # Becomes: J.User
             username = first_name_initial + "." + last_name
 
+            # Create Signature
+            # Concatenate First Name + Last Name
+            signature = first_name + " " + last_name
+
             # Address Generation
             # This Section Creates values for the Address Fields
             # Only Valid Values are generated based off of the State Value
@@ -166,18 +172,87 @@ class CreateAccount():
 
             # Create New Account, Click Submit
             ac = Account_Creation(driver)
-            ac.input_name_email_username_password(company_name_string, email_address, username, password)
+            ac.input_name_email_username_password(company_name_string, email_address, username, password )
             ac.click_submit_button()
+
+            # Wait
+            time.sleep(10)
 
             # Fill in Insured Information Screen
             ii = Insured_Information(driver)
             ii.fill_in_insured_information_fields(address_value, address_2, city, state, postal_code, revenue)
             ii.click_continue_button()
 
+            # Wait
+            time.sleep(5)
+
+            # Fill in PAF
+
+            saw_PAF = PAF(driver)
+
+            if test_scenario_number == "1" or test_scenario_number == "5" or test_scenario_number == "6" or test_scenario_number == "7":
+                saw_PAF.create_quote_individual(online_vendor, merchant_id, positive_feedback_rating)
+            elif test_scenario_number == "2":
+                saw_PAF.create_quote_corporation(online_vendor, merchant_id, positive_feedback_rating)
+            elif test_scenario_number == "3":
+                saw_PAF.create_quote_partnership(online_vendor, merchant_id, positive_feedback_rating)
+            elif test_scenario_number == "4":
+                saw_PAF.create_quote_other(online_vendor, merchant_id, positive_feedback_rating)
+
+            # Click Next on PAF Screen
+            saw_PAF.click_next_button()
+
+            # Application - Signature Screen
+            s = Signature(driver)
+
+            # Select Typed Signature
+            s.select_typed()
+
+            # Wait
+            time.sleep(3)
+
+            # Input Typed Signature
+            s.input_typed_signature(signature)
+
+            # Click Save Signature
+            s.click_save_signature_button()
+
+            # Wait
+            time.sleep(3)
+
+            # Click Next Button After Inputting Signature
+            svsf = Signature_View_Signed_Forms(driver)
+            svsf.click_next_button_after_inputting_signature()
+
             # Script Works Up to This point
 
             # Wait
             driver.implicitly_wait(3)
+
+            # Write Values to CSV
+
+            # Declare the values that will be outputted to csv
+            values = [test_summary, test_scenario_number, state,company_name_string, username, password, email_address]
+
+            # Declare Directory of csv file
+            download_dir = os.path.join(test_results_directory, 'Customer_Center_Results.csv')
+
+            # This Section Writes the output to the csv file
+            with open(download_dir, "a") as f:
+                writer = csv.writer(f, lineterminator='\n')  # lineterminator='\n'
+                writer.writerow(values)
+
+            # # Declare the values that will be outputted to csv
+            # values = [test_summary, test_scenario_number, state,company_name_string, username, password, email_address]
+            #
+            # # Declare Directory of csv file
+            # download_dir = os.path.join(test_results_directory, 'Customer_Center_Results.csv') # where you want the file to be downloaded to
+            #
+            # with open(download_dir, "w") as f:
+            #
+            #     writer = csv.writer(f)
+            #     # writer.writerow({'Test Summary' : test_summary, 'Test Scenario' : test_scenario_number, 'State' : state, 'Insured' : company_name_string, 'Username' : username, 'password' : password, 'Email Address' :email_address })
+            #     writer.writerow(values)
 
             # Close Browser
             driver.quit()
@@ -185,4 +260,4 @@ class CreateAccount():
             i += 1
 
 ca = CreateAccount()
-ca.create_account()
+ca.create_account_quote()

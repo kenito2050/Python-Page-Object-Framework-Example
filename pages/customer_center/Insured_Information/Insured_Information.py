@@ -27,7 +27,7 @@ class Insured_Information():
         self.postal_code_field = self.driver.find_element(By.ID, "zip")
 
         # Total Annual Revenue
-        self.total_annual_revenue_field = self.driver.find_element(By.NAME, "annual_revenue_current_year")
+        self.total_annual_revenue_field = self.driver.find_element(By.ID, "annual_revenue_current_year")
 
         # Continue Button
         self.continue_button = self.driver.find_element(By.CLASS_NAME, "text-button-ds")
