@@ -36,5 +36,13 @@ class PCI_Doctor_Count_3_Broad_Reg_Protect_Combined():
         PCI_Doctor_Count_3_Broad_Reg_Protect_Combined.PageElements(self).option_879_deductible_1044.click()
 
     def select_2M_Broad_Regulatory_Protection_Plus_and_eMD_Combined_2MM_2MM_limit_0_Deduct(self):
+        #JS
+        # scroll to element
+        self.driver.execute_script("return arguments[0].scrollIntoView();", PCI_Doctor_Count_3_Broad_Reg_Protect_Combined.PageElements(self).option_862_limit_3208)
+
         PCI_Doctor_Count_3_Broad_Reg_Protect_Combined.PageElements(self).option_862_limit_3208.click()
+        #JS
+        # scroll to element
+        self.driver.execute_script("return arguments[0].scrollIntoView();", PCI_Doctor_Count_3_Broad_Reg_Protect_Combined.PageElements(self).option_862_deductible_1044)
+
         PCI_Doctor_Count_3_Broad_Reg_Protect_Combined.PageElements(self).option_862_deductible_1044.click()

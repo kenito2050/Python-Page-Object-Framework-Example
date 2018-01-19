@@ -664,5 +664,6 @@ class CreateQuote():
 
             i += 1
 
+
 cq = CreateQuote()
 cq.test_login_search_for_agent_create_quote()

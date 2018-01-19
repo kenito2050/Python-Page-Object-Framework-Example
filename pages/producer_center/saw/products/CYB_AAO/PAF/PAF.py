@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+import time
 
 class PAF():
 
@@ -229,25 +230,37 @@ class PAF():
         return self
 
     def create_quote_PCI_DSS_No_DQ(self, revenue):
-
+        #JS -- scroll + sleep added below
         # PAF.Page_Elements(self).existing_insured_yes.click()
         PAF.Page_Elements(self).external_policy_number.send_keys("A111111111")
         PAF.Page_Elements(self).operation_commence_date.send_keys("01-01-2001")
         PAF.Page_Elements(self).operations_description.send_keys("QA TEST")
+        PAF.Page_Elements(self).annual_revenue_current_year.clear()
         PAF.Page_Elements(self).annual_revenue_current_year.send_keys(revenue)
+        PAF.Page_Elements(self).annual_revenue_one_year_ago.clear()
         PAF.Page_Elements(self).annual_revenue_one_year_ago.send_keys(revenue)
         PAF.Page_Elements(self).subsidiary_inclusion_no.click()
         PAF.Page_Elements(self).coverage_for_other_entity_no.click()
         PAF.Page_Elements(self).utilize_cpt_manual_yes.click()
         PAF.Page_Elements(self).billings_exceed_two_million_no.click()
+        time.sleep(5)
         PAF.Page_Elements(self).audited_investigated_no.click()
+        time.sleep(5)
         PAF.Page_Elements(self).audited_investigated_medicare_no.click()
+        time.sleep(5)
+
+        # scroll to element
+        self.driver.execute_script("return arguments[0].scrollIntoView();", PAF.Page_Elements(self).refund_excess_10_thousand_no)
+
         PAF.Page_Elements(self).refund_excess_10_thousand_no.click()
+        time.sleep(5)
         PAF.Page_Elements(self).accused_billing_errors_no.click()
+        time.sleep(5)
         PAF.Page_Elements(self).investigated_sanctioned_no.click()
         PAF.Page_Elements(self).anti_kickback_investigation_no.click()
         PAF.Page_Elements(self).sued_deselected_payer_no.click()
         PAF.Page_Elements(self).investigated_emtala_no.click()
+        time.sleep(5)
         PAF.Page_Elements(self).investigated_hipaa_no.click()
         PAF.Page_Elements(self).voluntary_disclosure_no.click()
         PAF.Page_Elements(self).non_renewed_extention_no.click()
@@ -260,11 +273,14 @@ class PAF():
         PAF.Page_Elements(self).data_security_yes.click()
         PAF.Page_Elements(self).data_security_encrypted_yes.click()
         PAF.Page_Elements(self).credit_card_data_yes.click()
+        time.sleep(5)
         PAF.Page_Elements(self).credit_card_data_compliant_yes.click()
+        time.sleep(5)
         #PAF.Page_Elements(self).wire_transfer_protocols_yes.click()
         PAF.Page_Elements(self).records_exceed_20000_no.click()
         #PAF.Page_Elements(self).wire_transfer_loss_no.click()
         PAF.Page_Elements(self).cyber_complaints_litigation_no.click()
+        time.sleep(5)
         PAF.Page_Elements(self).aware_compromised_security_no.click()
         PAF.Page_Elements(self).non_renewed_extention_cyb_no.click()
 
@@ -312,7 +328,12 @@ class PAF():
     #TODO
     # Ask Dev to create ID for next button
     def click_next(self):
+
         next_button = self.driver.find_element(By.XPATH, "//form[@id='rate-adjustment-form']/div[2]/div[5]/a/span[2]")
+
+        # scroll to element
+        self.driver.execute_script("return arguments[0].scrollIntoView();", next_button)
+
         next_button.click()
 
     def click_return_to_Admin_Interface(self):
