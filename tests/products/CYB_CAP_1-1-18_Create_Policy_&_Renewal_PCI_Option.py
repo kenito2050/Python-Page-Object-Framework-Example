@@ -200,8 +200,8 @@ class CreateQuote(unittest.TestCase):
         cc.click_next()
 
         cp = CoveragePeriods(driver)
-        # cp.enter_current_date_as_effective_date(date_today)
-        cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
+        cp.enter_current_date_as_effective_date(date_today)
+        # cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
         cp.click_next()
         saw_ii = Insured_Information(driver)
         saw_ii.enter_physician_count(doctor_count)
@@ -247,14 +247,14 @@ class CreateQuote(unittest.TestCase):
         # saw_CC_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit_and_CyberRisk_Combined_Shared_Limits_with_Cyber_Crime()
         # saw_CC_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit_and_CyberRisk_Combined_Shared_Limits_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime()
         # saw_CC_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit_and_CyberRisk_Combined_Shared_Limits_with_Cyber_Crime()
-        saw_CC_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit_and_CyberRisk_Combined_Separate_Limits_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime()
+        # saw_CC_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit_and_CyberRisk_Combined_Separate_Limits_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime()
 
 
          ### No PCI Options ###
 
         # saw_CC_No_PCI.select_CyberRisk_Only_with_Cyber_Crime_Only_No_PCI()
         # saw_CC_No_PCI.select_CyberRisk_Only_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime_No_PCI()
-        # saw_CC_No_PCI.select_Medefense_Plus_Only()
+        saw_CC_No_PCI.select_Medefense_Plus_Only()
         # saw_CC_No_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit()
         # saw_CC_No_PCI.select_Medefense_Plus_and_CyberRisk_with_Cyber_Crime_Combined_Shared_Limits_No_PCI()
         # saw_CC_No_PCI.select_Medefense_Plus_and_CyberRisk_Combined_Shared_Limits_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime_No_PCI()

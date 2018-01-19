@@ -216,7 +216,8 @@ class CreateQuote():
             # Uncertain
 
             # Access XML to retrieve login credentials
-            tree = ET.parse('resources.xml')
+
+            tree = ET.parse(os.path.join(config_file_directory, 'resources.xml'))
             login_credentials = tree.getroot()
             username = (login_credentials[1][0].text)
             password = (login_credentials[1][1].text)

@@ -52,6 +52,7 @@ class CreateAccount():
         global city
         global state
         global postal_code
+        global formatted_postal_code
         global revenue
         global effective_date
         global online_vendor
@@ -148,6 +149,13 @@ class CreateAccount():
             # city = StateCapitals.return_state_capital(state)
             # postal_code = ZipCodes.return_zip_codes(state)
 
+            # Format the Postal Code
+            # If Postal Code ends in '.0', remove that substring
+            # Store the value in a new variable formatted_postal_code
+            postal_code_string_length = len(postal_code)
+            if postal_code_string_length > 5:
+                formatted_postal_code = postal_code[:-2]
+
             # Date Variables
             date_today = time.strftime("%m/%d/%Y")
             ad_hoc_effectiveDate = "09/06/2017"
@@ -180,7 +188,15 @@ class CreateAccount():
 
             # Fill in Insured Information Screen
             ii = Insured_Information(driver)
-            ii.fill_in_insured_information_fields(address_value, address_2, city, state, postal_code, revenue)
+            ii.fill_in_insured_information_fields(address_value, address_2, city, state, revenue)
+
+            # Determine if Postal Code is More than 5 Characters
+            # If more than 5 characters, Trim the last 2 digits; Remove '.0'
+            if postal_code_string_length > 5:
+                ii.fill_in_formatted_postal_code(formatted_postal_code)
+            elif postal_code_string_length < 6:
+                ii.fill_in_postal_code(postal_code)
+
             ii.click_continue_button()
 
             # Wait
@@ -191,13 +207,13 @@ class CreateAccount():
             saw_PAF = PAF(driver)
 
             if test_scenario_number == "1" or test_scenario_number == "5" or test_scenario_number == "6" or test_scenario_number == "7":
-                saw_PAF.create_quote_individual(online_vendor, merchant_id, positive_feedback_rating)
+                saw_PAF.create_quote_individual(online_vendor, merchant_id, date_today)
             elif test_scenario_number == "2":
-                saw_PAF.create_quote_corporation(online_vendor, merchant_id, positive_feedback_rating)
+                saw_PAF.create_quote_corporation(online_vendor, merchant_id, date_today)
             elif test_scenario_number == "3":
-                saw_PAF.create_quote_partnership(online_vendor, merchant_id, positive_feedback_rating)
+                saw_PAF.create_quote_partnership(online_vendor, merchant_id, date_today)
             elif test_scenario_number == "4":
-                saw_PAF.create_quote_other(online_vendor, merchant_id, positive_feedback_rating)
+                saw_PAF.create_quote_other(online_vendor, merchant_id, date_today)
 
             # Click Next on PAF Screen
             saw_PAF.click_next_button()

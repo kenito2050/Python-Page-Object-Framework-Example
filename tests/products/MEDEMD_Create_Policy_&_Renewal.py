@@ -1,3 +1,4 @@
+import datetime
 import os
 import time
 import unittest
@@ -37,6 +38,7 @@ from pages.producer_center.saw.summary import Summary
 from pages.producer_center.saw.thank_you_page import Thank_You_Page
 from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.agents_page import AgentsPage
+from pages.service_center.application_screens.details import App_Details
 from pages.service_center.applications_page import ApplicationsPage
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
@@ -82,6 +84,7 @@ class CreateQuote():
 
         global test_summary
         global test_scenario
+        global effective_date
         global test_scenario_number
         global regression
         global smoke
@@ -139,17 +142,18 @@ class CreateQuote():
             if empty_cell == False:
                 test_summary = sh.cell_value(i, 0)
                 test_scenario = sh.cell_value(i, 1)
-                test_scenario_number = str(round(sh.cell_value(i, 2)))
-                regression = round(sh.cell_value(i, 3))
-                smoke = round(sh.cell_value(i, 4))
-                sanity = round(sh.cell_value(i, 5))
-                contract_class = sh.cell_value(i, 6)
-                agent = sh.cell_value(i, 7)
-                state = sh.cell_value(i, 8)
-                revenue = str(round(sh.cell_value(i, 9)))
-                staff_count = str(round(sh.cell_value(i, 10)))
-                _OLD_scenario = sh.cell_value(i, 11)
-                revenue_tier = str(round(sh.cell_value(i, 12)))
+                effective_date = sh.cell_value(i, 2)
+                test_scenario_number = str(round(sh.cell_value(i, 3)))
+                regression = round(sh.cell_value(i, 4))
+                smoke = round(sh.cell_value(i, 5))
+                sanity = round(sh.cell_value(i, 6))
+                contract_class = sh.cell_value(i, 7)
+                agent = sh.cell_value(i, 8)
+                state = sh.cell_value(i, 9)
+                revenue = str(round(sh.cell_value(i, 10)))
+                staff_count = str(round(sh.cell_value(i, 11)))
+                _OLD_scenario = sh.cell_value(i, 12)
+                revenue_tier = str(round(sh.cell_value(i, 13)))
 
 
             # Else, the cell is empty
@@ -213,10 +217,17 @@ class CreateQuote():
             # Uncertain
 
             # Access XML to retrieve login credentials
-            tree = ET.parse('resources.xml')
+
+            tree = ET.parse(os.path.join(config_file_directory, 'resources.xml'))
             login_credentials = tree.getroot()
-            username = (login_credentials[0][0].text)
+            username = (login_credentials[1][0].text)
             password = (login_credentials[1][1].text)
+
+            # # Access XML to retrieve login credentials
+            # tree = ET.parse('resources.xml')
+            # login_credentials = tree.getroot()
+            # username = (login_credentials[0][0].text)
+            # password = (login_credentials[1][1].text)
 
             # Access XML to retrieve the agent to search for
             # tree = ET.parse('Agents.xml')
@@ -262,7 +273,13 @@ class CreateQuote():
 
             # Date Variables
             date_today = time.strftime("%m/%d/%Y")
-            ad_hoc_effectiveDate = "08/01/2017"
+            ad_hoc_effectiveDate = "09/06/2017"
+
+            # Convert effective_date value to format MM/DD/YYYY
+            d = xlrd.xldate_as_tuple(int(effective_date), 0)
+            # convert date tuple in mm-dd-yyyy format
+            d = datetime.datetime(*(d[0:3]))
+            effective_date_formatted = d.strftime("%m/%d/%Y")
 
             # Initialize Driver; Launch URL
             # baseURL = "https://svcdemo1.wn.nasinsurance.com/"
@@ -324,12 +341,42 @@ class CreateQuote():
 
             cp = CoveragePeriods(driver)
 
+            cp.click_return_to_Admin_Interface()
+
+            # Navigate to Application Details page
+            current_url_2 = driver.current_url
+            slashparts = current_url_2.split('/')
+            # Now join back the first three sections 'http:', '' and 'example.com'
+            base_url_2 = '/'.join(slashparts[:3]) + '/'
+
+            app_details_string = "?c=app.view&id="
+            # app_subjectivities_string = "?c=app.track_subjectivities&id="
+
+            application_details_screen = base_url_2 + app_details_string + application_id
+
+            # Navigate to Application Subjectivities Screen
+            driver.get(application_details_screen)
+
+            app_details = App_Details(driver)
+
+            # Update the Create Date to the Ad Hoc Effective Date Value
+            app_details.update_create_date(effective_date_formatted)
+
+            # Click Update Button
+            app_details.click_update_button()
+
+            # Click on Agent Link to return to Producer Center
+            app_details.click_agent_text_link()
+
+            # Return to Coverage Periods screen
+
             # Enter an Ad Hoc Effective Date
-            # cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
+            cp.enter_ad_hoc_effective_date(effective_date_formatted)
 
             # Enter Today's Date as Effective Date
-            cp.enter_current_date_as_effective_date(date_today)
+            # cp.enter_current_date_as_effective_date(date_today)
 
+            # Click Next
             cp.click_next()
 
             # Instantiate Insured Information

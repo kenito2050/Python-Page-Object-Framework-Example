@@ -1,3 +1,4 @@
+import os
 import unittest
 from urllib.parse import urlparse, parse_qs
 from xml.etree import ElementTree as ET
@@ -46,15 +47,23 @@ class CreateQuote():
 
     def test_login_search_for_agent_create_quote(self):
 
+        ## Directory Locations
+
+        tests_directory = os.path.abspath(os.pardir)
+        framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
+        config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
+        test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
+        test_results_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
+
         ## Determine Test Environment to run scripts
 
         ## Read in value from test_environment.xml
-        tree = ET.parse('test_environment.xml')
-        test_environment  = tree.getroot()
-        environment =(test_environment[0][0].text)
+        tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
+        test_environment = tree.getroot()
+        environment = (test_environment[0][0].text)
 
         ## Select Appropriate URL based on the Environment Value from above
-        baseURL  = Environments.return_environments(environment)
+        base_URL = Environments.return_environments(environment)
 
         # Create "Fake" Variables
         #state = frandom.us_state()
@@ -78,10 +87,16 @@ class CreateQuote():
         total_num_records = '1 to 100,000'
 
         # Access XML to retrieve login credentials
-        tree = ET.parse('resources.xml')
+
+        tree = ET.parse(os.path.join(config_file_directory, 'resources.xml'))
         login_credentials = tree.getroot()
         username = (login_credentials[1][0].text)
-        password = (login_credentials[0][1].text)
+        password = (login_credentials[1][1].text)
+
+        # tree = ET.parse('resources.xml')
+        # login_credentials = tree.getroot()
+        # username = (login_credentials[1][0].text)
+        # password = (login_credentials[0][1].text)
 
         # Access XML to retrieve the agent to search for
         tree = ET.parse('Agents.xml')
@@ -131,7 +146,7 @@ class CreateQuote():
 
         # Maximize Window; Launch URL
         driver.maximize_window()
-        driver.get(baseURL)
+        driver.get(base_URL)
         driver.implicitly_wait(3)
 
         # Call Login methods from Pages.home.login_page.py
