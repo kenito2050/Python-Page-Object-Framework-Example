@@ -11,5 +11,8 @@ class Quote_Review():
 
 
     def click_select_option(self):
+        #JS
+        # scroll to element
+        self.driver.execute_script("return arguments[0].scrollIntoView();", Quote_Review.Page_Elements(self).select_option)
 
         Quote_Review.Page_Elements(self).select_option.click()

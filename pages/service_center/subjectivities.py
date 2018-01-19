@@ -70,6 +70,8 @@ class Subjectivities():
         subjectivities_met_drop_down.send_keys("Yes, all subjectivities have been met.")
 
     def click_submit(self):
+        #JS
+        time.sleep(5)
         submit_button = self.driver.find_element(By.XPATH, "//form[@id='main-form']/div[3]/a/span[2]/span/span")
         submit_button.click()
 

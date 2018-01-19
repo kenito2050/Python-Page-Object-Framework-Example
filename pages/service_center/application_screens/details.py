@@ -9,7 +9,7 @@ class App_Details():
     def Page_Elements(self):
 
         # Create Date field
-        self.create_date_field = self.driver.find_element_by_id("ts_create")
+        self.create_date_field = self.driver.find_element_by_name("ts_create")
 
         # Submit Button
         self.submit_button = self.driver.find_element_by_css_selector("#ts-created-form > p > span.data > input[type=\"submit\"]")
@@ -21,7 +21,7 @@ class App_Details():
 
     def update_create_date(self, ad_hoc_Date):
 
-        App_Details.Page_Elements(self).create_date_field.click()
+     #   App_Details.Page_Elements(self).create_date_field.click();
         App_Details.Page_Elements(self).create_date_field.clear()
         App_Details.Page_Elements(self).create_date_field.send_keys(ad_hoc_Date)
         App_Details.Page_Elements(self).create_date_field.send_keys(Keys.TAB)
