@@ -95,7 +95,7 @@ class ProductsAndPrograms():
         MED_NCMIC_link.click()
 
     def click_MMTM(self):
-        MMTM_link = self.driver.find_element(By.ID, "NAS Momentum_start")
+        MMTM_link = self.driver.find_element(By.ID, "Momentum Insurance_start")
         MMTM_link.click()
 
     def click_NGP(self):
