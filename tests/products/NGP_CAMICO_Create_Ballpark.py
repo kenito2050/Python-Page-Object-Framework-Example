@@ -1,4 +1,5 @@
 import unittest
+import os
 from xml.etree import ElementTree as ET
 
 from faker import address
@@ -23,6 +24,14 @@ from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
 class CreateQuote():
 
     def test_login_search_for_agent_create_quote(self):
+
+        ## Directory Locations
+
+        tests_directory = os.path.abspath(os.pardir)
+        framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
+        config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
+        test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
+        test_results_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
 
         ## Determine Test Environment to run scripts
 
@@ -75,7 +84,7 @@ class CreateQuote():
         # I have inserted a placeholder element at 0 -- Ken
         # Array will be 1 - 74
         # For List of Contract Classes, See Contract_Classes.xml
-        tree = ET.parse('Contract_Classes.xml')
+        tree = ET.parse(os.path.join(config_file_directory,'Contract_Classes.xml'))
         contract_classes_XML = tree.getroot()
         contract_class = (contract_classes_XML[0][1].text)
 
@@ -96,7 +105,7 @@ class CreateQuote():
 
         # Initialize Driver; Launch URL
         # baseURL = "https://svcdemo1.wn.nasinsurance.com/"
-        driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
+        driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
         # Maximize Window; Launch URL
         driver.maximize_window()

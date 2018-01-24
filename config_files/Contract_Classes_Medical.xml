@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<data>
+    <select name="contract_class_id" class="select">
+        <option value="0">Placeholder</option>
+        <option value="1">Healthcare Facilities</option>
+        <option value="2">Medical Group</option>
+        <option value="3">Office of Physician</option>
+        <option value="4">Offices of Dentists</option>
+        <option value="5">Chiropractors</option>
+    </select>
+</data>

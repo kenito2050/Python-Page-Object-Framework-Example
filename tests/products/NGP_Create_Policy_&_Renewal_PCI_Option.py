@@ -99,7 +99,7 @@ class CreateQuote():
         # password = (login_credentials[0][1].text)
 
         # Access XML to retrieve the agent to search for
-        tree = ET.parse('Agents.xml')
+        tree = ET.parse(os.path.join(config_file_directory, 'Agents.xml'))
         agents = tree.getroot()
         agent = (agents[5][0].text)
 
@@ -118,7 +118,7 @@ class CreateQuote():
         # I have inserted a placeholder element at 0 -- Ken
         # Array will be 1 - 74
         # For List of Contract Classes, See Contract_Classes.xml
-        tree = ET.parse('Contract_Classes.xml')
+        tree = ET.parse(os.path.join(config_file_directory, 'Contract_Classes.xml'))
         contract_classes_XML = tree.getroot()
         contract_class = (contract_classes_XML[0][52].text)
 
@@ -142,7 +142,7 @@ class CreateQuote():
 
         # Initialize Driver; Launch URL
         # baseURL = "https://service.wn.nasinsurance.com/"
-        driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
+        driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
         # Maximize Window; Launch URL
         driver.maximize_window()

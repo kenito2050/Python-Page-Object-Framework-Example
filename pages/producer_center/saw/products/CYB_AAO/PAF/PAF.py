@@ -165,13 +165,6 @@ class PAF():
 
         self.data_security_no = self.driver.find_element(By.ID, "cyb_aao_data_security-no")
 
-        # DISPLAYS IF YES TO ABOVE QUESTION
-
-        # Is such data encrypted to industry standards?
-
-        self.data_security_encrypted_yes = self.driver.find_element(By.ID, "cyb_aao_data_security_encrypted-yes")
-
-        self.data_security_encrypted_no = self.driver.find_element(By.ID, "cyb_aao_data_security_encrypted-no")
 
         # Does Your organization process, store, transmit or handle credit or debit card data?
 
@@ -227,6 +220,15 @@ class PAF():
 
         self.non_renewed_extention_cyb_no = self.driver.find_element(By.ID,"cyb_aao_non_renewed_extension_cyb-no")
 
+
+        # DISPLAYS IF YES TO ABOVE QUESTION
+
+        # Is such data encrypted to industry standards?
+
+        # self.data_security_encrypted_yes = self.driver.find_element(By.ID, "cyb_aao_data_security_encrypted-yes")
+        #
+        # self.data_security_encrypted_no = self.driver.find_element(By.ID, "cyb_aao_data_security_encrypted-no")
+
         return self
 
     def create_quote_PCI_DSS_No_DQ(self, revenue):
@@ -243,24 +245,24 @@ class PAF():
         PAF.Page_Elements(self).coverage_for_other_entity_no.click()
         PAF.Page_Elements(self).utilize_cpt_manual_yes.click()
         PAF.Page_Elements(self).billings_exceed_two_million_no.click()
-        time.sleep(5)
+
         PAF.Page_Elements(self).audited_investigated_no.click()
-        time.sleep(5)
+
         PAF.Page_Elements(self).audited_investigated_medicare_no.click()
-        time.sleep(5)
+
 
         # scroll to element
         self.driver.execute_script("return arguments[0].scrollIntoView();", PAF.Page_Elements(self).refund_excess_10_thousand_no)
 
         PAF.Page_Elements(self).refund_excess_10_thousand_no.click()
-        time.sleep(5)
+
         PAF.Page_Elements(self).accused_billing_errors_no.click()
-        time.sleep(5)
+
         PAF.Page_Elements(self).investigated_sanctioned_no.click()
         PAF.Page_Elements(self).anti_kickback_investigation_no.click()
         PAF.Page_Elements(self).sued_deselected_payer_no.click()
         PAF.Page_Elements(self).investigated_emtala_no.click()
-        time.sleep(5)
+
         PAF.Page_Elements(self).investigated_hipaa_no.click()
         PAF.Page_Elements(self).voluntary_disclosure_no.click()
         PAF.Page_Elements(self).non_renewed_extention_no.click()
@@ -271,16 +273,15 @@ class PAF():
         PAF.Page_Elements(self).platform_security_yes.click()
         PAF.Page_Elements(self).patient_information_yes.click()
         PAF.Page_Elements(self).data_security_yes.click()
-        PAF.Page_Elements(self).data_security_encrypted_yes.click()
         PAF.Page_Elements(self).credit_card_data_yes.click()
-        time.sleep(5)
+
         PAF.Page_Elements(self).credit_card_data_compliant_yes.click()
-        time.sleep(5)
+
         #PAF.Page_Elements(self).wire_transfer_protocols_yes.click()
         PAF.Page_Elements(self).records_exceed_20000_no.click()
         #PAF.Page_Elements(self).wire_transfer_loss_no.click()
         PAF.Page_Elements(self).cyber_complaints_litigation_no.click()
-        time.sleep(5)
+
         PAF.Page_Elements(self).aware_compromised_security_no.click()
         PAF.Page_Elements(self).non_renewed_extention_cyb_no.click()
 
@@ -314,7 +315,7 @@ class PAF():
         PAF.Page_Elements(self).platform_security_yes.click()
         PAF.Page_Elements(self).patient_information_yes.click()
         PAF.Page_Elements(self).data_security_yes.click()
-        PAF.Page_Elements(self).data_security_encrypted_yes.click()
+        # PAF.Page_Elements(self).data_security_encrypted_yes.click()
         PAF.Page_Elements(self).credit_card_data_no.click()
         #PAF.Page_Elements(self).credit_card_data_compliant_yes.click()
         #PAF.Page_Elements(self).wire_transfer_protocols_yes.click()

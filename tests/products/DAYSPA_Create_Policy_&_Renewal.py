@@ -163,7 +163,7 @@ class CreateQuote():
         # bed_count = "5"
 
         # Access XML to retrieve login credentials
-        tree = ET.parse('resources.xml')
+        tree = ET.parse(os.path.join(config_file_directory, 'resources.xml'))
         login_credentials = tree.getroot()
         username = (login_credentials[0][0].text)
         password = (login_credentials[1][1].text)
@@ -182,9 +182,11 @@ class CreateQuote():
         # convert date tuple in mm-dd-yyyy format
         d = datetime.datetime(*(d[0:3]))
         effective_date_formatted = d.strftime("%m/%d/%Y")
-        # Initialize Driver; Launch URL
+
+
+        # Initialize Driver
         # baseURL = "https://svcdemo2.wn.nasinsurance.com/"
-        driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
+        driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
         # Maximize Window; Launch URL
         driver.maximize_window()

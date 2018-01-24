@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<data>
+    <select name="contract_class_id" class="select">
+        <option value="0">Placeholder</option>
+        <option value="1">Assisted Living Facilities/RCFEs</option>
+    </select>
+</data>

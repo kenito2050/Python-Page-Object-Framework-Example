@@ -129,14 +129,14 @@ class CreateAccount():
             # Take First Character of First Name + . + Last Name String + Mailinator.com
             # Example: John User
             # Becomes: J.User@mailinator.com
-            email_address = first_name_initial + "." + last_name + "@" + "mailinator.com"
+            email_address = first_name + "." + last_name + "@" + "mailinator.com"
 
 
             # Create Username
             # Take First Character of First Name + . + Last Name String
             # Example: John User
             # Becomes: J.User
-            username = first_name_initial + "." + last_name
+            username = first_name + "." + last_name
 
             # Create Signature
             # Concatenate First Name + Last Name
@@ -168,7 +168,7 @@ class CreateAccount():
 
             # Initialize Driver; Launch URL
             # baseURL = "https://svcdemo1.wn.nasinsurance.com/"
-            driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
+            driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
             # Maximize Window; Launch URL
             driver.maximize_window()
@@ -207,13 +207,13 @@ class CreateAccount():
             saw_PAF = PAF(driver)
 
             if test_scenario_number == "1" or test_scenario_number == "5" or test_scenario_number == "6" or test_scenario_number == "7":
-                saw_PAF.create_quote_individual(online_vendor, merchant_id, date_today)
+                saw_PAF.create_quote_individual(online_vendor, merchant_id, effective_date_formatted)
             elif test_scenario_number == "2":
-                saw_PAF.create_quote_corporation(online_vendor, merchant_id, date_today)
+                saw_PAF.create_quote_corporation(online_vendor, merchant_id, effective_date_formatted)
             elif test_scenario_number == "3":
-                saw_PAF.create_quote_partnership(online_vendor, merchant_id, date_today)
+                saw_PAF.create_quote_partnership(online_vendor, merchant_id, effective_date_formatted)
             elif test_scenario_number == "4":
-                saw_PAF.create_quote_other(online_vendor, merchant_id, date_today)
+                saw_PAF.create_quote_other(online_vendor, merchant_id, effective_date_formatted)
 
             # Click Next on PAF Screen
             saw_PAF.click_next_button()

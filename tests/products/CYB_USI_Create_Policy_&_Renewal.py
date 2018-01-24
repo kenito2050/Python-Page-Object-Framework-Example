@@ -276,7 +276,7 @@ class CreateQuote():
 
             # Initialize Driver; Launch URL
             # baseURL = "https://svcdemo1.wn.nasinsurance.com/"
-            driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
+            driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
             # Maximize Window; Launch URL
             driver.maximize_window()
