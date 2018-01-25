@@ -13,6 +13,11 @@ class Subjectivities():
         received_btns = self.driver.find_elements(By.XPATH, '//*[contains(@id, "received")]')
 
         for r in received_btns:
+
+            # JS
+            # scroll to element
+            self.driver.execute_script("return arguments[0].scrollIntoView();", r)
+
             r.click()
 
             # receive subjectivities
