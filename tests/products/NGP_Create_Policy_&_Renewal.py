@@ -63,8 +63,7 @@ class CreateQuote():
         framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
         config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
         test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
-        test_results_directory = os.path.abspath(
-            os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
+        test_results_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
 
         # Determine the Test Run Type
         # Get Test Run Type Text from config file
@@ -186,10 +185,10 @@ class CreateQuote():
             # Uncertain
 
             # Access XML to retrieve login credentials
-            tree = ET.parse('resources.xml')
+            tree = ET.parse(os.path.join(config_file_directory, 'resources.xml'))
             login_credentials = tree.getroot()
             username = (login_credentials[1][0].text)
-            password = (login_credentials[1][1].text)
+            password = (login_credentials[0][1].text)
 
             # Access XML to retrieve the agent to search for
             # tree = ET.parse('Agents.xml')
@@ -245,7 +244,8 @@ class CreateQuote():
 
             # Initialize Driver; Launch URL
             # baseURL = "https://svcdemo1.wn.nasinsurance.com/"
-            driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
+            # driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
+            driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
             # Maximize Window; Launch URL
             driver.maximize_window()

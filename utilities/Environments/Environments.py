@@ -17,6 +17,7 @@ class Environments(dict):
             'Fix': 'https://svcfix.wn.nasinsurance.com/',
             'Stage': 'https://svcrel.wn.nasinsurance.com/',
             'QA': 'https://svcqa.wn.nasinsurance.com/',
+            'Cust_Demo3': 'https://custdemo3.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
             'Live': 'https://service.wn.nasinsurance.com/'
             }
         return environments[environment]

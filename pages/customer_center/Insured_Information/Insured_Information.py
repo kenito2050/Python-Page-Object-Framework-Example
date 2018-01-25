@@ -34,14 +34,19 @@ class Insured_Information():
 
         return self
 
-    def fill_in_insured_information_fields(self, address_value, address_2, city, state, postal_code, total_annual_revenue):
+    def fill_in_insured_information_fields(self, address_value, address_2, city, state, total_annual_revenue):
 
         Insured_Information.Page_Elements(self).address_1_field.send_keys(address_value)
         Insured_Information.Page_Elements(self).address_2_field.send_keys(address_2)
         Insured_Information.Page_Elements(self).city_field.send_keys(city)
         Insured_Information.Page_Elements(self).state_field.send_keys(state)
-        Insured_Information.Page_Elements(self).postal_code_field.send_keys(postal_code)
         Insured_Information.Page_Elements(self).total_annual_revenue_field.send_keys(total_annual_revenue)
+
+    def fill_in_postal_code(self,postal_code):
+        Insured_Information.Page_Elements(self).postal_code_field.send_keys(postal_code)
+
+    def fill_in_formatted_postal_code(self, formatted_postal_code):
+        Insured_Information.Page_Elements(self).postal_code_field.send_keys(formatted_postal_code)
 
     def click_continue_button(self):
 

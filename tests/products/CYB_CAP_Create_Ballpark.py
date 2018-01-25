@@ -1,4 +1,5 @@
 import unittest
+import os
 from xml.etree import ElementTree as ET
 
 from faker import address
@@ -24,10 +25,19 @@ class CreateQuote(unittest.TestCase):
 
     def test_login_search_for_agent_create_quote(self):
 
+        ## Directory Locations
+
+        tests_directory = os.path.abspath(os.pardir)
+        framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
+        config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
+        test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
+        test_results_directory = os.path.abspath(
+            os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
+
         ## Determine Test Environment to run scripts
 
         ## Read in value from test_environment.xml
-        tree = ET.parse('test_environment.xml')
+        tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
         test_environment  = tree.getroot()
         environment =(test_environment[0][0].text)
 
@@ -51,13 +61,13 @@ class CreateQuote(unittest.TestCase):
         staff_count = "5"
 
         # Access XML to retrieve login credentials
-        tree = ET.parse('resources.xml')
+        tree = ET.parse(os.path.join(config_file_directory, 'resources.xml'))
         login_credentials = tree.getroot()
         username = (login_credentials[0][0].text)
-        password = (login_credentials[0][1].text)
+        password = (login_credentials[1][1].text)
 
         # Access XML to retrieve the agent to search for
-        tree = ET.parse('Agents.xml')
+        tree = ET.parse(os.path.join(config_file_directory, 'Agents.xml'))
         agents = tree.getroot()
         agent = (agents[5][0].text)
 
@@ -76,7 +86,7 @@ class CreateQuote(unittest.TestCase):
         # I have inserted a placeholder element at 0 -- Ken
         # Array will be 1 - 74
         # For List of Contract Classes, See Contract_Classes.xml
-        tree = ET.parse('Contract_Classes_Medical.xml')
+        tree = ET.parse(os.path.join(config_file_directory, 'Contract_Classes_Medical.xml'))
         contract_classes_XML = tree.getroot()
         contract_class = (contract_classes_XML[0][1].text)
         # Contract Class - 1 - Medical Group
@@ -95,7 +105,7 @@ class CreateQuote(unittest.TestCase):
 
         # Initialize Driver; Launch URL
         # baseURL = "https://svcdemo5.wn.nasinsurance.com/"
-        driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
+        driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
         # Maximize Window; Launch URL
         driver.maximize_window()

@@ -1,4 +1,5 @@
 import unittest
+import os
 from xml.etree import ElementTree as ET
 
 from faker import address
@@ -23,6 +24,14 @@ from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
 class CreateQuote(unittest.TestCase):
 
     def test_login_search_for_agent_create_quote(self):
+
+        ## Directory Locations
+
+        tests_directory = os.path.abspath(os.pardir)
+        framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
+        config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
+        test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
+        test_results_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
 
         ## Determine Test Environment to run scripts
 
@@ -93,7 +102,7 @@ class CreateQuote(unittest.TestCase):
 
         # Initialize Driver; Launch URL
         # baseURL = "https://svcrel.wn.nasinsurance.com/"
-        driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
+        driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
         # Maximize Window; Launch URL
         driver.maximize_window()

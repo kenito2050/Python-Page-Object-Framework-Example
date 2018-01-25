@@ -22,7 +22,7 @@ class Coverage_Options():
     def select_all_deselect_all(self):
         Coverage_Options.PageElements(self).select_deselect_all.click()
 
-    def proceed_to_quote(self):
+    def click_proceed_to_quote(self):
         Coverage_Options.PageElements(self).proceed_to_quote.click()
 
     def click_return_to_Admin_Interface(self):

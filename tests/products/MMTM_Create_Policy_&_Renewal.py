@@ -53,6 +53,7 @@ class CreateQuote(unittest.TestCase):
 
         Product = "MMTM"
 
+
         ## Directory Locations
 
         tests_directory = os.path.abspath(os.pardir)
@@ -173,7 +174,7 @@ class CreateQuote(unittest.TestCase):
             postal_code = ZipCodes.return_zip_codes(state)
 
             # Access XML to retrieve login credentials
-            tree = ET.parse('resources.xml')
+            tree = ET.parse(os.path.join(config_file_directory, 'resources.xml'))
             login_credentials = tree.getroot()
             username = (login_credentials[0][0].text)
             password = (login_credentials[0][1].text)
@@ -192,7 +193,7 @@ class CreateQuote(unittest.TestCase):
 
             # Initialize Driver; Launch URL
             # baseURL = "https://svcdemo1.wn.nasinsurance.com/"
-            driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
+            driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
             # Maximize Window; Launch URL
             driver.maximize_window()

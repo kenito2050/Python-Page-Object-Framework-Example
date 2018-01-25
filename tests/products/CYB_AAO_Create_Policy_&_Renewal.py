@@ -21,6 +21,7 @@ from pages.producer_center.saw.confirm_order_details import Confirm_Order_Detail
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
 from pages.producer_center.saw.invoice import Invoice
 from pages.producer_center.saw.products.CYB_AAO.PAF.PAF import PAF
+from pages.producer_center.saw.products.CYB_AAO.PAF.PAF_data_security_encrypted import PAF_data_security_encrypted
 
 ### Generic PCI Coverage Options Classes
 from pages.producer_center.saw.products.CYB_AAO.coverage_options.Doctor_Count_1_Broad_Reg_Protect import Doctor_Count_1_Broad_Reg_Protect
@@ -219,7 +220,7 @@ class CreateQuote():
             # Uncertain
 
             # Access XML to retrieve login credentials
-            tree = ET.parse('resources.xml')
+            tree = ET.parse(os.path.join(config_file_directory, 'resources.xml'))
             login_credentials = tree.getroot()
             username = (login_credentials[0][0].text)
             password = (login_credentials[1][1].text)
@@ -278,7 +279,7 @@ class CreateQuote():
 
             # Initialize Driver; Launch URL
             # baseURL = "https://svcdemo1.wn.nasinsurance.com/"
-            driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
+            driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
             # Maximize Window; Launch URL
             driver.maximize_window()
@@ -384,6 +385,7 @@ class CreateQuote():
             saw_ii.click_next()
 
             saw_PAF = PAF(driver)
+            saw_PAF_data_security_encrypted = PAF_data_security_encrypted(driver)
 
             # Return to Admin Interface / Set Creation Date
             # saw_PAF.click_return_to_Admin_Interface()
@@ -395,6 +397,8 @@ class CreateQuote():
 
             if test_scenario == "1":
                 saw_PAF.create_quote_PCI_DSS_No_DQ(revenue)
+                saw_PAF_data_security_encrypted.click_yes_data_security_encrypted()
+
             elif test_scenario == "2":
                 saw_PAF.create_quote_No_PCI_DSS_No_DQ(revenue)
 

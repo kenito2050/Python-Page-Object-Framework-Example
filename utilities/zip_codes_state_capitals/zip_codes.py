@@ -22,9 +22,9 @@ class ZipCodes(dict):
             'Kansas': '66601',#Topeka
             'Kentucky': '40601',#Frankfort
             'Louisiana': '70801',#Baton Rouge
-            'Maine': '3901',#Augusta
+            'Maine': '03901',#Augusta
             'Maryland': '21401',#Annapolis
-            'Massachusetts': 'Boston',
+            'Massachusetts': '02445',#Boston
             'Michigan': '48901',#Lansing
             'Minnesota': '55101',#St. Paul
             'Mississippi': '39201',#Jackson
