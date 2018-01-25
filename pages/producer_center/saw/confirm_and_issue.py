@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+import time
 
 class Confirm_and_Issue():
 
@@ -14,8 +15,14 @@ class Confirm_and_Issue():
         save_and_exit.click()
 
     def click_return_to_Admin_Interface(self):
+        #JS
+        time.sleep(6)
         return_to_admin_interface = self.driver.find_element(By.LINK_TEXT, "Return to Admin Interface")
         return_to_admin_interface.click()
+
+        #JS
+        time.sleep(6)
+
 
     def input_signature(self):
         agent_signature_field = self.driver.find_element(By.ID, "agent_signature")
