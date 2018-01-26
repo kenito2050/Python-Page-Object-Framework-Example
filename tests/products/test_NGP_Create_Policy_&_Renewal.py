@@ -53,13 +53,6 @@ from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
 driver = None
 
-'''
-def test_screenshot_on_test_failure(browser):
-    # driver = webdriver.Firefox()
-    browser.get("https://google.com")
-    assert False
-'''
-
 
 def test_login_search_for_agent_create_quote(browser):
 
