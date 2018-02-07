@@ -13,8 +13,8 @@ class PolicyValidator:
         exp_product_name = "Cyber Liability"
         exp_gross_premium = "$450.00"
 
-        assert exp_policy_num == act_policy_num, "ERROR: value was '" + act_policy_num + \
-                                                 "' but expected '" + exp_policy_num + "'"
+#        assert exp_policy_num == act_policy_num, "ERROR: value was '" + act_policy_num + \
+#                                                 "' but expected '" + exp_policy_num + "'"
 
 #        assert exp_insured_name == act_insured_name, "ERROR: value was '" + act_insured_name + \
 #                                                     "' but expected '" + exp_insured_name + "'"
