@@ -66,6 +66,10 @@ class ProductsAndPrograms():
         CYB_USI_link = self.driver.find_element(By.ID, "PrivaSafe with MEDEFENSE™ Plus_start")
         CYB_USI_link.click()
 
+    def click_CYB_SVMIC(self):
+        CYB_SVMIC_link = self.driver.find_element(By.ID, "SVMIC MEDEFENSE™ Plus and e-MD™_start")
+        CYB_SVMIC_link.click()
+
     def click_CYB_TMLT(self):
         CYB_TMLT_link = self.driver.find_element(By.ID, "TMLT Cyber Liability / Medefense™ Plus_start")
         CYB_TMLT_link.click()
@@ -77,6 +81,14 @@ class ProductsAndPrograms():
     def click_EO_MISC(self):
         EO_MISC_link = self.driver.find_element(By.ID, "Miscellaneous E&O_start")
         EO_MISC_link.click()
+
+    def click_EO_PM(self):
+        EO_PM_link = self.driver.find_element(By.ID, "Property Manager’s E&O with Cyber Liability and Tenant Discrimination_start")
+        EO_PM_link.click()
+
+    def click_HHOL(self):
+        HHOL_link = self.driver.find_element(By.ID, "Home Health Care_start")
+        HHOL_link.click()
 
     def click_LEXR_TENANT(self):
         LEXR_TENANT_link = self.driver.find_element(By.ID, "Tenant Discrimination Legal Expense and Loss Reimbursement Insurance_start")
@@ -117,6 +129,10 @@ class ProductsAndPrograms():
     def click_NGP_RTS(self):
         NGP_RTS_link = self.driver.find_element(By.ID, "R-T Specialty Cyber Liability_start")
         NGP_RTS_link.click()
+
+    def click_NGP_SBDIA(self):
+        NGP_SBDIA_link = self.driver.find_element(By.ID, "Security Broker-Dealers and Investment Advisors Cyber Liability_start")
+        NGP_SBDIA_link.click()
 
     def click_NGP_USI(self):
         NGP_USI_link = self.driver.find_element(By.ID, "PrivaSafe Cyber Liability_start")

@@ -1,8 +1,10 @@
 import unittest
+import datetime
 import os
 from urllib.parse import urlparse, parse_qs
 from xml.etree import ElementTree as ET
 
+import xlrd
 from faker import address
 from faker import company
 from faker import name
@@ -35,6 +37,7 @@ from pages.producer_center.saw.summary import Summary
 
 from pages.service_center.agents_page import AgentsPage
 from pages.service_center.applications_page import ApplicationsPage
+from pages.service_center.application_screens.details import App_Details
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
 from pages.service_center.policies_page import PoliciesPage
@@ -53,6 +56,8 @@ class CreateQuote():
 
     def test_login_search_for_agent_create_quote(self):
 
+        Product = "EO_MISC"
+
         ## Directory Locations
 
         tests_directory = os.path.abspath(os.pardir)
@@ -61,6 +66,93 @@ class CreateQuote():
         test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
         test_results_directory = os.path.abspath(
             os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
+
+        # Determine the Test Run Type
+        # Get Test Run Type Text from config file
+        tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
+        test_environment = tree.getroot()
+        test_run_type = (test_environment[1][0].text)
+        test_run_type_value = ''
+
+        # If / Else to convert test_run_type text to a value
+        if test_run_type == "Regression":
+            test_run_type_value = '1'
+        elif test_run_type == "Smoke":
+            test_run_type_value = '2'
+        elif test_run_type == "Sanity":
+            test_run_type_value = '3'
+
+        global test_summary
+        global test_scenario
+        global effective_date
+        global test_scenario_number
+        global regression
+        global smoke
+        global sanity
+        global contract_class
+        global agent
+        global state
+        global revenue
+        global total_num_records
+        global limit
+        global deductible
+        global _OLD_scenario
+        global _OLD_scenario_number
+
+        # Open Test Scenario Workbook; Instantiate worksheet object
+        wb = xlrd.open_workbook(os.path.join(test_case_directory, Product + '.xlsx'))
+        sh = wb.sheet_by_index(0)
+
+        ## Begin For Loop to iterate through Test Scenarios
+        i = 1
+        rows = sh.nrows
+        empty_cell = False
+        for x in range(1, sh.nrows):
+
+            cell_val = sh.cell(i, 0).value
+            if cell_val == '':
+                # If Cell Value is empty, set empty_cell to True
+                empty_cell = True
+            else:
+                # If Cell Value is NOT empty, set empty_cell to False
+                empty_cell = False
+
+            regression_check = sh.cell_value(i, 3)
+            smoke_check = sh.cell_value(i, 4)
+            sanity_check = sh.cell_value(i, 5)
+
+            # If / Else Section to check if a test needs to be run
+            #### CODE NOT WORKING YET - Ken 8-2-17
+            #### Program is running ALL rows & NOT skipping rows
+            if test_run_type_value == 3 and sanity_check == "0":
+                continue
+            if test_run_type_value == 2 and smoke_check == "0":
+                continue
+            if test_run_type_value == 1 and regression_check == "0":
+                continue
+
+            # Check to see if cell is NOT empty
+            # If cell is not empty, read in the values
+            if empty_cell == False:
+                test_summary = sh.cell_value(i, 0)
+                test_scenario = str(round(sh.cell_value(i, 1)))
+                effective_date = sh.cell_value(i, 2)
+                test_scenario_number = str(round(sh.cell_value(i, 3)))
+                regression = sh.cell_value(i, 4)
+                smoke = sh.cell_value(i, 5)
+                sanity = sh.cell_value(i, 6)
+                contract_class = sh.cell_value(i, 7)
+                agent = sh.cell_value(i, 8)
+                state = sh.cell_value(i, 9)
+                revenue = str(round(sh.cell_value(i, 10)))
+                total_num_records = (sh.cell_value(i, 11))
+                _OLD_scenario = sh.cell_value(i, 12)
+                _OLD_scenario_number = str(round(sh.cell_value(i, 13)))
+
+            # Else, the cell is empty
+            # End the Loop
+            else:
+                break
 
         ## Determine Test Environment to run scripts
 
@@ -138,7 +230,13 @@ class CreateQuote():
 
         # Date Variables
         date_today = time.strftime("%m/%d/%Y")
-        ad_hoc_effectiveDate = "07/01/2017"
+        ad_hoc_effectiveDate = "09/06/2017"
+
+        # Convert effective_date value to format MM/DD/YYYY
+        d = xlrd.xldate_as_tuple(int(effective_date), 0)
+        # convert date tuple in mm-dd-yyyy format
+        d = datetime.datetime(*(d[0:3]))
+        effective_date_formatted = d.strftime("%m/%d/%Y")
 
         # Initialize Driver; Launch URL
         # baseURL = "https://service.wn.nasinsurance.com/"
@@ -176,11 +274,8 @@ class CreateQuote():
         cs.enter_new_client_name_address(company_name_string, address_value, city, state)
         cc = ClientContact(driver)
 
-        # TODO:
-        # Code now parses URL String & retrieves application ID
-        #cc.parse_url_get_app_id()
-
         # Get the Application ID from URL -- THIS WORKS
+        # Code parses URL String & retrieves application ID
         current_url = driver.current_url
         first_url_string = urlparse(current_url)
         query_dict = parse_qs(first_url_string.query)
@@ -190,13 +285,46 @@ class CreateQuote():
 
         cp = CoveragePeriods(driver)
 
+        cp.click_return_to_Admin_Interface()
+
+        time.sleep(3)
+
+        # Navigate to Application Details page
+        current_url_2 = driver.current_url
+        slashparts = current_url_2.split('/')
+        # Now join back the first three sections 'http:', '' and 'example.com'
+        base_url_2 = '/'.join(slashparts[:3]) + '/'
+
+        app_details_string = "?c=app.view&id="
+        # app_subjectivities_string = "?c=app.track_subjectivities&id="
+
+        application_details_screen = base_url_2 + app_details_string + application_id
+
+        # Navigate to Application Subjectivities Screen
+        driver.get(application_details_screen)
+
+        app_details = App_Details(driver)
+
+        # Update the Create Date to the Ad Hoc Effective Date Value
+        app_details.update_create_date(effective_date_formatted)
+
+        # Click Update Button
+        app_details.click_update_button()
+
+        # Click on Agent Link to return to Producer Center
+        app_details.click_agent_text_link()
+
+        # Return to Coverage Periods screen
+
         # Enter an Ad Hoc Effective Date
-        # cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
+        cp.enter_ad_hoc_effective_date(effective_date_formatted)
 
         # Enter Today's Date as Effective Date
-        cp.enter_current_date_as_effective_date(date_today)
+        # cp.enter_current_date_as_effective_date(date_today)
 
+        # Click Next
         cp.click_next()
+
         saw_ii = Insured_Information(driver)
         saw_ii.enter_annual_revenue(revenue)
         saw_ii.click_next()
@@ -280,10 +408,10 @@ class CreateQuote():
         # saw_CC.select_Netguard_Plus_1MM_1MM_with_25K_NGP_5K_Deductible_1st_Dollar_Defense()
         # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_25K_NGP_5K_Deductible_1st_Dollar_Defense()
         # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_500K_500K_with_100K_NGP_10K_Deductible_1st_Dollar_Defense()
-        saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_25K_NGP_15K_Deductible_1st_Dollar_Defense()
+        # saw_CC.select_Netguard_Plus_Additional_Claims_Expenses_1MM_1MM_with_25K_NGP_15K_Deductible_1st_Dollar_Defense()
 
         # Next line commented out, it is not working - 6-28-17 Ken
-        # saw_CC.proceed_to_quote()
+        saw_CC.click_proceed_to_quote()
 
         saw_summary = Summary(driver)
         saw_summary.click_generate_quote()

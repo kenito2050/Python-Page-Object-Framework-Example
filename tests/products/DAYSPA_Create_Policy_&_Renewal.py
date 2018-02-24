@@ -267,7 +267,7 @@ class CreateQuote():
         #### This class is for generic objects that display on the Coverage Options page
         saw_CC = Coverage_Options(driver)
 
-        saw_CC.select_all_deselect_all()
+        # saw_CC.select_all_deselect_all()
 
         # No Product Liability
         if test_scenario_number == "1":

@@ -256,7 +256,7 @@ class CreateQuote():
 
         # saw_CC_PCI.select_MEDEFENSE_Plus_Only_500K()
         # saw_CC_PCI.select_MEDEFENSE_Plus_Only_1MM()
-        saw_CC_PCI.select_MEDEFENSE_with_50K_Disciplinary_500K()
+        # saw_CC_PCI.select_MEDEFENSE_with_50K_Disciplinary_500K()
         # saw_CC_PCI.select_MEDEFENSE_with_50K_Disciplinary_1MM()
         # saw_CC_PCI.select_eMD_500K()
         # saw_CC_PCI.select_eMD_1MM()
