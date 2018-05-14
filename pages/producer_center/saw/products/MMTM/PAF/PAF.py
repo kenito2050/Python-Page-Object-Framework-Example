@@ -28,7 +28,7 @@ class PAF():
         self.other = self.driver.find_element(By.ID, "mmtm-applicant-other")
 
         # Online Vendor(platform on which you sell products or services):
-        self.online_vendor_platform = self.driver.find_element(By.ID, "mmtm-platform")
+        self.online_vendor_platform = self.driver.find_element(By.ID, "mmtm_platform")
 
         # Merchant Identification Number(for which coverage is desired):
         self.merchant_id = self.driver.find_element(By.ID, "mmtm-merchant")
@@ -62,7 +62,16 @@ class PAF():
         self.years_in_business_5_years = self.driver.find_element(By.ID, "mmtm_business_greater_than_5")
 
         # Positive Feedback Rating (average) for past 365 days(%):
-        self.positive_feedback_rating = self.driver.find_element(By.ID, "mmtm_feedback")
+
+        # Less Than 90
+        self.positive_feedback_rating_less_than_90 = self.driver.find_element(By.ID, "mmtm_feedback_less_than_90")
+
+        # Between 90 - 97
+        self.positive_feedback_rating_between_90_to_97 = self.driver.find_element(By.ID,
+                                                                                  "mmtm_feedback_between_90_to_97")
+
+        # Over 97
+        self.positive_feedback_rating_greater_than_97 = self.driver.find_element(By.ID, "mmtm_feedback_greater_than_97")
 
         # Do you purchase all your inventory directly from authorized manufacturers, wholesalers, or distributors?
         self.inventory_purchase_yes = self.driver.find_element(By.ID, "mmtm_inventory_purchase-yes")
@@ -96,14 +105,14 @@ class PAF():
 
         return self
 
-    def create_quote_individual(self, online_vendor, merchant_id, positive_feedback_rating_percent):
+    def create_quote_individual(self, online_vendor, merchant_id):
 
         PAF.Page_Elements(self).individual.click()
         PAF.Page_Elements(self).online_vendor_platform.send_keys(online_vendor)
         PAF.Page_Elements(self).merchant_id.send_keys(merchant_id)
         PAF.Page_Elements(self).cogs_15_percent.click()
         PAF.Page_Elements(self).years_in_business_2_years.click()
-        PAF.Page_Elements(self).positive_feedback_rating.send_keys(positive_feedback_rating_percent)
+        PAF.Page_Elements(self).positive_feedback_rating_between_90_to_97.click()
         PAF.Page_Elements(self).inventory_purchase_yes.click()
         PAF.Page_Elements(self).amazon_fulfill_yes.click()
         PAF.Page_Elements(self).seller_account_inquiry_no.click()
@@ -111,14 +120,14 @@ class PAF():
         PAF.Page_Elements(self).seller_account_online_no.click()
         PAF.Page_Elements(self).online_seller_issues_no.click()
 
-    def create_quote_corporation(self, online_vendor, merchant_id, positive_feedback_rating_percent):
+    def create_quote_corporation(self, online_vendor, merchant_id):
 
         PAF.Page_Elements(self).corporation.click()
         PAF.Page_Elements(self).online_vendor_platform.send_keys(online_vendor)
         PAF.Page_Elements(self).merchant_id.send_keys(merchant_id)
         PAF.Page_Elements(self).cogs_15_percent.click()
         PAF.Page_Elements(self).years_in_business_2_years.click()
-        PAF.Page_Elements(self).positive_feedback_rating.send_keys(positive_feedback_rating_percent)
+        PAF.Page_Elements(self).positive_feedback_rating_between_90_to_97.click()
         PAF.Page_Elements(self).inventory_purchase_yes.click()
         PAF.Page_Elements(self).amazon_fulfill_yes.click()
         PAF.Page_Elements(self).seller_account_inquiry_no.click()
@@ -126,14 +135,14 @@ class PAF():
         PAF.Page_Elements(self).seller_account_online_no.click()
         PAF.Page_Elements(self).online_seller_issues_no.click()
 
-    def create_quote_partnership(self, online_vendor, merchant_id, positive_feedback_rating_percent):
+    def create_quote_partnership(self, online_vendor, merchant_id):
 
         PAF.Page_Elements(self).partnership.click()
         PAF.Page_Elements(self).online_vendor_platform.send_keys(online_vendor)
         PAF.Page_Elements(self).merchant_id.send_keys(merchant_id)
         PAF.Page_Elements(self).cogs_15_percent.click()
         PAF.Page_Elements(self).years_in_business_2_years.click()
-        PAF.Page_Elements(self).positive_feedback_rating.send_keys(positive_feedback_rating_percent)
+        PAF.Page_Elements(self).positive_feedback_rating_between_90_to_97.click()
         PAF.Page_Elements(self).inventory_purchase_yes.click()
         PAF.Page_Elements(self).amazon_fulfill_yes.click()
         PAF.Page_Elements(self).seller_account_inquiry_no.click()
@@ -141,14 +150,14 @@ class PAF():
         PAF.Page_Elements(self).seller_account_online_no.click()
         PAF.Page_Elements(self).online_seller_issues_no.click()
 
-    def create_quote_other(self, online_vendor, merchant_id, positive_feedback_rating_percent):
+    def create_quote_other(self, online_vendor, merchant_id):
 
         PAF.Page_Elements(self).other.click()
         PAF.Page_Elements(self).online_vendor_platform.send_keys(online_vendor)
         PAF.Page_Elements(self).merchant_id.send_keys(merchant_id)
         PAF.Page_Elements(self).cogs_15_percent.click()
         PAF.Page_Elements(self).years_in_business_2_years.click()
-        PAF.Page_Elements(self).positive_feedback_rating.send_keys(positive_feedback_rating_percent)
+        PAF.Page_Elements(self).positive_feedback_rating_between_90_to_97.click()
         PAF.Page_Elements(self).inventory_purchase_yes.click()
         PAF.Page_Elements(self).amazon_fulfill_yes.click()
         PAF.Page_Elements(self).seller_account_inquiry_no.click()
@@ -156,13 +165,13 @@ class PAF():
         PAF.Page_Elements(self).seller_account_online_no.click()
         PAF.Page_Elements(self).online_seller_issues_no.click()
 
-    def create_quote_revenue_between_500K_1MM(self, online_vendor, merchant_id, positive_feedback_rating_percent):
+    def create_quote_revenue_between_500K_1MM(self, online_vendor, merchant_id):
         PAF.Page_Elements(self).individual.click()
         PAF.Page_Elements(self).online_vendor_platform.send_keys(online_vendor)
         PAF.Page_Elements(self).merchant_id.send_keys(merchant_id)
         PAF.Page_Elements(self).cogs_15_percent.click()
         PAF.Page_Elements(self).years_in_business_2_years.click()
-        PAF.Page_Elements(self).positive_feedback_rating.send_keys(positive_feedback_rating_percent)
+        PAF.Page_Elements(self).positive_feedback_rating_between_90_to_97.click()
         PAF.Page_Elements(self).inventory_purchase_yes.click()
         PAF.Page_Elements(self).amazon_fulfill_yes.click()
         PAF.Page_Elements(self).seller_account_inquiry_no.click()
@@ -170,13 +179,13 @@ class PAF():
         PAF.Page_Elements(self).seller_account_online_no.click()
         PAF.Page_Elements(self).online_seller_issues_no.click()
 
-    def create_quote_revenue_between_1MM_2pt5MM(self, online_vendor, merchant_id, positive_feedback_rating_percent):
+    def create_quote_revenue_between_1MM_2pt5MM(self, online_vendor, merchant_id):
         PAF.Page_Elements(self).individual.click()
         PAF.Page_Elements(self).online_vendor_platform.send_keys(online_vendor)
         PAF.Page_Elements(self).merchant_id.send_keys(merchant_id)
         PAF.Page_Elements(self).cogs_15_percent.click()
         PAF.Page_Elements(self).years_in_business_2_years.click()
-        PAF.Page_Elements(self).positive_feedback_rating.send_keys(positive_feedback_rating_percent)
+        PAF.Page_Elements(self).positive_feedback_rating_between_90_to_97.click()
         PAF.Page_Elements(self).inventory_purchase_yes.click()
         PAF.Page_Elements(self).amazon_fulfill_yes.click()
         PAF.Page_Elements(self).seller_account_inquiry_no.click()
@@ -184,13 +193,13 @@ class PAF():
         PAF.Page_Elements(self).seller_account_online_no.click()
         PAF.Page_Elements(self).online_seller_issues_no.click()
 
-    def create_quote_revenue_over_2pt5MM(self, online_vendor, merchant_id, positive_feedback_rating_percent):
+    def create_quote_revenue_over_2pt5MM(self, online_vendor, merchant_id):
         PAF.Page_Elements(self).individual.click()
         PAF.Page_Elements(self).online_vendor_platform.send_keys(online_vendor)
         PAF.Page_Elements(self).merchant_id.send_keys(merchant_id)
         PAF.Page_Elements(self).cogs_15_percent.click()
         PAF.Page_Elements(self).years_in_business_2_years.click()
-        PAF.Page_Elements(self).positive_feedback_rating.send_keys(positive_feedback_rating_percent)
+        PAF.Page_Elements(self).positive_feedback_rating_between_90_to_97.click()
         PAF.Page_Elements(self).inventory_purchase_yes.click()
         PAF.Page_Elements(self).amazon_fulfill_yes.click()
         PAF.Page_Elements(self).seller_account_inquiry_no.click()

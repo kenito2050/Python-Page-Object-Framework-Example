@@ -354,6 +354,7 @@ class CreateQuote(unittest.TestCase):
                 saw_CC_in_use = No_PCI_Coverage_Options(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
 
+
             ### Commented out next line; Moved Proceed to Quote button Call into the PCI / Non-PCI Methods
             saw_CC.click_proceed_to_quote()
 

@@ -263,13 +263,12 @@ class CreateQuote(unittest.TestCase):
             #### This class is for generic objects that display on the Coverage Options page
             saw_CC = Coverage_Options(driver)
 
+            ### Clear All selections on Coverage Options Screen
+                # saw_CC.select_all_deselect_all()
 
             # Next line uses the text in the _OLD_scenario column (in Excel Spreadsheet) as
             # the method name
-            getattr(saw_CC, _OLD_scenario)()
-
-            ### Clear All selections on Coverage Options Screen
-            # saw_CC.select_all_deselect_all()
+                # getattr(saw_CC, _OLD_scenario)()
 
             ### Commented out next line; Moved Proceed to Quote button Call into the PCI / Non-PCI Methods
             saw_CC.click_proceed_to_quote()

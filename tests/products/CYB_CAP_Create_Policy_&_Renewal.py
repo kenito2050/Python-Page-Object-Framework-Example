@@ -263,6 +263,8 @@ class CreateQuote():
                 saw_CC_in_use = No_PCI_Coverage_Options(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
 
+            saw_CC.click_proceed_to_quote()
+
             saw_summary = Summary(driver)
             saw_summary.click_generate_quote()
             saw_quote_review = Quote_Review(driver)

@@ -198,10 +198,10 @@ class CreateQuote():
         cp = CoveragePeriods(driver)
 
         # Enter an Ad Hoc Effective Date
-        cp.enter_ad_hoc_effective_date(effective_date_formatted)
+        # cp.enter_ad_hoc_effective_date(effective_date_formatted)
 
         # Enter Today's Date as Effective Date
-        # cp.enter_current_date_as_effective_date(date_today)
+        cp.enter_current_date_as_effective_date(date_today)
 
         cp.click_next()
         saw_ii = Insured_Information(driver)
@@ -216,6 +216,10 @@ class CreateQuote():
         if test_scenario == "1":
             saw_PAF.create_quote_include_HNOA(years_in_business, staff_count, number_daily_participants)
         elif test_scenario == "2":
+            saw_PAF.create_quote_include_HNOA(years_in_business, staff_count, number_daily_participants)
+        elif test_scenario == "3":
+            saw_PAF.create_quote_NO_HNOA(years_in_business, staff_count, number_daily_participants)
+        elif test_scenario == "4":
             saw_PAF.create_quote_NO_HNOA(years_in_business, staff_count, number_daily_participants)
 
         # Click Next on PAF screen

@@ -275,7 +275,7 @@ class CreateQuote():
             ### If / Then Block to determine which instance of Coverage Options to use
 
             ### Commented out next line; Moved Proceed to Quote button Call into the PCI / Non-PCI Methods
-            # saw_CC.click_proceed_to_quote()
+            saw_CC.click_proceed_to_quote()
 
             saw_summary = Summary(driver)
             saw_summary.click_generate_quote()

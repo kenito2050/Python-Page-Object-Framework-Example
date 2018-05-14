@@ -176,8 +176,8 @@ class CreateQuote(unittest.TestCase):
             # Access XML to retrieve login credentials
             tree = ET.parse(os.path.join(config_file_directory, 'resources.xml'))
             login_credentials = tree.getroot()
-            username = (login_credentials[0][0].text)
-            password = (login_credentials[0][1].text)
+            username = (login_credentials[1][0].text)
+            password = (login_credentials[1][1].text)
 
             # No Code to Select Contract Class as it is not Selected
 
@@ -266,10 +266,10 @@ class CreateQuote(unittest.TestCase):
             # Return to Coverage Periods screen
 
             # Enter an Ad Hoc Effective Date
-            cp.enter_ad_hoc_effective_date(effective_date_formatted)
+            # cp.enter_ad_hoc_effective_date(effective_date_formatted)
 
             # Enter Today's Date as Effective Date
-            # cp.enter_current_date_as_effective_date(date_today)
+            cp.enter_current_date_as_effective_date(date_today)
 
             # Click Next
             cp.click_next()
@@ -280,19 +280,21 @@ class CreateQuote(unittest.TestCase):
             # Fill out Insured Information Screen According to test scenario number
             saw_ii.create_quote_01(annual_gross_sales)
 
+            time.sleep(3)
+
             # Click Next
             saw_ii.click_next()
 
             saw_PAF = PAF(driver)
 
             if test_scenario_number == "1" or test_scenario_number == "5" or test_scenario_number == "6" or test_scenario_number == "7":
-                saw_PAF.create_quote_individual(online_vendor, merchant_id, positive_feedback_rating_percent)
+                saw_PAF.create_quote_individual(online_vendor, merchant_id)
             elif test_scenario_number == "2":
-                saw_PAF.create_quote_corporation(online_vendor, merchant_id, positive_feedback_rating_percent)
+                saw_PAF.create_quote_corporation(online_vendor, merchant_id)
             elif test_scenario_number == "3":
-                saw_PAF.create_quote_partnership(online_vendor, merchant_id, positive_feedback_rating_percent)
+                saw_PAF.create_quote_partnership(online_vendor, merchant_id)
             elif test_scenario_number == "4":
-                saw_PAF.create_quote_other(online_vendor, merchant_id, positive_feedback_rating_percent)
+                saw_PAF.create_quote_other(online_vendor, merchant_id)
 
             # Click Next on PAF Screen
             saw_PAF.click_next()

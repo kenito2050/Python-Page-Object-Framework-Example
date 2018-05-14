@@ -86,22 +86,22 @@ class Coverage_Options():
             # self.option_476_deductible_516_15K = self.driver.find_element(By.ID, "option-476-deductible-516")
 
 
-            # Select / Deselect All
-            self.select_deselect_all = self.driver.find_element(By.ID, "select-deselect-all")
+        # Select / Deselect All
+        self.select_deselect_all = self.driver.find_element(By.ID, "select-deselect-all")
 
-            # Proceed to Quote
-            self.proceed_to_quote = self.driver.find_element(By.XPATH,
-                                                        "//div[@id='saw-application-coverage-builder']/form/div[5]/a/span[2]/span/span")
-            # Return to Admin Interface
-            self.return_to_admin_interface = self.driver.find_element(By.LINK_TEXT, "Return to Admin Interface")
+        # Proceed to Quote
+        self.proceed_to_quote = self.driver.find_element(By.XPATH,
+                                                    "//div[@id='saw-application-coverage-builder']/form/div[5]/a/span[2]/span/span")
+        # Return to Admin Interface
+        self.return_to_admin_interface = self.driver.find_element(By.LINK_TEXT, "Return to Admin Interface")
 
-            # Additional Coverage Options
+        # Additional Coverage Options
 
-            # First Dollar Defense
-            self.first_dollar_defense = self.driver.find_element(By.ID, "product-form-952")
+        # First Dollar Defense
+        self.first_dollar_defense = self.driver.find_element(By.ID, "product-form-952")
 
 
-            return self
+        return self
 
     # Miscellaneous E&O with NetGuard™ Plus Section
 

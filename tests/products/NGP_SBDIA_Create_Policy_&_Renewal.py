@@ -418,9 +418,6 @@ class CreateQuote():
             # No_PCI_Doctor_Count_5_Broad_Reg_Protect_Combined(driver)      - Test Scenario 17
 
 
-            #### This class is for generic objects that display on the Coverage Options page
-            saw_CC = Coverage_Options(driver)
-
             ## Coverage Options Section  ###
             ##                           ###
 

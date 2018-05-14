@@ -207,13 +207,13 @@ class CreateAccount():
             saw_PAF = PAF(driver)
 
             if test_scenario_number == "1" or test_scenario_number == "5" or test_scenario_number == "6" or test_scenario_number == "7":
-                saw_PAF.create_quote_individual(online_vendor, merchant_id, effective_date_formatted)
+                saw_PAF.create_quote_individual(online_vendor, merchant_id, date_today)
             elif test_scenario_number == "2":
-                saw_PAF.create_quote_corporation(online_vendor, merchant_id, effective_date_formatted)
+                saw_PAF.create_quote_corporation(online_vendor, merchant_id, date_today)
             elif test_scenario_number == "3":
-                saw_PAF.create_quote_partnership(online_vendor, merchant_id, effective_date_formatted)
+                saw_PAF.create_quote_partnership(online_vendor, merchant_id, date_today)
             elif test_scenario_number == "4":
-                saw_PAF.create_quote_other(online_vendor, merchant_id, effective_date_formatted)
+                saw_PAF.create_quote_other(online_vendor, merchant_id, date_today)
 
             # Click Next on PAF Screen
             saw_PAF.click_next_button()

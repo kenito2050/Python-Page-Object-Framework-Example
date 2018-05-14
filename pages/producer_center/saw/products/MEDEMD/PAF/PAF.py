@@ -362,7 +362,8 @@ class PAF():
     def create_quote_No_PCI_DSS_No_DQ_Not_HealthCare_Facilities(self, revenue):
 
         PAF.Page_Elements(self).operations_description.send_keys("QA TEST")
-        # PAF.Page_Elements(self).annual_revenue_current_year.send_keys(revenue)
+        PAF.Page_Elements(self).annual_revenue_current_year.click()
+        PAF.Page_Elements(self).annual_revenue_current_year.send_keys(revenue)
         PAF.Page_Elements(self).annual_revenue_one_year_ago.send_keys(revenue)
         PAF.Page_Elements(self).liability_carrier.send_keys("Test")
         # PAF.Page_Elements(self).subsidiary_inclusion_no.click()

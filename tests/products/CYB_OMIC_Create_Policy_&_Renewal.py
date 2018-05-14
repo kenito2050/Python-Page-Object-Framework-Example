@@ -447,87 +447,87 @@ class CreateQuote():
             saw_CC = Coverage_Options(driver)
 
             ### Clear All selections on Coverage Options Screen
-            saw_CC.select_all_deselect_all()
+            # saw_CC.select_all_deselect_all()
 
             ### If / Then Block to determine which instance of Coverage Options to use
 
             ### eMD / Higher Limits Test Scenarios - PCI & Non-PCI
 
             ### eMD and Higher Limits PCI Scenarios
-            if test_scenario_number == "1":
-                saw_CC_in_use = PCI_Coverage_Options_eMD_Higher_Limits(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-
-            ### eMD and Higher Limits Non-PCI Scenarios
-            elif test_scenario_number == "2":
-                saw_CC_in_use = No_PCI_Coverage_Options_eMD_Higher_Limits(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-
-            ### Broad Regulatory Only Test Scenarios
-
-            elif test_scenario_number == "3":
-                saw_CC_in_use = Doctor_Count_1_Broad_Reg_Protect(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-
-            elif test_scenario_number == "4":
-                saw_CC_in_use = Doctor_Count_2_Broad_Reg_Protect(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-
-            elif test_scenario_number == "5":
-                saw_CC_in_use = Doctor_Count_3_Broad_Reg_Protect(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-
-            elif test_scenario_number == "6":
-                saw_CC_in_use = Doctor_Count_4_Broad_Reg_Protect(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-
-            elif test_scenario_number == "7":
-                saw_CC_in_use = Doctor_Count_5_Broad_Reg_Protect(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-
-            ### Broad Regulatory Combined - Test Scenarios - PCI
-
-            elif test_scenario_number == "8":
-                saw_CC_in_use = PCI_Doctor_Count_1_Broad_Reg_Protect_Combined(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-
-            elif test_scenario_number == "9":
-                saw_CC_in_use = PCI_Doctor_Count_2_Broad_Reg_Protect_Combined(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-
-            elif test_scenario_number == "10":
-                saw_CC_in_use = PCI_Doctor_Count_3_Broad_Reg_Protect_Combined(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-
-            elif test_scenario_number == "11":
-                saw_CC_in_use = PCI_Doctor_Count_4_Broad_Reg_Protect_Combined(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-
-            elif test_scenario_number == "12":
-                saw_CC_in_use = PCI_Doctor_Count_5_Broad_Reg_Protect_Combined(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-
-            ### Broad Regulatory Combined - Test Scenarios - Non-PCI
-
-            elif test_scenario_number == "13":
-                saw_CC_in_use = No_PCI_Doctor_Count_1_Broad_Reg_Protect_Combined(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-
-            elif test_scenario_number == "14":
-                saw_CC_in_use = No_PCI_Doctor_Count_2_Broad_Reg_Protect_Combined(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-
-            elif test_scenario_number == "15":
-                saw_CC_in_use = No_PCI_Doctor_Count_3_Broad_Reg_Protect_Combined(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-
-            elif test_scenario_number == "16":
-                saw_CC_in_use = No_PCI_Doctor_Count_4_Broad_Reg_Protect_Combined(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-
-            elif test_scenario_number == "17":
-                saw_CC_in_use = No_PCI_Doctor_Count_5_Broad_Reg_Protect_Combined(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
+            # if test_scenario_number == "1":
+            #     saw_CC_in_use = PCI_Coverage_Options_eMD_Higher_Limits(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #
+            # ### eMD and Higher Limits Non-PCI Scenarios
+            # elif test_scenario_number == "2":
+            #     saw_CC_in_use = No_PCI_Coverage_Options_eMD_Higher_Limits(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #
+            # ### Broad Regulatory Only Test Scenarios
+            #
+            # elif test_scenario_number == "3":
+            #     saw_CC_in_use = Doctor_Count_1_Broad_Reg_Protect(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #
+            # elif test_scenario_number == "4":
+            #     saw_CC_in_use = Doctor_Count_2_Broad_Reg_Protect(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #
+            # elif test_scenario_number == "5":
+            #     saw_CC_in_use = Doctor_Count_3_Broad_Reg_Protect(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #
+            # elif test_scenario_number == "6":
+            #     saw_CC_in_use = Doctor_Count_4_Broad_Reg_Protect(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #
+            # elif test_scenario_number == "7":
+            #     saw_CC_in_use = Doctor_Count_5_Broad_Reg_Protect(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #
+            # ### Broad Regulatory Combined - Test Scenarios - PCI
+            #
+            # elif test_scenario_number == "8":
+            #     saw_CC_in_use = PCI_Doctor_Count_1_Broad_Reg_Protect_Combined(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #
+            # elif test_scenario_number == "9":
+            #     saw_CC_in_use = PCI_Doctor_Count_2_Broad_Reg_Protect_Combined(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #
+            # elif test_scenario_number == "10":
+            #     saw_CC_in_use = PCI_Doctor_Count_3_Broad_Reg_Protect_Combined(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #
+            # elif test_scenario_number == "11":
+            #     saw_CC_in_use = PCI_Doctor_Count_4_Broad_Reg_Protect_Combined(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #
+            # elif test_scenario_number == "12":
+            #     saw_CC_in_use = PCI_Doctor_Count_5_Broad_Reg_Protect_Combined(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #
+            # ### Broad Regulatory Combined - Test Scenarios - Non-PCI
+            #
+            # elif test_scenario_number == "13":
+            #     saw_CC_in_use = No_PCI_Doctor_Count_1_Broad_Reg_Protect_Combined(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #
+            # elif test_scenario_number == "14":
+            #     saw_CC_in_use = No_PCI_Doctor_Count_2_Broad_Reg_Protect_Combined(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #
+            # elif test_scenario_number == "15":
+            #     saw_CC_in_use = No_PCI_Doctor_Count_3_Broad_Reg_Protect_Combined(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #
+            # elif test_scenario_number == "16":
+            #     saw_CC_in_use = No_PCI_Doctor_Count_4_Broad_Reg_Protect_Combined(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #
+            # elif test_scenario_number == "17":
+            #     saw_CC_in_use = No_PCI_Doctor_Count_5_Broad_Reg_Protect_Combined(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
 
 
             ### Commented out next line; Moved Proceed to Quote button Call into the PCI / Non-PCI Methods

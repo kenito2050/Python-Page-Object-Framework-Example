@@ -200,10 +200,10 @@ class CreateQuote():
         cp = CoveragePeriods(driver)
 
         # Enter an Ad Hoc Effective Date
-        cp.enter_ad_hoc_effective_date(effective_date_formatted)
+        # cp.enter_ad_hoc_effective_date(effective_date_formatted)
 
         # Enter Today's Date as Effective Date
-        # cp.enter_current_date_as_effective_date(date_today)
+        cp.enter_current_date_as_effective_date(date_today)
 
         cp.click_next()
         saw_ii = Insured_Information(driver)
@@ -223,20 +223,12 @@ class CreateQuote():
         # Click Next on PAF screen
         saw_PAF.click_next()
 
-        if test_scenario == "1":
-            saw_CC_in_use = HNOA_Coverage_Options(driver)
-            getattr(saw_CC_in_use, _OLD_scenario)()
-
-        elif test_scenario == "2":
-            saw_CC_in_use = No_HNOA_Coverage_Options(driver)
-            getattr(saw_CC_in_use, _OLD_scenario)()
-
         #### This class is for generic objects that display on the Coverage Options page
         saw_CC = Coverage_Options(driver)
 
-        #saw_CC.select_all_deselect_all()
+        # saw_CC.select_all_deselect_all()
 
-        saw_CC.proceed_to_quote()
+        saw_CC.click_proceed_to_quote()
         saw_summary = Summary(driver)
         saw_summary.click_generate_quote()
         saw_quote_review = Quote_Review(driver)

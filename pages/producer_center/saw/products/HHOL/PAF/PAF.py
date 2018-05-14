@@ -104,7 +104,7 @@ class PAF():
         self.gross_million_no = self.driver.find_element(By.ID, "hhol_gross_million-no")
 
         # Amount Last Policy Year
-        self.revenue_current_year = self.driver.find_element(By.ID, "annual_revenue_current_year")
+        self.annual_revenue_last_policy_year = self.driver.find_element(By.ID, "annual_revenue_last_policy_year")
 
         # Has any application for Professional Liability Insurance made on behalf of the Applicant, any predecessors in business or present Partners EVER been declined or has the insurance ever been cancelled or non-renewed
         self.insurance_declined_yes = self.driver.find_element(By.ID, "hhol_insurance_declined-yes")
@@ -120,6 +120,11 @@ class PAF():
         self.expiring_coverage_yes = self.driver.find_element(By.ID, "hhol_expiring_coverage-yes")
 
         self.expiring_coverage_no = self.driver.find_element(By.ID, "hhol_expiring_coverage-no")
+
+        # Is the Applicant aware of ANY circumstances which may result in ANY claim against it, the entity, its predecessors in business, or any of its past or present directors, officers, or partners
+        self.potential_claims_yes = self.driver.find_element(By.ID, "hhol_potential_claim-yes")
+
+        self.potential_claims_no = self.driver.find_element(By.ID, "hhol_potential_claim-no")
 
         # Is the Applicant interested in Hired and Non-Owned Auto Liability coverage
         self.include_hnoa_yes = self.driver.find_element(By.ID, "hhol_include_hnoa-yes")
@@ -153,10 +158,11 @@ class PAF():
         PAF.Page_Elements(self).services_nursing_no.click()
         PAF.Page_Elements(self).perform_correctional_no.click()
         PAF.Page_Elements(self).gross_million_no.click()
-        PAF.Page_Elements(self).revenue_current_year.send_keys(revenue_current_year)
+        PAF.Page_Elements(self).annual_revenue_last_policy_year.send_keys(revenue_current_year)
         PAF.Page_Elements(self).insurance_declined_no.click()
         PAF.Page_Elements(self).past_claim_no.click()
         PAF.Page_Elements(self).insurance_declined_no.click()
+        PAF.Page_Elements(self).potential_claims_no.click()
         PAF.Page_Elements(self).expiring_coverage_no.click()
         PAF.Page_Elements(self).include_hnoa_yes.click()
         PAF.Page_Elements(self).warrant_min_insurance_yes.click()
@@ -179,10 +185,11 @@ class PAF():
         PAF.Page_Elements(self).services_nursing_no.click()
         PAF.Page_Elements(self).perform_correctional_no.click()
         PAF.Page_Elements(self).gross_million_no.click()
-        PAF.Page_Elements(self).revenue_current_year.send_keys(revenue_current_year)
+        PAF.Page_Elements(self).annual_revenue_last_policy_year.send_keys(revenue_current_year)
         PAF.Page_Elements(self).insurance_declined_no.click()
         PAF.Page_Elements(self).past_claim_no.click()
         PAF.Page_Elements(self).insurance_declined_no.click()
+        PAF.Page_Elements(self).potential_claims_no.click()
         PAF.Page_Elements(self).expiring_coverage_no.click()
         PAF.Page_Elements(self).include_hnoa_no.click()
         PAF.Page_Elements(self).warrant_min_insurance_na.click()

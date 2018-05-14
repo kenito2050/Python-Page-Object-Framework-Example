@@ -17,7 +17,13 @@ class Environments(dict):
             'Fix': 'https://svcfix.wn.nasinsurance.com/',
             'Stage': 'https://svcrel.wn.nasinsurance.com/',
             'QA': 'https://svcqa.wn.nasinsurance.com/',
+            'Cust_Dev': 'https://custdev.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
             'Cust_Demo3': 'https://custdemo3.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
+            'Cust_Demo4': 'https://custdemo4.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
+            'Cust_Demo6': 'https://custdemo6.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
+            'Cust_QA': 'https://custqa.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
+            'Cust_Fix': 'https://custfix.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
+            'Retail_Access_Demo7': 'https://proddemo7.wn.nasinsurance.com/registration',
             'Live': 'https://service.wn.nasinsurance.com/'
             }
         return environments[environment]

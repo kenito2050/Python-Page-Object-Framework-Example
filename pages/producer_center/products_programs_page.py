@@ -1,4 +1,6 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
+import time
 
 class ProductsAndPrograms():
 
@@ -25,6 +27,13 @@ class ProductsAndPrograms():
         ballpark_link.click()
 
     # Products
+    def click_Ken_V_Test(self):
+        Ken_V_Test_link = self.driver.find_element(By.ID, "Ken Villarruel Agency_start")
+        Ken_V_Test_link.click()
+
+    def click_ADULTDC(self):
+        ADULTDC_link = self.driver.find_element(By.ID, "Adult Day Care_start")
+        ADULTDC_link.click()
 
     def click_CYB_AAO(self):
         CYB_AAO_link = self.driver.find_element(By.ID, "AAO Broad Regulatory Protection Plus and e-MD™_start")
@@ -42,6 +51,30 @@ class ProductsAndPrograms():
         CYB_LAMMICO_link = self.driver.find_element(By.ID, "LAMMICO MEDEFENSE™ Plus and Cyber Liability_start")
         CYB_LAMMICO_link.click()
 
+    def click_CYB_MDA(self):
+        CYB_MDA_link = self.driver.find_element(By.ID, "Supreme Advantage PDSI / MPAI_start")
+        CYB_MDA_link.click()
+
+    def click_CYB_MMD(self):
+        CYB_MMD_link = self.driver.find_element(By.ID, "MedMal Direct MEDEFENSE™ Plus and CyberProtector™_start")
+        CYB_MMD_link.click()
+
+    def click_CYB_MMIC(self):
+        CYB_MMIC_link = self.driver.find_element(By.ID, "MMNC e-MD™ and MEDEFENSE™ Plus_start")
+        CYB_MMIC_link.click()
+
+    def click_CYB_MICA(self):
+        CYB_MICA_link = self.driver.find_element(By.ID, "MICA e-Med Protection Plus_start")
+        CYB_MICA_link.click()
+
+    def click_CYB_PAS(self):
+        CYB_PAS_link = self.driver.find_element(By.ID, "ProAssurance ProSecure Regulatory Risk Protection and Cyber Liability_start")
+        CYB_PAS_link.click()
+
+    def click_CYB_PAS_PICA(self):
+        CYB_PAS_PICA_link = self.driver.find_element(By.ID, "PICA ProSecure Regulatory Risk Protection and Cyber Liability_start")
+        CYB_PAS_PICA_link.click()
+
     def click_CYB_PSIC_DDS(self):
         CYB_PSIC_DDS_link = self.driver.find_element(By.ID, "PSIC Regulatory Proceedings and Network Security & Privacy Coverage for Dentists_start")
         CYB_PSIC_DDS_link.click()
@@ -53,14 +86,6 @@ class ProductsAndPrograms():
     def click_CYB_LSA(self):
         CYB_LSA_link = self.driver.find_element(By.ID, "LSA Cyber Liability / Medefense™ Plus_start")
         CYB_LSA_link.click()
-
-    def click_CYB_MMIC(self):
-        CYB_MMIC_link = self.driver.find_element(By.ID, "MMNC e-MD™ and MEDEFENSE™ Plus_start")
-        CYB_MMIC_link.click()
-
-    def click_CYB_MICA(self):
-        CYB_MICA_link = self.driver.find_element(By.ID, "MICA e-Med Protection Plus_start")
-        CYB_MICA_link.click()
 
     def click_CYB_USI(self):
         CYB_USI_link = self.driver.find_element(By.ID, "PrivaSafe with MEDEFENSE™ Plus_start")
@@ -78,6 +103,10 @@ class ProductsAndPrograms():
         DAYSPA_link = self.driver.find_element(By.ID, "Day Spa PL/GL_start")
         DAYSPA_link.click()
 
+    def click_EO_MHC(self):
+        EO_MHC_link = self.driver.find_element(By.ID, "Healthcare Misc. E&O_start")
+        EO_MHC_link.click()
+
     def click_EO_MISC(self):
         EO_MISC_link = self.driver.find_element(By.ID, "Miscellaneous E&O_start")
         EO_MISC_link.click()
@@ -85,6 +114,10 @@ class ProductsAndPrograms():
     def click_EO_PM(self):
         EO_PM_link = self.driver.find_element(By.ID, "Property Manager’s E&O with Cyber Liability and Tenant Discrimination_start")
         EO_PM_link.click()
+
+    def click_GRPHOME(self):
+        GRPHOME_link = self.driver.find_element(By.ID, "Group Home_start")
+        GRPHOME_link.click()
 
     def click_HHOL(self):
         HHOL_link = self.driver.find_element(By.ID, "Home Health Care_start")
@@ -146,6 +179,10 @@ class ProductsAndPrograms():
         NGP_USPRO_AZIONE_link = self.driver.find_element(By.ID, "AZIONE Cyber Liability_start")
         NGP_USPRO_AZIONE_link.click()
 
+    def click_TLIE(self):
+        TLIE_link = self.driver.find_element(By.ID, "Texas Lawyers' Insurance Exchange_start")
+        TLIE_link.click()
+
     # Declare and Click Contract Class Modal
     def click_contract_class_modal(self):
         contract_class_modal = self.driver.find_element(By.ID, "pcs-product-class")
@@ -163,6 +200,22 @@ class ProductsAndPrograms():
     def select_contract_class_dropdown(self):
         select_contract_class_dropdown = self.driver.find_element(By.XPATH, "//*[@id='class-select-wrap']")
         select_contract_class_dropdown.click()
+
+    def select_contract_class_updated(self, contract_class):
+        select_contract_class_dropdown = self.driver.find_element(By.XPATH, "//*[@id='class-select-wrap']")
+        select_contract_class_dropdown.click()
+
+        # Code works up to this point -- Ken
+
+        contract_class_drop_down = self.driver.find_element_by_css_selector("select[name=\"contract_class_id\"]")
+        contract_class_drop_down.send_keys(contract_class)
+
+    def select_contract_class_updated_rev2(self, contract_class):
+        select_contract_class_dropdown = self.driver.find_element(By.XPATH, "//*[@id='class-select-wrap']")
+        select_contract_class_dropdown.click()
+
+        contract_class_drop_down = self.driver.find_element_by_css_selector("select[name=\"contract_class_id\"]")
+        contract_class_drop_down.send_keys(contract_class)
 
     # TODO: NEED TO FIX SO THAT SCRIPT USES STRING VALUE CONTAINED IN contract_class variable instead of an integer value
     # 12-23-16

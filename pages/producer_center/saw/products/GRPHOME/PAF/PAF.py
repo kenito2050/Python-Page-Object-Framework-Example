@@ -15,6 +15,9 @@ class PAF():
         # Total Staff Count
         self.total_staff_count = self.driver.find_element(By.ID, "staff_count")
 
+        # Total # of Licensed Beds
+        self.total_licensed_beds = self.driver.find_element(By.ID, "licensed_beds")
+
         # On average, are at least 66% of licensed beds occupied?
         self.beds_occupied_yes = self.driver.find_element(By.ID, "gh_beds_occupied-yes")
 
@@ -185,18 +188,18 @@ class PAF():
 
         return self
 
-    def create_quote_include_HNOA(self, years_in_business, staff_count):
+    def create_quote_include_HNOA(self, years_in_business, staff_count, total_occupied_beds):
         PAF.Page_Elements(self).years_in_business.send_keys(years_in_business)
         PAF.Page_Elements(self).total_staff_count.send_keys(staff_count)
+        PAF.Page_Elements(self).total_licensed_beds.send_keys(total_occupied_beds)
         PAF.Page_Elements(self).beds_occupied_yes.click()
         PAF.Page_Elements(self).background_checks_yes.click()
-        PAF.Page_Elements(self).implement_immediately_yes.click()
         PAF.Page_Elements(self).smember_premises_yes.click()
         PAF.Page_Elements(self).emergency_protocols_yes.click()
         PAF.Page_Elements(self).security_measures_yes.click()
         PAF.Page_Elements(self).screened_prior_yes.click()
         PAF.Page_Elements(self).gender_separated_yes.click()
-        PAF.Page_Elements(self).app_licensed_yes.click()
+        PAF.Page_Elements(self).app_licensed_no.click()
         PAF.Page_Elements(self).minors_no.click()
         PAF.Page_Elements(self).elderly_no.click()
         PAF.Page_Elements(self).bedridden_no.click()
@@ -221,18 +224,18 @@ class PAF():
         PAF.Page_Elements(self).hired_yes.click()
         PAF.Page_Elements(self).warrant_yes.click()
 
-    def create_quote_NO_HNOA(self, years_in_business, staff_count):
+    def create_quote_NO_HNOA(self, years_in_business, staff_count, total_occupied_beds):
         PAF.Page_Elements(self).years_in_business.send_keys(years_in_business)
         PAF.Page_Elements(self).total_staff_count.send_keys(staff_count)
+        PAF.Page_Elements(self).total_licensed_beds.send_keys(total_occupied_beds)
         PAF.Page_Elements(self).beds_occupied_yes.click()
         PAF.Page_Elements(self).background_checks_yes.click()
-        PAF.Page_Elements(self).implement_immediately_yes.click()
         PAF.Page_Elements(self).smember_premises_yes.click()
         PAF.Page_Elements(self).emergency_protocols_yes.click()
         PAF.Page_Elements(self).security_measures_yes.click()
         PAF.Page_Elements(self).screened_prior_yes.click()
         PAF.Page_Elements(self).gender_separated_yes.click()
-        PAF.Page_Elements(self).app_licensed_yes.click()
+        PAF.Page_Elements(self).app_licensed_no.click()
         PAF.Page_Elements(self).minors_no.click()
         PAF.Page_Elements(self).elderly_no.click()
         PAF.Page_Elements(self).bedridden_no.click()
@@ -255,7 +258,6 @@ class PAF():
         PAF.Page_Elements(self).aware_partners_no.click()
         PAF.Page_Elements(self).expiring_coverage_yes.click()
         PAF.Page_Elements(self).hired_no.click()
-        PAF.Page_Elements(self).warrant_yes.click()
 
 
     def input_retroactive_date(self, retroactive_date):

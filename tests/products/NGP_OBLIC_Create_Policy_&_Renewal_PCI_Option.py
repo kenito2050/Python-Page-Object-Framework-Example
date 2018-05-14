@@ -141,7 +141,7 @@ class CreateQuote():
 
         # Date Variables
         date_today = time.strftime("%m/%d/%Y")
-        ad_hoc_effectiveDate = "07/01/2017"
+        ad_hoc_effectiveDate = "03/14/2018"
 
         # Initialize Driver; Launch URL
         # baseURL = "https://svcrel.wn.nasinsurance.com/"
@@ -194,10 +194,10 @@ class CreateQuote():
         cp = CoveragePeriods(driver)
 
         # Enter an Ad Hoc Effective Date
-        # cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
+        cp.enter_ad_hoc_effective_date(date_today)
 
         # Enter Today's Date as Effective Date
-        cp.enter_current_date_as_effective_date(date_today)
+        # cp.enter_current_date_as_effective_date(date_today)
 
         cp.click_next()
         saw_ii = Insured_Information(driver)
@@ -227,7 +227,7 @@ class CreateQuote():
         #### This class is for generic objects that display on the Coverage Options page
         saw_CC = Coverage_Options(driver)
 
-        saw_CC.select_all_deselect_all()
+        # saw_CC.select_all_deselect_all()
 
         ### Choose PCI / No PCI Options in this block   ###
         ###                                             ###
@@ -245,7 +245,7 @@ class CreateQuote():
         # saw_CC_No_PCI.select_1MM_limit_0_Deductible()
 
         ### Commented out next line; Moved Proceed to Quote button Call into the PIC / Non-PCI Methods
-        # saw_CC.proceed_to_quote()
+        saw_CC.proceed_to_quote()
 
         saw_summary = Summary(driver)
         saw_summary.click_generate_quote()

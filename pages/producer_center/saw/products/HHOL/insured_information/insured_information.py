@@ -6,7 +6,7 @@ class Insured_Information():
         self.driver = driver
 
     def PageElements(self):
-        self.annual_revenue = self.driver.find_element(By.ID, "annual_revenue_next_year")
+        self.annual_revenue = self.driver.find_element(By.ID, "annual_revenue_current_year")
 
         self.next_button = self.driver.find_element(By.NAME, "submit")
 

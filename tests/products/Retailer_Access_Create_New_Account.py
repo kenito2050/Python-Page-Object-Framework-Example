@@ -114,13 +114,17 @@ class CreateAccount():
             last_name = name.last_name()
             company_name = company.company_name()
             # company_name_string = company_name
-            company_name_faker = "QA Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
+            company_name_faker = "QA Test" + " " + "-" + " " + first_name_initial + " " + last_name
+
+            # old company name
+            # company_name_faker = "QA Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
+
 
             # Create Email Address
             # Take First Character of First Name + . + Last Name String + Mailinator.com
             # Example: John User
             # Becomes: J.User@mailinator.com
-            email_address = first_name + "." + last_name + "@" + "mailinator.com"
+            email_address = first_name_initial + "." + last_name + "@" + "mailinator.com"
 
 
             # Create Username
@@ -186,7 +190,6 @@ class CreateAccount():
                 ac.select_state(state)
                 ac.input_company_name_FAKER(company_name_faker)
                 ac.select_preferred_wholesaler(preferred_wholesaler)
-                ac.click_send_button()
 
             elif test_scenario == "2":
                 ac.click_custom_registration_code_no()
@@ -195,7 +198,6 @@ class CreateAccount():
                 ac.input_title(title)
                 ac.select_state(state)
                 ac.input_company_name_EXCEL(company_name_excel)
-                ac.click_send_button()
 
             elif test_scenario == "3":
                 ac.click_custom_registration_code_no()
@@ -204,7 +206,6 @@ class CreateAccount():
                 ac.input_title(title)
                 ac.select_state(state)
                 ac.input_company_name_FAKER(company_name_faker)
-                ac.click_send_button()
 
             elif test_scenario == "4":
                 ac.click_custom_registration_code_yes()
@@ -213,7 +214,8 @@ class CreateAccount():
                 ac.input_title(title)
                 ac.select_state(state)
                 ac.input_company_name_FAKER(company_name_faker)
-                ac.click_send_button()
+
+            ac.click_send_button()
 
             # Wait
             time.sleep(3)

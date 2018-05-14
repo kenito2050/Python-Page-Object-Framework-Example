@@ -8,4 +8,8 @@
         <username>admin.14</username>
         <password>Test1234</password>
     </user >
+    <user type= "admin3">
+    <username>admin.6</username>
+    <password>Test1234</password>
+    </user >
 </data>

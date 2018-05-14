@@ -37,6 +37,7 @@ from pages.producer_center.saw.thank_you_page import Thank_You_Page
 from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.agents_page import AgentsPage
 from pages.service_center.application_screens.details import App_Details
+from pages.service_center.application_screens.sub_agent_details import App_Details_sub_agent
 from pages.service_center.applications_page import ApplicationsPage
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
@@ -267,6 +268,7 @@ class CreateQuote():
 
             pp = ProductsAndPrograms(driver)
             pp.click_NGP()
+            # pp.click_Ken_V_Test()
 
             # The following lines added on 10-09-17 work
             pp.click_contract_class_drop_down_select_contract_class(contract_class)
@@ -288,43 +290,54 @@ class CreateQuote():
             cc.click_next()
 
             cp = CoveragePeriods(driver)
-
-            cp.click_return_to_Admin_Interface()
-
-            time.sleep(3)
-
-            # Navigate to Application Details page
-            current_url_2 = driver.current_url
-            slashparts = current_url_2.split('/')
-            # Now join back the first three sections 'http:', '' and 'example.com'
-            base_url_2 = '/'.join(slashparts[:3]) + '/'
-
-            app_details_string = "?c=app.view&id="
-            # app_subjectivities_string = "?c=app.track_subjectivities&id="
-
-            application_details_screen = base_url_2 + app_details_string + application_id
-
-            # Navigate to Application Subjectivities Screen
-            driver.get(application_details_screen)
-
-            app_details = App_Details(driver)
-
-            # Update the Create Date to the Ad Hoc Effective Date Value
-            app_details.update_create_date(effective_date_formatted)
-
-            # Click Update Button
-            app_details.click_update_button()
-
-            # Click on Agent Link to return to Producer Center
-            app_details.click_agent_text_link()
-
-            # Return to Coverage Periods screen
-
-            # Enter an Ad Hoc Effective Date
-            cp.enter_ad_hoc_effective_date(effective_date_formatted)
+            # This section commented out
+            # cp.click_return_to_Admin_Interface()
+            #
+            # time.sleep(3)
+            #
+            # # Navigate to Application Details page
+            # current_url_2 = driver.current_url
+            # slashparts = current_url_2.split('/')
+            # # Now join back the first three sections 'http:', '' and 'example.com'
+            # base_url_2 = '/'.join(slashparts[:3]) + '/'
+            #
+            # app_details_string = "?c=app.view&id="
+            # # app_subjectivities_string = "?c=app.track_subjectivities&id="
+            #
+            # application_details_screen = base_url_2 + app_details_string + application_id
+            #
+            # # Navigate to Application Subjectivities Screen
+            # driver.get(application_details_screen)
+            #
+            # # Declare an app details class for Agents & Sub-Agents
+            # app_details = App_Details(driver)
+            # app_details_sub_agent = App_Details_sub_agent(driver)
+            #
+            # # Update the Create Date to the Ad Hoc Effective Date Value
+            # # app_details.update_create_date(effective_date_formatted)
+            #
+            # # This section if agent is direct
+            # # Click Update Button
+            # app_details.click_update_button()
+            #
+            # # Click on Agent Link to return to Producer Center
+            # app_details.click_agent_text_link()
+            # # Click on Agent Link to return to Producer Center
+            #
+            # # This section if agent is Sub-Agent
+            # # app_details_sub_agent.update_create_date(effective_date_formatted)
+            # # app_details_sub_agent.click_update_button()
+            # # app_details_sub_agent.click_sub_agent_text_link()
+            #
+            # # Return to Coverage Periods screen
+            #
+            # # Enter an Ad Hoc Effective Date
+            # cp.enter_ad_hoc_effective_date(effective_date_formatted)
 
             # Enter Today's Date as Effective Date
             # cp.enter_current_date_as_effective_date(date_today)
+
+            # End Comment Section
 
             # Click Next
             cp.click_next()

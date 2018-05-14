@@ -109,8 +109,15 @@ class Account_Creation():
         # 1 - Retail Agency Selected
         # 2 - Company
         # Preferred Wholesaler
+
         self.preferred_wholesaler_field = self.driver.find_element(By.ID, "p_wholesaler")
+        self.preferred_wholesaler_field.click()
         self.preferred_wholesaler_field.send_keys(preferred_wholesaler)
+
+        # Click Address 2; Wholesaler Information field displays
+        Account_Creation.Page_Elements(self).address_2_field.click()
+
+
 
     def click_send_button(self):
         Account_Creation.Page_Elements(self).send_button.click()

@@ -422,25 +422,25 @@ class CreateQuote():
             ### This section tests to see if the correct test scenario is executed, given the test_scenario_number & revenue tier
             ### TODO: Read the values from the OLD_Scenario variable; Run that scenario
 
-            if test_scenario_number == "1":
-                saw_CC_in_use = PCI_Coverage_Options_After_Sep_6_2017(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-                # saw_CC_in_use.select_MEDEFENSE_Plus_Only_1MM_1MM_limit_2pt5K_Deduct()
-
-            elif test_scenario_number == "2":
-                saw_CC_in_use = No_PCI_Coverage_Options_After_Sep_6_2017(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-                # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_With_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()
-
-            elif test_scenario_number == "3":
-                saw_CC_in_use = PCI_Coverage_Options_Before_Sep_6_2017(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-                # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_With_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()
-
-            elif test_scenario_number == "4":
-                saw_CC_in_use = No_PCI_Coverage_Options_Before_Sep_6_2017(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
-                # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_With_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()
+            # if test_scenario_number == "1":
+            #     saw_CC_in_use = PCI_Coverage_Options_After_Sep_6_2017(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #     # saw_CC_in_use.select_MEDEFENSE_Plus_Only_1MM_1MM_limit_2pt5K_Deduct()
+            #
+            # elif test_scenario_number == "2":
+            #     saw_CC_in_use = No_PCI_Coverage_Options_After_Sep_6_2017(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #     # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_With_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()
+            #
+            # elif test_scenario_number == "3":
+            #     saw_CC_in_use = PCI_Coverage_Options_Before_Sep_6_2017(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #     # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_With_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()
+            #
+            # elif test_scenario_number == "4":
+            #     saw_CC_in_use = No_PCI_Coverage_Options_Before_Sep_6_2017(driver)
+            #     getattr(saw_CC_in_use, _OLD_scenario)()
+            #     # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_With_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()
 
 
             ### FIXED: Renamed method proceed_to_quote to click_proceed_to_quote; This code now works

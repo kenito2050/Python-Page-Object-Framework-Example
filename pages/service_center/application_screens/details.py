@@ -34,7 +34,6 @@ class App_Details():
 
 
     def click_agent_text_link(self):
-
         App_Details.Page_Elements(self).agent_link.click()
 
     def click_agent_link(self, _agent):
