@@ -1,7 +1,27 @@
 import pytest
 from selenium import webdriver
+from config_globals import *
 
-driver = None
+
+def pytest_addoption(parser):
+    parser.addoption("--env", action="store", default="Stage",
+                     help="Environment to run test against")
+
+@pytest.fixture
+def env(request):
+    return request.config.getoption("--env")
+
+@pytest.fixture(scope='function')
+def browser(request):
+    print("creating a new webdriver")
+    driver = webdriver.Chrome(str(CONFIG_PATH / 'chromedriver.exe'))
+    driver.maximize_window()
+
+    def fin():
+        driver.quit()
+
+    request.addfinalizer(fin)
+    return driver
 
 @pytest.mark.hookwrapper
 def pytest_runtest_makereport(item):
@@ -26,17 +46,7 @@ def pytest_runtest_makereport(item):
                 extra.append(pytest_html.extras.html(html))
         report.extra = extra
 
-
 def _capture_screenshot(name):
+    driver = browser()
     driver.get_screenshot_as_file(name)
-
-
-@pytest.fixture(scope='function', autouse=True)
-def browser():
-    global driver
-    if driver is None:
-        # JS: make sure chromedriver.exe is in the SYSTEM PATH
-        print("creating a new webdriver")
-        driver = webdriver.Chrome()
-    return driver
 
