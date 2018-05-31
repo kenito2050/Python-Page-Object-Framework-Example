@@ -243,7 +243,7 @@ class CreateQuote():
         saw_CC_No_PCI.select_500K_limit_0_Deductible()
         # saw_CC_No_PCI.select_1MM_limit_0_Deductible()
 
-        ### Commented out next line; Moved Proceed to Quote button Call into the PIC / Non-PCI Methods
+        ### Commented out next line; Moved Proceed to Quote button Call into the CYB_PIC / Non-PCI Methods
         # saw_CC.proceed_to_quote()
 
         saw_summary = Summary(driver)

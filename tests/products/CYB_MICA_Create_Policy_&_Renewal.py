@@ -331,7 +331,7 @@ class CreateQuote():
             app_details = App_Details(driver)
 
             # Update the Create Date to the Ad Hoc Effective Date Value
-            app_details.update_create_date(effective_date_formatted)
+            app_details.update_create_date(date_today)
 
             # Click Update Button
             app_details.click_update_button()
@@ -342,10 +342,10 @@ class CreateQuote():
             # Return to Coverage Periods screen
 
             # Enter an Ad Hoc Effective Date
-            cp.enter_ad_hoc_effective_date(effective_date_formatted)
+            # cp.enter_ad_hoc_effective_date(effective_date_formatted)
 
             # Enter Today's Date as Effective Date
-            # cp.enter_current_date_as_effective_date(date_today)
+            cp.enter_current_date_as_effective_date(date_today)
 
             # Click Next
             cp.click_next()

@@ -229,7 +229,7 @@ class CreateQuote(unittest.TestCase):
         #### This class is for generic objects that display on the Coverage Options page
         saw_CC = Coverage_Options(driver)
 
-        saw_CC.select_all_deselect_all()
+        # saw_CC.select_all_deselect_all()
 
         ### Choose PCI / No PCI Options in this block   ###
         ###                                             ###
@@ -254,7 +254,7 @@ class CreateQuote(unittest.TestCase):
 
         # saw_CC_No_PCI.select_CyberRisk_Only_with_Cyber_Crime_Only_No_PCI()
         # saw_CC_No_PCI.select_CyberRisk_Only_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime_No_PCI()
-        saw_CC_No_PCI.select_Medefense_Plus_Only()
+        # saw_CC_No_PCI.select_Medefense_Plus_Only()
         # saw_CC_No_PCI.select_Medefense_Plus_with_Peer_Review_Proceeding_Sublimit()
         # saw_CC_No_PCI.select_Medefense_Plus_and_CyberRisk_with_Cyber_Crime_Combined_Shared_Limits_No_PCI()
         # saw_CC_No_PCI.select_Medefense_Plus_and_CyberRisk_Combined_Shared_Limits_with_Claim_Expenses_Outside_Limits_and_Cyber_Crime_No_PCI()
@@ -270,8 +270,8 @@ class CreateQuote(unittest.TestCase):
         # Unable to call proceed to quote method on the Coverage Options class
         # WORKAROUND: I placed proceed to quote method inside of each of the individual Select Coverage Options Method - Ken - 7-11-17
 
-        # saw_CC.proceed_to_quote()
-        #saw_CC_No_PCI.proceed_to_quote()
+        saw_CC.proceed_to_quote()
+        # saw_CC_No_PCI.proceed_to_quote()
 
         saw_summary = Summary(driver)
         saw_summary.click_generate_quote()
