@@ -39,14 +39,14 @@ def pytest_runtest_makereport(item):
         if (report.skipped and xfail) or (report.failed and not xfail):
             file_name = report.nodeid.replace("::", "_")+".png"
             file_name_path = "reports/" + file_name
-            _capture_screenshot(file_name_path)
+            # _capture_screenshot(file_name_path)
             if file_name:
                 html = '<div><img src="%s" alt="screenshot" style="width:304px;height:228px;" ' \
                        'onclick="window.open(this.src)" align="right"/></div>' % file_name
                 extra.append(pytest_html.extras.html(html))
         report.extra = extra
 
-def _capture_screenshot(name):
-    driver = browser()
-    driver.get_screenshot_as_file(name)
+# def _capture_screenshot(name):
+#     driver = browser()
+#     driver.get_screenshot_as_file(name)
 
