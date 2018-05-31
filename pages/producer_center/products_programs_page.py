@@ -47,6 +47,10 @@ class ProductsAndPrograms():
         CYB_OMIC_link = self.driver.find_element(By.ID, "OMIC Broad Regulatory Protection Plus and e-MD™_start")
         CYB_OMIC_link.click()
 
+    def click_CYB_PIC(self):
+        CYB_PIC_link = self.driver.find_element(By.ID, "PIC Cyber Liability / Medefense™ Plus_start")
+        CYB_PIC_link.click()
+
     def click_CYB_LAMMICO(self):
         CYB_LAMMICO_link = self.driver.find_element(By.ID, "LAMMICO MEDEFENSE™ Plus and Cyber Liability_start")
         CYB_LAMMICO_link.click()
@@ -114,6 +118,10 @@ class ProductsAndPrograms():
     def click_EO_PM(self):
         EO_PM_link = self.driver.find_element(By.ID, "Property Manager’s E&O with Cyber Liability and Tenant Discrimination_start")
         EO_PM_link.click()
+
+    def click_EPL(self):
+        EPL_link = self.driver.find_element(By.ID, "Employment Practices Liability (Under 50 employees)_start")
+        EPL_link.click()
 
     def click_GRPHOME(self):
         GRPHOME_link = self.driver.find_element(By.ID, "Group Home_start")

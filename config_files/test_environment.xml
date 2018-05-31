@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <data>
     <TestEnvironment One ="">
-        <Server>Demo1</Server>
+        <Server>Demo8</Server>
     </TestEnvironment>
 
     <TestType One ="">
@@ -36,6 +36,7 @@
             'Cust_Demo6': 'https://custdemo6.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
             'Cust_QA': 'https://custqa.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
             'Cust_Fix': 'https://custfix.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
+            'Cust_OS_Upgrade': 'https://custstg.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
             'Cust_Live': 'https://customer.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
 
             Retailer Access Sites
