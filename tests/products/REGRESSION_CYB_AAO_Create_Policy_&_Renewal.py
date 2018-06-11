@@ -21,24 +21,43 @@ from pages.producer_center.saw.confirm_and_issue import Confirm_and_Issue
 from pages.producer_center.saw.confirm_order_details import Confirm_Order_Details
 from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
 from pages.producer_center.saw.invoice import Invoice
-from pages.producer_center.saw.products.NGP.PAF.PAF import PAF
+from pages.producer_center.saw.products.CYB_AAO.PAF.PAF import PAF
+from pages.producer_center.saw.products.CYB_AAO.PAF.PAF_data_security_encrypted import PAF_data_security_encrypted
+
+### Generic PCI Coverage Options Classes
+from pages.producer_center.saw.products.CYB_AAO.coverage_options.Doctor_Count_1_Broad_Reg_Protect import Doctor_Count_1_Broad_Reg_Protect
+from pages.producer_center.saw.products.CYB_AAO.coverage_options.Doctor_Count_2_Broad_Reg_Protect import Doctor_Count_2_Broad_Reg_Protect
+from pages.producer_center.saw.products.CYB_AAO.coverage_options.Doctor_Count_3_Broad_Reg_Protect import Doctor_Count_3_Broad_Reg_Protect
+from pages.producer_center.saw.products.CYB_AAO.coverage_options.Doctor_Count_4_Broad_Reg_Protect import Doctor_Count_4_Broad_Reg_Protect
+from pages.producer_center.saw.products.CYB_AAO.coverage_options.Doctor_Count_5_Broad_Reg_Protect import Doctor_Count_5_Broad_Reg_Protect
 
 ### PCI Coverage Options Classes
-from pages.producer_center.saw.products.NGP.coverage_options.PCI_Options.PCI_coverage_options import PCI_Coverage_Options
+from pages.producer_center.saw.products.CYB_AAO.coverage_options.PCI_Options.PCI_coverage_options_Broad_Regulatory_EMD_Higher_Limits import PCI_Coverage_Options_Broad_Regulatory_eMD_Higher_Limits
+
+from pages.producer_center.saw.products.CYB_AAO.coverage_options.PCI_Options.Doctor_Count_1.PCI_Doctor_Count_1_Broad_Reg_Protect_Combined import PCI_Doctor_Count_1_Broad_Reg_Protect_Combined
+from pages.producer_center.saw.products.CYB_AAO.coverage_options.PCI_Options.Doctor_Count_2.PCI_Doctor_Count_2_Broad_Reg_Protect_Combined import PCI_Doctor_Count_2_Broad_Reg_Protect_Combined
+from pages.producer_center.saw.products.CYB_AAO.coverage_options.PCI_Options.Doctor_Count_3.PCI_Doctor_Count_3_Broad_Reg_Protect_Combined import PCI_Doctor_Count_3_Broad_Reg_Protect_Combined
+from pages.producer_center.saw.products.CYB_AAO.coverage_options.PCI_Options.Doctor_Count_4.PCI_Doctor_Count_4_Broad_Reg_Protect_Combined import PCI_Doctor_Count_4_Broad_Reg_Protect_Combined
+from pages.producer_center.saw.products.CYB_AAO.coverage_options.PCI_Options.Doctor_Count_5_or_Greater.PCI_Doctor_Count_5_Broad_Reg_Protect_Combined import PCI_Doctor_Count_5_Broad_Reg_Protect_Combined
 
 ### Non PCI Coverage Options Classes
-from pages.producer_center.saw.products.NGP.coverage_options.No_PCI_Options.No_PCI_coverage_options import No_PCI_Coverage_Options
+from pages.producer_center.saw.products.CYB_AAO.coverage_options.No_PCI_Options.No_PCI_coverage_options_EMD_BroadRegulatory_Higher_Limits import No_PCI_Coverage_Options_eMD_Broad_Regulatory_Higher_Limits
 
-from pages.producer_center.saw.products.NGP.coverage_options.coverage_options import Coverage_Options
-from pages.producer_center.saw.products.NGP.insured_information.insured_information import Insured_Information
-from pages.producer_center.saw.products.NGP.select_option.select_option import Select_Option
+from pages.producer_center.saw.products.CYB_AAO.coverage_options.No_PCI_Options.Doctor_Count_1.No_PCI_Doctor_Count_1_Broad_Reg_Protect_Combined import No_PCI_Doctor_Count_1_Broad_Reg_Protect_Combined
+from pages.producer_center.saw.products.CYB_AAO.coverage_options.No_PCI_Options.Doctor_Count_2.No_PCI_Doctor_Count_2_Broad_Reg_Protect_Combined import No_PCI_Doctor_Count_2_Broad_Reg_Protect_Combined
+from pages.producer_center.saw.products.CYB_AAO.coverage_options.No_PCI_Options.Doctor_Count_3.No_PCI_Doctor_Count_3_Broad_Reg_Protect_Combined import No_PCI_Doctor_Count_3_Broad_Reg_Protect_Combined
+from pages.producer_center.saw.products.CYB_AAO.coverage_options.No_PCI_Options.Doctor_Count_4.No_PCI_Doctor_Count_4_Broad_Reg_Protect_Combined import No_PCI_Doctor_Count_4_Broad_Reg_Protect_Combined
+from pages.producer_center.saw.products.CYB_AAO.coverage_options.No_PCI_Options.Doctor_Count_5_or_Greater.No_PCI_Doctor_Count_5_Broad_Reg_Protect_Combined import No_PCI_Doctor_Count_5_Broad_Reg_Protect_Combined
+
+from pages.producer_center.saw.products.CYB_AAO.coverage_options.coverage_options import Coverage_Options
+from pages.producer_center.saw.products.CYB_AAO.insured_information.insured_information import Insured_Information
+from pages.producer_center.saw.products.CYB_AAO.select_option.select_option import Select_Option
 from pages.producer_center.saw.quote_review import Quote_Review
 from pages.producer_center.saw.summary import Summary
 from pages.producer_center.saw.thank_you_page import Thank_You_Page
 from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.agents_page import AgentsPage
 from pages.service_center.application_screens.details import App_Details
-from pages.service_center.application_screens.sub_agent_details import App_Details_sub_agent
 from pages.service_center.applications_page import ApplicationsPage
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
@@ -57,7 +76,7 @@ class CreateQuote():
 
     def test_login_search_for_agent_create_quote(self):
 
-        Product = "NGP"
+        Product = "CYB_AAO"
 
         ## Directory Locations
 
@@ -65,7 +84,8 @@ class CreateQuote():
         framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
         config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
         test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
-        test_results_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
+        test_results_directory = os.path.abspath(
+            os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
 
         # Determine the Test Run Type
         # Get Test Run Type Text from config file
@@ -93,7 +113,7 @@ class CreateQuote():
         global agent
         global state
         global revenue
-        global total_num_records
+        global staff_count
         global limit
         global deductible
         global _OLD_scenario
@@ -119,19 +139,19 @@ class CreateQuote():
                 empty_cell = False
 
 
-            regression_check = sh.cell_value(i, 3)
-            smoke_check = sh.cell_value(i, 4)
-            sanity_check = sh.cell_value(i, 5)
+            # regression_check = sh.cell_value(i, 3)
+            # smoke_check = sh.cell_value(i, 4)
+            # sanity_check = sh.cell_value(i, 5)
 
             # If / Else Section to check if a test needs to be run
             #### CODE NOT WORKING YET - Ken 8-2-17
             #### Program is running ALL rows & NOT skipping rows
-            if test_run_type_value == 3 and sanity_check == "0":
-                    continue
-            if test_run_type_value == 2 and smoke_check == "0":
-                    continue
-            if test_run_type_value == 1 and regression_check == "0":
-                    continue
+            # if test_run_type_value == 3 and sanity_check == "0":
+            #         continue
+            # if test_run_type_value == 2 and smoke_check == "0":
+            #         continue
+            # if test_run_type_value == 1 and regression_check == "0":
+            #         continue
 
 
             # Check to see if cell is NOT empty
@@ -148,7 +168,7 @@ class CreateQuote():
                 agent = sh.cell_value(i, 8)
                 state = sh.cell_value(i, 9)
                 revenue = str(round(sh.cell_value(i, 10)))
-                total_num_records = (sh.cell_value(i, 11))
+                staff_count = int(round(sh.cell_value(i, 11)))
                 _OLD_scenario = sh.cell_value(i, 12)
                 _OLD_scenario_number = str(round(sh.cell_value(i, 13)))
 
@@ -167,11 +187,25 @@ class CreateQuote():
             ## Select Appropriate URL based on the Environment Value from above
             base_URL = Environments.return_environments(environment)
 
+            # Test Scenarios
+
+            # 1 - PCI_50K_embedded_limit
+            # 2 - PCI_100K_embedded_limit
+            # 3 - No_PCI_50K_embedded_limit
+            # 4 - No_PCI_100K_embedded_limit
+
+            # test_scenario = '1'
+
+            # Create "Fake" Variables
+            # state = frandom.us_state()
+            # state = "California"
+            # state = Create_Insured_Address.return_alabama(state_value)
+
             first_name = name.first_name()
             last_name = name.last_name()
             company_name = company.company_name()
             # company_name_string = company_name
-            company_name_string = "QA Test" + " " + "-" + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
+            company_name_string = "QA Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
             address_value = address.street_address()
             city = StateCapitals.return_state_capital(state)
             postal_code = ZipCodes.return_zip_codes(state)
@@ -189,7 +223,7 @@ class CreateQuote():
             # Access XML to retrieve login credentials
             tree = ET.parse(os.path.join(config_file_directory, 'resources.xml'))
             login_credentials = tree.getroot()
-            username = (login_credentials[1][0].text)
+            username = (login_credentials[0][0].text)
             password = (login_credentials[1][1].text)
 
             # Access XML to retrieve the agent to search for
@@ -229,7 +263,7 @@ class CreateQuote():
 
             # NOTE: For contract_classes.py, the array count starts at 1
             # Array will be 1 - 74
-            # contract_class_int_value = ContractClasses_Medical.return_contract_class_values(contract_class)
+            contract_class_int_value = ContractClasses_Medical.return_contract_class_values(contract_class)
 
             # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
             # contract_class_value = "74"
@@ -246,7 +280,6 @@ class CreateQuote():
 
             # Initialize Driver; Launch URL
             # baseURL = "https://svcdemo1.wn.nasinsurance.com/"
-            # driver = webdriver.Chrome('C:\ChromeDriver\chromedriver.exe')
             driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
             # Maximize Window; Launch URL
@@ -268,12 +301,22 @@ class CreateQuote():
             ap.click_submit_new_application_as_agent()
 
             pp = ProductsAndPrograms(driver)
-            pp.click_NGP()
-            # pp.click_Ken_V_Test()
+            pp.click_CYB_AAO()
 
-            # The following lines added on 10-09-17 work
+            # The following lines added on 5-15-17 work
             pp.click_contract_class_drop_down_select_contract_class(contract_class)
-            pp.click_continue_on_contract_class_modal()
+            # pp.select_contract_class_dropdown()
+
+            # pp.select_contract_class(contract_class)  # Script Ends Here
+            pp.click_continue_on_contract_class_modal_after_selecting_contract_class()
+
+            # These next (2) lines commented out
+            # No prompt for Contract Class
+
+            # pp.click_contract_class_modal()
+            # pp.select_contract_class_dropdown()
+            # pp.select_contract_class(contract_class_int_value)
+            # pp.click_continue_on_contract_class_modal()
 
             cs = ClientSearch(driver)
             cs.input_bogus_client_data(postal_code)
@@ -281,8 +324,11 @@ class CreateQuote():
             cs.enter_new_client_name_address(company_name_string, address_value, city, state)
             cc = ClientContact(driver)
 
+            # TODO:
+            # Code now parses URL String & retrieves application ID
+            # cc.parse_url_get_app_id()
+
             # Get the Application ID from URL -- THIS WORKS
-            # Code parses URL String & retrieves application ID
             current_url = driver.current_url
             first_url_string = urlparse(current_url)
             query_dict = parse_qs(first_url_string.query)
@@ -291,63 +337,56 @@ class CreateQuote():
             cc.click_next()
 
             cp = CoveragePeriods(driver)
-            # This section commented out
-            # cp.click_return_to_Admin_Interface()
-            #
-            # time.sleep(3)
-            #
-            # # Navigate to Application Details page
-            # current_url_2 = driver.current_url
-            # slashparts = current_url_2.split('/')
-            # # Now join back the first three sections 'http:', '' and 'example.com'
-            # base_url_2 = '/'.join(slashparts[:3]) + '/'
-            #
-            # app_details_string = "?c=app.view&id="
-            # # app_subjectivities_string = "?c=app.track_subjectivities&id="
-            #
-            # application_details_screen = base_url_2 + app_details_string + application_id
-            #
-            # # Navigate to Application Subjectivities Screen
-            # driver.get(application_details_screen)
-            #
-            # # Declare an app details class for Agents & Sub-Agents
-            # app_details = App_Details(driver)
-            # app_details_sub_agent = App_Details_sub_agent(driver)
-            #
-            # # Update the Create Date to the Ad Hoc Effective Date Value
-            # # app_details.update_create_date(effective_date_formatted)
-            #
-            # # This section if agent is direct
-            # # Click Update Button
-            # app_details.click_update_button()
-            #
-            # # Click on Agent Link to return to Producer Center
-            # app_details.click_agent_text_link()
-            # # Click on Agent Link to return to Producer Center
-            #
-            # # This section if agent is Sub-Agent
-            # # app_details_sub_agent.update_create_date(effective_date_formatted)
-            # # app_details_sub_agent.click_update_button()
-            # # app_details_sub_agent.click_sub_agent_text_link()
-            #
-            # # Return to Coverage Periods screen
-            #
-            # # Enter an Ad Hoc Effective Date
+
+            cp.click_return_to_Admin_Interface()
+
+            # Navigate to Application Details page
+            current_url_2 = driver.current_url
+            slashparts = current_url_2.split('/')
+            # Now join back the first three sections 'http:', '' and 'example.com'
+            base_url_2 = '/'.join(slashparts[:3]) + '/'
+
+            app_details_string = "?c=app.view&id="
+            # app_subjectivities_string = "?c=app.track_subjectivities&id="
+
+            application_details_screen = base_url_2 + app_details_string + application_id
+
+            # Navigate to Application Subjectivities Screen
+            driver.get(application_details_screen)
+
+            app_details = App_Details(driver)
+
+            # Update the Create Date to the Ad Hoc Effective Date Value
+            app_details.update_create_date(date_today)
+
+            # Click Update Button
+            app_details.click_update_button()
+
+            # Click on Agent Link to return to Producer Center
+            app_details.click_agent_text_link()
+
+            # Return to Coverage Periods screen
+
+            # Enter an Ad Hoc Effective Date
             # cp.enter_ad_hoc_effective_date(effective_date_formatted)
 
             # Enter Today's Date as Effective Date
-            # cp.enter_current_date_as_effective_date(date_today)
-
-            # End Comment Section
+            cp.enter_current_date_as_effective_date(date_today)
 
             # Click Next
             cp.click_next()
 
             # Instantiate Insured Information;
             saw_ii = Insured_Information(driver)
-            saw_ii.enter_annual_revenue(revenue)
+
+            # Enter FTE & NON-FTE Physician Counts
+            # Click Next
+            saw_ii.enter_fte_physician_count(staff_count)
+            saw_ii.enter_non_fte_physician_count("0")
             saw_ii.click_next()
+
             saw_PAF = PAF(driver)
+            saw_PAF_data_security_encrypted = PAF_data_security_encrypted(driver)
 
             # Return to Admin Interface / Set Creation Date
             # saw_PAF.click_return_to_Admin_Interface()
@@ -358,9 +397,11 @@ class CreateQuote():
             # Scenario 2: No PCI Options
 
             if test_scenario == "1":
-                saw_PAF.create_quote_PCI_DSS_No_DQ(total_num_records)
+                saw_PAF.create_quote_PCI_DSS_No_DQ(revenue)
+                saw_PAF_data_security_encrypted.click_yes_data_security_encrypted()
+
             elif test_scenario == "2":
-                saw_PAF.create_quote_No_PCI_DSS_No_DQ(total_num_records)
+                saw_PAF.create_quote_No_PCI_DSS_No_DQ(revenue)
 
             # Click Next on PAF Screen
             saw_PAF.click_next()
@@ -371,35 +412,33 @@ class CreateQuote():
             ### eMD / Higher Limits Test Scenarios - PCI & Non-PCI
 
             ### eMD and Higher Limits PCI Scenarios
-            # PCI_Coverage_Options_eMD_Higher_Limits(driver)                - Test Scenario 1
+            # PCI_Coverage_Options_Broad_Regulatory_eMD_Higher_Limits(driver)                - Test Scenario 1
 
             ### eMD and Higher Limits Non-PCI Scenarios
-            # No_PCI_Coverage_Options_eMD_Higher_Limits(driver)             - Test Scenario 2
-
+            # No_PCI_Coverage_Options_eMD_Broad_Regulatory_Higher_Limits(driver)             - Test Scenario 2
 
             ### Broad Regulatory Only Test Scenarios
-            # Doctor_Count_1_Broad_Reg_Protect(driver)                      - Test Scenario 3
-            # Doctor_Count_2_Broad_Reg_Protect(driver)                      - Test Scenario 4
-            # Doctor_Count_3_Broad_Reg_Protect(driver)                      - Test Scenario 5
-            # Doctor_Count_4_Broad_Reg_Protect(driver)                      - Test Scenario 6
-            # Doctor_Count_5_Broad_Reg_Protect(driver)                      - Test Scenario 7
+            # Doctor_Count_1_Broad_Reg_Protect(driver)                                      - Test Scenario 3
+            # Doctor_Count_2_Broad_Reg_Protect(driver)                                      - Test Scenario 4
+            # Doctor_Count_3_Broad_Reg_Protect(driver)                                      - Test Scenario 5
+            # Doctor_Count_4_Broad_Reg_Protect(driver)                                      - Test Scenario 6
+            # Doctor_Count_5_Broad_Reg_Protect(driver)                                      - Test Scenario 7
 
             ### Broad Regulatory Combined - Test Scenarios - PCI
 
-            # PCI_Doctor_Count_1_Broad_Reg_Protect_Combined(driver)         - Test Scenario 8
-            # PCI_Doctor_Count_2_Broad_Reg_Protect_Combined(driver)         - Test Scenario 9
-            # PCI_Doctor_Count_3_Broad_Reg_Protect_Combined(driver)         - Test Scenario 10
-            # PCI_Doctor_Count_4_Broad_Reg_Protect_Combined(driver)         - Test Scenario 11
-            # PCI_Doctor_Count_5_Broad_Reg_Protect_Combined(driver)         - Test Scenario 12
+            # PCI_Doctor_Count_1_Broad_Reg_Protect_Combined(driver)                         - Test Scenario 8
+            # PCI_Doctor_Count_2_Broad_Reg_Protect_Combined(driver)                         - Test Scenario 9
+            # PCI_Doctor_Count_3_Broad_Reg_Protect_Combined(driver)                         - Test Scenario 10
+            # PCI_Doctor_Count_4_Broad_Reg_Protect_Combined(driver)                         - Test Scenario 11
+            # PCI_Doctor_Count_5_Broad_Reg_Protect_Combined(driver)                         - Test Scenario 12
 
             ### Broad Regulatory Combined - Test Scenarios - Non-PCI
 
-            # No_PCI_Doctor_Count_1_Broad_Reg_Protect_Combined(driver)      - Test Scenario 13
-            # No_PCI_Doctor_Count_2_Broad_Reg_Protect_Combined(driver)      - Test Scenario 14
-            # No_PCI_Doctor_Count_3_Broad_Reg_Protect_Combined(driver)      - Test Scenario 15
-            # No_PCI_Doctor_Count_4_Broad_Reg_Protect_Combined(driver)      - Test Scenario 16
-            # No_PCI_Doctor_Count_5_Broad_Reg_Protect_Combined(driver)      - Test Scenario 17
-
+            # No_PCI_Doctor_Count_1_Broad_Reg_Protect_Combined(driver)                      - Test Scenario 13
+            # No_PCI_Doctor_Count_2_Broad_Reg_Protect_Combined(driver)                      - Test Scenario 14
+            # No_PCI_Doctor_Count_3_Broad_Reg_Protect_Combined(driver)                      - Test Scenario 15
+            # No_PCI_Doctor_Count_4_Broad_Reg_Protect_Combined(driver)                      - Test Scenario 16
+            # No_PCI_Doctor_Count_5_Broad_Reg_Protect_Combined(driver)                      - Test Scenario 17
 
             #### This class is for generic objects that display on the Coverage Options page
             saw_CC = Coverage_Options(driver)
@@ -411,21 +450,88 @@ class CreateQuote():
             saw_CC = Coverage_Options(driver)
 
             ### Clear All selections on Coverage Options Screen
-            saw_CC.select_all_deselect_all()
+            # saw_CC.select_all_deselect_all()
 
             ### If / Then Block to determine which instance of Coverage Options to use
 
-            ### PCI & Non-PCI Test Scenarios
+            ### eMD / Higher Limits Test Scenarios - PCI & Non-PCI
 
-            ### PCI Scenarios
+            ### eMD and Higher Limits PCI Scenarios
             if test_scenario_number == "1":
-                saw_CC_in_use = PCI_Coverage_Options(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
+                saw_CC_in_use = PCI_Coverage_Options_Broad_Regulatory_eMD_Higher_Limits(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
 
-            ### Non-PCI Scenarios
+            ### eMD and Higher Limits Non-PCI Scenarios
             elif test_scenario_number == "2":
-                saw_CC_in_use = No_PCI_Coverage_Options(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
+                saw_CC_in_use = No_PCI_Coverage_Options_eMD_Broad_Regulatory_Higher_Limits(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
+
+            ### Broad Regulatory Only Test Scenarios
+
+            elif test_scenario_number == "3":
+                saw_CC_in_use = Doctor_Count_1_Broad_Reg_Protect(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
+
+            elif test_scenario_number == "4":
+                saw_CC_in_use = Doctor_Count_2_Broad_Reg_Protect(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
+
+            elif test_scenario_number == "5":
+                saw_CC_in_use = Doctor_Count_3_Broad_Reg_Protect(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
+
+            elif test_scenario_number == "6":
+                saw_CC_in_use = Doctor_Count_4_Broad_Reg_Protect(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
+
+            elif test_scenario_number == "7":
+                saw_CC_in_use = Doctor_Count_5_Broad_Reg_Protect(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
+
+            ### Broad Regulatory Combined - Test Scenarios - PCI
+
+            elif test_scenario_number == "8":
+                saw_CC_in_use = PCI_Doctor_Count_1_Broad_Reg_Protect_Combined(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
+
+            elif test_scenario_number == "9":
+                saw_CC_in_use = PCI_Doctor_Count_2_Broad_Reg_Protect_Combined(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
+
+            elif test_scenario_number == "10":
+                saw_CC_in_use = PCI_Doctor_Count_3_Broad_Reg_Protect_Combined(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
+
+            elif test_scenario_number == "11":
+                saw_CC_in_use = PCI_Doctor_Count_4_Broad_Reg_Protect_Combined(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
+
+            elif test_scenario_number == "12":
+                saw_CC_in_use = PCI_Doctor_Count_5_Broad_Reg_Protect_Combined(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
+
+            ### Broad Regulatory Combined - Test Scenarios - Non-PCI
+
+            elif test_scenario_number == "13":
+                saw_CC_in_use = No_PCI_Doctor_Count_1_Broad_Reg_Protect_Combined(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
+
+            elif test_scenario_number == "14":
+                saw_CC_in_use = No_PCI_Doctor_Count_2_Broad_Reg_Protect_Combined(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
+
+            elif test_scenario_number == "15":
+                saw_CC_in_use = No_PCI_Doctor_Count_3_Broad_Reg_Protect_Combined(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
+
+            elif test_scenario_number == "16":
+                saw_CC_in_use = No_PCI_Doctor_Count_4_Broad_Reg_Protect_Combined(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
+
+            elif test_scenario_number == "17":
+                saw_CC_in_use = No_PCI_Doctor_Count_5_Broad_Reg_Protect_Combined(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
+
 
             ### Commented out next line; Moved Proceed to Quote button Call into the PCI / Non-PCI Methods
             saw_CC.click_proceed_to_quote()
@@ -553,18 +659,13 @@ class CreateQuote():
             # # Click Policy
             # ap.click_policy_link(policy_text)
 
-            # Code works up to this point
-
-            # Wait
-            driver.implicitly_wait(3)
-
             # Write Values to CSV
 
             # Declare the values that will be outputted to csv
             values = [test_summary, company_name_string, application_id, policy_text]
 
             # Declare Directory of csv file
-            download_dir = os.path.join(test_results_directory, 'Regressions', Product + '_Regression_Test_Results.csv')
+            download_dir = os.path.join(test_results_directory,  'Regressions', Product + '_Regression_Test_Results.csv')
 
             # This Section Writes the output to the csv file
             with open(download_dir, "a") as f:
@@ -575,13 +676,20 @@ class CreateQuote():
             values = [test_summary, company_name_string, application_id, policy_text]
 
             # Declare Directory of csv file
-            download_dir = os.path.join(test_results_directory, 'Regressions', Product + '_Regression_Test_Results.csv') # where you want the file to be downloaded to
+            download_dir = os.path.join(test_results_directory,  'Regressions', Product + '_Regression_Test_Results.csv')  # where you want the file to be downloaded to
 
             with open(download_dir, "w") as f:
 
                 writer = csv.writer(f)
-                writer.writerow({'Test Summary' : test_summary, 'Insured' : company_name_string, 'Application ID' : application_id, 'Policy' : policy_text})
+                writer.writerow(
+                    {'Test Summary': test_summary, 'Insured': company_name_string, 'Application ID': application_id,
+                     'Policy': policy_text})
                 writer.writerow(values)
+
+            # Code works up to this point
+
+            # Wait
+            driver.implicitly_wait(3)
 
             # Close Browser
             driver.quit()
