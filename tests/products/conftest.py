@@ -25,7 +25,6 @@ def browser(request):
     request.addfinalizer(fin)
     return driver
 
-
 # @pytest.mark.hookwrapper
 # def pytest_runtest_makereport(item):
 #     """
@@ -52,5 +51,4 @@ def browser(request):
 #
 # def _capture_screenshot(name, browser):
 #     driver = browser
-#     driver.get_screenshot_as_file(name)
 
