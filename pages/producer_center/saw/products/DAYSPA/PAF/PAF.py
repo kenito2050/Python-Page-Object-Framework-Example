@@ -12,6 +12,9 @@ class PAF():
         # Number of Years in Business:
         self.business_years_count = self.driver.find_element(By.ID, "business-years-count")
 
+        # Total Staff Count
+        self.staff_count = self.driver.find_element(By.ID, "dayspa_staff_count")
+
         # Do you sell products?
         self.sell_products_yes = self.driver.find_element(By.ID, "sell_products-yes")
 
@@ -149,9 +152,10 @@ class PAF():
 
         return self
 
-    def create_quote_No_Product_Liability(self, years_in_business, number_procedures, revenue_last_year, revenue_upcoming_year, effective_date_formatted):
+    def create_quote_No_Product_Liability(self, years_in_business, staff_count, number_procedures, revenue_last_year, revenue_upcoming_year, effective_date_formatted):
 
         PAF.Page_Elements(self).business_years_count.send_keys(years_in_business)
+        PAF.Page_Elements(self).staff_count.send_keys(staff_count)
         PAF.Page_Elements(self).sell_products_no.click()
         PAF.Page_Elements(self).procedure_count.send_keys(number_procedures)
         PAF.Page_Elements(self).annual_revenue_last_policy_year.send_keys(revenue_last_year)
@@ -176,9 +180,10 @@ class PAF():
         PAF.Page_Elements(self).dayspa_professional_liability_expiring_yes.click()
         PAF.Page_Elements(self).dayspa_expiring_poliy_retroactive_date.send_keys(effective_date_formatted)
 
-    def create_quote_Product_Liability(self, years_in_business, number_procedures, revenue_last_year, revenue_upcoming_year, effective_date_formatted):
+    def create_quote_Product_Liability(self, years_in_business, staff_count, number_procedures, revenue_last_year, revenue_upcoming_year, effective_date_formatted):
 
         PAF.Page_Elements(self).business_years_count.send_keys(years_in_business)
+        PAF.Page_Elements(self).staff_count.send_keys(staff_count)
         PAF.Page_Elements(self).sell_products_yes.click()
         PAF.Hidden_Page_Elements(self).label_products_no.click()
         PAF.Page_Elements(self).procedure_count.send_keys(number_procedures)

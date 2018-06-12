@@ -7,18 +7,23 @@ class Coverage_Options():
 
     def PageElements(self):
 
+        # Property Manager’s E&O with NetGuard™ Plus and Tenant Discrimination
         # Limits
 
         # $1MM/1MM
-        # self.option_989_limit_3772 = self.driver.find_element(By.ID, "option-989-limit-3772")
-        #
-        # # Deductibles
-        #
-        # # $2,500
-        # self.option_989_deductible_1490 = self.driver.find_element(By.ID, "option-989-deductible-1490")
+        self.option_989_limit_3772 = self.driver.find_element(By.ID, "option-989-limit-3772")
 
-        # # $5,000
-        # self.option_989_deductible_1491 = self.driver.find_element(By.ID, "option-989-deductible-1491")
+        # Deductibles
+
+        # $2,500
+        self.option_989_deductible_1490 = self.driver.find_element(By.ID, "option-989-deductible-1490")
+
+
+        # First Dollar Defense
+        self.first_dollar_defense = self.driver.find_element(By.ID, "product-form-952")
+
+        # Additional Claim Expenses Limit (DOL)
+        self.additional_claim_expenses_limit = self.driver.find_element(By.ID, "product-form-953")
 
 
         # Select Deselect All
@@ -30,18 +35,19 @@ class Coverage_Options():
         # Return to Admin Interface
         self.return_to_admin_interface = self.driver.find_element(By.LINK_TEXT, "Return to Admin Interface")
 
+
         return self
 
-    # def select_Property_Manager_EO_with_NetGuard_Plus_Tenant_Discrimination_1MM_limit_2pt5K_Deduct(self):
-    #     Coverage_Options.PageElements(self).option_989_limit_3772.click()
-    #     Coverage_Options.PageElements(self).option_989_deductible_1490.click()
-    #
-    # def select_Property_Manager_EO_with_NetGuard_Plus_Tenant_Discrimination_1MM_limit_5K_Deduct(self):
-    #     Coverage_Options.PageElements(self).option_989_limit_3772.click()
-    #     Coverage_Options.PageElements(self).option_989_deductible_1491.click()
+    def select_deselect_all(self):
+        # Property Manager’s E&O with NetGuard™ Plus and Tenant Discrimination
+        # Coverage_Options.PageElements(self).option_989_limit_3772.click()
+        # Coverage_Options.PageElements(self).option_989_deductible_1490.click()
+        # First Dollar Defense
+        Coverage_Options.PageElements(self).first_dollar_defense.click()
+        Coverage_Options.PageElements(self).additional_claim_expenses_limit.click()
 
-    def select_all_deselect_all(self):
-        Coverage_Options.PageElements(self).select_deselect_all.click()
+    # def select_all_deselect_all(self):
+    #     Coverage_Options.PageElements(self).select_deselect_all.click()
 
     def click_proceed_to_quote(self):
         Coverage_Options.PageElements(self).proceed_to_quote.click()

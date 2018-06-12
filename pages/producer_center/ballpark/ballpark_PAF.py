@@ -40,12 +40,30 @@ class BallPark_PAF():
 
         # TODO: Move these identifiers into a separate class
 
+    def select_CYB_AAO(self):
+
+        # CYB_AAO - product - list - item - 44
+        cb_CYB_AAO = self.driver.find_element(By.ID, "product-list-item-44")
+
+        cb_CYB_AAO.click()
+
+
     def select_CYB_CAP(self):
 
         # CYB_CAP - product - list - item - 33
         cb_CYB_CAP = self.driver.find_element(By.ID, "product-list-item-33")
 
         cb_CYB_CAP.click()
+
+    def select_CYB_MDA(self):
+            # Ballpark Product Identifiers
+
+            # TODO: Move these identifiers into a separate class
+
+            # CYB_MDA - product - list - item - 9
+            cb_CYB_MDA = self.driver.find_element(By.ID, "product-list-item-9")
+
+            cb_CYB_MDA.click()
 
     def select_CYB_MMIC(self):
         # Ballpark Product Identifiers
@@ -97,6 +115,16 @@ class BallPark_PAF():
         cb_EO_MISC = self.driver.find_element(By.ID, "product-list-item-62")
 
         cb_EO_MISC.click()
+
+    def select_LSA(self):
+            # Ballpark Product Identifiers
+
+            # TODO: Move these identifiers into a separate class
+
+            # LSA Cyber Liability / Medefense™ Plus - product - list - item - 111
+            cb_LSA = self.driver.find_element(By.ID, "product-list-item-111")
+
+            cb_LSA.click()
 
     def select_LTC(self):
         # Ballpark Product Identifiers
