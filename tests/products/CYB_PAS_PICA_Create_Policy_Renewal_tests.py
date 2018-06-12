@@ -73,7 +73,7 @@ class TestCreateQuote:
         # 0 - First Worksheet
         # 1 - Second Worksheet...etc
 
-        wb = xlrd.open_workbook(os.path.join(test_case_directory, Product + '.xlsx'))
+        wb = xlrd.open_workbook(str(test_case_directory / Product) + '.xlsx')
         sh = wb.sheet_by_index(0)
 
         ## Begin For Loop to iterate through Test Scenarios
@@ -128,7 +128,7 @@ class TestCreateQuote:
             postal_code = ZipCodes.return_zip_codes(state)
 
             # Access XML to retrieve login credentials
-            tree = ET.parse(os.path.join(config_file_directory, 'resources.xml'))
+            tree = ET.parse(str(config_file_directory /'resources.xml'))
             login_credentials = tree.getroot()
             username = (login_credentials[1][0].text)
             password = (login_credentials[1][1].text)
