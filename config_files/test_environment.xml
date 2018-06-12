@@ -1,7 +1,22 @@
 <?xml version="1.0"?>
 <data>
-    <TestEnvironment One ="">
-        <Server>Demo8</Server>
+
+    <!--NAS Online Sites-->
+
+    <TestEnvironment One ="0">
+        <Server>Stage</Server>
+    </TestEnvironment>
+
+    <!--Customer Center Sites-->
+
+    <TestEnvironment Two ="1">
+        <Server>Cust_Stage</Server>
+    </TestEnvironment>
+
+    <!--Retailer Access Sites-->
+
+    <TestEnvironment Three ="2">
+        <Server>Retail_Access_Stage</Server>
     </TestEnvironment>
 
     <TestType One ="">
@@ -36,12 +51,14 @@
             'Cust_Demo6': 'https://custdemo6.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
             'Cust_QA': 'https://custqa.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
             'Cust_Fix': 'https://custfix.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
+            'Cust_Stage': 'https://custrel.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
             'Cust_OS_Upgrade': 'https://custstg.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
             'Cust_Live': 'https://customer.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
 
             Retailer Access Sites
 
             'Retail_Access_Demo7': 'https://proddemo7.wn.nasinsurance.com/registration',
+            'Retail_Access_Stage': 'https://prodrel.wn.nasinsurance.com/registration',
             'Retail_Access_Live': 'https://producer.wn.nasinsurance.com/registration',
 
 -->

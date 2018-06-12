@@ -1,2 +1,7 @@
 .idea/
 *.pyc
+<<<<<<< HEAD
+=======
+.cache/
+*.log
+>>>>>>> remotes/origin/new_branch_name

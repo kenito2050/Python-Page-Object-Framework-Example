@@ -333,7 +333,7 @@ class CreateQuote():
         saw_PAF.click_next()
         saw_CC = Coverage_Options(driver)
 
-        # saw_CC.select_deselect_all()
+        saw_CC.select_deselect_all()
 
         # saw_CC.select_Netguard_Plus_option_limits_deductibles()
 

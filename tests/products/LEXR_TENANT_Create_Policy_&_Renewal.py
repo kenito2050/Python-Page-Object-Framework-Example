@@ -323,10 +323,10 @@ class CreateQuote(unittest.TestCase):
 
             # Next line uses the text in the _OLD_scenario column (in Excel Spreadsheet) as
             # the method name
-            getattr(saw_CC, _OLD_scenario)()
+            # getattr(saw_CC, _OLD_scenario)()
 
             ### Clear All selections on Coverage Options Screen
-            # saw_CC.select_all_deselect_all()
+            saw_CC.select_all_deselect_all()
 
             ### Commented out next line; Moved Proceed to Quote button Call into the PCI / Non-PCI Methods
             saw_CC.click_proceed_to_quote()
