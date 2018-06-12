@@ -386,21 +386,21 @@ class CreateQuote():
             saw_CC = Coverage_Options(driver)
 
             ### Clear All selections on Coverage Options Screen
-            # saw_CC.select_all_deselect_all()
+            saw_CC.select_all_deselect_all()
 
             ### If / Then Block to determine which instance of Coverage Options to use
 
             ### PCI & Non-PCI Test Scenarios
 
             ### PCI Scenarios
-            if test_scenario_number == "1":
-                saw_CC_in_use = PCI_Coverage_Options(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
+            # if test_scenario_number == "1":
+            #     saw_CC_in_use = PCI_Coverage_Options(driver)
+            #     saw_CC_in_use.select_MEDEFENSE_Plus_Only()
 
             ### Non-PCI Scenarios
-            elif test_scenario_number == "2":
-                saw_CC_in_use = No_PCI_Coverage_Options(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
+            # elif test_scenario_number == "2":
+            #     saw_CC_in_use = No_PCI_Coverage_Options(driver)
+            #     saw_CC_in_use.select_Cyber_Liability_Only_No_PCI
 
             ### Commented out next line; Moved Proceed to Quote button Call into the PCI / Non-PCI Methods
             saw_CC.click_proceed_to_quote()

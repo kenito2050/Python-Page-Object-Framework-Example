@@ -280,7 +280,7 @@ class CreateQuote():
             saw_CC = Coverage_Options(driver)
 
             ### Clear All selections on Coverage Options Screen
-            # saw_CC.select_all_deselect_all()
+            saw_CC.select_all_deselect_all()
 
             #### If / ELSE to Determine which Coverage Options are selected based on Test Scenario
             ####

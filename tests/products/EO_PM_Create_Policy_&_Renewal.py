@@ -264,7 +264,7 @@ class CreateQuote(unittest.TestCase):
             saw_CC = Coverage_Options(driver)
 
             ### Clear All selections on Coverage Options Screen
-                # saw_CC.select_all_deselect_all()
+            saw_CC.select_deselect_all()
 
             # Next line uses the text in the _OLD_scenario column (in Excel Spreadsheet) as
             # the method name
@@ -403,8 +403,6 @@ class CreateQuote(unittest.TestCase):
 
             # Close Browser
             driver.quit()
-
-            i += 1
 
 cq = CreateQuote()
 cq.test_login_search_for_agent_create_quote()

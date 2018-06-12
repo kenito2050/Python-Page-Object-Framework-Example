@@ -31,6 +31,7 @@ from pages.producer_center.saw.thank_you_page import Thank_You_Page
 from pages.producer_center.saw.summary import Summary
 from pages.service_center.agents_page import AgentsPage
 from pages.service_center.applications_page import ApplicationsPage
+from pages.service_center.application_screens.details import App_Details
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
 from pages.service_center.policies_page import PoliciesPage
@@ -88,6 +89,7 @@ class CreateQuote():
         global zip
         global number_locations
         global years_in_business
+        global staff_count
         global number_procedures
         global revenue_last_year
         global revenue_upcoming_year
@@ -130,11 +132,12 @@ class CreateQuote():
                 zip = str(round(sh.cell_value(i, 10)))
                 number_locations = str(round(sh.cell_value(i, 11)))
                 years_in_business = str(round(sh.cell_value(i, 12)))
-                number_procedures = str(round(sh.cell_value(i, 13)))
-                revenue_last_year = str(round(sh.cell_value(i, 14)))
-                revenue_upcoming_year = str(round(sh.cell_value(i, 15)))
-                _OLD_scenario = sh.cell_value(i, 16)
-                _OLD_scenario_number = str(round(sh.cell_value(i, 17)))
+                staff_count = str(round(sh.cell_value(i, 13)))
+                number_procedures = str(round(sh.cell_value(i, 14)))
+                revenue_last_year = str(round(sh.cell_value(i, 15)))
+                revenue_upcoming_year = str(round(sh.cell_value(i, 16)))
+                _OLD_scenario = sh.cell_value(i, 17)
+                _OLD_scenario_number = str(round(sh.cell_value(i, 18)))
 
             # Else, the cell is empty
             # End the Loop
@@ -157,8 +160,8 @@ class CreateQuote():
         # company_name_string = company_name
         company_name_string = "QA Test" + " " + "-" + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
         address_value = address.street_address()
-        # city = StateCapitals.return_state_capital(state)
-        # postal_code = ZipCodes.return_zip_codes(state)
+        city = StateCapitals.return_state_capital(state)
+        postal_code = ZipCodes.return_zip_codes(state)
 
         # bed_count = "5"
 
@@ -214,14 +217,14 @@ class CreateQuote():
         #pp.click_continue_on_contract_class_modal_after_selecting_contract_class()
 
         cs = ClientSearch(driver)
-        cs.input_bogus_client_data(zip)
+        cs.input_bogus_client_data(postal_code)
         cs.manually_input_new_client()
         cs.enter_new_client_name_address(company_name_string, address_value, city, state)
         cc = ClientContact(driver)
 
         # TODO:
         # Code now parses URL String & retrieves application ID
-        #cc.parse_url_get_app_id()
+        # cc.parse_url_get_app_id()
 
         # Get the Application ID from URL -- THIS WORKS
         current_url = driver.current_url
@@ -233,13 +236,48 @@ class CreateQuote():
 
         cp = CoveragePeriods(driver)
 
+        time.sleep(3)
+
+        cp.click_return_to_Admin_Interface()
+
+        # Navigate to Application Details page
+        current_url_2 = driver.current_url
+        slashparts = current_url_2.split('/')
+        # Now join back the first three sections 'http:', '' and 'example.com'
+        base_url_2 = '/'.join(slashparts[:3]) + '/'
+
+        app_details_string = "?c=app.view&id="
+        # app_subjectivities_string = "?c=app.track_subjectivities&id="
+
+        application_details_screen = base_url_2 + app_details_string + application_id
+
+        # Navigate to Application Subjectivities Screen
+        driver.get(application_details_screen)
+
+        app_details = App_Details(driver)
+
+        # Update the Create Date to the Ad Hoc Effective Date Value
+        app_details.update_create_date(date_today)
+
+        # Click Update Button
+        app_details.click_update_button()
+
+        # Click on Agent Link to return to Producer Center
+        app_details.click_agent_text_link()
+
+        # Return to Coverage Periods screen
+
         # Enter an Ad Hoc Effective Date
-        # cp.enter_ad_hoc_effective_date(ad_hoc_effectiveDate)
+        # cp.enter_ad_hoc_effective_date(effective_date_formatted)
 
         # Enter Today's Date as Effective Date
         cp.enter_current_date_as_effective_date(date_today)
 
         cp.click_next()
+
+        # Enter Today's Date as Effective Date
+        # cp.enter_current_date_as_effective_date(date_today)
+
         saw_ii = Insured_Information(driver)
         saw_ii.enter_location_count(number_locations)
         saw_ii.click_next()
@@ -253,9 +291,9 @@ class CreateQuote():
         # test_scenario 2, Product Liability
 
         if test_scenario == "1":
-            saw_PAF.create_quote_No_Product_Liability(years_in_business, number_procedures, revenue_last_year, revenue_upcoming_year, effective_date_formatted)
+            saw_PAF.create_quote_No_Product_Liability(years_in_business, staff_count, number_procedures, revenue_last_year, revenue_upcoming_year, effective_date_formatted)
         elif test_scenario == "2":
-            saw_PAF.create_quote_Product_Liability(years_in_business, number_procedures, revenue_last_year, revenue_upcoming_year, effective_date_formatted)
+            saw_PAF.create_quote_Product_Liability(years_in_business, staff_count, number_procedures, revenue_last_year, revenue_upcoming_year, effective_date_formatted)
 
         # saw_PAF.create_quote_No_Product_Liability(years_in_business, number_procedures, revenue_last_year, revenue_upcoming_year, effective_date_formatted)
 
@@ -272,12 +310,12 @@ class CreateQuote():
         # No Product Liability
         if test_scenario_number == "1":
             saw_CC_in_use = No_Product_Liability_Coverage_Options(driver)
-            getattr(saw_CC_in_use, _OLD_scenario)()
+            # getattr(saw_CC_in_use, _OLD_scenario)()
 
         # Product Liability
         elif test_scenario_number == "2":
             saw_CC_in_use = Product_Liability_Coverage_Options(driver)
-            getattr(saw_CC_in_use, _OLD_scenario)()
+            # getattr(saw_CC_in_use, _OLD_scenario)()
 
 
         saw_CC.click_proceed_to_quote()
