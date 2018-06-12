@@ -41,6 +41,7 @@ from pages.service_center.subjectivities import Subjectivities
 from utilities.Environments.Environments import Environments
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from config_globals import *
 
 
 class TestCreateQuote:
@@ -52,11 +53,11 @@ class TestCreateQuote:
 
         ## Directory Locations
 
-        tests_directory = os.path.abspath(os.pardir)
-        framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
-        config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
-        test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
-        test_results_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
+        tests_directory = ROOT_DIR / 'tests'
+        framework_directory = ROOT_DIR
+        config_file_directory = CONFIG_PATH
+        test_case_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Products'
+        test_results_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Test_Results'
 
         global test_summary
         global effective_date
