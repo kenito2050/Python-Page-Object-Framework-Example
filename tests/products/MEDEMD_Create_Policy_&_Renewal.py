@@ -74,21 +74,18 @@ class CreateQuote():
         test_run_type = (test_environment[1][0].text)
         test_run_type_value = ''
 
-        # If / Else to convert test_run_type text to a value
-        if test_run_type == "Regression":
-            test_run_type_value = '1'
-        elif test_run_type == "Smoke":
-            test_run_type_value = '2'
-        elif test_run_type == "Sanity":
-            test_run_type_value = '3'
+        # # If / Else to convert test_run_type text to a value
+        # if test_run_type == "Regression":
+        #     test_run_type_value = '1'
+        # elif test_run_type == "Smoke":
+        #     test_run_type_value = '2'
+        # elif test_run_type == "Sanity":
+        #     test_run_type_value = '3'
 
         global test_summary
         global test_scenario
         global effective_date
         global test_scenario_number
-        global regression
-        global smoke
-        global sanity
         global contract_class
         global agent
         global state
@@ -122,20 +119,20 @@ class CreateQuote():
                 empty_cell = False
 
 
-            regression_check = round(sh.cell_value(i, 3))
-            smoke_check = round(sh.cell_value(i, 4))
-            sanity_check = round(sh.cell_value(i, 5))
+            # regression_check = round(sh.cell_value(i, 3))
+            # smoke_check = round(sh.cell_value(i, 4))
+            # sanity_check = round(sh.cell_value(i, 5))
 
             # If / Else Section to check if a test needs to be run
             #### CODE NOT WORKING YET - Ken 8-2-17
             #### Program is running ALL rows & NOT skipping rows
 
-            if (test_run_type_value == 3 and sanity_check == 0):
-                    continue
-            elif (test_run_type_value == 2 and smoke_check == 0):
-                    continue
-            elif (test_run_type_value == 1 and regression_check == 0):
-                    continue
+            # if (test_run_type_value == 3 and sanity_check == 0):
+            #         continue
+            # elif (test_run_type_value == 2 and smoke_check == 0):
+            #         continue
+            # elif (test_run_type_value == 1 and regression_check == 0):
+            #         continue
 
             # Check to see if cell is NOT empty
             # If cell is not empty, read in the values
@@ -144,16 +141,13 @@ class CreateQuote():
                 test_scenario = sh.cell_value(i, 1)
                 effective_date = sh.cell_value(i, 2)
                 test_scenario_number = str(round(sh.cell_value(i, 3)))
-                regression = round(sh.cell_value(i, 4))
-                smoke = round(sh.cell_value(i, 5))
-                sanity = round(sh.cell_value(i, 6))
-                contract_class = sh.cell_value(i, 7)
-                agent = sh.cell_value(i, 8)
-                state = sh.cell_value(i, 9)
-                revenue = str(round(sh.cell_value(i, 10)))
-                staff_count = str(round(sh.cell_value(i, 11)))
-                _OLD_scenario = sh.cell_value(i, 12)
-                revenue_tier = str(round(sh.cell_value(i, 13)))
+                contract_class = sh.cell_value(i, 4)
+                agent = sh.cell_value(i, 5)
+                state = sh.cell_value(i, 6)
+                revenue = str(round(sh.cell_value(i, 7)))
+                staff_count = str(round(sh.cell_value(i, 8)))
+                _OLD_scenario = sh.cell_value(i, 9)
+                revenue_tier = str(round(sh.cell_value(i, 10)))
 
 
             # Else, the cell is empty
