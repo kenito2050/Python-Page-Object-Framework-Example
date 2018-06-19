@@ -71,19 +71,14 @@ class TestCreateQuote:
         global test_summary
         global test_scenario
         global effective_date
-        global test_scenario_number
-        global regression
-        global smoke
-        global sanity
         global contract_class
         global agent
         global state
         global revenue
         global total_num_records
+        global _OLD_scenario
         global limit
         global deductible
-        global _OLD_scenario
-        global _OLD_scenario_number
 
         # Open Test Scenario Workbook; Instantiate worksheet object
         # 0 - First Worksheet
@@ -112,17 +107,14 @@ class TestCreateQuote:
                 test_summary = sh.cell_value(i, 0)
                 test_scenario = str(round(sh.cell_value(i, 1)))
                 effective_date = sh.cell_value(i, 2)
-                test_scenario_number = str(round(sh.cell_value(i, 3)))
-                regression = sh.cell_value(i, 4)
-                smoke = sh.cell_value(i, 5)
-                sanity = sh.cell_value(i, 6)
-                contract_class = sh.cell_value(i, 7)
-                agent = sh.cell_value(i, 8)
-                state = sh.cell_value(i, 9)
-                revenue = str(round(sh.cell_value(i, 10)))
-                total_num_records = (sh.cell_value(i, 11))
-                _OLD_scenario = sh.cell_value(i, 12)
-                _OLD_scenario_number = str(round(sh.cell_value(i, 13)))
+                contract_class = sh.cell_value(i, 3)
+                agent = sh.cell_value(i, 4)
+                state = sh.cell_value(i, 5)
+                revenue = str(round(sh.cell_value(i, 6)))
+                total_num_records = (sh.cell_value(i, 7))
+                _OLD_scenario = sh.cell_value(i, 8)
+                limit = sh.cell_value(i, 9)
+                deductible = sh.cell_value(i, 10)
 
             # Else, the cell is empty
             # End the Loop
@@ -324,19 +316,86 @@ class TestCreateQuote:
             saw_CC = Coverage_Options(driver)
 
             ### Clear All selections on Coverage Options Screen
-            saw_CC.select_all_deselect_all()
+            # saw_CC.select_all_deselect_all()
 
             ### If / Then Block to determine which instance of Coverage Options to use
 
             ### PCI & Non-PCI Test Scenarios
 
             ### PCI Scenarios
-            if test_scenario_number == "1":
+            if test_scenario == "1":
                 saw_CC_in_use = PCI_Coverage_Options(driver)
+                # saw_CC_in_use.test_ken(limit)
+
+                # Assert Limits Display
+                _NGP_with_BrandGuard_PCI_Assessment_250K_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_250K_limit_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_250K_limit_label_text == "$250,000 (Full Sublimits) ($250K PCI)"
+
+                _NGP_with_BrandGuard_PCI_Assessment_500K_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_500K_limit_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_500K_limit_label_text == "$500,000 (Full Sublimits) ($500K PCI)"
+
+                _NGP_with_BrandGuard_PCI_Assessment_1MM_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_1MM_limit_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_1MM_limit_label_text == "$1,000,000 (Full Sublimits) ($1MM PCI)"
+
+                _NGP_with_BrandGuard_PCI_Assessment_2MM_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_2MM_limit_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_2MM_limit_label_text == "$2,000,000 (Full Sublimits) ($2MM PCI)"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_250K_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_250K_limit_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_250K_limit_label_text == "$250,000 (Full Sublimits) ($250K PCI)"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500K_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500K_limit_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500K_limit_label_text == "$500,000 (Full Sublimits) ($500K PCI)"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1MM_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1MM_limit_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1MM_limit_label_text == "$1,000,000 (Full Sublimits) ($1MM PCI)"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2MM_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2MM_limit_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2MM_limit_label_text == "$2,000,000 (Full Sublimits) ($2MM PCI)"
+
+                # Assert Deductibles Display
+                _NGP_with_BrandGuard_PCI_Assessment_500_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_500_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_500_deductible_label_text == "$500"
+
+                _NGP_with_BrandGuard_PCI_Assessment_1k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_1k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_1k_deductible_label_text == "$1,000"
+
+                _NGP_with_BrandGuard_PCI_Assessment_2pt5k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_2pt5k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_2pt5k_deductible_label_text == "$2,500"
+
+                _NGP_with_BrandGuard_PCI_Assessment_5k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_5k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_5k_deductible_label_text == "$5,000"
+
+                _NGP_with_BrandGuard_PCI_Assessment_10k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_10k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_10k_deductible_label_text == "$10,000"
+
+                _NGP_with_BrandGuard_PCI_Assessment_25k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_25k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_25k_deductible_label_text == "$25,000"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500_deductible_label_text == "$500"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1k_deductible_label_text == "$1,000"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2pt5k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2pt5k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2pt5k_deductible_label_text == "$2,500"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_5k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_5k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_5k_deductible_label_text == "$5,000"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_10k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_10k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_10k_deductible_label_text == "$10,000"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_25k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_25k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_25k_deductible_label_text == "$25,000"
+
+                saw_CC_in_use.assert_deductibles_and_labels_display()
+
+                # Run Test Scenario listed on Excel Spreadsheet
                 getattr(saw_CC_in_use, _OLD_scenario)()
 
             ### Non-PCI Scenarios
-            elif test_scenario_number == "2":
+            elif test_scenario == "2":
                 saw_CC_in_use = No_PCI_Coverage_Options(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
 
@@ -346,6 +405,7 @@ class TestCreateQuote:
             saw_summary = Summary(driver)
             saw_summary.click_generate_quote()
             saw_quote_review = Quote_Review(driver)
+
             saw_quote_review.click_select_option()
             saw_select_option = Select_Option(driver)
             saw_select_option.select_premium()
