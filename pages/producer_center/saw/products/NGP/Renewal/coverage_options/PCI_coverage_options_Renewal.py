@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 
-class PCI_Coverage_Options():
+class PCI_Coverage_Options_Renewal():
 
     def __init__(self, driver):
         self.driver = driver
@@ -142,120 +142,120 @@ class PCI_Coverage_Options():
     ## Return Text for Limits
 
     def return_NGP_with_BrandGuard_PCI_Assessment_250K_limit_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_250K_limit_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_limit_3708.text)
+        NGP_with_BrandGuard_PCI_Assessment_250K_limit_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_limit_3708.text)
         return NGP_with_BrandGuard_PCI_Assessment_250K_limit_label_text
 
     def return_NGP_with_BrandGuard_PCI_Assessment_500K_limit_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_500K_limit_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_limit_3709.text)
+        NGP_with_BrandGuard_PCI_Assessment_500K_limit_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_limit_3709.text)
         return NGP_with_BrandGuard_PCI_Assessment_500K_limit_label_text
 
     def return_NGP_with_BrandGuard_PCI_Assessment_1MM_limit_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_1MM_limit_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_limit_3710.text)
+        NGP_with_BrandGuard_PCI_Assessment_1MM_limit_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_limit_3710.text)
         return NGP_with_BrandGuard_PCI_Assessment_1MM_limit_label_text
 
     def return_NGP_with_BrandGuard_PCI_Assessment_2MM_limit_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_2MM_limit_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_limit_3711.text)
+        NGP_with_BrandGuard_PCI_Assessment_2MM_limit_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_limit_3711.text)
         return NGP_with_BrandGuard_PCI_Assessment_2MM_limit_label_text
 
     def return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_250K_limit_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_250K_limit_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_limit_3815.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_250K_limit_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_limit_3815.text)
         return NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_250K_limit_label_text
 
     def return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500K_limit_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500K_limit_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_limit_3816.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500K_limit_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_limit_3816.text)
         return NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500K_limit_label_text
 
     def return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1MM_limit_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1MM_limit_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_limit_3817.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1MM_limit_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_limit_3817.text)
         return NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1MM_limit_label_text
 
     def return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2MM_limit_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2MM_limit_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_limit_3818.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2MM_limit_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_limit_3818.text)
         return NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2MM_limit_label_text
 
     ## Return Text for Deductibles
 
     def return_NGP_with_BrandGuard_PCI_Assessment_500_deductible_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_500_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_deductible_1432.text)
+        NGP_with_BrandGuard_PCI_Assessment_500_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_deductible_1432.text)
         return NGP_with_BrandGuard_PCI_Assessment_500_deductible_label_text
 
     def return_NGP_with_BrandGuard_PCI_Assessment_1k_deductible_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_1k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_deductible_1427.text)
+        NGP_with_BrandGuard_PCI_Assessment_1k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_deductible_1427.text)
         return NGP_with_BrandGuard_PCI_Assessment_1k_deductible_label_text
 
     def return_NGP_with_BrandGuard_PCI_Assessment_2pt5k_deductible_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_2pt5k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_deductible_1428.text)
+        NGP_with_BrandGuard_PCI_Assessment_2pt5k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_deductible_1428.text)
         return NGP_with_BrandGuard_PCI_Assessment_2pt5k_deductible_label_text
 
     def return_NGP_with_BrandGuard_PCI_Assessment_5k_deductible_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_5k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_deductible_1429.text)
+        NGP_with_BrandGuard_PCI_Assessment_5k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_deductible_1429.text)
         return NGP_with_BrandGuard_PCI_Assessment_5k_deductible_label_text
 
     def return_NGP_with_BrandGuard_PCI_Assessment_10k_deductible_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_10k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_deductible_1430.text)
+        NGP_with_BrandGuard_PCI_Assessment_10k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_deductible_1430.text)
         return NGP_with_BrandGuard_PCI_Assessment_10k_deductible_label_text
 
     def return_NGP_with_BrandGuard_PCI_Assessment_25k_deductible_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_25k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_deductible_1431.text)
+        NGP_with_BrandGuard_PCI_Assessment_25k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_deductible_1431.text)
         return NGP_with_BrandGuard_PCI_Assessment_25k_deductible_label_text
 
     def return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500_deductible_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_deductible_1503.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_deductible_1503.text)
         return NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500_deductible_label_text
 
     def return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1k_deductible_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_deductible_1498.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_deductible_1498.text)
         return NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1k_deductible_label_text
 
     def return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2pt5k_deductible_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2pt5k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_deductible_1499.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2pt5k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_deductible_1499.text)
         return NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2pt5k_deductible_label_text
 
     def return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_5k_deductible_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_5k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_deductible_1500.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_5k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_deductible_1500.text)
         return NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_5k_deductible_label_text
 
     def return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_10k_deductible_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_10k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_deductible_1501.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_10k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_deductible_1501.text)
         return NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_10k_deductible_label_text
 
     def return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_25k_deductible_label_text(self):
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_25k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_deductible_1502.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_25k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_deductible_1502.text)
         return NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_25k_deductible_label_text
 
     ## Assert Statements
 
     def assert_limits_and_labels_display(self):
 
-        NGP_with_BrandGuard_PCI_Assessment_250K_limit_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_limit_3708.text)
+        NGP_with_BrandGuard_PCI_Assessment_250K_limit_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_limit_3708.text)
         assert NGP_with_BrandGuard_PCI_Assessment_250K_limit_label_text == "$250,000 (Full Sublimits) ($250K PCI)"
         print (NGP_with_BrandGuard_PCI_Assessment_250K_limit_label_text)
 
-        NGP_with_BrandGuard_PCI_Assessment_500K_limit_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_limit_3709.text)
+        NGP_with_BrandGuard_PCI_Assessment_500K_limit_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_limit_3709.text)
         assert NGP_with_BrandGuard_PCI_Assessment_500K_limit_label_text == "$500,000 (Full Sublimits) ($500K PCI)"
         print (NGP_with_BrandGuard_PCI_Assessment_500K_limit_label_text)
 
-        NGP_with_BrandGuard_PCI_Assessment_1MM_limit_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_limit_3710.text)
+        NGP_with_BrandGuard_PCI_Assessment_1MM_limit_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_limit_3710.text)
         assert NGP_with_BrandGuard_PCI_Assessment_1MM_limit_label_text == "$1,000,000 (Full Sublimits) ($1MM PCI)"
         print (NGP_with_BrandGuard_PCI_Assessment_1MM_limit_label_text)
 
-        NGP_with_BrandGuard_PCI_Assessment_2MM_limit_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_limit_3711.text)
+        NGP_with_BrandGuard_PCI_Assessment_2MM_limit_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_limit_3711.text)
         assert NGP_with_BrandGuard_PCI_Assessment_2MM_limit_label_text == "$2,000,000 (Full Sublimits) ($2MM PCI)"
         print (NGP_with_BrandGuard_PCI_Assessment_2MM_limit_label_text)
 
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_250K_limit_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_limit_3815.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_250K_limit_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_limit_3815.text)
         assert NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_250K_limit_label_text == "$250,000 (Full Sublimits) ($250K PCI)"
         print (NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_250K_limit_label_text)
 
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500K_limit_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_limit_3816.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500K_limit_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_limit_3816.text)
         assert NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500K_limit_label_text == "$500,000 (Full Sublimits) ($500K PCI)"
         print (NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500K_limit_label_text)
 
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1MM_limit_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_limit_3817.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1MM_limit_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_limit_3817.text)
         assert NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1MM_limit_label_text == "$1,000,000 (Full Sublimits) ($1MM PCI)"
         print (NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1MM_limit_label_text)
 
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2MM_limit_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_deductible_1503.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2MM_limit_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_deductible_1503.text)
         assert NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2MM_limit_label_text == "$2,000,000 (Full Sublimits) ($2MM PCI)"
         print(NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2MM_limit_label_text)
 
@@ -273,51 +273,51 @@ class PCI_Coverage_Options():
 
     def assert_deductibles_and_labels_display(self):
 
-        NGP_with_BrandGuard_PCI_Assessment_500_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_deductible_1432.text)
+        NGP_with_BrandGuard_PCI_Assessment_500_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_deductible_1432.text)
         assert NGP_with_BrandGuard_PCI_Assessment_500_deductible_label_text == "$500"
         print(NGP_with_BrandGuard_PCI_Assessment_500_deductible_label_text)
 
-        NGP_with_BrandGuard_PCI_Assessment_1k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_deductible_1427.text)
+        NGP_with_BrandGuard_PCI_Assessment_1k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_deductible_1427.text)
         assert NGP_with_BrandGuard_PCI_Assessment_1k_deductible_label_text == "$1,000"
         print(NGP_with_BrandGuard_PCI_Assessment_1k_deductible_label_text)
 
-        NGP_with_BrandGuard_PCI_Assessment_2pt5k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_deductible_1428.text)
+        NGP_with_BrandGuard_PCI_Assessment_2pt5k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_deductible_1428.text)
         assert NGP_with_BrandGuard_PCI_Assessment_2pt5k_deductible_label_text == "$2,500"
         print(NGP_with_BrandGuard_PCI_Assessment_2pt5k_deductible_label_text)
 
-        NGP_with_BrandGuard_PCI_Assessment_5k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_deductible_1429.text)
+        NGP_with_BrandGuard_PCI_Assessment_5k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_deductible_1429.text)
         assert NGP_with_BrandGuard_PCI_Assessment_5k_deductible_label_text == "$5,000"
         print(NGP_with_BrandGuard_PCI_Assessment_5k_deductible_label_text)
 
-        NGP_with_BrandGuard_PCI_Assessment_10k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_deductible_1430.text)
+        NGP_with_BrandGuard_PCI_Assessment_10k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_deductible_1430.text)
         assert NGP_with_BrandGuard_PCI_Assessment_10k_deductible_label_text == "$10,000"
         print(NGP_with_BrandGuard_PCI_Assessment_10k_deductible_label_text)
 
-        NGP_with_BrandGuard_PCI_Assessment_25k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_971_deductible_1431.text)
+        NGP_with_BrandGuard_PCI_Assessment_25k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_deductible_1431.text)
         assert NGP_with_BrandGuard_PCI_Assessment_25k_deductible_label_text == "$25,000"
         print(NGP_with_BrandGuard_PCI_Assessment_25k_deductible_label_text)
 
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_deductible_1503.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_deductible_1503.text)
         assert NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500_deductible_label_text == "$500"
         print(NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500_deductible_label_text)
 
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_deductible_1498.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_deductible_1498.text)
         assert NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1k_deductible_label_text == "$1,000"
         print(NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1k_deductible_label_text)
 
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2pt5k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_deductible_1499.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2pt5k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_deductible_1499.text)
         assert NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2pt5k_deductible_label_text == "$2,500"
         print(NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2pt5k_deductible_label_text)
 
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_5k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_deductible_1500.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_5k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_deductible_1500.text)
         assert NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_5k_deductible_label_text == "$5,000"
         print(NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_5k_deductible_label_text)
 
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_10k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_deductible_1501.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_10k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_deductible_1501.text)
         assert NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_10k_deductible_label_text == "$10,000"
         print(NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_10k_deductible_label_text)
 
-        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_25k_deductible_label_text = (PCI_Coverage_Options.PageElements(self).label_option_1012_deductible_1502.text)
+        NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_25k_deductible_label_text = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_1012_deductible_1502.text)
         assert NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_25k_deductible_label_text == "$25,000"
         print(NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_25k_deductible_label_text)
 
@@ -338,15 +338,15 @@ class PCI_Coverage_Options():
             )
 
     def test_ken(self, limit):
-        print (PCI_Coverage_Options.PageElements(self).label_option_971_limit_3708.text)
-        assert limit == (PCI_Coverage_Options.PageElements(self).label_option_971_limit_3708.text)
+        print (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_limit_3708.text)
+        assert limit == (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_limit_3708.text)
 
     def select_NetGuard_Plus_with_BrandGuard_and_PCI_250K_limit_2_pt_5K_Deduct(self):
 
-        limit_label = (PCI_Coverage_Options.PageElements(self).label_option_971_limit_3708.text)
-        deductible_label = (PCI_Coverage_Options.PageElements(self).label_option_971_deductible_1428.text)
+        limit_label = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_limit_3708.text)
+        deductible_label = (PCI_Coverage_Options_Renewal.PageElements(self).label_option_971_deductible_1428.text)
         # print (limit_label, deductible_label)
-        PCI_Coverage_Options.PageElements(self).option_971_limit_3708.click()
-        PCI_Coverage_Options.PageElements(self).option_971_deductible_1428.click()
+        PCI_Coverage_Options_Renewal.PageElements(self).option_971_limit_3708.click()
+        PCI_Coverage_Options_Renewal.PageElements(self).option_971_deductible_1428.click()
 
 
