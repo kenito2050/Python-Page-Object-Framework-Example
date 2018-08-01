@@ -84,24 +84,19 @@ class CreateQuote():
         global test_summary
         global test_scenario
         global effective_date
-        global test_scenario_number
-        global regression
-        global smoke
-        global sanity
         global contract_class
         global agent
         global state
         global revenue
         global total_num_records
+        global _OLD_scenario
         global limit
         global deductible
-        global _OLD_scenario
-        global _OLD_scenario_number
 
 
         # Open Test Scenario Workbook; Instantiate worksheet object
         wb = xlrd.open_workbook(os.path.join(test_case_directory, Product + '.xlsx'))
-        sh = wb.sheet_by_index(0)
+        sh = wb.sheet_by_index(1)
 
         ## Begin For Loop to iterate through Test Scenarios
         i = 1
@@ -117,39 +112,20 @@ class CreateQuote():
                 # If Cell Value is NOT empty, set empty_cell to False
                 empty_cell = False
 
-
-            regression_check = sh.cell_value(i, 3)
-            smoke_check = sh.cell_value(i, 4)
-            sanity_check = sh.cell_value(i, 5)
-
-            # If / Else Section to check if a test needs to be run
-            #### CODE NOT WORKING YET - Ken 8-2-17
-            #### Program is running ALL rows & NOT skipping rows
-            if test_run_type_value == 3 and sanity_check == "0":
-                    continue
-            if test_run_type_value == 2 and smoke_check == "0":
-                    continue
-            if test_run_type_value == 1 and regression_check == "0":
-                    continue
-
-
             # Check to see if cell is NOT empty
             # If cell is not empty, read in the values
             if empty_cell == False:
                 test_summary = sh.cell_value(i, 0)
                 test_scenario = str(round(sh.cell_value(i, 1)))
                 effective_date = sh.cell_value(i, 2)
-                test_scenario_number = str(round(sh.cell_value(i, 3)))
-                regression = sh.cell_value(i, 4)
-                smoke = sh.cell_value(i, 5)
-                sanity = sh.cell_value(i, 6)
-                contract_class = sh.cell_value(i, 7)
-                agent = sh.cell_value(i, 8)
-                state = sh.cell_value(i, 9)
-                revenue = str(round(sh.cell_value(i, 10)))
-                total_num_records = (sh.cell_value(i, 11))
-                _OLD_scenario = sh.cell_value(i, 12)
-                _OLD_scenario_number = str(round(sh.cell_value(i, 13)))
+                contract_class = sh.cell_value(i, 3)
+                agent = sh.cell_value(i, 4)
+                state = sh.cell_value(i, 5)
+                revenue = str(round(sh.cell_value(i, 6)))
+                total_num_records = (sh.cell_value(i, 7))
+                _OLD_scenario = sh.cell_value(i, 8)
+                limit = sh.cell_value(i, 9)
+                deductible = sh.cell_value(i, 10)
 
             # Else, the cell is empty
             # End the Loop
@@ -417,12 +393,12 @@ class CreateQuote():
             ### PCI & Non-PCI Test Scenarios
 
             ### PCI Scenarios
-            if test_scenario_number == "1":
+            if test_scenario == "1":
                 saw_CC_in_use = PCI_Coverage_Options(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
 
             ### Non-PCI Scenarios
-            elif test_scenario_number == "2":
+            elif test_scenario == "2":
                 saw_CC_in_use = No_PCI_Coverage_Options(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
 

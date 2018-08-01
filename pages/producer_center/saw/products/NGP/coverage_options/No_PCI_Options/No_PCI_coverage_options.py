@@ -7,86 +7,43 @@ class No_PCI_Coverage_Options():
 
     def PageElements(self):
 
-        # e-MD™ Only - No PCI
+        # NetGuard™ Plus with BrandGuard™ Without PCI
 
         # Limits
 
-        # 500K/1MM
-        self.option_850_limit_3169 = self.driver.find_element(By.ID, "option-850-limit-3169")
+        # 250K
+        self.option_972_limit_3716 = self.driver.find_element(By.ID, "option-972-limit-3716")
 
-        # 1MM/1MM
-        self.option_850_limit_3168 = self.driver.find_element(By.ID, "option-850-limit-3168")
+        # 500K
+        self.option_972_limit_3713 = self.driver.find_element(By.ID, "option-972-limit-3713")
 
-        # Deductibles
-        # $0
-        self.option_850_deductible_1296 = self.driver.find_element(By.ID, "option-850-deductible-1296")
+        # 1MM
+        self.option_972_limit_3714 = self.driver.find_element(By.ID, "option-972-limit-3714")
 
-        # $2M e-MD™ Only - No PCI
-
-        # Limits
-
-        # 2MM/2MM
-        self.option_856_limit_3196 = self.driver.find_element(By.ID, "option-856-limit-3196")
+        # 2MM
+        self.option_972_limit_3715 = self.driver.find_element(By.ID, "option-972-limit-3715")
 
         # Deductibles
-        # $0
-        self.option_856_deductible_1296 = self.driver.find_element(By.ID, "option-856-deductible-1296")
+        # $500
+        self.option_972_deductible_1439 = self.driver.find_element(By.ID, "option-972-deductible-1439")
 
-        # $3M e-MD™ Only - No PCI
+        # $1K
+        self.option_972_deductible_1434 = self.driver.find_element(By.ID, "option-972-deductible-1434")
 
-        # Limits
+        # $2pt5K
+        self.option_972_deductible_1435 = self.driver.find_element(By.ID, "option-972-deductible-1435")
 
-        # 3MM/3MM
-        self.option_858_limit_3201 = self.driver.find_element(By.ID, "option-858-limit-3201")
+        # $5K
+        self.option_972_deductible_1436 = self.driver.find_element(By.ID, "option-972-deductible-1436")
 
-        # Deductibles
-        # $0
-        self.option_858_deductible_1296 = self.driver.find_element(By.ID, "option-858-deductible-1296")
+        # $10K
+        self.option_972_deductible_1437 = self.driver.find_element(By.ID, "option-972-deductible-1437")
 
-        # $2M Broad Regulatory Protection Plus and e-MD™ Combined - No PCI
-
-        # Limits
-
-        # 2MM/2MM
-        self.option_857_limit_3257 = self.driver.find_element(By.ID, "option-857-limit-3257")
-
-        # Deductibles
-        # $0
-        self.option_857_deductible_1297 = self.driver.find_element(By.ID, "option-857-deductible-1297")
-
-        # $3M Broad Regulatory Protection Plus and e-MD™ Combined - No PCI
-
-        # Limits
-
-        # 3MM/3MM
-        self.option_859_limit_3263 = self.driver.find_element(By.ID, "option-859-limit-3263")
-
-        # Deductibles
-        # $0
-        self.option_859_deductible_1297 = self.driver.find_element(By.ID, "option-859-deductible-1297")
+        # $25K
+        self.option_972_deductible_1438 = self.driver.find_element(By.ID, "option-972-deductible-1438")
 
         return self
 
-    def select_eMD_Only_No_PCI_500K_1MM_limit_0_Deduct(self):
-        No_PCI_Coverage_Options.PageElements(self).option_850_limit_3169.click()
-        No_PCI_Coverage_Options.PageElements(self).option_850_deductible_1296.click()
-
-    def select_eMD_Only_No_PCI_1MM_1MM_limit_0_Deduct(self):
-        No_PCI_Coverage_Options.PageElements(self).option_850_limit_3168.click()
-        No_PCI_Coverage_Options.PageElements(self).option_850_deductible_1296.click()
-
-    def select_2M_eMD_Only_No_PCI_2MM_2MM_limit_0_Deduct(self):
-        No_PCI_Coverage_Options.PageElements(self).option_856_limit_3196.click()
-        No_PCI_Coverage_Options.PageElements(self).option_856_deductible_1296.click()
-
-    def select_3M_eMD_Only_No_PCI_3MM_3MM_limit_0_Deduct(self):
-        No_PCI_Coverage_Options.PageElements(self).option_858_limit_3201.click()
-        No_PCI_Coverage_Options.PageElements(self).option_858_deductible_1296.click()
-
-    def select_2M_Broad_Regulatory_Protection_Plus_and_eMD_Combined_No_PCI_2MM_2MM_limit_0_Deduct(self):
-        No_PCI_Coverage_Options.PageElements(self).option_857_limit_3257.click()
-        No_PCI_Coverage_Options.PageElements(self).option_857_deductible_1297.click()
-
-    def select_3M_Broad_Regulatory_Protection_Plus_and_eMD_Combined_No_PCI_3MM_3MM_limit_0_Deduct(self):
-        No_PCI_Coverage_Options.PageElements(self).option_859_limit_3263.click()
-        No_PCI_Coverage_Options.PageElements(self).option_859_deductible_1297.click()
+    def select_NGP_with_BrandGuard_No_PCI_1MM_limit_2pt5K_Deduct(self):
+        No_PCI_Coverage_Options.PageElements(self).option_972_limit_3714.click()
+        No_PCI_Coverage_Options.PageElements(self).option_972_deductible_1435.click()
