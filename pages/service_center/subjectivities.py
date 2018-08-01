@@ -80,7 +80,7 @@ class Subjectivities():
         submit_button = self.driver.find_element(By.XPATH, "//form[@id='main-form']/div[3]/a/span[2]/span/span")
         submit_button.click()
 
-    def click_agent_link(self, log):
+    def click_agent_link(self):
         agent_link = self.driver.find_element(By.LINK_TEXT, "Agent")
         if agent_link:
             agent_link.click()

@@ -490,7 +490,7 @@ class CreateQuote():
             thank_you = Thank_You_Page(driver)
 
             policy_text = thank_you.retrieve_store_policy_number()
-            if policy_text:
+            if not policy_text:
                 log.error("Policy number was NOT FOUND")
 
             # Return to Admin Interface
@@ -553,6 +553,8 @@ class CreateQuote():
             driver.quit()
 
             i += 1
+
+        log.removeHandler(log_file)
 
 cq = CreateQuote()
 cq.test_login_search_for_agent_create_quote()
