@@ -1,6 +1,7 @@
 import datetime
 import os
 import time
+import logging
 import unittest
 from urllib.parse import urlparse, parse_qs
 from xml.etree import ElementTree as ET
@@ -57,6 +58,14 @@ class CreateQuote():
     def test_login_search_for_agent_create_quote(self):
 
         Product = "NGP"
+
+        # Set logger
+        log = logging.getLogger("ngp-create-policy")
+        log.setLevel(logging.INFO)
+        fmt_str = logging.Formatter('%(levelname)s %(asctime)s %(lineno)d %(module)s: %(message)s')
+        log_file = logging.FileHandler("ngp-create-policy.log")
+        log_file.setFormatter(fmt_str)
+        log.addHandler(log_file)
 
         ## Directory Locations
 
@@ -116,6 +125,7 @@ class CreateQuote():
             # If cell is not empty, read in the values
             if empty_cell == False:
                 test_summary = sh.cell_value(i, 0)
+                log.info("Testing {0} ".format(test_summary))
                 test_scenario = str(round(sh.cell_value(i, 1)))
                 effective_date = sh.cell_value(i, 2)
                 contract_class = sh.cell_value(i, 3)
@@ -230,7 +240,7 @@ class CreateQuote():
 
             driver.get(base_URL)
 
-            driver.implicitly_wait(3)
+            driver.implicitly_wait(60)
 
             # Call Login methods from Pages.home.login_page.py
             lp = LoginPage(driver)
@@ -468,14 +478,20 @@ class CreateQuote():
             # sub.change_open_subjectivities_to_received()
             # sub.select_yes_to_subjectivities_met()
             sub.click_submit()
-            sub.click_agent_link()
+
+            found = sub.click_agent_link()
+            if not found:
+                log.error("Agent link NOT FOUND in subjectivities page")
 
             # Return to Producer Center; Issue Policy
             saw_confirm_issue.input_signature()
             saw_confirm_issue.click_accept_terms_issue_policy()
             # Retrieve Policy Number of Policy that was issued; Policy Number stored in policy_text
             thank_you = Thank_You_Page(driver)
+
             policy_text = thank_you.retrieve_store_policy_number()
+            if policy_text:
+                log.error("Policy number was NOT FOUND")
 
             # Return to Admin Interface
             saw_confirm_issue.click_return_to_Admin_Interface()
