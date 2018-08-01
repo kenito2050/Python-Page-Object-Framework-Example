@@ -6,7 +6,7 @@ class Insured_Information():
         self.driver = driver
 
     def PageElements(self):
-        self.occupied_beds = self.driver.find_element(By.ID, "occupied_beds")
+        self.occupied_beds = self.driver.find_element(By.ID, "currently_occupied_beds")
 
         self.next_button = self.driver.find_element(By.NAME, "submit")
 

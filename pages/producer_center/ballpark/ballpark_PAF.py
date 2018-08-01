@@ -36,6 +36,10 @@ class BallPark_PAF():
         ballpark_button = self.driver.find_element(By.CSS_SELECTOR, "span.text-button-ds > span")
         ballpark_button.click()
 
+    def click_ballpark_button_new(self):
+        ballpark_button = self.driver.find_element(By.XPATH, "//form[@id='ballpark-application-form']/div[3]/a/span[2]/span/span")
+        ballpark_button.click()
+
         # Ballpark Product Identifiers
 
         # TODO: Move these identifiers into a separate class
@@ -182,6 +186,16 @@ class BallPark_PAF():
         # Swett IIABCal Cyber Liability - product-list-item-83
         cb_NGP_SWETT = self.driver.find_element(By.ID, "product-list-item-83")
 
+    def select_Transitional_Living_Facilities(self):
+        # Ballpark Product Identifiers
+
+        # TODO: Move these identifiers into a separate class
+
+        # NGP_old Cyber Liability - product - list - item - 74
+        cb_Transitional_Living_Facilities = self.driver.find_element(By.ID, "product-list-item-130")
+
+        cb_Transitional_Living_Facilities.click()
+
     def wait_until_effective_date_field_displays(self):
 
         userElement = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, 'effective-date')))
@@ -224,6 +238,10 @@ class BallPark_PAF():
     def enter_revenue_EO_MISC(self, revenue):
         annual_revenue_next_year_field = self.driver.find_element(By.ID, "annual_revenue_next_year")
         annual_revenue_next_year_field.send_keys(revenue)
+
+    def enter_currently_occupied_bed_count(self, bed_count):
+        bed_count_field = self.driver.find_element(By.ID, 'currently_occupied_beds')
+        bed_count_field.send_keys(bed_count)
 
     def enter_bed_count(self, bed_count):
         bed_count_field = self.driver.find_element(By.ID, 'bed_count')
