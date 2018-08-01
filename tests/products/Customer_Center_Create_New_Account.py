@@ -109,7 +109,7 @@ class CreateAccount():
             ## Read in value from test_environment.xml
             tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
             test_environment = tree.getroot()
-            environment = (test_environment[0][0].text)
+            environment = (test_environment[1][0].text)
 
             ## Select Appropriate URL based on the Environment Value from above
             base_URL = Environments.return_environments(environment)

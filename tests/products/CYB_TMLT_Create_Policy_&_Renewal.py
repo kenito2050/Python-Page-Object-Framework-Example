@@ -333,32 +333,32 @@ class CreateQuote():
 
             time.sleep(5)
 
-            cp.click_return_to_Admin_Interface()
-
-            # Navigate to Application Details page
-            current_url_2 = driver.current_url
-            slashparts = current_url_2.split('/')
-            # Now join back the first three sections 'http:', '' and 'example.com'
-            base_url_2 = '/'.join(slashparts[:3]) + '/'
-
-            app_details_string = "?c=app.view&id="
-            # app_subjectivities_string = "?c=app.track_subjectivities&id="
-
-            application_details_screen = base_url_2 + app_details_string + application_id
-
-            # Navigate to Application Subjectivities Screen
-            driver.get(application_details_screen)
-
-            app_details = App_Details(driver)
-
-            # Update the Create Date to the Ad Hoc Effective Date Value
-            app_details.update_create_date(date_today)
-
-            # Click Update Button
-            app_details.click_update_button()
-
-            # Click on Agent Link to return to Producer Center
-            app_details.click_agent_text_link()
+            # cp.click_return_to_Admin_Interface()
+            #
+            # # Navigate to Application Details page
+            # current_url_2 = driver.current_url
+            # slashparts = current_url_2.split('/')
+            # # Now join back the first three sections 'http:', '' and 'example.com'
+            # base_url_2 = '/'.join(slashparts[:3]) + '/'
+            #
+            # app_details_string = "?c=app.view&id="
+            # # app_subjectivities_string = "?c=app.track_subjectivities&id="
+            #
+            # application_details_screen = base_url_2 + app_details_string + application_id
+            #
+            # # Navigate to Application Subjectivities Screen
+            # driver.get(application_details_screen)
+            #
+            # app_details = App_Details(driver)
+            #
+            # # Update the Create Date to the Ad Hoc Effective Date Value
+            # app_details.update_create_date(date_today)
+            #
+            # # Click Update Button
+            # app_details.click_update_button()
+            #
+            # # Click on Agent Link to return to Producer Center
+            # app_details.click_agent_text_link()
 
             # Return to Coverage Periods screen
 

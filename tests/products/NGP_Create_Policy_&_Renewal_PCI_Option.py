@@ -247,7 +247,7 @@ class CreateQuote():
         # saw_CC_PCI.select_500K_limit_25K_Deductible()
         # saw_CC_PCI.select_1MM_limit_500_Deductible()
         # saw_CC_PCI.select_1MM_limit_1K_Deductible()
-        saw_CC_PCI.select_1MM_limit_2pt5K_Deductible()
+        # saw_CC_PCI.select_1MM_limit_2pt5K_Deductible()
         # saw_CC_PCI.select_1MM_limit_5K_Deductible()
         # saw_CC_PCI.select_1MM_limit_10K_Deductible()
         # saw_CC_PCI.select_1MM_limit_25K_Deductible()
@@ -279,9 +279,9 @@ class CreateQuote():
         # saw_CC_No_PCI.select_250K_500K_limit_500_Deductible()
         # saw_CC_No_PCI.select_250K_500K_1MM_2MM_limit_2pt5K_Deductible()
 
-        #saw_CC.select_all_deselect_all()
+        saw_CC.select_all_deselect_all()
 
-        saw_CC.proceed_to_quote()
+        saw_CC.click_proceed_to_quote()
 
         saw_summary = Summary(driver)
         saw_summary.click_generate_quote()

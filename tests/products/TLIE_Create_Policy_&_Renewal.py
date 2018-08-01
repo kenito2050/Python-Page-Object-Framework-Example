@@ -73,14 +73,6 @@ class CreateQuote():
         test_run_type = (test_environment[1][0].text)
         test_run_type_value = ''
 
-        # If / Else to convert test_run_type text to a value
-        if test_run_type == "Regression":
-            test_run_type_value = '1'
-        elif test_run_type == "Smoke":
-            test_run_type_value = '2'
-        elif test_run_type == "Sanity":
-            test_run_type_value = '3'
-
         global test_summary
         global test_scenario
         global effective_date

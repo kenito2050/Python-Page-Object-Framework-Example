@@ -122,7 +122,7 @@ class TestCreateQuote:
         # company_name_string = company_name
         company_name_string = "QA Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
         address_value = address.street_address()
-        city = StateCapitals.return_state_capital(state)
+        # city = StateCapitals.return_state_capital(state)
         postal_code = ZipCodes.return_zip_codes(state)
 
         # Access XML to retrieve login credentials

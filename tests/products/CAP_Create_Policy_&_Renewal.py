@@ -222,21 +222,21 @@ class TestCreateQuote:
             #### This class is for generic objects that display on the Coverage Options page
             saw_CC = Coverage_Options(driver)
 
-            saw_CC.select_all_deselect_all()
+            # saw_CC.select_all_deselect_all()
 
             ### If / Then Block to determine which instance of Coverage Options to use
 
             ### PCI & Non-PCI Test Scenarios
 
             ### PCI Scenarios
-            if test_scenario_number == "1":
-                saw_CC_in_use = PCI_Coverage_Options(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
+            # if test_scenario_number == "1":
+            #     saw_CC_in_use = PCI_Coverage_Options(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
 
             ### Non-PCI Scenarios
-            elif test_scenario_number == "2":
-                saw_CC_in_use = No_PCI_Coverage_Options(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
+            # elif test_scenario_number == "2":
+            #     saw_CC_in_use = No_PCI_Coverage_Options(driver)
+                # getattr(saw_CC_in_use, _OLD_scenario)()
 
             saw_CC.click_proceed_to_quote()
 

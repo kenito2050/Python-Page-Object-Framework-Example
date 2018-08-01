@@ -52,6 +52,7 @@ from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
 
 
+
 class CreateQuote():
 
     def test_login_search_for_agent_create_quote(self):
@@ -230,7 +231,7 @@ class CreateQuote():
 
             driver.get(base_URL)
 
-            driver.implicitly_wait(3)
+            driver.implicitly_wait(60)
 
             # Call Login methods from Pages.home.login_page.py
             lp = LoginPage(driver)
@@ -386,7 +387,7 @@ class CreateQuote():
             saw_CC = Coverage_Options(driver)
 
             ### Clear All selections on Coverage Options Screen
-            saw_CC.select_all_deselect_all()
+            # saw_CC.select_all_deselect_all()
 
             ### If / Then Block to determine which instance of Coverage Options to use
 
@@ -468,11 +469,15 @@ class CreateQuote():
             # sub.change_open_subjectivities_to_received()
             # sub.select_yes_to_subjectivities_met()
             sub.click_submit()
+
+
             sub.click_agent_link()
 
             # Return to Producer Center; Issue Policy
             saw_confirm_issue.input_signature()
             saw_confirm_issue.click_accept_terms_issue_policy()
+
+
             # Retrieve Policy Number of Policy that was issued; Policy Number stored in policy_text
             thank_you = Thank_You_Page(driver)
             policy_text = thank_you.retrieve_store_policy_number()

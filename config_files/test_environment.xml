@@ -4,19 +4,19 @@
     <!--NAS Online Sites-->
 
     <TestEnvironment One ="0">
-        <Server>Stage</Server>
+        <Server>Demo9</Server>
     </TestEnvironment>
 
     <!--Customer Center Sites-->
 
     <TestEnvironment Two ="1">
-        <Server>Cust_Stage</Server>
+        <Server>Cust_Live</Server>
     </TestEnvironment>
 
     <!--Retailer Access Sites-->
 
     <TestEnvironment Three ="2">
-        <Server>Retail_Access_Stage</Server>
+        <Server>Retail_Access_Live</Server>
     </TestEnvironment>
 
     <TestType One ="">
@@ -37,9 +37,9 @@
             'Demo7': 'https://svcdemo7.wn.nasinsurance.com/',
             'Demo8': 'https://svcdemo8.wn.nasinsurance.com/',
             'Demo9': 'https://svcdemo9.wn.nasinsurance.com/',
-            'OS_Upgrade': 'https://svcstg.wn.nasinsurance.com/',
+            'Stage': 'https://svcstg.wn.nasinsurance.com/',
             'Fix': 'https://svcfix.wn.nasinsurance.com/',
-            'Stage': 'https://svcrel.wn.nasinsurance.com/',
+            'Old_Stage': 'https://svcrel.wn.nasinsurance.com/',
             'QA': 'https://svcqa.wn.nasinsurance.com/',
             'Live': 'https://service.wn.nasinsurance.com/'
 
@@ -58,7 +58,7 @@
             Retailer Access Sites
 
             'Retail_Access_Demo7': 'https://proddemo7.wn.nasinsurance.com/registration',
-            'Retail_Access_Stage': 'https://prodrel.wn.nasinsurance.com/registration',
+            'Retail_Access_Stage': 'https://prodstg.wn.nasinsurance.com/registration',
             'Retail_Access_Live': 'https://producer.wn.nasinsurance.com/registration',
 
 -->

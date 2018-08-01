@@ -33,12 +33,6 @@ class CreateAccount():
         test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
         test_results_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
 
-        # Determine the Test Run Type
-        # Get Test Run Type Text from config file
-        tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
-        test_environment = tree.getroot()
-        test_run_type = (test_environment[1][0].text)
-
         global test_summary
         global test_scenario
         global registration_code
@@ -101,7 +95,7 @@ class CreateAccount():
             ## Read in value from test_environment.xml
             tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
             test_environment = tree.getroot()
-            environment = (test_environment[0][0].text)
+            environment = (test_environment[2][0].text)
 
             ## Select Appropriate URL based on the Environment Value from above
             base_URL = Environments.return_environments(environment)
@@ -215,7 +209,7 @@ class CreateAccount():
                 ac.select_state(state)
                 ac.input_company_name_FAKER(company_name_faker)
 
-            ac.click_send_button()
+                ac.click_send_button()
 
             # Wait
             time.sleep(3)

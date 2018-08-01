@@ -255,7 +255,7 @@ class CreateQuote(unittest.TestCase):
             app_details = App_Details(driver)
 
             # Update the Create Date to the Ad Hoc Effective Date Value
-            app_details.update_create_date(effective_date_formatted)
+            app_details.update_create_date(date_today)
 
             # Click Update Button
             app_details.click_update_button()
