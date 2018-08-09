@@ -220,15 +220,19 @@ class TestCreateQuote:
             #### If / ELSE Section to Determine how PAF is completed
 
             # Scenario 1: PCI Options
-            # Scenario 2: No PCI Options
+            # Scenario 2 and 3 : No PCI Options
 
             if test_scenario == "1":
-                saw_PAF.create_quote_PCI_DSS_No_DQ(current_revenue, previous_revenue)
+                saw_PAF.create_quote_PCI_DSS_Compliance_No_DQ(current_revenue, previous_revenue)
                 saw_PAF.is_data_encrypted_yes()
                 saw_PAF.credit_card_compliant_yes()
             elif test_scenario == "2":
-                saw_PAF.create_quote_No_PCI_DSS_No_DQ(current_revenue, previous_revenue)
+                saw_PAF.create_quote_No_Data_Encryption_No_PCI_DSS_Compliance_No_DQ(current_revenue, previous_revenue)
                 saw_PAF.is_data_encrypted_yes()
+            elif test_scenario == "3":
+                saw_PAF.create_quote_Data_Encryption_No_PCI_DSS_Compliance_No_DQ(current_revenue, previous_revenue)
+                saw_PAF.is_data_encrypted_yes()
+                saw_PAF.credit_card_compliant_no()
 
             # Click Next on PAF Screen
             saw_PAF.click_next()
