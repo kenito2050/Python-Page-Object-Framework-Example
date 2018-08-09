@@ -1,0 +1,585 @@
+import csv
+import datetime
+import os
+import time
+import unittest
+from urllib.parse import urlparse, parse_qs
+from xml.etree import ElementTree as ET
+
+import xlrd
+from faker import address
+from faker import company
+from faker import name
+from selenium import webdriver
+
+from pages.producer_center.client_contact_page import ClientContact
+from pages.producer_center.client_search_page import ClientSearch
+from pages.producer_center.my_policies.my_policies_screens.active_policies import active_policies
+from pages.producer_center.my_policies.my_policies_screens.policy_details import policy_details
+from pages.producer_center.navigation_bar import Navigation_Bar
+from pages.producer_center.products_programs_page import ProductsAndPrograms
+from pages.producer_center.saw.confirm_and_issue import Confirm_and_Issue
+from pages.producer_center.saw.confirm_order_details import Confirm_Order_Details
+from pages.producer_center.saw.coverage_periods_page import CoveragePeriods
+from pages.producer_center.saw.invoice import Invoice
+from pages.producer_center.saw.products.CYB_OMSNIC.PAF.PAF import PAF
+
+### PCI Coverage Options Classes
+from pages.producer_center.saw.products.CYB_OMSNIC.coverage_options.PCI_Options.PCI_coverage_options import PCI_Coverage_Options
+
+### Non PCI Coverage Options Classes
+from pages.producer_center.saw.products.CYB_OMSNIC.coverage_options.No_PCI_Options.No_PCI_coverage_options import No_PCI_Coverage_Options
+
+from pages.producer_center.saw.products.CYB_OMSNIC.coverage_options.coverage_options import Coverage_Options
+from pages.producer_center.saw.products.CYB_OMSNIC.insured_information.insured_information import Insured_Information
+from pages.producer_center.saw.products.CYB_OMSNIC.select_option.select_option import Select_Option
+from pages.producer_center.saw.quote_review import Quote_Review
+from pages.producer_center.saw.summary import Summary
+from pages.producer_center.saw.thank_you_page import Thank_You_Page
+from pages.producer_center.saw.products.CYB_OMSNIC.Renewal.client_contact_page import Client_Contact_Renewal
+from pages.producer_center.saw.products.CYB_OMSNIC.Renewal.coverage_periods import Coverage_Periods_Renewal
+from pages.producer_center.saw.products.CYB_OMSNIC.Renewal.insured_information import Insured_Information_Renewal
+from pages.producer_center.saw.products.CYB_OMSNIC.Renewal.PAF_Renewal import PAF_Renewal
+from pages.producer_center.saw.products.CYB_OMSNIC.Renewal.coverage_options.coverage_options_renewal import Coverage_Options_Renewal
+from pages.producer_center.saw.products.CYB_OMSNIC.Renewal.coverage_options.PCI_coverage_options_Renewal import PCI_Coverage_Options_Renewal
+from pages.producer_center.saw.products.CYB_OMSNIC.Renewal.coverage_options.No_PCI_coverage_options_Renewal import No_PCI_Coverage_Options_Renewal
+from pages.service_center.agent_screens.agent_details import Agent_Details
+from pages.service_center.agents_page import AgentsPage
+from pages.service_center.application_screens.details import App_Details
+from pages.service_center.application_screens.sub_agent_details import App_Details_sub_agent
+from pages.service_center.applications_page import ApplicationsPage
+from pages.service_center.login_page import LoginPage
+from pages.service_center.navigation_bar import NavigationBar
+from pages.service_center.policies_page import PoliciesPage
+from pages.service_center.policy_screens.details import Details
+from pages.service_center.policy_screens.effective_periods import Effective_Periods
+from pages.service_center.policy_screens.policy_screens import Policy_Screens
+from pages.service_center.subjectivities import Subjectivities
+from utilities.Environments.Environments import Environments
+from utilities.state_capitals.state_capitals import StateCapitals
+from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from config_globals import *
+
+class TestCreateQuote:
+
+    def test_login_search_for_agent_create_quote(self, browser, env):
+
+        Product = "CYB_OMSNIC"
+        driver = browser
+
+        ## Directory Locations
+
+        tests_directory = ROOT_DIR / 'tests'
+        framework_directory = ROOT_DIR
+        config_file_directory = CONFIG_PATH
+        test_case_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Products'
+        test_results_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Test_Results'
+
+        global test_summary
+        global test_scenario
+        global effective_date
+        global contract_class
+        global agent
+        global state
+        global staff_count
+        global current_revenue
+        global previous_revenue
+        global _OLD_scenario
+        global limit
+        global deductible
+
+        # Open Test Scenario Workbook; Instantiate worksheet object
+        # 0 - First Worksheet
+        # 1 - Second Worksheet...etc
+
+        wb = xlrd.open_workbook(str(test_case_directory / Product) + '.xlsx')
+        sh = wb.sheet_by_index(0)
+
+        ## Begin For Loop to iterate through Test Scenarios
+        i = 1
+        rows = sh.nrows
+        empty_cell = False
+        for i in range(1, sh.nrows):
+
+            cell_val = sh.cell(i, 0).value
+            if cell_val == '':
+                # If Cell Value is empty, set empty_cell to True
+                empty_cell = True
+            else:
+                # If Cell Value is NOT empty, set empty_cell to False
+                empty_cell = False
+
+            # Check to see if cell is NOT empty
+            # If cell is not empty, read in the values
+            if empty_cell == False:
+                test_summary = sh.cell_value(i, 0)
+                test_scenario = str(round(sh.cell_value(i, 1)))
+                effective_date = sh.cell_value(i, 2)
+                contract_class = sh.cell_value(i, 3)
+                agent = sh.cell_value(i, 4)
+                state = sh.cell_value(i, 5)
+                staff_count = str(round(sh.cell_value(i, 6)))
+                current_revenue = str(round(sh.cell_value(i, 7)))
+                previous_revenue = str(round(sh.cell_value(i, 8)))
+                _OLD_scenario = sh.cell_value(i, 9)
+                limit = sh.cell_value(i, 10)
+                deductible = sh.cell_value(i, 11)
+
+            # Else, the cell is empty
+            # End the Loop
+            else:
+                break
+
+            ## Determine Test Environment to run scripts
+
+            ## Read in value from test_environment.xml
+            # tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
+            # test_environment = tree.getroot()
+            # environment = (test_environment[0][0].text)
+
+            ## Select Appropriate URL based on the Environment Value from above
+            base_URL = Environments.return_environments(env)
+
+            first_name = name.first_name()
+            last_name = name.last_name()
+            company_name = company.company_name()
+            # company_name_string = company_name
+            company_name_string = "QA Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
+            address_value = address.street_address()
+            city = StateCapitals.return_state_capital(state)
+            postal_code = ZipCodes.return_zip_codes(state)
+
+            # Access XML to retrieve login credentials
+            tree = ET.parse(str(config_file_directory /'resources.xml'))
+            login_credentials = tree.getroot()
+            username = (login_credentials[1][0].text)
+            password = (login_credentials[1][1].text)
+
+            # Date Variables
+            date_today = time.strftime("%m/%d/%Y")
+            ad_hoc_effectiveDate = "09/06/2017"
+
+            # Convert effective_date value to format MM/DD/YYYY
+            d = xlrd.xldate_as_tuple(int(effective_date), 0)
+            # convert date tuple in mm-dd-yyyy format
+            d = datetime.datetime(*(d[0:3]))
+            effective_date_formatted = d.strftime("%m/%d/%Y")
+
+            # driver.get(baseURL)
+
+            driver.get(base_URL)
+
+            driver.implicitly_wait(3)
+
+            # Call Login methods from Pages.home.login_page.py
+            lp = LoginPage(driver)
+            lp.login(username, password)
+            lp.click_login_button()
+            nb = NavigationBar(driver)
+            nb.click_agents()
+            ap = AgentsPage(driver)
+            ap.search_for_agent(agent)
+            ap.click_submit_new_application_as_agent()
+
+            pp = ProductsAndPrograms(driver)
+            pp.click_CYB_OMSNIC()
+
+            # The following lines added on 10-09-17 work
+            # pp.click_contract_class_drop_down_select_contract_class(contract_class)
+            # pp.click_continue_on_contract_class_modal()
+
+            cs = ClientSearch(driver)
+            cs.input_bogus_client_data(postal_code)
+            cs.manually_input_new_client()
+            cs.enter_new_client_name_address(company_name_string, address_value, city, state)
+            cc = ClientContact(driver)
+
+            # Get the Application ID from URL -- THIS WORKS
+            # Code parses URL String & retrieves application ID
+            current_url = driver.current_url
+            first_url_string = urlparse(current_url)
+            query_dict = parse_qs(first_url_string.query)
+            application_id = (query_dict['app_id'][0])
+
+            cc.click_next()
+
+            cp = CoveragePeriods(driver)
+
+            # Click Next
+            cp.click_next()
+
+            # Instantiate Insured Information;
+            saw_ii = Insured_Information(driver)
+            saw_ii.enter_physician_count(staff_count)
+            saw_ii.click_next()
+            saw_PAF = PAF(driver)
+
+            # Return to Admin Interface / Set Creation Date
+            # saw_PAF.click_return_to_Admin_Interface()
+
+            #### If / ELSE Section to Determine how PAF is completed
+
+            # Scenario 1: PCI Options
+            # Scenario 2: No PCI Options
+
+            if test_scenario == "1":
+                saw_PAF.create_quote_PCI_DSS_No_DQ(current_revenue, previous_revenue)
+                saw_PAF.is_data_encrypted_yes()
+                saw_PAF.credit_card_compliant_yes()
+            elif test_scenario == "2":
+                saw_PAF.create_quote_No_PCI_DSS_No_DQ(current_revenue, previous_revenue)
+                saw_PAF.is_data_encrypted_yes()
+
+            # Click Next on PAF Screen
+            saw_PAF.click_next()
+
+            ## Coverage Options Section  ###
+            ##                           ###
+
+            #### This class is for generic objects that display on the Coverage Options page
+            saw_CC = Coverage_Options(driver)
+
+            ### Clear All selections on Coverage Options Screen
+            # saw_CC.select_all_deselect_all()
+
+            ### If / Then Block to determine which instance of Coverage Options to use
+
+            ### PCI & Non-PCI Test Scenarios
+
+            ### PCI Scenarios
+            if test_scenario == "1":
+                saw_CC_in_use = PCI_Coverage_Options(driver)
+                # saw_CC_in_use.test_ken(limit)
+
+                # Assert Limits Display
+                _NGP_with_BrandGuard_PCI_Assessment_250K_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_250K_limit_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_250K_limit_label_text == "$250,000 (Full Sublimits) ($250K PCI)"
+
+                _NGP_with_BrandGuard_PCI_Assessment_500K_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_500K_limit_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_500K_limit_label_text == "$500,000 (Full Sublimits) ($500K PCI)"
+
+                _NGP_with_BrandGuard_PCI_Assessment_1MM_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_1MM_limit_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_1MM_limit_label_text == "$1,000,000 (Full Sublimits) ($1MM PCI)"
+
+                _NGP_with_BrandGuard_PCI_Assessment_2MM_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_2MM_limit_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_2MM_limit_label_text == "$2,000,000 (Full Sublimits) ($2MM PCI)"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_250K_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_250K_limit_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_250K_limit_label_text == "$250,000 (Full Sublimits) ($250K PCI)"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500K_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500K_limit_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500K_limit_label_text == "$500,000 (Full Sublimits) ($500K PCI)"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1MM_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1MM_limit_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1MM_limit_label_text == "$1,000,000 (Full Sublimits) ($1MM PCI)"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2MM_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2MM_limit_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2MM_limit_label_text == "$2,000,000 (Full Sublimits) ($2MM PCI)"
+
+                # Assert Deductibles Display
+                _NGP_with_BrandGuard_PCI_Assessment_500_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_500_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_500_deductible_label_text == "$500"
+
+                _NGP_with_BrandGuard_PCI_Assessment_1k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_1k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_1k_deductible_label_text == "$1,000"
+
+                _NGP_with_BrandGuard_PCI_Assessment_2pt5k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_2pt5k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_2pt5k_deductible_label_text == "$2,500"
+
+                _NGP_with_BrandGuard_PCI_Assessment_5k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_5k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_5k_deductible_label_text == "$5,000"
+
+                _NGP_with_BrandGuard_PCI_Assessment_10k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_10k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_10k_deductible_label_text == "$10,000"
+
+                _NGP_with_BrandGuard_PCI_Assessment_25k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_25k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_25k_deductible_label_text == "$25,000"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_500_deductible_label_text == "$500"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_1k_deductible_label_text == "$1,000"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2pt5k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2pt5k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_2pt5k_deductible_label_text == "$2,500"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_5k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_5k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_5k_deductible_label_text == "$5,000"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_10k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_10k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_10k_deductible_label_text == "$10,000"
+
+                _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_25k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_25k_deductible_label_text()
+                assert _NGP_with_BrandGuard_PCI_Assessment_Sublimit_Per_Identity_25k_deductible_label_text == "$25,000"
+
+                saw_CC_in_use.assert_deductibles_and_labels_display()
+
+                # Run Test Scenario listed on Excel Spreadsheet
+                getattr(saw_CC_in_use, _OLD_scenario)()
+
+            ### Non-PCI Scenarios
+            elif test_scenario == "2":
+                saw_CC_in_use = No_PCI_Coverage_Options(driver)
+
+                # Run Test Scenario listed on Excel Spreadsheet
+                getattr(saw_CC_in_use, _OLD_scenario)()
+
+            ### Commented out next line; Moved Proceed to Quote button Call into the PCI / Non-PCI Methods
+            saw_CC.click_proceed_to_quote()
+
+            saw_summary = Summary(driver)
+            saw_summary.click_generate_quote()
+            saw_quote_review = Quote_Review(driver)
+
+            saw_quote_review.click_select_option()
+            saw_select_option = Select_Option(driver)
+            saw_select_option.select_premium()
+            saw_select_option.click_accept_rate_and_continue()
+            saw_confirm_order_details = Confirm_Order_Details(driver)
+            saw_confirm_order_details.click_next()
+            saw_invoice = Invoice(driver)
+            saw_invoice.click_proceed_to_issuing()
+
+            # Click Return to Admin Interface
+            saw_confirm_issue = Confirm_and_Issue(driver)
+
+            time.sleep(3)
+
+            # At this point, script is re-directed to service center login screen
+            # This works on DEV
+            # TODO: FIX redirection; should redirect back to Service Center
+            saw_confirm_issue.click_return_to_Admin_Interface()
+
+            time.sleep(2)
+
+            # This section is necessary ONLY on STAGE
+            # Call Login methods from Pages.home.login_page.py
+            # lp = LoginPage(driver)
+            # lp.login(username, password)
+            # nb = NavigationBar(driver)
+
+            # Click Applications link on Navigation Bar
+            nb.click_applications()
+
+            # Enter Application ID, click Search
+            app_page = ApplicationsPage(driver)
+            app_page.enter_application_id(application_id)
+            app_page.click_search_button()
+
+            # Click on application id link
+            # THIS IS NOT WORKING
+            # app_page.click_application_id_link(application_id)
+
+            # Navigate to Application Details page
+            new_current_url = driver.current_url
+            slashparts = new_current_url.split('/')
+            # Now join back the first three sections 'http:', '' and 'example.com'
+            new_base_url = '/'.join(slashparts[:3]) + '/'
+
+            app_details_string = "?c=app.view&id="
+            app_subjectivities_string = "?c=app.track_subjectivities&id="
+
+            application_details_screen = new_base_url + app_details_string + application_id
+            application_subjectivites_screen = new_base_url + app_subjectivities_string + application_id
+
+            # Navigate to Application Subjectivities Screen
+            driver.get(application_subjectivites_screen)
+
+            # Approve Subjectivities
+            sub = Subjectivities(driver)
+            sub.set_all_subjectivities_to_recieved()
+            # sub.change_open_subjectivities_to_received()
+            # sub.select_yes_to_subjectivities_met()
+            sub.click_submit()
+            sub.click_agent_link()
+
+            # Return to Producer Center; Issue Policy
+            saw_confirm_issue.input_signature()
+            saw_confirm_issue.click_accept_terms_issue_policy()
+            # Retrieve Policy Number of Policy that was issued; Policy Number stored in policy_text
+            thank_you = Thank_You_Page(driver)
+            policy_text = thank_you.retrieve_store_policy_number()
+
+            # Return to Admin Interface
+            saw_confirm_issue.click_return_to_Admin_Interface()
+
+            # Click on Policies link; Navigate to Policy that was just issued
+            nb.click_policies()
+
+            pp = PoliciesPage(driver)
+            # On Policies Page, Click All link
+            pp.click_all_link()
+
+            # Enter Policy Number & Click Search
+            pp.enter_policy_name(policy_text)
+            pp.click_search_button()
+
+            # Click on the Policy link, Open Policy Details
+            pp.click_policy_link(policy_text)
+
+            # Click Effective Periods
+            ps = Policy_Screens(driver)
+            ps.click_Effective_Periods()
+
+            # Change Effective Periods Dates to allow renewals
+            ep = Effective_Periods(driver)
+            ep.change_dates_expire_policy_allow_renewal()
+            ep.click_update_dates()
+
+            # Click Details link to display the Policy Details screen
+            ps.click_Details()
+
+            # On Details Screen, Click on the Agent that issued the Policy
+            details = Details(driver)
+            details.click_agent_link(agent)
+
+            # Agent Details Screen Displays
+            ag = Agent_Details(driver)
+
+            # Click "Submit New Application as" link
+            ag.click_submit_new_application_as_agent()
+
+            # Click My Policies on Navigation Bar
+            pnb = Navigation_Bar(driver)
+            pnb.click_my_policies()
+
+            # Locate Policy that was issued
+            ap = active_policies(driver)
+            ap.enter_policy_name(policy_text)
+            ap.click_search_button()
+
+            # Click Policy
+            ap.click_policy_link(policy_text)
+
+            # Click Quote Now link
+            pd = policy_details(driver)
+            pd.click_quote_now_link()
+
+            # Renewal Session
+
+            # Client Contact Screen
+            # Click Next
+            cc_renewal = Client_Contact_Renewal(driver)
+            cc_renewal.click_next()
+
+            # Coverage Periods
+            # Click Next
+            cp_renewal = Coverage_Periods_Renewal(driver)
+            cp_renewal.click_next()
+
+            # Insured Information
+            # Click Next
+            ii_renewal = Insured_Information_Renewal(driver)
+            ii_renewal.click_next()
+
+            # PAF
+            PAF_renewal = PAF_Renewal(driver)
+            PAF_renewal.create_quote_PCI_DSS_No_DQ(total_num_records)
+
+            # Coverage Options
+
+            # Generic Coverage Options Object (This contains Next & Select All / Deselect All elements)
+            co_renewal = Coverage_Options_Renewal(driver)
+
+            ### PCI Scenarios
+            if test_scenario == "1":
+                co_pci_renewal = PCI_Coverage_Options_Renewal(driver)
+            # Run Test Scenario listed on Excel Spreadsheet
+            #     getattr(co_pci_renewal, _OLD_scenario)()
+
+            ### Non-PCI Scenarios
+            elif test_scenario == "2":
+                co_no_pci_renewal = No_PCI_Coverage_Options_Renewal(driver)
+
+            # Run Test Scenario listed on Excel Spreadsheet
+            #     getattr(co_no_pci_renewal, _OLD_scenario)()
+
+            # Click Proceed to Quote
+            co_renewal.click_proceed_to_quote()
+
+            saw_summary = Summary(driver)
+            saw_summary.click_generate_quote()
+            saw_quote_review = Quote_Review(driver)
+
+            saw_quote_review.click_select_option()
+            saw_select_option = Select_Option(driver)
+            saw_select_option.select_premium()
+            saw_select_option.click_accept_rate_and_continue()
+            saw_confirm_order_details = Confirm_Order_Details(driver)
+            saw_confirm_order_details.click_next()
+            saw_invoice = Invoice(driver)
+            saw_invoice.click_proceed_to_issuing()
+
+            # Get the Application ID from URL -- THIS WORKS
+            # Code parses URL String & retrieves application ID
+            current_url_renewal = driver.current_url
+            first_url_string_renewal = urlparse(current_url_renewal)
+            query_dict_renewal = parse_qs(first_url_string_renewal.query)
+            renewal_application_id = (query_dict_renewal['app_id'][0])
+
+            # Click Return to Admin Interface
+            saw_confirm_issue = Confirm_and_Issue(driver)
+
+            time.sleep(3)
+
+            # At this point, script is re-directed to service center login screen
+            # This works on DEV
+            # TODO: FIX redirection; should redirect back to Service Center
+            saw_confirm_issue.click_return_to_Admin_Interface()
+
+            time.sleep(2)
+
+            # This section is necessary ONLY on STAGE
+            # Call Login methods from Pages.home.login_page.py
+            # lp = LoginPage(driver)
+            # lp.login(username, password)
+            # nb = NavigationBar(driver)
+
+            # Click Applications link on Navigation Bar
+            nb.click_applications()
+
+            # Enter Application ID, click Search
+            app_page = ApplicationsPage(driver)
+            app_page.enter_application_id(renewal_application_id)
+            app_page.click_search_button()
+
+            # Click on application id link
+            # THIS IS NOT WORKING
+            # app_page.click_application_id_link(application_id)
+
+            # Navigate to Application Details page
+            next_current_url = driver.current_url
+            slashparts = new_current_url.split('/')
+            # Now join back the first three sections 'http:', '' and 'example.com'
+            next_base_url = '/'.join(slashparts[:3]) + '/'
+
+            app_details_string = "?c=app.view&id="
+            app_subjectivities_string = "?c=app.track_subjectivities&id="
+
+            application_details_screen = next_base_url + app_details_string + renewal_application_id
+            application_subjectivites_screen = next_base_url + app_subjectivities_string + renewal_application_id
+
+            # Navigate to Application Subjectivities Screen
+            driver.get(application_subjectivites_screen)
+
+            # Approve Subjectivities
+            sub = Subjectivities(driver)
+            sub.set_all_subjectivities_to_recieved()
+            # sub.change_open_subjectivities_to_received()
+            # sub.select_yes_to_subjectivities_met()
+            sub.click_submit()
+            sub.click_agent_link()
+
+            # Return to Producer Center; Issue Policy
+            saw_confirm_issue.input_signature()
+            saw_confirm_issue.click_accept_terms_issue_policy()
+            # Retrieve Policy Number of Policy that was issued; Policy Number stored in policy_text
+            thank_you = Thank_You_Page(driver)
+            policy_text = thank_you.retrieve_store_policy_number()
+
+            # Wait
+            driver.implicitly_wait(3)
+
+            # Close Browser
+            driver.quit()
