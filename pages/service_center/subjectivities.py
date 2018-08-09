@@ -81,11 +81,6 @@ class Subjectivities():
         submit_button.click()
 
     # def click_agent_link(self):
-    def click_agent_link(self, log):
+    def click_agent_link(self):
         agent_link = self.driver.find_element(By.LINK_TEXT, "Agent")
         agent_link.click()
-
-        if agent_link:
-            agent_link.click()
-            return True
-        return False

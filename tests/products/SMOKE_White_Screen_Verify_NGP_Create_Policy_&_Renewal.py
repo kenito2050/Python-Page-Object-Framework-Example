@@ -1,3 +1,4 @@
+import csv
 import datetime
 import os
 import time
@@ -76,21 +77,6 @@ class CreateQuote():
         test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
         test_results_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
 
-        # Determine the Test Run Type
-        # Get Test Run Type Text from config file
-        tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
-        test_environment = tree.getroot()
-        test_run_type = (test_environment[1][0].text)
-        test_run_type_value = ''
-
-        # If / Else to convert test_run_type text to a value
-        if test_run_type == "Regression":
-            test_run_type_value = '1'
-        elif test_run_type == "Smoke":
-            test_run_type_value = '2'
-        elif test_run_type == "Sanity":
-            test_run_type_value = '3'
-
         global test_summary
         global test_scenario
         global effective_date
@@ -102,7 +88,6 @@ class CreateQuote():
         global _OLD_scenario
         global limit
         global deductible
-
 
         # Open Test Scenario Workbook; Instantiate worksheet object
         wb = xlrd.open_workbook(os.path.join(test_case_directory, Product + '.xlsx'))
@@ -162,62 +147,13 @@ class CreateQuote():
             city = StateCapitals.return_state_capital(state)
             postal_code = ZipCodes.return_zip_codes(state)
 
-            # revenue = "20,000,000"
             total_num_records = '1 to 100,000'
-            # cpa_count = "9"
-
-            # 1 to 100,000
-            # 100,001 to 250,000
-            # 250,001 to 500,000
-            # Over 500,000
-            # Uncertain
 
             # Access XML to retrieve login credentials
             tree = ET.parse(os.path.join(config_file_directory, 'resources.xml'))
             login_credentials = tree.getroot()
             username = (login_credentials[1][0].text)
             password = (login_credentials[1][1].text)
-
-            # Access XML to retrieve the agent to search for
-            # tree = ET.parse('Agents.xml')
-            # agents = tree.getroot()
-            # agent = (agents[5][0].text)
-
-            # 0,0 = Crump Tester                -- Wholesale Agent - Crump Insurance Services, Boston - Test Account
-            # 1,0 = Susan Leeming - TEST        -- Sub Agent of Wholesale Agency
-            # 2,0 = Retail Agent                -- Retail Agent - Boston Retail Insurance
-            # 3,0 = Preferred Agent             -- Preferred Agent - Preferred Agency
-            # 4,0 = CYB_TMLT Test User              -- Account to Test COMM2 Scenarios
-            # 5,0 = QA Agent                    -- QA Agent
-            # 6,0 = Janice Quinn                -- Janice Quinn - Boston Retail
-
-            # Access XML to retrieve contract_class
-
-            # NOTE: For XML, the array count starts at 0
-            # I have inserted a placeholder element at 0 -- Ken
-            # Array will be 1 - 74
-            # For List of Contract Classes, See Contract_Classes.xml
-            # tree = ET.parse('Contract_Classes.xml')
-            # contract_classes_XML = tree.getroot()
-            # contract_class = (contract_classes_XML[0][43].text)
-
-            # Retail Sales          - 57
-            # Online Retailer       - 46
-            # Restaurant            - 56
-            # Misc Consultant       - 43
-            # Hospitality           - 30
-            # Title/Escrow Services - 63
-
-            # tree = ET.parse('Contract_Classes_Medical.xml')
-            # contract_classes_XML = tree.getroot()
-            # contract_class = (contract_classes_XML[0][1].text)
-
-            # NOTE: For contract_classes.py, the array count starts at 1
-            # Array will be 1 - 74
-            # contract_class_int_value = ContractClasses_Medical.return_contract_class_values(contract_class)
-
-            # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
-            # contract_class_value = "74"
 
             # Date Variables
             date_today = time.strftime("%m/%d/%Y")
@@ -276,54 +212,6 @@ class CreateQuote():
             cc.click_next()
 
             cp = CoveragePeriods(driver)
-            # This section commented out
-            # cp.click_return_to_Admin_Interface()
-            #
-            # time.sleep(3)
-            #
-            # # Navigate to Application Details page
-            # current_url_2 = driver.current_url
-            # slashparts = current_url_2.split('/')
-            # # Now join back the first three sections 'http:', '' and 'example.com'
-            # base_url_2 = '/'.join(slashparts[:3]) + '/'
-            #
-            # app_details_string = "?c=app.view&id="
-            # # app_subjectivities_string = "?c=app.track_subjectivities&id="
-            #
-            # application_details_screen = base_url_2 + app_details_string + application_id
-            #
-            # # Navigate to Application Subjectivities Screen
-            # driver.get(application_details_screen)
-            #
-            # # Declare an app details class for Agents & Sub-Agents
-            # app_details = App_Details(driver)
-            # app_details_sub_agent = App_Details_sub_agent(driver)
-            #
-            # # Update the Create Date to the Ad Hoc Effective Date Value
-            # # app_details.update_create_date(effective_date_formatted)
-            #
-            # # This section if agent is direct
-            # # Click Update Button
-            # app_details.click_update_button()
-            #
-            # # Click on Agent Link to return to Producer Center
-            # app_details.click_agent_text_link()
-            # # Click on Agent Link to return to Producer Center
-            #
-            # # This section if agent is Sub-Agent
-            # # app_details_sub_agent.update_create_date(effective_date_formatted)
-            # # app_details_sub_agent.click_update_button()
-            # # app_details_sub_agent.click_sub_agent_text_link()
-            #
-            # # Return to Coverage Periods screen
-            #
-            # # Enter an Ad Hoc Effective Date
-            # cp.enter_ad_hoc_effective_date(effective_date_formatted)
-
-            # Enter Today's Date as Effective Date
-            # cp.enter_current_date_as_effective_date(date_today)
-
-            # End Comment Section
 
             # Click Next
             cp.click_next()
@@ -333,9 +221,6 @@ class CreateQuote():
             saw_ii.enter_annual_revenue(revenue)
             saw_ii.click_next()
             saw_PAF = PAF(driver)
-
-            # Return to Admin Interface / Set Creation Date
-            # saw_PAF.click_return_to_Admin_Interface()
 
             #### If / ELSE Section to Determine how PAF is completed
 
@@ -349,45 +234,6 @@ class CreateQuote():
 
             # Click Next on PAF Screen
             saw_PAF.click_next()
-
-            ## Coverage Options Section  ###
-            ##                           ###
-
-            ### eMD / Higher Limits Test Scenarios - PCI & Non-PCI
-
-            ### eMD and Higher Limits PCI Scenarios
-            # PCI_Coverage_Options_eMD_Higher_Limits(driver)                - Test Scenario 1
-
-            ### eMD and Higher Limits Non-PCI Scenarios
-            # No_PCI_Coverage_Options_eMD_Higher_Limits(driver)             - Test Scenario 2
-
-
-            ### Broad Regulatory Only Test Scenarios
-            # Doctor_Count_1_Broad_Reg_Protect(driver)                      - Test Scenario 3
-            # Doctor_Count_2_Broad_Reg_Protect(driver)                      - Test Scenario 4
-            # Doctor_Count_3_Broad_Reg_Protect(driver)                      - Test Scenario 5
-            # Doctor_Count_4_Broad_Reg_Protect(driver)                      - Test Scenario 6
-            # Doctor_Count_5_Broad_Reg_Protect(driver)                      - Test Scenario 7
-
-            ### Broad Regulatory Combined - Test Scenarios - PCI
-
-            # PCI_Doctor_Count_1_Broad_Reg_Protect_Combined(driver)         - Test Scenario 8
-            # PCI_Doctor_Count_2_Broad_Reg_Protect_Combined(driver)         - Test Scenario 9
-            # PCI_Doctor_Count_3_Broad_Reg_Protect_Combined(driver)         - Test Scenario 10
-            # PCI_Doctor_Count_4_Broad_Reg_Protect_Combined(driver)         - Test Scenario 11
-            # PCI_Doctor_Count_5_Broad_Reg_Protect_Combined(driver)         - Test Scenario 12
-
-            ### Broad Regulatory Combined - Test Scenarios - Non-PCI
-
-            # No_PCI_Doctor_Count_1_Broad_Reg_Protect_Combined(driver)      - Test Scenario 13
-            # No_PCI_Doctor_Count_2_Broad_Reg_Protect_Combined(driver)      - Test Scenario 14
-            # No_PCI_Doctor_Count_3_Broad_Reg_Protect_Combined(driver)      - Test Scenario 15
-            # No_PCI_Doctor_Count_4_Broad_Reg_Protect_Combined(driver)      - Test Scenario 16
-            # No_PCI_Doctor_Count_5_Broad_Reg_Protect_Combined(driver)      - Test Scenario 17
-
-
-            #### This class is for generic objects that display on the Coverage Options page
-            saw_CC = Coverage_Options(driver)
 
             ## Coverage Options Section  ###
             ##                           ###
@@ -438,12 +284,6 @@ class CreateQuote():
 
             time.sleep(2)
 
-            # This section is necessary ONLY on STAGE
-            # Call Login methods from Pages.home.login_page.py
-            # lp = LoginPage(driver)
-            # lp.login(username, password)
-            # nb = NavigationBar(driver)
-
             # Click Applications link on Navigation Bar
             nb.click_applications()
 
@@ -451,10 +291,6 @@ class CreateQuote():
             app_page = ApplicationsPage(driver)
             app_page.enter_application_id(application_id)
             app_page.click_search_button()
-
-            # Click on application id link
-            # THIS IS NOT WORKING
-            # app_page.click_application_id_link(application_id)
 
             # Navigate to Application Details page
             new_current_url = driver.current_url
@@ -478,12 +314,9 @@ class CreateQuote():
             # sub.select_yes_to_subjectivities_met()
             sub.click_submit()
 
-            sub.click_agent_link(log)
+            sub.click_agent_link()
 
-            found = sub.click_agent_link(log)
-            if not found:
-                log.error("Agent link NOT FOUND in subjectivities page")
-
+            # Note: Script will end if there is a white screen after submitting subjectivities
 
             # Return to Producer Center; Issue Policy
             saw_confirm_issue.input_signature()
@@ -493,61 +326,20 @@ class CreateQuote():
             thank_you = Thank_You_Page(driver)
             policy_text = thank_you.retrieve_store_policy_number()
 
-            if policy_text:
+            # logging
+            if not policy_text:
                 log.error("Policy number was NOT FOUND")
 
-            # Return to Admin Interface
-            saw_confirm_issue.click_return_to_Admin_Interface()
+            # Declare the values that will be outputted to csv
+            values = [test_summary, company_name_string, application_id, policy_text]
 
-            # Click on Policies link; Navigate to Policy that was just issued
-            nb.click_policies()
+            # Declare Directory of csv file
+            download_dir = os.path.join(test_results_directory, 'White_Screen_Test_Script_Results.csv')
 
-            pp = PoliciesPage(driver)
-            # On Policies Page, Click All link
-            pp.click_all_link()
-
-            # Enter Policy Number & Click Search
-            pp.enter_policy_name(policy_text)
-            pp.click_search_button()
-
-            # Click on the Policy link, Open Policy Details
-            pp.click_policy_link(policy_text)
-
-            # Click Effective Periods
-            ps = Policy_Screens(driver)
-            ps.click_Effective_Periods()
-
-            # Change Effective Periods Dates to allow renewals
-            ep = Effective_Periods(driver)
-            ep.change_dates_expire_policy_allow_renewal()
-            ep.click_update_dates()
-
-            # Click Details link to display the Policy Details screen
-            ps.click_Details()
-
-            # On Details Screen, Click on the Agent that issued the Policy
-            details = Details(driver)
-            details.click_agent_link(agent)
-
-            # Agent Details Screen Displays
-            ag = Agent_Details(driver)
-
-            # Click "Submit New Application as" link
-            ag.click_submit_new_application_as_agent()
-
-            # Click My Policies on Navigation Bar
-            pnb = Navigation_Bar(driver)
-            pnb.click_my_policies()
-
-            # Locate Policy that was issued
-            ap = active_policies(driver)
-            ap.enter_policy_name(policy_text)
-            ap.click_search_button()
-
-            # Click Policy
-            ap.click_policy_link(policy_text)
-
-            # Code works up to this point
+            # This Section Writes the output to the csv file
+            with open(download_dir, "a") as f:
+                writer = csv.writer(f, lineterminator='\n')  # lineterminator='\n'
+                writer.writerow(values)
 
             # Wait
             driver.implicitly_wait(3)
