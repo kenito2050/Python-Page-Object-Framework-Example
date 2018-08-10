@@ -161,6 +161,10 @@ class ProductsAndPrograms():
         CYB_MICA_link = self.driver.find_element(By.ID, "MICA e-Med Protection Plus_start")
         CYB_MICA_link.click()
 
+    def click_CYB_OMSNIC(self):
+        CYB_OMSNIC_link = self.driver.find_element(By.ID, "OMSNIC Cyber Liability_start")
+        CYB_OMSNIC_link.click()
+
     def click_CYB_PAS(self):
         CYB_PAS_link = self.driver.find_element(By.ID, "ProAssurance ProSecure Regulatory Risk Protection and Cyber Liability_start")
         CYB_PAS_link.click()
