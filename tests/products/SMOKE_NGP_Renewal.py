@@ -92,7 +92,7 @@ class TestCreateQuote:
         # 1 - Second Worksheet...etc
 
         wb = xlrd.open_workbook(str(test_case_directory / Product) + '.xlsx')
-        sh = wb.sheet_by_index(0)
+        sh = wb.sheet_by_index(1)
 
         ## Begin For Loop to iterate through Test Scenarios
         i = 1
@@ -127,13 +127,6 @@ class TestCreateQuote:
             # End the Loop
             else:
                 break
-
-            ## Determine Test Environment to run scripts
-
-            ## Read in value from test_environment.xml
-            # tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
-            # test_environment = tree.getroot()
-            # environment = (test_environment[0][0].text)
 
             ## Select Appropriate URL based on the Environment Value from above
             base_URL = Environments.return_environments(env)
@@ -203,54 +196,6 @@ class TestCreateQuote:
             cc.click_next()
 
             cp = CoveragePeriods(driver)
-            # This section commented out
-            # cp.click_return_to_Admin_Interface()
-            #
-            # time.sleep(3)
-            #
-            # # Navigate to Application Details page
-            # current_url_2 = driver.current_url
-            # slashparts = current_url_2.split('/')
-            # # Now join back the first three sections 'http:', '' and 'example.com'
-            # base_url_2 = '/'.join(slashparts[:3]) + '/'
-            #
-            # app_details_string = "?c=app.view&id="
-            # # app_subjectivities_string = "?c=app.track_subjectivities&id="
-            #
-            # application_details_screen = base_url_2 + app_details_string + application_id
-            #
-            # # Navigate to Application Subjectivities Screen
-            # driver.get(application_details_screen)
-            #
-            # # Declare an app details class for Agents & Sub-Agents
-            # app_details = App_Details(driver)
-            # app_details_sub_agent = App_Details_sub_agent(driver)
-            #
-            # # Update the Create Date to the Ad Hoc Effective Date Value
-            # # app_details.update_create_date(effective_date_formatted)
-            #
-            # # This section if agent is direct
-            # # Click Update Button
-            # app_details.click_update_button()
-            #
-            # # Click on Agent Link to return to Producer Center
-            # app_details.click_agent_text_link()
-            # # Click on Agent Link to return to Producer Center
-            #
-            # # This section if agent is Sub-Agent
-            # # app_details_sub_agent.update_create_date(effective_date_formatted)
-            # # app_details_sub_agent.click_update_button()
-            # # app_details_sub_agent.click_sub_agent_text_link()
-            #
-            # # Return to Coverage Periods screen
-            #
-            # # Enter an Ad Hoc Effective Date
-            # cp.enter_ad_hoc_effective_date(effective_date_formatted)
-
-            # Enter Today's Date as Effective Date
-            # cp.enter_current_date_as_effective_date(date_today)
-
-            # End Comment Section
 
             # Click Next
             cp.click_next()
@@ -276,45 +221,6 @@ class TestCreateQuote:
 
             # Click Next on PAF Screen
             saw_PAF.click_next()
-
-            ## Coverage Options Section  ###
-            ##                           ###
-
-            ### eMD / Higher Limits Test Scenarios - PCI & Non-PCI
-
-            ### eMD and Higher Limits PCI Scenarios
-            # PCI_Coverage_Options_eMD_Higher_Limits(driver)                - Test Scenario 1
-
-            ### eMD and Higher Limits Non-PCI Scenarios
-            # No_PCI_Coverage_Options_eMD_Higher_Limits(driver)             - Test Scenario 2
-
-
-            ### Broad Regulatory Only Test Scenarios
-            # Doctor_Count_1_Broad_Reg_Protect(driver)                      - Test Scenario 3
-            # Doctor_Count_2_Broad_Reg_Protect(driver)                      - Test Scenario 4
-            # Doctor_Count_3_Broad_Reg_Protect(driver)                      - Test Scenario 5
-            # Doctor_Count_4_Broad_Reg_Protect(driver)                      - Test Scenario 6
-            # Doctor_Count_5_Broad_Reg_Protect(driver)                      - Test Scenario 7
-
-            ### Broad Regulatory Combined - Test Scenarios - PCI
-
-            # PCI_Doctor_Count_1_Broad_Reg_Protect_Combined(driver)         - Test Scenario 8
-            # PCI_Doctor_Count_2_Broad_Reg_Protect_Combined(driver)         - Test Scenario 9
-            # PCI_Doctor_Count_3_Broad_Reg_Protect_Combined(driver)         - Test Scenario 10
-            # PCI_Doctor_Count_4_Broad_Reg_Protect_Combined(driver)         - Test Scenario 11
-            # PCI_Doctor_Count_5_Broad_Reg_Protect_Combined(driver)         - Test Scenario 12
-
-            ### Broad Regulatory Combined - Test Scenarios - Non-PCI
-
-            # No_PCI_Doctor_Count_1_Broad_Reg_Protect_Combined(driver)      - Test Scenario 13
-            # No_PCI_Doctor_Count_2_Broad_Reg_Protect_Combined(driver)      - Test Scenario 14
-            # No_PCI_Doctor_Count_3_Broad_Reg_Protect_Combined(driver)      - Test Scenario 15
-            # No_PCI_Doctor_Count_4_Broad_Reg_Protect_Combined(driver)      - Test Scenario 16
-            # No_PCI_Doctor_Count_5_Broad_Reg_Protect_Combined(driver)      - Test Scenario 17
-
-
-            #### This class is for generic objects that display on the Coverage Options page
-            saw_CC = Coverage_Options(driver)
 
             ## Coverage Options Section  ###
             ##                           ###
@@ -402,8 +308,71 @@ class TestCreateQuote:
                 getattr(saw_CC_in_use, _OLD_scenario)()
 
             ### Non-PCI Scenarios
+                ### Non-PCI Scenarios
             elif test_scenario == "2":
                 saw_CC_in_use = No_PCI_Coverage_Options(driver)
+
+                # Assert Limits Display
+                _NGP_with_BrandGuard_without_PCI_250K_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_250K_limit_label_text()
+                assert _NGP_with_BrandGuard_without_PCI_250K_limit_label_text == "$250,000 (Full Sublimits)"
+
+                _NGP_with_BrandGuard_without_500K_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_500K_limit_label_text()
+                assert _NGP_with_BrandGuard_without_500K_limit_label_text == "$500,000 (Full Sublimits)"
+
+                _NGP_with_BrandGuard_without_1MM_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_1MM_limit_label_text()
+                assert _NGP_with_BrandGuard_without_1MM_limit_label_text == "$1,000,000 (Full Sublimits)"
+
+                _NGP_with_BrandGuard_without_2MM_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_2MM_limit_label_text()
+                assert _NGP_with_BrandGuard_without_2MM_limit_label_text == "$2,000,000 (Full Sublimits)"
+
+                _NGP_with_BrandGuard_without_PCI_Per_Identity_250K_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_Per_Identity_250K_limit_label_text()
+                assert _NGP_with_BrandGuard_without_PCI_Per_Identity_250K_limit_label_text == "$250,000 (Full Sublimits)"
+
+                _NGP_with_BrandGuard_without_PCI_Per_Identity_500K_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_Per_Identity_500K_limit_label_text()
+                assert _NGP_with_BrandGuard_without_PCI_Per_Identity_500K_limit_label_text == "$500,000 (Full Sublimits)"
+
+                _NGP_with_BrandGuard_without_PCI_Per_Identity_1MM_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_Per_Identity_1MM_limit_label_text()
+                assert _NGP_with_BrandGuard_without_PCI_Per_Identity_1MM_limit_label_text == "$1,000,000 (Full Sublimits)"
+
+                _NGP_with_BrandGuard_without_PCI_Per_Identity_2MM_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_Per_Identity_2MM_limit_label_text()
+                assert _NGP_with_BrandGuard_without_PCI_Per_Identity_2MM_limit_label_text == "$2,000,000 (Full Sublimits)"
+
+                # Assert Deductibles Display
+                _NGP_with_BrandGuard_without_PCI_500_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_500_deductible_label_text()
+                assert _NGP_with_BrandGuard_without_PCI_500_deductible_label_text == "$500"
+
+                _NGP_with_BrandGuard_without_PCI_1k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_1k_deductible_label_text()
+                assert _NGP_with_BrandGuard_without_PCI_1k_deductible_label_text == "$1,000"
+
+                _NGP_with_BrandGuard_without_PCI_2pt5k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_2pt5k_deductible_label_text()
+                assert _NGP_with_BrandGuard_without_PCI_2pt5k_deductible_label_text == "$2,500"
+
+                _NGP_with_BrandGuard_without_PCI_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_5k_deductible_label_text()
+                assert _NGP_with_BrandGuard_without_PCI_deductible_label_text == "$5,000"
+
+                _NGP_with_BrandGuard_without_PCI_10k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_10k_deductible_label_text()
+                assert _NGP_with_BrandGuard_without_PCI_10k_deductible_label_text == "$10,000"
+
+                _NGP_with_BrandGuard_without_PCI_25k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_25k_deductible_label_text()
+                assert _NGP_with_BrandGuard_without_PCI_25k_deductible_label_text == "$25,000"
+
+                _NGP_with_BrandGuard_without_PCI_Per_Identity_500_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_Per_Identity_500_deductible_label_text()
+                assert _NGP_with_BrandGuard_without_PCI_Per_Identity_500_deductible_label_text == "$500"
+
+                _NGP_with_BrandGuard_without_PCI_Per_Identity_1k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_Per_Identity_1k_deductible_label_text()
+                assert _NGP_with_BrandGuard_without_PCI_Per_Identity_1k_deductible_label_text == "$1,000"
+
+                _NGP_with_BrandGuard_without_PCI_Per_Identity_2pt5k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_Per_Identity_2pt5k_deductible_label_text()
+                assert _NGP_with_BrandGuard_without_PCI_Per_Identity_2pt5k_deductible_label_text == "$2,500"
+
+                _NGP_with_BrandGuard_without_PCI_Per_Identity_5k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_Per_Identity_5k_deductible_label_text()
+                assert _NGP_with_BrandGuard_without_PCI_Per_Identity_5k_deductible_label_text == "$5,000"
+
+                _NGP_with_BrandGuard_without_PCI_Per_Identity_10k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_Per_Identity_10k_deductible_label_text()
+                assert _NGP_with_BrandGuard_without_PCI_Per_Identity_10k_deductible_label_text == "$10,000"
+
+                _NGP_with_BrandGuard_without_PCI_Per_Identity_25k_deductible_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_without_PCI_Per_Identity_25k_deductible_label_text()
+                assert _NGP_with_BrandGuard_without_PCI_Per_Identity_25k_deductible_label_text == "$25,000"
 
                 # Run Test Scenario listed on Excel Spreadsheet
                 getattr(saw_CC_in_use, _OLD_scenario)()
@@ -435,12 +404,6 @@ class TestCreateQuote:
             saw_confirm_issue.click_return_to_Admin_Interface()
 
             time.sleep(2)
-
-            # This section is necessary ONLY on STAGE
-            # Call Login methods from Pages.home.login_page.py
-            # lp = LoginPage(driver)
-            # lp.login(username, password)
-            # nb = NavigationBar(driver)
 
             # Click Applications link on Navigation Bar
             nb.click_applications()
@@ -613,12 +576,6 @@ class TestCreateQuote:
 
             time.sleep(2)
 
-            # This section is necessary ONLY on STAGE
-            # Call Login methods from Pages.home.login_page.py
-            # lp = LoginPage(driver)
-            # lp.login(username, password)
-            # nb = NavigationBar(driver)
-
             # Click Applications link on Navigation Bar
             nb.click_applications()
 
@@ -626,10 +583,6 @@ class TestCreateQuote:
             app_page = ApplicationsPage(driver)
             app_page.enter_application_id(renewal_application_id)
             app_page.click_search_button()
-
-            # Click on application id link
-            # THIS IS NOT WORKING
-            # app_page.click_application_id_link(application_id)
 
             # Navigate to Application Details page
             next_current_url = driver.current_url

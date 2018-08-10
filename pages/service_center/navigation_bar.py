@@ -45,7 +45,7 @@ class NavigationBar():
         NavigationBar.Page_Elements(self).agencies_link.click()
 
     def click_products_and_programs(self):
-        #products_and_programs_link = self.driver.find_element(By.LINK_TEXT, "Products & Programs")
+        # products_and_programs_link = self.driver.find_element(By.LINK_TEXT, "Products & Programs")
         NavigationBar.Page_Elements(self).products_and_programs_link.click()
 
     def click_staff(self):

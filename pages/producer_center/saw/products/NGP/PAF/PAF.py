@@ -9,9 +9,6 @@ class PAF():
 
     def Page_Elements(self):
 
-        # Return to Admin Link
-        self.return_to_Admin = self.driver.find_element(By.LINK_TEXT, "Return to Admin Interface")
-
         # Description of operations
         self.operations_description = self.driver.find_element(By.ID, "operation_nature")
 
@@ -107,6 +104,3 @@ class PAF():
     def click_next(self):
         next_button = self.driver.find_element(By.XPATH, "//form[@id='rate-adjustment-form']/div[2]/div[5]/a/span[2]")
         next_button.click()
-
-    def click_return_to_Admin_Interface(self):
-        PAF.Page_Elements(self).return_to_Admin.click()
