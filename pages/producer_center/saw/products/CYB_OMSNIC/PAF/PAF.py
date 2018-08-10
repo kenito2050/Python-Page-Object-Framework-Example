@@ -113,7 +113,7 @@ class PAF():
 
         return self
 
-    def create_quote_PCI_DSS_No_DQ(self, current_revenue, previous_revenue):
+    def create_quote_PCI_DSS_Compliance_No_DQ(self, current_revenue, previous_revenue):
         PAF.Page_Elements(self).existing_insured_yes.click()
         PAF.Page_Elements(self).policy_number.send_keys("A111111111")
         PAF.Page_Elements(self).operation_commence_date.send_keys("01-01-2001")
@@ -139,7 +139,7 @@ class PAF():
         PAF.Page_Elements(self).aware_compromised_security_no.click()
         PAF.Page_Elements(self).non_renewed_extention_cyb_no.click()
 
-    def create_quote_No_PCI_DSS_No_DQ(self, current_revenue, previous_revenue):
+    def create_quote_No_Data_Encryption_No_PCI_DSS_Compliance_No_DQ(self, current_revenue, previous_revenue):
         PAF.Page_Elements(self).existing_insured_yes.click()
         PAF.Page_Elements(self).policy_number.send_keys("A111111111")
         PAF.Page_Elements(self).operation_commence_date.send_keys("01-01-2001")
@@ -164,6 +164,32 @@ class PAF():
         PAF.Page_Elements(self).aware_compromised_security_no.click()
         PAF.Page_Elements(self).non_renewed_extention_cyb_no.click()
 
+    def create_quote_Data_Encryption_No_PCI_DSS_Compliance_No_DQ(self, current_revenue, previous_revenue):
+        PAF.Page_Elements(self).existing_insured_yes.click()
+        PAF.Page_Elements(self).policy_number.send_keys("A111111111")
+        PAF.Page_Elements(self).operation_commence_date.send_keys("01-01-2001")
+        PAF.Page_Elements(self).operations_description.send_keys("QA TEST")
+        PAF.Page_Elements(self).annual_revenue_current_year.send_keys(current_revenue)
+        PAF.Page_Elements(self).annual_revenue_one_year_ago.send_keys(previous_revenue)
+        PAF.Page_Elements(self).black_talon_security_no.click()
+        PAF.Page_Elements(self).subsidiary_inclusion_no.click()
+        PAF.Page_Elements(self).coverage_for_other_entity_no.click()
+
+        # Cyber Liability Questions
+        PAF.Page_Elements(self).hipaa_compliance_program_yes.click()
+        PAF.Page_Elements(self).platform_security_yes.click()
+        PAF.Page_Elements(self).patient_information_yes.click()
+        PAF.Page_Elements(self).data_security_yes.click()
+        # Questions 13a and 13b were hidden but now display
+        # call the is_data_encrypted_yes or is_data_encrypted_no method to answer questions 13a and 13b
+
+        PAF.Page_Elements(self).credit_card_data_yes.click()
+        # Question 14a displays if Yes
+        PAF.Page_Elements(self).records_exceed_20000_no.click()
+        PAF.Page_Elements(self).cyber_complaints_litigation_no.click()
+        PAF.Page_Elements(self).aware_compromised_security_no.click()
+        PAF.Page_Elements(self).non_renewed_extention_cyb_no.click()
+
         # If user selects Yes to Question 13 (organization store personal and/or confidential data on portable devices), Then Questions 13a & 13b display
         # Next methods will answer Questions 13a and 13b
 
@@ -178,13 +204,13 @@ class PAF():
 
         # Question 13b
         # If “NO”, to question 13.a., please describe on a separate page the type of devices used, the nature of data/information stored, and the security measures You have in place to protect such data/information.
-        self.device_type_yes = self.driver.find_element(By.ID, "cyb_omsnic_device_type-yes")
-
-        self.device_type_no = self.driver.find_element(By.ID, "cyb_omsnic_device_type-no")
+        # self.device_type_yes = self.driver.find_element(By.ID, "cyb_omsnic_device_type-yes")
+        #
+        # self.device_type_no = self.driver.find_element(By.ID, "cyb_omsnic_device_type-no")
 
         # Select Yes for question 13a and 13b
         self.data_security_encrypted_yes.click()
-        self.device_type_yes.click()
+        # self.device_type_yes.click()
 
     def is_data_encrypted_no(self):
         # Question 13a
@@ -195,13 +221,13 @@ class PAF():
 
         # Question 13b
         # If “NO”, to question 13.a., please describe on a separate page the type of devices used, the nature of data/information stored, and the security measures You have in place to protect such data/information.
-        self.device_type_yes = self.driver.find_element(By.ID, "cyb_omsnic_device_type-yes")
-
-        self.device_type_no = self.driver.find_element(By.ID, "cyb_omsnic_device_type-no")
+        # self.device_type_yes = self.driver.find_element(By.ID, "cyb_omsnic_device_type-yes")
+        #
+        # self.device_type_no = self.driver.find_element(By.ID, "cyb_omsnic_device_type-no")
 
         # Select No for question 13a and 13b
         self.data_security_encrypted_no.click()
-        self.device_type_no.click()
+        # self.device_type_no.click()
 
     def credit_card_compliant_yes(self):
 
@@ -214,6 +240,17 @@ class PAF():
         self.pci_dss_no = self.driver.find_element(By.ID, "cyb_omsnic_pci_dss-no")
 
         self.pci_dss_yes.click()
+
+    def credit_card_compliant_no(self):
+        # Question 14a ONLY DISPLAYS IF YES TO QUESTION "organization process, store, transmit or handle credit or debit card data"
+
+        # Are Your data security controls compliant with the Payment Card Industry Data Security Standard (PCI DSS)?
+
+        self.pci_dss_yes = self.driver.find_element(By.ID, "cyb_omsnic_pci_dss-yes")
+
+        self.pci_dss_no = self.driver.find_element(By.ID, "cyb_omsnic_pci_dss-no")
+
+        self.pci_dss_no.click()
 
     def click_next(self):
         next_button = self.driver.find_element(By.XPATH, "//form[@id='rate-adjustment-form']/div[5]/a/span[2]/span/span")
