@@ -1,6 +1,7 @@
 import datetime
 import os
 import time
+import logging
 import unittest
 from urllib.parse import urlparse, parse_qs
 from xml.etree import ElementTree as ET
@@ -59,6 +60,14 @@ class CreateQuote():
 
         Product = "NGP"
 
+        # Set logger
+        log = logging.getLogger("ngp-create-policy")
+        log.setLevel(logging.INFO)
+        fmt_str = logging.Formatter('%(levelname)s %(asctime)s %(lineno)d %(module)s: %(message)s')
+        log_file = logging.FileHandler("ngp-create-policy.log")
+        log_file.setFormatter(fmt_str)
+        log.addHandler(log_file)
+
         ## Directory Locations
 
         tests_directory = os.path.abspath(os.pardir)
@@ -97,7 +106,7 @@ class CreateQuote():
 
         # Open Test Scenario Workbook; Instantiate worksheet object
         wb = xlrd.open_workbook(os.path.join(test_case_directory, Product + '.xlsx'))
-        sh = wb.sheet_by_index(1)
+        sh = wb.sheet_by_index(0)
 
         ## Begin For Loop to iterate through Test Scenarios
         i = 1
@@ -117,6 +126,7 @@ class CreateQuote():
             # If cell is not empty, read in the values
             if empty_cell == False:
                 test_summary = sh.cell_value(i, 0)
+                log.info("Testing {0} ".format(test_summary))
                 test_scenario = str(round(sh.cell_value(i, 1)))
                 effective_date = sh.cell_value(i, 2)
                 contract_class = sh.cell_value(i, 3)
@@ -387,7 +397,7 @@ class CreateQuote():
             saw_CC = Coverage_Options(driver)
 
             ### Clear All selections on Coverage Options Screen
-            # saw_CC.select_all_deselect_all()
+            saw_CC.select_all_deselect_all()
 
             ### If / Then Block to determine which instance of Coverage Options to use
 
@@ -396,12 +406,12 @@ class CreateQuote():
             ### PCI Scenarios
             if test_scenario == "1":
                 saw_CC_in_use = PCI_Coverage_Options(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
+                # getattr(saw_CC_in_use, _OLD_scenario)()
 
             ### Non-PCI Scenarios
             elif test_scenario == "2":
                 saw_CC_in_use = No_PCI_Coverage_Options(driver)
-                getattr(saw_CC_in_use, _OLD_scenario)()
+                # getattr(saw_CC_in_use, _OLD_scenario)()
 
             ### Commented out next line; Moved Proceed to Quote button Call into the PCI / Non-PCI Methods
             saw_CC.click_proceed_to_quote()
@@ -470,17 +480,23 @@ class CreateQuote():
             # sub.select_yes_to_subjectivities_met()
             sub.click_submit()
 
+            sub.click_agent_link(log)
 
-            sub.click_agent_link()
+            found = sub.click_agent_link(log)
+            if not found:
+                log.error("Agent link NOT FOUND in subjectivities page")
+
 
             # Return to Producer Center; Issue Policy
             saw_confirm_issue.input_signature()
             saw_confirm_issue.click_accept_terms_issue_policy()
 
-
             # Retrieve Policy Number of Policy that was issued; Policy Number stored in policy_text
             thank_you = Thank_You_Page(driver)
             policy_text = thank_you.retrieve_store_policy_number()
+
+            if policy_text:
+                log.error("Policy number was NOT FOUND")
 
             # Return to Admin Interface
             saw_confirm_issue.click_return_to_Admin_Interface()

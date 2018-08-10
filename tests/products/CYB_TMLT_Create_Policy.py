@@ -442,6 +442,7 @@ class CreateQuote():
             #     getattr(saw_CC_in_use, _OLD_scenario)()
             #     # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_With_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()
 
+            saw_CC.select_all_deselect_all()
 
             ### FIXED: Renamed method proceed_to_quote to click_proceed_to_quote; This code now works
             saw_CC.click_proceed_to_quote()
