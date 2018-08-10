@@ -13,9 +13,6 @@ class Coverage_Options():
         # Proceed to Quote
         self.proceed_to_quote = self.driver.find_element(By.XPATH, "//div[@id='saw-application-coverage-builder']/form/div[5]/a/span[2]/span/span")
 
-        # Return to Admin Interface
-        self.return_to_admin_interface = self.driver.find_element(By.LINK_TEXT, "Return to Admin Interface")
-
         return self
 
     def select_all_deselect_all(self):
@@ -25,4 +22,6 @@ class Coverage_Options():
         Coverage_Options.PageElements(self).proceed_to_quote.click()
 
     def click_return_to_Admin_Interface(self):
-        Coverage_Options.PageElements(self).return_to_admin_interface.click()
+
+        self.return_to_admin_interface = self.driver.find_element(By.LINK_TEXT, "Return to Admin Interface")
+        self.return_to_admin_interface.click()
