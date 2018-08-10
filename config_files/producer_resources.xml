@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<data>
+    <user type= "producer1">
+        <username>qatest</username>
+        <password>test1234</password>
+    </user >
+    <user type= "producer2">
+        <username>janice_test</username>
+        <password>test1234</password>
+    </user >
+    <user type= "producer3">
+    <username>qatest</username>
+    <password>test1234</password>
+    </user >
+</data>
