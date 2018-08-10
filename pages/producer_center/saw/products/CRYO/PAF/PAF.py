@@ -202,7 +202,7 @@ class PAF():
         PAF.Page_Elements(self).patients_exit_cryotherapy_yes.click()
         PAF.Page_Elements(self).patients_sign_cryotherapy_yes.click()
         PAF.Page_Elements(self).machines_inspect_yes.click()
-        PAF.Page_Elements(self).patients_self_cryotherapy_yes.click()
+        PAF.Page_Elements(self).patients_self_cryotherapy_no.click()
         PAF.Page_Elements(self).consent_from_guardian_yes.click()
         PAF.Page_Elements(self).disciplinary_investigative_reprimand_no.click()
         PAF.Page_Elements(self).convict_act_no.click()
@@ -236,7 +236,7 @@ class PAF():
         PAF.Page_Elements(self).patients_exit_cryotherapy_yes.click()
         PAF.Page_Elements(self).patients_sign_cryotherapy_yes.click()
         PAF.Page_Elements(self).machines_inspect_yes.click()
-        PAF.Page_Elements(self).patients_self_cryotherapy_yes.click()
+        PAF.Page_Elements(self).patients_self_cryotherapy_no.click()
         PAF.Page_Elements(self).consent_from_guardian_yes.click()
         PAF.Page_Elements(self).disciplinary_investigative_reprimand_no.click()
         PAF.Page_Elements(self).convict_act_no.click()
@@ -269,7 +269,7 @@ class PAF():
         PAF.Page_Elements(self).patients_exit_cryotherapy_yes.click()
         PAF.Page_Elements(self).patients_sign_cryotherapy_yes.click()
         PAF.Page_Elements(self).machines_inspect_yes.click()
-        PAF.Page_Elements(self).patients_self_cryotherapy_yes.click()
+        PAF.Page_Elements(self).patients_self_cryotherapy_no.click()
         PAF.Page_Elements(self).consent_from_guardian_yes.click()
         PAF.Page_Elements(self).disciplinary_investigative_reprimand_no.click()
         PAF.Page_Elements(self).convict_act_no.click()
@@ -302,7 +302,7 @@ class PAF():
         PAF.Page_Elements(self).patients_exit_cryotherapy_yes.click()
         PAF.Page_Elements(self).patients_sign_cryotherapy_yes.click()
         PAF.Page_Elements(self).machines_inspect_yes.click()
-        PAF.Page_Elements(self).patients_self_cryotherapy_yes.click()
+        PAF.Page_Elements(self).patients_self_cryotherapy_no.click()
         PAF.Page_Elements(self).consent_from_guardian_yes.click()
         PAF.Page_Elements(self).disciplinary_investigative_reprimand_no.click()
         PAF.Page_Elements(self).convict_act_no.click()
@@ -320,5 +320,5 @@ class PAF():
     #TODO
     # Ask Dev to create ID for next button
     def click_next(self):
-        next_button = self.driver.find_element(By.XPATH, "//form[@id='primary']/div[5]/a/span[2]/span/span")
+        next_button = self.driver.find_element(By.XPATH, "//form[@id='primary']/div[3]/div[3]/a/span[2]/span/span")
         next_button.click()
