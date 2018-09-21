@@ -83,7 +83,6 @@ class CreateQuote():
         #     test_run_type_value = '3'
 
         global test_summary
-        global test_scenario
         global effective_date
         global test_scenario_number
         global contract_class
@@ -95,7 +94,6 @@ class CreateQuote():
         global deductible
         global _OLD_scenario
         global revenue_tier
-
 
         # Open Test Scenario Workbook; Instantiate worksheet object
         # 0 - First Worksheet
@@ -138,17 +136,15 @@ class CreateQuote():
             # If cell is not empty, read in the values
             if empty_cell == False:
                 test_summary = sh.cell_value(i, 0)
-                test_scenario = sh.cell_value(i, 1)
-                effective_date = sh.cell_value(i, 2)
-                test_scenario_number = str(round(sh.cell_value(i, 3)))
-                contract_class = sh.cell_value(i, 4)
-                agent = sh.cell_value(i, 5)
-                state = sh.cell_value(i, 6)
-                revenue = str(round(sh.cell_value(i, 7)))
-                staff_count = str(round(sh.cell_value(i, 8)))
-                _OLD_scenario = sh.cell_value(i, 9)
-                revenue_tier = str(round(sh.cell_value(i, 10)))
-
+                effective_date = sh.cell_value(i, 1)
+                test_scenario_number = str(round(sh.cell_value(i, 2)))
+                contract_class = sh.cell_value(i, 3)
+                agent = sh.cell_value(i, 4)
+                state = sh.cell_value(i, 5)
+                revenue = str(round(sh.cell_value(i, 6)))
+                staff_count = str(round(sh.cell_value(i, 7)))
+                _OLD_scenario = sh.cell_value(i, 8)
+                revenue_tier = str(round(sh.cell_value(i, 9)))
 
             # Else, the cell is empty
             # End the Loop
@@ -390,13 +386,23 @@ class CreateQuote():
 
             #### If / ELSE Section to Determine how PAF is completed
 
-            if test_scenario_number == "1":
+            ### Test Scenarios
+            #   1 - Healthcare Facilities, PCI, Staff Count = 1
+            #   2 - Healthcare Facilities, PCI, Staff Count = 2
+            #   3 - Healthcare Facilities, No PCI, Staff Count = 1
+            #   4 - Healthcare Facilities, No PCI, Staff Count = 2
+            #   5 - Non-Healthcare Facilities, PCI, Staff Count = 1
+            #   6 - Non-Healthcare Facilities, PCI, Staff Count = 2
+            #   7 - Non-Healthcare Facilities, No PCI, Staff Count = 1
+            #   8 - Non-Healthcare Facilities, No PCI, Staff Count = 2
+
+            if test_scenario_number == "1" or test_scenario_number == "2":
                 saw_PAF.create_quote_PCI_DSS_No_DQ_HealthCare_Facilities(revenue)
-            elif test_scenario_number == "2":
-                saw_PAF.create_quote_PCI_DSS_No_DQ_Not_HealthCare_Facilities(revenue)
-            elif test_scenario_number == "3":
+            elif test_scenario_number == "3" or test_scenario_number == "4":
                 saw_PAF.create_quote_No_PCI_DSS_No_DQ_HealthCare_Facilities(revenue)
-            elif test_scenario_number == "4":
+            elif test_scenario_number == "5" or test_scenario_number == "6":
+                saw_PAF.create_quote_PCI_DSS_No_DQ_Not_HealthCare_Facilities(revenue)
+            elif test_scenario_number == "7" or test_scenario_number == "8":
                 saw_PAF.create_quote_No_PCI_DSS_No_DQ_Not_HealthCare_Facilities(revenue)
 
             # Click Next on PAF Screen
@@ -431,42 +437,42 @@ class CreateQuote():
             ### This section tests to see if the correct test scenario is executed, given the test_scenario_number & revenue tier
             ### TODO: Read the values from the OLD_Scenario variable; Run that scenario
 
-            if test_scenario_number == "1" and revenue_tier == "1":
+            if test_scenario_number == "1" or test_scenario_number == "2" and revenue_tier == "1":
                 saw_CC_in_use = HCF_PCI_Coverage_Options_10MM_or_Less(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
                 # saw_CC_in_use.select_MEDEFENSE_Plus_Only_1MM_1MM_limit_2pt5K_Deduct()
 
-            elif test_scenario_number == "1" and revenue_tier == "2":
+            elif test_scenario_number == "1" or test_scenario_number == "2" and revenue_tier == "2":
                 saw_CC_in_use = HCF_PCI_Coverage_Options_10MM_to_25MM(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
                 # saw_CC_in_use.select_Medefense_Plus_and_eMD_Higher_Limits_With_PCI_and_Cyber_Crime_Combined_3MM_3MM_100K_250K_limit_5K_Deduct()
 
-            elif test_scenario_number == "1" and revenue_tier == "3":
+            elif test_scenario_number == "1" or test_scenario_number == "2" and revenue_tier == "3":
                 saw_CC_in_use = HCF_PCI_Coverage_Options_25MM_or_Greater(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
                 # saw_CC_in_use.select_Medefense_Plus_and_eMD_Higher_Limits_With_PCI_and_Cyber_Crime_Combined_3MM_3MM_100K_250K_limit_10K_Deduct()
 
-            elif test_scenario_number == "3" and revenue_tier == "1":
+            elif test_scenario_number == "3" or test_scenario_number == "4" and revenue_tier == "1":
                 saw_CC_in_use = HCF_No_PCI_Coverage_Options_10MM_or_Less(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
                 # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_Without_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_2pt5K_Deduct()
 
-            elif test_scenario_number == "3" and revenue_tier == "2":
+            elif test_scenario_number == "3" or test_scenario_number == "4" and revenue_tier == "2":
                 saw_CC_in_use = HCF_No_PCI_Coverage_Options_10MM_to_25MM(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
                 # saw_CC_in_use.select_Medefense_Plus_and_eMD_Higher_Limits_Without_PCI_and_Cyber_Crime_Combined_2MM_2MM_100K_250K_limit_5K_Deduct()
 
-            elif test_scenario_number == "3" and revenue_tier == "3":
+            elif test_scenario_number == "3" or test_scenario_number == "4" and revenue_tier == "3":
                 saw_CC_in_use = HCF_No_PCI_Coverage_Options_25MM_or_Greater(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
                 # saw_CC_in_use.select_Medefense_Plus_and_eMD_Higher_Limits_Without_PCI_and_Cyber_Crime_Combined_3MM_3MM_100K_250K_limit_10K_Deduct()
 
-            elif test_scenario_number == "2":
+            elif test_scenario_number == "5" or test_scenario_number == "6":
                 saw_CC_in_use = Non_HCF_PCI_Coverage_Options(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
                 # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_With_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()
 
-            elif test_scenario_number == "4":
+            elif test_scenario_number == "7" or test_scenario_number == "8":
                 saw_CC_in_use = Non_HCF_No_PCI_Coverage_Options(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
                 # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_Without_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()

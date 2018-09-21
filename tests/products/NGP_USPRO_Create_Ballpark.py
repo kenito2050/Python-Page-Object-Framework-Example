@@ -136,7 +136,7 @@ class CreateQuote():
         time.sleep(3)
 
         # Enter Ad Hoc Effective Date
-        bp_PAF.enter_effective_date(ad_hoc_effectiveDate)
+        bp_PAF.enter_effective_date(date_today)
 
         # Enter Today's Date as Effective Date
         # bp_PAF.enter_current_date(date_today)

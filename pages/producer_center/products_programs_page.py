@@ -162,7 +162,7 @@ class ProductsAndPrograms():
         CYB_MICA_link.click()
 
     def click_CYB_OMSNIC(self):
-        CYB_OMSNIC_link = self.driver.find_element(By.ID, "OMSNIC Cyber Liability_start")
+        CYB_OMSNIC_link = self.driver.find_element(By.ID, "OMSGuard Data Defense_start")
         CYB_OMSNIC_link.click()
 
     def click_CYB_PAS(self):

@@ -23,7 +23,7 @@ class CreateAccount():
 
     def create_account_quote(self):
 
-        Product = "Retailer_Access"
+        Product = "Agent_Registration"
 
         ## Directory Locations
 

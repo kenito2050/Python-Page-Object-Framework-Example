@@ -66,6 +66,7 @@ class CreateQuote():
         global contract_class
         global agent
         global state
+        global zip
         global full_time
         global part_time
         global seasonal
@@ -107,16 +108,18 @@ class CreateQuote():
                 contract_class = sh.cell_value(i, 3)
                 agent = sh.cell_value(i, 4)
                 state = sh.cell_value(i, 5)
-                full_time = str(round(sh.cell_value(i, 6)))
-                part_time = str(round(sh.cell_value(i, 7)))
-                seasonal = str(round(sh.cell_value(i, 8)))
-                foreign = str(round(sh.cell_value(i, 9)))
-                high_comp_salary = str(round(sh.cell_value(i, 10)))
-                total_employee_salary = str(round(sh.cell_value(i, 11)))
-                emp_turnover_rate = str(round(sh.cell_value(i, 12)))
-                mgmt_turnover_rate = str(round(sh.cell_value(i, 13)))
-                officer_turnover_rate = str(round(sh.cell_value(i, 14)))
-                _OLD_scenario = sh.cell_value(i, 15)
+                city = sh.cell_value(i, 6)
+                zip = str(round(sh.cell_value(i, 7)))
+                full_time = str(round(sh.cell_value(i, 8)))
+                part_time = str(round(sh.cell_value(i, 9)))
+                seasonal = str(round(sh.cell_value(i, 10)))
+                foreign = str(round(sh.cell_value(i, 11)))
+                high_comp_salary = str(round(sh.cell_value(i, 12)))
+                total_employee_salary = str(round(sh.cell_value(i, 13)))
+                emp_turnover_rate = str(round(sh.cell_value(i, 14)))
+                mgmt_turnover_rate = str(round(sh.cell_value(i, 15)))
+                officer_turnover_rate = str(round(sh.cell_value(i, 16)))
+                _OLD_scenario = sh.cell_value(i, 17)
 
             # Else, the cell is empty
             # End the Loop
@@ -139,7 +142,7 @@ class CreateQuote():
             # company_name_string = company_name
             company_name_string = "QA Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
             address_value = address.street_address()
-            city = StateCapitals.return_state_capital(state)
+            # city = StateCapitals.return_state_capital(state)
             postal_code = ZipCodes.return_zip_codes(state)
 
             # Access XML to retrieve login credentials
@@ -199,7 +202,7 @@ class CreateQuote():
             # pp.click_continue_on_contract_class_modal()
 
             cs = ClientSearch(driver)
-            cs.input_bogus_client_data(postal_code)
+            cs.input_bogus_client_data(zip)
             cs.manually_input_new_client()
             cs.enter_new_client_name_address(company_name_string, address_value, city, state)
             cc = ClientContact(driver)

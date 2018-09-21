@@ -84,7 +84,7 @@ class CreateQuote():
         city = StateCapitals.return_state_capital(state)
         postal_code = ZipCodes.return_zip_codes(state)
 
-        revenue = "100000"
+        revenue = "2500000"
         total_num_records = '1 to 100,000'
 
         # Access XML to retrieve login credentials
@@ -115,7 +115,8 @@ class CreateQuote():
         # For List of Contract Classes, See Contract_Classes.xml
         tree = ET.parse(os.path.join(config_file_directory, 'Contract_Classes.xml'))
         contract_classes_XML = tree.getroot()
-        contract_class = (contract_classes_XML[0][43].text)
+        # contract_class = (contract_classes_XML[0][43].text)
+        contract_class = "Property Managers"
 
         # Retail Sales          - 57
         # Online Retailer       - 46
@@ -126,7 +127,7 @@ class CreateQuote():
 
         # NOTE: For contract_classes.py, the array count starts at 1
         # Array will be 1 - 74
-        contract_class_int_value = ContractClasses.return_contract_class_values(contract_class)
+        # contract_class_int_value = ContractClasses.return_contract_class_values(contract_class)
 
         # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
         #contract_class_value = "74"

@@ -4,7 +4,7 @@
     <!--NAS Online Sites-->
 
     <TestEnvironment One ="0">
-        <Server>Demo5</Server>
+        <Server>Stage</Server>
     </TestEnvironment>
 
     <!--Customer Center Sites-->
@@ -16,7 +16,7 @@
     <!--Retailer Access Sites-->
 
     <TestEnvironment Three ="2">
-        <Server>Retail_Access_Live</Server>
+        <Server>Retail_Access_Stage</Server>
     </TestEnvironment>
 
     <TestType One ="">
@@ -37,7 +37,7 @@
             'Demo4': 'https://svcdemo4.wn.nasinsurance.com/',
             'ProdDemo4': 'https://proddemo4.wn.nasinsurance.com/',
             'Demo5': 'https://svcdemo5.wn.nasinsurance.com/',
-            'prodDemo5': 'https://proddemo5.wn.nasinsurance.com/',
+            'ProdDemo5': 'https://proddemo5.wn.nasinsurance.com/',
             'Demo6': 'https://svcdemo6.wn.nasinsurance.com/',
             'ProdDemo6': 'https://proddemo6.wn.nasinsurance.com/',
             'Demo7': 'https://svcdemo7.wn.nasinsurance.com/',
@@ -68,6 +68,7 @@
 
             Retailer Access Sites
 
+            'Retail_Access_Demo1': 'https://proddemo1.wn.nasinsurance.com/registration',
             'Retail_Access_Demo7': 'https://proddemo7.wn.nasinsurance.com/registration',
             'Retail_Access_Stage': 'https://prodstg.wn.nasinsurance.com/registration',
             'Retail_Access_Live': 'https://producer.wn.nasinsurance.com/registration',

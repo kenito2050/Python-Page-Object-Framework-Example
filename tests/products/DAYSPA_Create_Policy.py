@@ -160,8 +160,8 @@ class CreateQuote():
         # company_name_string = company_name
         company_name_string = "QA Test" + " " + "-" + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
         address_value = address.street_address()
-        city = StateCapitals.return_state_capital(state)
-        postal_code = ZipCodes.return_zip_codes(state)
+        # city = StateCapitals.return_state_capital(state)
+        # postal_code = ZipCodes.return_zip_codes(state)
 
         # bed_count = "5"
 
@@ -217,7 +217,7 @@ class CreateQuote():
         #pp.click_continue_on_contract_class_modal_after_selecting_contract_class()
 
         cs = ClientSearch(driver)
-        cs.input_bogus_client_data(postal_code)
+        cs.input_bogus_client_data(zip)
         cs.manually_input_new_client()
         cs.enter_new_client_name_address(company_name_string, address_value, city, state)
         cc = ClientContact(driver)
