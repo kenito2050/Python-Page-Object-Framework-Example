@@ -4,7 +4,7 @@ from config_globals import *
 
 
 def pytest_addoption(parser):
-    parser.addoption("--env", action="store", default="Stage",
+    parser.addoption("--env", action="store", default="ProdDemo5",
                      help="Environment to run test against")
 
 
