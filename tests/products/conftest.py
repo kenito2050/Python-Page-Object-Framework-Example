@@ -16,8 +16,11 @@ def env(request):
 @pytest.fixture(scope='class')
 def browser(request):
     print("creating a new webdriver")
-    driver = webdriver.Chrome(str(CONFIG_PATH / 'chromedriver.exe'))
-    driver.maximize_window()
+    options = webdriver.ChromeOptions()
+    # options.add_argument('headless')
+    options.add_argument('start-maximized')
+    driver = webdriver.Chrome(executable_path=str(CONFIG_PATH / 'chromedriver.exe'),
+                              chrome_options=options)
 
     def fin():
         driver.quit()
