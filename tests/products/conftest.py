@@ -4,7 +4,7 @@ from config_globals import *
 
 
 def pytest_addoption(parser):
-    parser.addoption("--env", action="store", default="ProdDemo5",
+    parser.addoption("--env", action="store", default="Stage",
                      help="Environment to run test against")
 
 
@@ -17,7 +17,7 @@ def env(request):
 def browser(request):
     print("creating a new webdriver")
     options = webdriver.ChromeOptions()
-    # options.add_argument('headless')
+    options.add_argument('headless')
     options.add_argument('start-maximized')
     driver = webdriver.Chrome(executable_path=str(CONFIG_PATH / 'chromedriver.exe'),
                               chrome_options=options)
