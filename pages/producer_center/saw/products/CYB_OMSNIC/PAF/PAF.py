@@ -12,10 +12,11 @@ class PAF():
         # Current or prospective insured?
         self.existing_insured_yes = self.driver.find_element(By.ID, "cyb_omsnic_current_insured-yes")
 
+
         self.existing_insured_no = self.driver.find_element(By.ID, "cyb_omsnic_current_insured-no")
 
         # policy number:
-        self.policy_number = self.driver.find_element(By.ID, "cyb_omsnic_policy_number")
+        self.policy_number = self.driver.find_element(By.ID, "external_policy_number")
 
         # Date operations commenced under current ownership
         self.operation_commence_date = self.driver.find_element(By.ID, "cyb_omsnic_operation_commence_date")
@@ -107,9 +108,9 @@ class PAF():
 
         # Have You ever been non-renewed, placed on extension, or declined for similar privacy/security liability coverage?
 
-        self.non_renewed_extention_cyb_yes = self.driver.find_element(By.ID, "cyb_omsnic_non_renewed_extention-yes")
+        self.non_renewed_extention_cyb_yes = self.driver.find_element(By.ID, "cyb_omsnic_non_renewed_extension-yes")
 
-        self.non_renewed_extention_cyb_no = self.driver.find_element(By.ID, "cyb_omsnic_non_renewed_extention-no")
+        self.non_renewed_extention_cyb_no = self.driver.find_element(By.ID, "cyb_omsnic_non_renewed_extension-no")
 
         return self
 

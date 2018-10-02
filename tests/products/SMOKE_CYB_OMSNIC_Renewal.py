@@ -432,7 +432,11 @@ class TestCreateQuote:
 
             # PAF
             PAF_renewal = PAF_Renewal(driver)
-            PAF_renewal.create_quote_PCI_DSS_No_DQ(total_num_records)
+            PAF_renewal.click_yes_completed_renewal()
+            time.sleep(3)
+            PAF_renewal.create_quote_PCI_DSS_No_DQ()
+            PAF_renewal.mark_yes_pci_dss()
+            PAF_renewal.click_next()
 
             # Coverage Options
 

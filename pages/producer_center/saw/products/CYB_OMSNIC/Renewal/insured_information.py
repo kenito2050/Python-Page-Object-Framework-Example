@@ -6,7 +6,7 @@ class Insured_Information_Renewal():
         self.driver = driver
 
     def PageElements(self):
-        self.annual_revenue = self.driver.find_element(By.ID, "annual_revenue_current_year")
+        # self.annual_revenue = self.driver.find_element(By.ID, "annual_revenue_current_year")
 
         self.next_button = self.driver.find_element(By.NAME, "submit")
 
@@ -14,8 +14,8 @@ class Insured_Information_Renewal():
 
         return self
 
-    def enter_annual_revenue(self, revenue):
-        Insured_Information_Renewal.PageElements(self).annual_revenue.send_keys(revenue)
+    # def enter_annual_revenue(self, revenue):
+    #     Insured_Information_Renewal.PageElements(self).annual_revenue.send_keys(revenue)
 
     def click_next(self):
         Insured_Information_Renewal.PageElements(self).next_button.click()
