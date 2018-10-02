@@ -382,6 +382,7 @@ class TestCreateQuote:
             # Change Effective Periods Dates to allow renewals
             ep = Effective_Periods(driver)
             ep.change_dates_expire_policy_allow_renewal()
+            time.sleep(3)
             ep.click_update_dates()
 
             # Click Details link to display the Policy Details screen
