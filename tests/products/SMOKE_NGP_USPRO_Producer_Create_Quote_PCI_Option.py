@@ -37,6 +37,8 @@ from pages.producer_center.saw.products.NGP_USPRO.insured_information.insured_in
 from pages.producer_center.saw.products.NGP_USPRO.select_option.select_option import Select_Option
 from pages.producer_center.saw.quote_review import Quote_Review
 from pages.producer_center.saw.summary import Summary
+from pages.producer_center.saw.ouststanding_subjectivities import Outstanding_Subjectivities
+from pages.producer_center.saw.binder_status import Binder_Status
 from pages.producer_center.saw.thank_you_page import Thank_You_Page
 from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.agents_page import AgentsPage
@@ -93,7 +95,7 @@ class TestCreateQuote:
         # 1 - Second Worksheet...etc
 
         wb = xlrd.open_workbook(str(test_case_directory / Product) + '.xlsx')
-        sh = wb.sheet_by_index(1)
+        sh = wb.sheet_by_index(2)
 
         ## Begin For Loop to iterate through Test Scenarios
         i = 1
@@ -115,17 +117,12 @@ class TestCreateQuote:
                 test_summary = sh.cell_value(i, 0)
                 test_scenario = str(round(sh.cell_value(i, 1)))
                 effective_date = sh.cell_value(i, 2)
-                test_scenario_number = str(round(sh.cell_value(i, 3)))
-                regression = sh.cell_value(i, 4)
-                smoke = sh.cell_value(i, 5)
-                sanity = sh.cell_value(i, 6)
-                contract_class = sh.cell_value(i, 7)
-                agent = sh.cell_value(i, 8)
-                state = sh.cell_value(i, 9)
-                revenue = str(round(sh.cell_value(i, 10)))
-                total_num_records = (sh.cell_value(i, 11))
-                _OLD_scenario = sh.cell_value(i, 12)
-                _OLD_scenario_number = str(round(sh.cell_value(i, 13)))
+                contract_class = sh.cell_value(i, 3)
+                agent = sh.cell_value(i, 4)
+                state = sh.cell_value(i, 5)
+                revenue = str(round(sh.cell_value(i, 6)))
+                total_num_records = (sh.cell_value(i, 7))
+                _OLD_scenario = sh.cell_value(i, 8)
 
             # Else, the cell is empty
             # End the Loop
@@ -276,12 +273,12 @@ class TestCreateQuote:
             ### PCI & Non-PCI Test Scenarios
 
             ### PCI Scenarios
-            if test_scenario_number == "1":
+            if test_scenario == "1":
                 saw_CC_in_use = PCI_Coverage_Options(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
 
             ### Non-PCI Scenarios
-            elif test_scenario_number == "2":
+            elif test_scenario == "2":
                 saw_CC_in_use = No_PCI_Coverage_Options(driver)
                 getattr(saw_CC_in_use, _OLD_scenario)()
 
@@ -297,11 +294,10 @@ class TestCreateQuote:
             saw_select_option.click_accept_rate_and_continue()
             saw_confirm_order_details = Confirm_Order_Details(driver)
             saw_confirm_order_details.click_next()
-            saw_invoice = Invoice(driver)
-            saw_invoice.click_proceed_to_issuing()
-
-            # Click Return to Admin Interface
-            saw_confirm_issue = Confirm_and_Issue(driver)
+            saw_outstanding_subjectivities = Outstanding_Subjectivities(driver)
+            saw_outstanding_subjectivities.click_proceed_to_binding()
+            saw_binder_status = Binder_Status(driver)
+            saw_binder_status.click_create_binder()
 
             # Wait
             driver.implicitly_wait(3)
