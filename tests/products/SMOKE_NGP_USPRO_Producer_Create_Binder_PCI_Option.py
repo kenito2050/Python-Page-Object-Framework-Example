@@ -218,6 +218,8 @@ class TestCreateQuote:
             cs.enter_new_client_name_address(company_name_string, address_value, city, state)
             cc = ClientContact(driver)
 
+            time.sleep(5)
+
             cc.click_next()
 
             cp = Producer_CoveragePeriods(driver)

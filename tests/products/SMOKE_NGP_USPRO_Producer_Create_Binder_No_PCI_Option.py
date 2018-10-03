@@ -220,6 +220,8 @@ class TestCreateQuote:
 
             cc.click_next()
 
+            time.sleep(5)
+
             cp = Producer_CoveragePeriods(driver)
 
             # Enter an Ad Hoc Effective Date
