@@ -7,89 +7,84 @@ class PCI_Coverage_Options():
 
     def PageElements(self):
 
-        # e-MD™ Only
+        # NetGuard™ Plus with BrandGuard™ and PCI Assessment Sublimit
 
         # Limits
 
-        # 500K/1MM
-        self.option_451_limit_1989 = self.driver.find_element(By.ID, "option-451-limit-1989")
+        # 250K
+        self.option_978_limit_3740 = self.driver.find_element(By.ID, "option-978-limit-3740")
 
-        # 1MM/1MM
-        self.option_451_limit_1988 = self.driver.find_element(By.ID, "option-451-limit-1988")
+        # 500K
+        self.option_978_limit_3741 = self.driver.find_element(By.ID, "option-978-limit-3741")
+
+        # 1MM
+        self.option_978_limit_3742 = self.driver.find_element(By.ID, "option-978-limit-3742")
+
+        # 2MM
+        self.option_978_limit_3743 = self.driver.find_element(By.ID, "option-978-limit-3743")
+
+        # # 3MM
+        # self.option_978_limit_3744 = self.driver.find_element(By.ID, "option-978-limit-3744")
 
         # Deductibles
-        # $0
-        self.option_451_deductible_763 = self.driver.find_element(By.ID, "option-451-deductible-763")
+        # $500
+        self.option_978_deductible_1465 = self.driver.find_element(By.ID, "option-978-deductible-1465")
 
+        # $1,000
+        self.option_978_deductible_1460 = self.driver.find_element(By.ID, "option-978-deductible-1460")
 
-        # $2M e-MD™ Only
+        # $2,500
+        self.option_978_deductible_1461 = self.driver.find_element(By.ID, "option-978-deductible-1461")
+
+        # $5,000
+        self.option_978_deductible_1462 = self.driver.find_element(By.ID, "option-978-deductible-1462")
+
+        # $10,000
+        self.option_978_deductible_1463 = self.driver.find_element(By.ID, "option-978-deductible-1463")
+
+        # $25,000
+        self.option_978_deductible_1464 = self.driver.find_element(By.ID, "option-978-deductible-1464")
+
+        # NetGuard™ Plus with BrandGuard™ and PCI Assessment Sublimit Per Identity
 
         # Limits
 
-        # 2MM/2MM
-        self.option_852_limit_3186 = self.driver.find_element(By.ID, "option-852-limit-3186")
+        # 250K
+        self.option_1017_limit_3843 = self.driver.find_element(By.ID, "option-1017-limit-3843")
+
+        # 500K
+        self.option_1017_limit_3844 = self.driver.find_element(By.ID, "option-1017-limit-3844")
+
+        # 1MM
+        self.option_1017_limit_3844 = self.driver.find_element(By.ID, "option-1017-limit-3845")
+
+        # 2MM
+        self.option_1017_limit_3846 = self.driver.find_element(By.ID, "option-1017-limit-3846")
+
+        # # 3MM
+        # self.option_1017_limit_3847 = self.driver.find_element(By.ID, "option-1017-limit-3847")
 
         # Deductibles
-        # $0
-        self.option_852_deductible_763 = self.driver.find_element(By.ID, "option-852-deductible-763")
+        # $500
+        self.option_1017_deductible_1523 = self.driver.find_element(By.ID, "option-1017-deductible-1523")
 
-        # $3M e-MD™ Only
+        # $1,000
+        self.option_1017_deductible_1518 = self.driver.find_element(By.ID, "option-1017-deductible-1518")
 
-        # Limits
+        # $2,500
+        self.option_1017_deductible_1519 = self.driver.find_element(By.ID, "option-1017-deductible-1519")
 
-        # 3MM/3MM
-        self.option_853_limit_3187 = self.driver.find_element(By.ID, "option-853-limit-3187")
+        # $5,000
+        self.option_1017_deductible_1520 = self.driver.find_element(By.ID, "option-1017-deductible-1520")
 
-        # Deductibles
-        # $0
-        self.option_853_deductible_763 = self.driver.find_element(By.ID, "option-853-deductible-763")
+        # $10,000
+        self.option_1017_deductible_1521 = self.driver.find_element(By.ID, "option-1017-deductible-1521")
 
-
-        # $2M Broad Regulatory Protection Plus and e-MD™ Combined
-
-        # Limits
-
-        # 2MM/2MM
-        self.option_854_limit_3256 = self.driver.find_element(By.ID, "option-854-limit-3256")
-
-        # Deductibles
-        # $0
-        self.option_854_deductible_1297 = self.driver.find_element(By.ID, "option-854-deductible-1297")
-
-        # $3M Broad Regulatory Protection Plus and e-MD™ Combined
-
-        # Limits
-
-        # 3MM/3MM
-        self.option_855_limit_3262 = self.driver.find_element(By.ID, "option-855-limit-3262")
-
-        # Deductibles
-        # $0
-        self.option_855_deductible_762 = self.driver.find_element(By.ID, "option-855-deductible-762")
-
+        # $25,000
+        self.option_1017_deductible_1522 = self.driver.find_element(By.ID, "option-1017-deductible-1522")
 
         return self
 
-    def select_eMD_Only_500K_1MM_limit_0_Deduct(self):
-        PCI_Coverage_Options.PageElements(self).option_451_limit_1989.click()
-        PCI_Coverage_Options.PageElements(self).option_451_deductible_763.click()
-
-    def select_eMD_Only_1MM_1MM_limit_0_Deduct(self):
-        PCI_Coverage_Options.PageElements(self).option_451_limit_1988.click()
-        PCI_Coverage_Options.PageElements(self).option_451_deductible_763.click()
-
-    def select_2M_eMD_Only_2MM_2MM_limit_0_Deduct(self):
-        PCI_Coverage_Options.PageElements(self).option_852_limit_3186.click()
-        PCI_Coverage_Options.PageElements(self).option_852_deductible_763.click()
-
-    def select_3M_eMD_Only_3MM_3MM_limit_0_Deduct(self):
-        PCI_Coverage_Options.PageElements(self).option_853_limit_3187.click()
-        PCI_Coverage_Options.PageElements(self).option_853_deductible_763.click()
-
-    def select_2M_Broad_Regulatory_Protection_Plus_and_eMD_Combined_2MM_2MM_limit_0_Deduct(self):
-        PCI_Coverage_Options.PageElements(self).option_854_limit_3256.click()
-        PCI_Coverage_Options.PageElements(self).option_854_deductible_1297.click()
-
-    def select_3M_Broad_Regulatory_Protection_Plus_and_eMD_Combined_3MM_3MM_limit_0_Deduct(self):
-        PCI_Coverage_Options.PageElements(self).option_855_limit_3262.click()
-        PCI_Coverage_Options.PageElements(self).option_855_deductible_762.click()
+    def select_NetGuard_Plus_with_BrandGuard_PCI_Assessment_1MM_limit_2pt5K_Deduct(self):
+        PCI_Coverage_Options.PageElements(self).option_978_limit_3742.click()
+        PCI_Coverage_Options.PageElements(self).option_978_deductible_1461.click()
