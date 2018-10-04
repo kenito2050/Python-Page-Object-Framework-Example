@@ -29,6 +29,10 @@ class Signature():
         typed_signature_field = self.driver.find_element(By.ID, "signature-typed")
         typed_signature_field.send_keys(signature)
 
+    def input_title(self):
+        title_field = self.driver.find_element(By.ID, "insured_title")
+        title_field.send_keys("Proprietor")
+
     def click_save_signature_button(self):
         Signature.Page_Elements(self).save_signature_button.click()
 
