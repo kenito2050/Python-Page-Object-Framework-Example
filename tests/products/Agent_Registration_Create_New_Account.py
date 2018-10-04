@@ -17,21 +17,21 @@ from pages.retailer_access.Landing_Page.Account_Creation import Account_Creation
 from utilities.Environments.Environments import Environments
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from config_globals import *
 
+class TestCreateAccount():
 
-class CreateAccount():
-
-    def create_account_quote(self):
+    def test_create_account_quote(self, browser, env):
 
         Product = "Agent_Registration"
+        driver = browser
 
         ## Directory Locations
-
-        tests_directory = os.path.abspath(os.pardir)
-        framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
-        config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
-        test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
-        test_results_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
+        tests_directory = ROOT_DIR / 'tests'
+        framework_directory = ROOT_DIR
+        config_file_directory = CONFIG_PATH
+        test_case_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Products'
+        test_results_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Test_Results'
 
         global test_summary
         global test_scenario
@@ -51,7 +51,7 @@ class CreateAccount():
         # 0 - First Worksheet
         # 1 - Second Worksheet...etc
 
-        wb = xlrd.open_workbook(os.path.join(test_case_directory, Product + '.xlsx'))
+        wb = xlrd.open_workbook(str(test_case_directory / Product) + '.xlsx')
         sh = wb.sheet_by_index(0)
 
         ## Begin For Loop to iterate through Test Scenarios
@@ -92,13 +92,8 @@ class CreateAccount():
 
             ## Determine Test Environment to run scripts
 
-            ## Read in value from test_environment.xml
-            tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
-            test_environment = tree.getroot()
-            environment = (test_environment[2][0].text)
-
             ## Select Appropriate URL based on the Environment Value from above
-            base_URL = Environments.return_environments(environment)
+            base_URL = Environments.return_environments(env)
 
             # Data Generator Section
 
@@ -157,10 +152,10 @@ class CreateAccount():
 
             # Initialize Driver; Launch URL
             # baseURL = "https://svcdemo1.wn.nasinsurance.com/"
-            driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
+            # driver = webdriver.Chrome(str(config_file_directory / 'chromedriver.exe'))
 
             # Maximize Window; Launch URL
-            driver.maximize_window()
+            # driver.maximize_window()
             # driver.get(baseURL)
 
             driver.get(base_URL)
@@ -226,7 +221,7 @@ class CreateAccount():
                 scenario_1_3_4_values = [test_summary, company_name_faker, city, city, formatted_postal_code, preferred_wholesaler, registration_code]
 
                 # Declare Directory of csv file
-                download_dir = os.path.join(test_results_directory, 'Retail_Access_Results.csv')
+                download_dir = str(test_results_directory / 'Retail_Access_Results.csv')
 
                 # This Section Writes the output to the csv file
                 with open(download_dir, "a") as f:
@@ -237,7 +232,7 @@ class CreateAccount():
                 scenario_2_values = [test_summary, company_name_excel, city, city, formatted_postal_code, preferred_wholesaler, registration_code]
 
                 # Declare Directory of csv file
-                download_dir = os.path.join(test_results_directory, 'Retail_Access_Results.csv')
+                download_dir = str(test_results_directory / 'Retail_Access_Results.csv')
 
                 # This Section Writes the output to the csv file
                 with open(download_dir, "a") as f:
@@ -258,8 +253,3 @@ class CreateAccount():
 
             # Close Browser
             driver.quit()
-
-            i += 1
-
-ca = CreateAccount()
-ca.create_account_quote()
