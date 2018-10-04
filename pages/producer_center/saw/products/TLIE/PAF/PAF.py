@@ -160,7 +160,7 @@ class PAF():
     #TODO
     # Ask Dev to create ID for next button
     def click_next(self):
-        next_button = self.driver.find_element(By.XPATH, "//*[@id='rate-adjustment-form']/div[2]/div[5]/a/span[1]")
+        next_button = self.driver.find_element(By.XPATH, "//*[@id='rate-adjustment-form']/div[2]/div[4]/a/span[2]/span/span")
         next_button.click()
 
     def click_return_to_Admin_Interface(self):
