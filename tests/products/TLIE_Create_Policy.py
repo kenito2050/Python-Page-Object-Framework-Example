@@ -158,7 +158,7 @@ class TestCreateQuote():
             # driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
             # Maximize Window; Launch URL
-            driver.maximize_window()
+            # driver.maximize_window()
             # driver.get(baseURL)
 
             driver.get(base_URL)
