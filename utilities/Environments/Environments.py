@@ -35,7 +35,7 @@ class Environments(dict):
             'Cust_Demo6': 'https://custdemo6.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
             'Cust_QA': 'https://custqa.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
             'Cust_Fix': 'https://custfix.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
-            'Cust_Stage': 'https://custrel.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
+            'Cust_Stage': 'https://custstg.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
             'Cust_OS_Upgrade': 'https://custstg.wn.nasinsurance.com/index.php?c=program.welcome&id=19',
             'Retail_Access_Live': 'https://producer.wn.nasinsurance.com/registration',
             'Retail_Access_Stage': 'https://prodstg.wn.nasinsurance.com/registration',
