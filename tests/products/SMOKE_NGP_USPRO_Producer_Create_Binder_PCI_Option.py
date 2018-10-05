@@ -168,7 +168,7 @@ class TestCreateQuote:
 
             driver.get(base_URL)
 
-            driver.implicitly_wait(60)
+            driver.implicitly_wait(3)
 
             # Call Login methods from Pages.home.login_page.py
             lp = Producer_LoginPage(driver)
@@ -193,7 +193,6 @@ class TestCreateQuote:
             # nb = NavigationBar(driver)
             # nb.click_products_and_programs()
 
-            pp = ProductsAndPrograms(driver)
             pp = ProductsAndPrograms(driver)
             pp.click_NGP_USPRO()
 
