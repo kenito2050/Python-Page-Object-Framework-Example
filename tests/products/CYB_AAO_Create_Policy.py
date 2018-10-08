@@ -69,45 +69,27 @@ from utilities.Environments.Environments import Environments
 from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from config_globals import *
 
+class TestCreateQuote():
 
-class CreateQuote():
-
-    def test_login_search_for_agent_create_quote(self):
+    def test_login_search_for_agent_create_quote(self, browser, env):
 
         Product = "CYB_AAO"
+        driver = browser
 
         ## Directory Locations
 
-        tests_directory = os.path.abspath(os.pardir)
-        framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
-        config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
-        test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
-        test_results_directory = os.path.abspath(
-            os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
-
-        # Determine the Test Run Type
-        # Get Test Run Type Text from config file
-        tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
-        test_environment = tree.getroot()
-        test_run_type = (test_environment[1][0].text)
-        test_run_type_value = ''
-
-        # If / Else to convert test_run_type text to a value
-        if test_run_type == "Regression":
-            test_run_type_value = '1'
-        elif test_run_type == "Smoke":
-            test_run_type_value = '2'
-        elif test_run_type == "Sanity":
-            test_run_type_value = '3'
+        tests_directory = ROOT_DIR / 'tests'
+        framework_directory = ROOT_DIR
+        config_file_directory = CONFIG_PATH
+        test_case_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Products'
+        test_results_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Test_Results'
 
         global test_summary
         global test_scenario
-        global effective_date
         global test_scenario_number
-        global regression
-        global smoke
-        global sanity
+        global effective_date
         global contract_class
         global agent
         global state
@@ -118,9 +100,8 @@ class CreateQuote():
         global _OLD_scenario
         global _OLD_scenario_number
 
-
         # Open Test Scenario Workbook; Instantiate worksheet object
-        wb = xlrd.open_workbook(os.path.join(test_case_directory, Product + '.xlsx'))
+        wb = xlrd.open_workbook(str(test_case_directory / Product) + '.xlsx')
         sh = wb.sheet_by_index(0)
 
         ## Begin For Loop to iterate through Test Scenarios
@@ -137,39 +118,20 @@ class CreateQuote():
                 # If Cell Value is NOT empty, set empty_cell to False
                 empty_cell = False
 
-
-            # regression_check = sh.cell_value(i, 3)
-            # smoke_check = sh.cell_value(i, 4)
-            # sanity_check = sh.cell_value(i, 5)
-
-            # If / Else Section to check if a test needs to be run
-            #### CODE NOT WORKING YET - Ken 8-2-17
-            #### Program is running ALL rows & NOT skipping rows
-            # if test_run_type_value == 3 and sanity_check == "0":
-            #         continue
-            # if test_run_type_value == 2 and smoke_check == "0":
-            #         continue
-            # if test_run_type_value == 1 and regression_check == "0":
-            #         continue
-
-
             # Check to see if cell is NOT empty
             # If cell is not empty, read in the values
             if empty_cell == False:
                 test_summary = sh.cell_value(i, 0)
                 test_scenario = str(round(sh.cell_value(i, 1)))
-                effective_date = sh.cell_value(i, 2)
-                test_scenario_number = str(round(sh.cell_value(i, 3)))
-                regression = sh.cell_value(i, 4)
-                smoke = sh.cell_value(i, 5)
-                sanity = sh.cell_value(i, 6)
-                contract_class = sh.cell_value(i, 7)
-                agent = sh.cell_value(i, 8)
-                state = sh.cell_value(i, 9)
-                revenue = str(round(sh.cell_value(i, 10)))
-                staff_count = int(round(sh.cell_value(i, 11)))
-                _OLD_scenario = sh.cell_value(i, 12)
-                _OLD_scenario_number = str(round(sh.cell_value(i, 13)))
+                test_scenario_number = str(round(sh.cell_value(i, 2)))
+                effective_date = sh.cell_value(i, 3)
+                contract_class = sh.cell_value(i, 4)
+                agent = sh.cell_value(i, 5)
+                state = sh.cell_value(i, 6)
+                revenue = str(round(sh.cell_value(i, 7)))
+                staff_count = int(round(sh.cell_value(i, 8)))
+                _OLD_scenario = sh.cell_value(i, 9)
+                _OLD_scenario_number = str(round(sh.cell_value(i, 10)))
 
             # Else, the cell is empty
             # End the Loop
@@ -178,27 +140,8 @@ class CreateQuote():
 
             ## Determine Test Environment to run scripts
 
-            ## Read in value from test_environment.xml
-            tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
-            test_environment = tree.getroot()
-            environment = (test_environment[0][0].text)
-
             ## Select Appropriate URL based on the Environment Value from above
-            base_URL = Environments.return_environments(environment)
-
-            # Test Scenarios
-
-            # 1 - PCI_50K_embedded_limit
-            # 2 - PCI_100K_embedded_limit
-            # 3 - No_PCI_50K_embedded_limit
-            # 4 - No_PCI_100K_embedded_limit
-
-            # test_scenario = '1'
-
-            # Create "Fake" Variables
-            # state = frandom.us_state()
-            # state = "California"
-            # state = Create_Insured_Address.return_alabama(state_value)
+            base_URL = Environments.return_environments(env)
 
             first_name = name.first_name()
             last_name = name.last_name()
@@ -220,7 +163,7 @@ class CreateQuote():
             # Uncertain
 
             # Access XML to retrieve login credentials
-            tree = ET.parse(os.path.join(config_file_directory, 'resources.xml'))
+            tree = ET.parse(str(config_file_directory / 'resources.xml'))
             login_credentials = tree.getroot()
             username = (login_credentials[0][0].text)
             password = (login_credentials[1][1].text)
@@ -279,10 +222,10 @@ class CreateQuote():
 
             # Initialize Driver; Launch URL
             # baseURL = "https://svcdemo1.wn.nasinsurance.com/"
-            driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
+            # driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
             # Maximize Window; Launch URL
-            driver.maximize_window()
+            # driver.maximize_window()
             # driver.get(baseURL)
 
             driver.get(base_URL)
@@ -449,7 +392,7 @@ class CreateQuote():
             saw_CC = Coverage_Options(driver)
 
             ### Clear All selections on Coverage Options Screen
-            # saw_CC.select_all_deselect_all()
+            saw_CC.select_all_deselect_all()
 
             ### If / Then Block to determine which instance of Coverage Options to use
 
@@ -665,9 +608,3 @@ class CreateQuote():
 
             # Close Browser
             driver.quit()
-
-            i += 1
-
-
-cq = CreateQuote()
-cq.test_login_search_for_agent_create_quote()
