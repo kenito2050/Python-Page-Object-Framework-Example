@@ -47,21 +47,22 @@ from utilities.Environments.Environments import Environments
 from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from config_globals import *
 
+class TestCreateQuote():
 
-class CreateQuote():
-
-    def test_login_search_for_agent_create_quote(self):
+    def test_login_search_for_agent_create_quote(self, browser, env):
 
         Product = "CYB_MMIC"
+        driver = browser
 
         ## Directory Locations
 
-        tests_directory = os.path.abspath(os.pardir)
-        framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
-        config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
-        test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
-        test_results_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
+        tests_directory = ROOT_DIR / 'tests'
+        framework_directory = ROOT_DIR
+        config_file_directory = CONFIG_PATH
+        test_case_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Products'
+        test_results_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Test_Results'
 
         global test_summary
         global test_scenario
@@ -78,8 +79,8 @@ class CreateQuote():
         # 0 - First Worksheet
         # 1 - Second Worksheet...etc
 
-        wb = xlrd.open_workbook(os.path.join(test_case_directory, Product + '.xlsx'))
-        sh = wb.sheet_by_index(0)
+        wb = xlrd.open_workbook(str(test_case_directory / Product) + '.xlsx')
+        sh = wb.sheet_by_index(2)
 
         ## Begin For Loop to iterate through Test Scenarios
         i = 1
@@ -116,13 +117,8 @@ class CreateQuote():
 
             ## Determine Test Environment to run scripts
 
-            ## Read in value from test_environment.xml
-            tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
-            test_environment = tree.getroot()
-            environment = (test_environment[0][0].text)
-
             ## Select Appropriate URL based on the Environment Value from above
-            base_URL = Environments.return_environments(environment)
+            base_URL = Environments.return_environments(env)
 
             first_name = name.first_name()
             last_name = name.last_name()
@@ -134,7 +130,7 @@ class CreateQuote():
             postal_code = ZipCodes.return_zip_codes(state)
 
             # Access XML to retrieve login credentials
-            tree = ET.parse(os.path.join(config_file_directory, 'resources.xml'))
+            tree = ET.parse(str(config_file_directory / 'resources.xml'))
             login_credentials = tree.getroot()
             username = (login_credentials[1][0].text)
             password = (login_credentials[1][1].text)
@@ -151,10 +147,10 @@ class CreateQuote():
 
             # Initialize Driver; Launch URL
             # baseURL = "https://svcdemo1.wn.nasinsurance.com/"
-            driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
+            # driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
             # Maximize Window; Launch URL
-            driver.maximize_window()
+            # driver.maximize_window()
             # driver.get(baseURL)
 
             driver.get(base_URL)
@@ -180,14 +176,6 @@ class CreateQuote():
 
             # pp.select_contract_class(contract_class)  # Script Ends Here
             pp.click_continue_on_contract_class_modal_after_selecting_contract_class()
-
-            # These next (2) lines commented out
-            # No prompt for Contract Class
-
-            # pp.click_contract_class_modal()
-            # pp.select_contract_class_dropdown()
-            # pp.select_contract_class(contract_class_int_value)
-            # pp.click_continue_on_contract_class_modal()
 
             cs = ClientSearch(driver)
             cs.input_bogus_client_data(postal_code)
@@ -271,45 +259,27 @@ class CreateQuote():
             ## Coverage Options Section  ###
             ##                           ###
 
-            ### Declare instances of Coverage Options
-
-            PCI_options = PCI_Coverage_Options(driver)
-            No_PCI_options = No_PCI_Coverage_Options(driver)
-
             #### This class is for generic objects that display on the Coverage Options page
             saw_CC = Coverage_Options(driver)
 
             ### Clear All selections on Coverage Options Screen
-            saw_CC.select_all_deselect_all()
+            # saw_CC.select_all_deselect_all()
 
             #### If / ELSE to Determine which Coverage Options are selected based on Test Scenario
             ####
 
-            ### Declare the Coverage Options Driver Variable
+            ### Declare instances of Coverage Options
 
-            ### This section tests to see if the correct test scenario is executed, given the test_scenario_number & revenue tier
-            ### TODO: Read the values from the OLD_Scenario variable; Run that scenario
+            ## If Test Scenario = 1, Use PCI Options
+            ## Else if Test Scenario = 2, Use Non-PCI Options
 
-            # if test_scenario_number == "1":
-            #     saw_CC_in_use = PCI_Coverage_Options_After_Sep_6_2017(driver)
-            #     getattr(saw_CC_in_use, _OLD_scenario)()
-            #     # saw_CC_in_use.select_MEDEFENSE_Plus_Only_1MM_1MM_limit_2pt5K_Deduct()
-            #
-            # elif test_scenario_number == "2":
-            #     saw_CC_in_use = No_PCI_Coverage_Options_After_Sep_6_2017(driver)
-            #     getattr(saw_CC_in_use, _OLD_scenario)()
-            #     # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_With_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()
-            #
-            # elif test_scenario_number == "3":
-            #     saw_CC_in_use = PCI_Coverage_Options_Before_Sep_6_2017(driver)
-            #     getattr(saw_CC_in_use, _OLD_scenario)()
-            #     # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_With_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()
-            #
-            # elif test_scenario_number == "4":
-            #     saw_CC_in_use = No_PCI_Coverage_Options_Before_Sep_6_2017(driver)
-            #     getattr(saw_CC_in_use, _OLD_scenario)()
-            #     # saw_CC_in_use.select_MEDEFENSE_Plus_and_eMD_With_PCI_and_Cyber_Crime_Combined_1MM_1MM_100K_250K_limit_1K_Deduct()
+            if test_scenario == "1":
+                saw_CC_in_use = PCI_Coverage_Options(driver)
+                getattr(saw_CC_in_use, _OLD_scenario)()
 
+            elif test_scenario == "2":
+                saw_CC_in_use = No_PCI_Coverage_Options(driver)
+                getattr(saw_CC_in_use, _OLD_scenario)()
 
             ### FIXED: Renamed method proceed_to_quote to click_proceed_to_quote; This code now works
             saw_CC.click_proceed_to_quote()
@@ -444,8 +414,3 @@ class CreateQuote():
 
             # Close Browser
             driver.quit()
-
-            i += 1
-
-cq = CreateQuote()
-cq.test_login_search_for_agent_create_quote()
