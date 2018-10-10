@@ -41,6 +41,7 @@ class Environments(dict):
             'Retail_Access_Stage': 'https://prodstg.wn.nasinsurance.com/registration',
             'Retail_Access_Demo1': 'https://proddemo1.wn.nasinsurance.com/registration',
             'Retail_Access_Demo7': 'https://proddemo7.wn.nasinsurance.com/registration',
-            'Live': 'https://service.wn.nasinsurance.com/'
+            'Live': 'https://service.wn.nasinsurance.com/',
+            'ProdLive': 'https://producer.wn.nasinsurance.com/'
             }
         return environments[environment]
