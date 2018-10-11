@@ -2,6 +2,7 @@ import unittest
 import os
 from xml.etree import ElementTree as ET
 
+import xlrd
 from faker import address
 from faker import company
 from faker import name
@@ -19,30 +20,78 @@ from utilities.Environments.Environments import Environments
 from utilities.contract_classes.contract_classes import ContractClasses
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from config_globals import *
 
+class TestCreateQuote():
 
-class CreateQuote():
+    def test_login_search_for_agent_create_quote(self, browser, env):
 
-    def test_login_search_for_agent_create_quote(self):
+        Product = "NGP_OBLIC"
+        driver = browser
 
         ## Directory Locations
 
-        tests_directory = os.path.abspath(os.pardir)
-        framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
-        config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
-        test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
-        test_results_directory = os.path.abspath(
-            os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
+        tests_directory = ROOT_DIR / 'tests'
+        framework_directory = ROOT_DIR
+        config_file_directory = CONFIG_PATH
+        test_case_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Products'
+        test_results_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Test_Results'
 
-        ## Determine Test Environment to run scripts
+        global test_summary
+        global test_scenario
+        global effective_date
+        global contract_class
+        global agent
+        global state
+        global revenue
+        global total_num_records
+        global _OLD_scenario
+        global limit
+        global deductible
 
-        ## Read in value from test_environment.xml
-        tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
-        test_environment  = tree.getroot()
-        environment =(test_environment[0][0].text)
+        # Open Test Scenario Workbook; Instantiate worksheet object
+        # 0 - First Worksheet
+        # 1 - Second Worksheet...etc
+
+        wb = xlrd.open_workbook(str(test_case_directory / Product) + '.xlsx')
+        sh = wb.sheet_by_index(3)
+
+        ## Begin For Loop to iterate through Test Scenarios
+        i = 1
+        rows = sh.nrows
+        empty_cell = False
+        for i in range(1, sh.nrows):
+
+            cell_val = sh.cell(i, 0).value
+            if cell_val == '':
+                # If Cell Value is empty, set empty_cell to True
+                empty_cell = True
+            else:
+                # If Cell Value is NOT empty, set empty_cell to False
+                empty_cell = False
+
+            # Check to see if cell is NOT empty
+            # If cell is not empty, read in the values
+            if empty_cell == False:
+                test_summary = sh.cell_value(i, 0)
+                test_scenario = str(round(sh.cell_value(i, 1)))
+                effective_date = sh.cell_value(i, 2)
+                contract_class = sh.cell_value(i, 3)
+                agent = sh.cell_value(i, 4)
+                state = sh.cell_value(i, 5)
+                revenue = str(round(sh.cell_value(i, 6)))
+                total_num_records = (sh.cell_value(i, 7))
+                _OLD_scenario = sh.cell_value(i, 8)
+                limit = sh.cell_value(i, 9)
+                deductible = sh.cell_value(i, 10)
+
+            # Else, the cell is empty
+            # End the Loop
+            else:
+                break
 
         ## Select Appropriate URL based on the Environment Value from above
-        baseURL  = Environments.return_environments(environment)
+        baseURL  = Environments.return_environments(env)
 
         # Create "Fake" Variables
         #state = frandom.us_state()
@@ -57,17 +106,16 @@ class CreateQuote():
         city = StateCapitals.return_state_capital(state)
         postal_code = ZipCodes.return_zip_codes(state)
 
-        revenue = "9000000"
-        staff_count = "5"
+        # revenue = "9000000"
 
         # Access XML to retrieve login credentials
-        tree = ET.parse(os.path.join(config_file_directory, 'resources.xml'))
+        tree = ET.parse(str(config_file_directory / 'resources.xml'))
         login_credentials = tree.getroot()
         username = (login_credentials[0][0].text)
         password = (login_credentials[0][1].text)
 
         # Access XML to retrieve the agent to search for
-        tree = ET.parse(os.path.join(config_file_directory, 'Agents.xml'))
+        tree = ET.parse(str(config_file_directory / 'Agents.xml'))
         agents = tree.getroot()
         agent = (agents[5][0].text)
 
@@ -86,9 +134,9 @@ class CreateQuote():
         # I have inserted a placeholder element at 0 -- Ken
         # Array will be 1 - 74
         # For List of Contract Classes, See Contract_Classes.xml
-        tree = ET.parse(os.path.join(config_file_directory, 'Contract_Classes.xml'))
-        contract_classes_XML = tree.getroot()
-        contract_class = (contract_classes_XML[0][35].text)
+        # tree = ET.parse(os.path.join(config_file_directory, 'Contract_Classes.xml'))
+        # contract_classes_XML = tree.getroot()
+        # contract_class = (contract_classes_XML[0][35].text)
         # Contract Class - 35 - Legal Services
 
         # NOTE: For contract_classes.py, the array count starts at 1
@@ -101,10 +149,10 @@ class CreateQuote():
 
         # Initialize Driver; Launch URL
         # baseURL = "https://svcdemo4.wn.nasinsurance.com/"
-        driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
+        # driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
         # Maximize Window; Launch URL
-        driver.maximize_window()
+        # driver.maximize_window()
         driver.get(baseURL)
         driver.implicitly_wait(3)
 
@@ -160,6 +208,3 @@ class CreateQuote():
 
         # Close Browser
         driver.quit()
-
-cq = CreateQuote()
-cq.test_login_search_for_agent_create_quote()
