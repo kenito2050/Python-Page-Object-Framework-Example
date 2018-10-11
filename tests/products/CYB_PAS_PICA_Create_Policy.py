@@ -44,21 +44,22 @@ from utilities.Environments.Environments import Environments
 from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from config_globals import *
 
+class TestCreateQuote():
 
-class CreateQuote():
-
-    def test_login_search_for_agent_create_quote(self):
+    def test_login_search_for_agent_create_quote(self, browser, env):
 
         Product = "CYB_PAS_PICA"
+        driver = browser
 
         ## Directory Locations
 
-        tests_directory = os.path.abspath(os.pardir)
-        framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
-        config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
-        test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
-        test_results_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
+        tests_directory = ROOT_DIR / 'tests'
+        framework_directory = ROOT_DIR
+        config_file_directory = CONFIG_PATH
+        test_case_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Products'
+        test_results_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Test_Results'
 
         global test_summary
         global effective_date
@@ -74,7 +75,7 @@ class CreateQuote():
         # 0 - First Worksheet
         # 1 - Second Worksheet...etc
 
-        wb = xlrd.open_workbook(os.path.join(test_case_directory, Product + '.xlsx'))
+        wb = xlrd.open_workbook(str(test_case_directory / Product) + '.xlsx')
         sh = wb.sheet_by_index(0)
 
         ## Begin For Loop to iterate through Test Scenarios
@@ -111,13 +112,8 @@ class CreateQuote():
 
             ## Determine Test Environment to run scripts
 
-            ## Read in value from test_environment.xml
-            tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
-            test_environment = tree.getroot()
-            environment = (test_environment[0][0].text)
-
             ## Select Appropriate URL based on the Environment Value from above
-            base_URL = Environments.return_environments(environment)
+            base_URL = Environments.return_environments(env)
 
             first_name = name.first_name()
             last_name = name.last_name()
@@ -129,7 +125,7 @@ class CreateQuote():
             postal_code = ZipCodes.return_zip_codes(state)
 
             # Access XML to retrieve login credentials
-            tree = ET.parse(os.path.join(config_file_directory, 'resources.xml'))
+            tree = ET.parse(str(config_file_directory / 'resources.xml'))
             login_credentials = tree.getroot()
             username = (login_credentials[1][0].text)
             password = (login_credentials[1][1].text)
@@ -146,10 +142,10 @@ class CreateQuote():
 
             # Initialize Driver; Launch URL
             # baseURL = "https://svcdemo1.wn.nasinsurance.com/"
-            driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
+            # driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
             # Maximize Window; Launch URL
-            driver.maximize_window()
+            # driver.maximize_window()
             # driver.get(baseURL)
 
             driver.get(base_URL)
@@ -440,8 +436,3 @@ class CreateQuote():
 
             # Close Browser
             driver.quit()
-
-            i += 1
-
-cq = CreateQuote()
-cq.test_login_search_for_agent_create_quote()
