@@ -1,8 +1,10 @@
 import unittest
 import os
+import datetime
 from urllib.parse import urlparse, parse_qs
 from xml.etree import ElementTree as ET
 
+import xlrd
 from faker import address
 from faker import company
 from faker import name
@@ -48,109 +50,114 @@ from utilities.Environments.Environments import Environments
 from utilities.contract_classes.contract_classes import ContractClasses
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from config_globals import *
 
-class CreateQuote():
+class TestCreateQuote():
 
-    def test_login_search_for_agent_create_quote(self):
+    def test_login_search_for_agent_create_quote(self, browser, env):
+
+        Product = "NGP_OBLIC"
+        driver = browser
 
         ## Directory Locations
 
-        tests_directory = os.path.abspath(os.pardir)
-        framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
-        config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
-        test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
-        test_results_directory = os.path.abspath(
-            os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
+        tests_directory = ROOT_DIR / 'tests'
+        framework_directory = ROOT_DIR
+        config_file_directory = CONFIG_PATH
+        test_case_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Products'
+        test_results_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Test_Results'
+
+        global test_summary
+        global test_scenario
+        global effective_date
+        global contract_class
+        global agent
+        global state
+        global revenue
+        global total_num_records
+        global _OLD_scenario
+        global limit
+        global deductible
+
+        # Open Test Scenario Workbook; Instantiate worksheet object
+        # 0 - First Worksheet
+        # 1 - Second Worksheet...etc
+
+        wb = xlrd.open_workbook(str(test_case_directory / Product) + '.xlsx')
+        sh = wb.sheet_by_index(1)
+
+        ## Begin For Loop to iterate through Test Scenarios
+        i = 1
+        rows = sh.nrows
+        empty_cell = False
+        for i in range(1, sh.nrows):
+
+            cell_val = sh.cell(i, 0).value
+            if cell_val == '':
+                # If Cell Value is empty, set empty_cell to True
+                empty_cell = True
+            else:
+                # If Cell Value is NOT empty, set empty_cell to False
+                empty_cell = False
+
+            # Check to see if cell is NOT empty
+            # If cell is not empty, read in the values
+            if empty_cell == False:
+                test_summary = sh.cell_value(i, 0)
+                test_scenario = str(round(sh.cell_value(i, 1)))
+                effective_date = sh.cell_value(i, 2)
+                contract_class = sh.cell_value(i, 3)
+                agent = sh.cell_value(i, 4)
+                state = sh.cell_value(i, 5)
+                revenue = str(round(sh.cell_value(i, 6)))
+                total_num_records = (sh.cell_value(i, 7))
+                _OLD_scenario = sh.cell_value(i, 8)
+                limit = sh.cell_value(i, 9)
+                deductible = sh.cell_value(i, 10)
+
+            # Else, the cell is empty
+            # End the Loop
+            else:
+                break
 
         ## Determine Test Environment to run scripts
 
         ## Read in value from test_environment.xml
-        tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
-        test_environment  = tree.getroot()
-        environment =(test_environment[0][0].text)
+        # tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
+        # test_environment = tree.getroot()
+        # environment = (test_environment[0][0].text)
 
         ## Select Appropriate URL based on the Environment Value from above
-        baseURL  = Environments.return_environments(environment)
-
-        # Create "Fake" Variables
-        #state = frandom.us_state()
-        state = "California"
-        #state = Create_Insured_Address.return_alabama(state_value)
+        base_URL = Environments.return_environments(env)
 
         first_name = name.first_name()
         last_name = name.last_name()
         company_name = company.company_name()
-        #company_name_string = company_name
-        company_name_string = "QA Test" + " " + "-" + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
+        # company_name_string = company_name
+        company_name_string = "QA Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
         address_value = address.street_address()
         city = StateCapitals.return_state_capital(state)
         postal_code = ZipCodes.return_zip_codes(state)
 
-        revenue = "1000000"
-        total_num_records = '1 to 100,000'
-
-        # 1 to 100,000
-        # 100,001 to 250,000
-        # 250,001 to 500,000
-        # Over 500,000
-        # Uncertain
-
         # Access XML to retrieve login credentials
-        tree = ET.parse(os.path.join(config_file_directory, 'resources.xml'))
+        tree = ET.parse(str(config_file_directory / 'resources.xml'))
         login_credentials = tree.getroot()
-        username = (login_credentials[0][0].text)
+        username = (login_credentials[1][0].text)
         password = (login_credentials[1][1].text)
-
-        # Access XML to retrieve the agent to search for
-        tree = ET.parse(os.path.join(config_file_directory, 'Agents.xml'))
-        agents = tree.getroot()
-        agent = (agents[5][0].text)
-
-        # 0,0 = Crump Tester                -- Wholesale Agent - Crump Insurance Services, Boston - Test Account
-        # 1,0 = Susan Leeming - TEST        -- Sub Agent of Wholesale Agency
-        # 2,0 = Retail Agent                -- Retail Agent - Boston Retail Insurance
-        # 3,0 = Preferred Agent             -- Preferred Agent - Preferred Agency
-        # 4,0 = TMLT Test User              -- Account to Test COMM2 Scenarios
-        # 5,0 = QA Agent                    -- QA Agent
-        # 6,0 = Janice Quinn                -- Janice Quinn - Boston Retail
-
-        # TODO: NEED TO FIX SO THAT SCRIPT USES STRING VALUE CONTAINED IN contract_class variable
-        # Access XML to retrieve contract_class
-
-        # NOTE: For XML, the array count starts at 0
-        # I have inserted a placeholder element at 0 -- Ken
-        # Array will be 1 - 74
-        # For List of Contract Classes, See Contract_Classes.xml
-        tree = ET.parse(os.path.join(config_file_directory, 'Contract_Classes.xml'))
-        contract_classes_XML = tree.getroot()
-        contract_class = (contract_classes_XML[0][43].text)
-
-        # Retail Sales          - 57
-        # Online Retailer       - 46
-        # Restaurant            - 56
-        # Misc Consultant       - 43
-        # Hospitality           - 30
-        # Title/Escrow Services - 63
-
-        # NOTE: For contract_classes.py, the array count starts at 1
-        # Array will be 1 - 74
-        contract_class_int_value = ContractClasses.return_contract_class_values(contract_class)
-
-        # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
-        #contract_class_value = "74"
 
         # Date Variables
         date_today = time.strftime("%m/%d/%Y")
-        ad_hoc_effectiveDate = "03/14/2018"
+        ad_hoc_effectiveDate = "09/06/2017"
 
-        # Initialize Driver; Launch URL
-        # baseURL = "https://svcrel.wn.nasinsurance.com/"
-        driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
+        # Convert effective_date value to format MM/DD/YYYY
+        d = xlrd.xldate_as_tuple(int(effective_date), 0)
+        # convert date tuple in mm-dd-yyyy format
+        d = datetime.datetime(*(d[0:3]))
+        effective_date_formatted = d.strftime("%m/%d/%Y")
 
-        # Maximize Window; Launch URL
-        driver.maximize_window()
-        driver.get(baseURL)
-        driver.implicitly_wait(3)
+        # driver.get(baseURL)
+
+        driver.get(base_URL)
 
         # Call Login methods from Pages.home.login_page.py
         lp = LoginPage(driver)
@@ -205,17 +212,10 @@ class CreateQuote():
         saw_ii.click_next()
         saw_PAF = PAF(driver)
 
-
-        ### Quote Creation Section  ###
-        ###                         ###
-
-        # Create Quote with PCI Option
-        saw_PAF.create_quote_PCI_DSS_No_DQ()
-
-        # Create Quote with NO PCI Option
-        # saw_PAF.create_quote_No_PCI_DSS_No_DQ()
-
-        # Create Quote that Triggers DQ
+        if test_scenario == "1":
+            saw_PAF.create_quote_PCI_DSS_No_DQ()
+        elif test_scenario == "2":
+            saw_PAF.create_quote_No_PCI_DSS_No_DQ()
 
         # Click Next on PAF Screen
         saw_PAF.click_next()
@@ -235,7 +235,7 @@ class CreateQuote():
         ### PCI Options ###
 
         # saw_CC_PCI.select_250K_limit_0_Deductible()
-        saw_CC_PCI.select_500K_limit_0_Deductible()
+        # saw_CC_PCI.select_500K_limit_0_Deductible()
         # saw_CC_PCI.select_1MM_limit_0_Deductible()
 
         ### No-PCI Options ###
@@ -375,6 +375,3 @@ class CreateQuote():
 
         # Close Browser
         driver.quit()
-
-cq = CreateQuote()
-cq.test_login_search_for_agent_create_quote()
