@@ -140,7 +140,7 @@ class PAF():
 
         return self
 
-    def create_quote_PCI_DSS_No_DQ(self, revenue):
+    def create_quote_No_DQ(self, revenue):
 
         PAF.Page_Elements(self).existing_insured_yes.click()
         PAF.Page_Elements(self).external_policy_number.send_keys("A111111111")
