@@ -45,45 +45,27 @@ from pages.service_center.subjectivities import Subjectivities
 from utilities.Environments.Environments import Environments
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from config_globals import *
 
+class TestCreateQuote():
 
-class CreateQuote(unittest.TestCase):
-
-    def test_login_search_for_agent_create_quote(self):
+    def test_login_search_for_agent_create_quote(self, browser, env):
 
         Product = "MMTM"
-
+        driver = browser
 
         ## Directory Locations
 
-        tests_directory = os.path.abspath(os.pardir)
-        framework_directory = os.path.abspath(os.path.join(tests_directory, os.pardir))
-        config_file_directory = os.path.abspath(os.path.join(framework_directory, 'config_files'))
-        test_case_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Products'))
-        test_results_directory = os.path.abspath(os.path.join(framework_directory, 'utilities\Excel_Sheets\Test_Results'))
-
-        # Determine the Test Environment
-        # Get Test Environment value from config file
-        tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
-        test_environment = tree.getroot()
-        test_run_type = (test_environment[1][0].text)
-        test_run_type_value = ''
-
-        # If / Else to convert test_run_type text to a value
-        # if test_run_type == "Regression":
-        #     test_run_type_value = '1'
-        # elif test_run_type == "Smoke":
-        #     test_run_type_value = '2'
-        # elif test_run_type == "Sanity":
-        #     test_run_type_value = '3'
+        tests_directory = ROOT_DIR / 'tests'
+        framework_directory = ROOT_DIR
+        config_file_directory = CONFIG_PATH
+        test_case_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Products'
+        test_results_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Test_Results'
 
         global test_summary
         global test_scenario_number
         global test_scenario
         global effective_date
-        global regression
-        global smoke
-        global sanity
         global agent
         global state
         global annual_gross_sales
@@ -97,7 +79,7 @@ class CreateQuote(unittest.TestCase):
         # 0 - First Worksheet
         # 1 - Second Worksheet...etc
 
-        wb = xlrd.open_workbook(os.path.join(test_case_directory, Product + '.xlsx'))
+        wb = xlrd.open_workbook(str(test_case_directory / Product) + '.xlsx')
         sh = wb.sheet_by_index(0)
 
         ## Begin For Loop to iterate through Test Scenarios
@@ -114,22 +96,6 @@ class CreateQuote(unittest.TestCase):
                 # If Cell Value is NOT empty, set empty_cell to False
                 empty_cell = False
 
-
-            # regression_check = round(sh.cell_value(i, 3))
-            # smoke_check = round(sh.cell_value(i, 4))
-            # sanity_check = round(sh.cell_value(i, 5))
-
-            # If / Else Section to check if a test needs to be run
-            #### CODE NOT WORKING YET - Ken 8-2-17
-            #### Program is running ALL rows & NOT skipping rows
-
-            # if (test_run_type_value == 3 and sanity_check == 0):
-            #         continue
-            # elif (test_run_type_value == 2 and smoke_check == 0):
-            #         continue
-            # elif (test_run_type_value == 1 and regression_check == 0):
-            #         continue
-
             # Check to see if cell is NOT empty
             # If cell is not empty, read in the values
             if empty_cell == False:
@@ -137,17 +103,14 @@ class CreateQuote(unittest.TestCase):
                 test_scenario_number = str(round(sh.cell_value(i, 1)))
                 test_scenario = (sh.cell_value(i, 2))
                 effective_date = sh.cell_value(i, 3)
-                regression = sh.cell_value(i, 4)
-                smoke = sh.cell_value(i, 5)
-                sanity = sh.cell_value(i, 6)
-                agent = sh.cell_value(i, 7)
-                state = sh.cell_value(i, 8)
-                annual_gross_sales = str(round(sh.cell_value(i, 9)))
-                online_vendor = (sh.cell_value(i, 10))
-                merchant_id = (sh.cell_value(i, 11))
-                positive_feedback_rating_percent = str(round(sh.cell_value(i, 12)))
-                _OLD_scenario = sh.cell_value(i, 13)
-                _OLD_scenario_Number = str(round(sh.cell_value(i, 14)))
+                agent = sh.cell_value(i,4)
+                state = sh.cell_value(i, 5)
+                annual_gross_sales = str(round(sh.cell_value(i, 6)))
+                online_vendor = (sh.cell_value(i, 7))
+                merchant_id = (sh.cell_value(i, 8))
+                positive_feedback_rating_percent = str(round(sh.cell_value(i, 9)))
+                _OLD_scenario = sh.cell_value(i, 10)
+                _OLD_scenario_Number = str(round(sh.cell_value(i, 11)))
 
             # Else, the cell is empty
             # End the Loop
@@ -156,13 +119,8 @@ class CreateQuote(unittest.TestCase):
 
             ## Determine Test Environment to run scripts
 
-            ## Read in value from test_environment.xml
-            tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
-            test_environment = tree.getroot()
-            environment = (test_environment[0][0].text)
-
             ## Select Appropriate URL based on the Environment Value from above
-            base_URL = Environments.return_environments(environment)
+            base_URL = Environments.return_environments(env)
 
             first_name = name.first_name()
             last_name = name.last_name()
@@ -174,7 +132,7 @@ class CreateQuote(unittest.TestCase):
             postal_code = ZipCodes.return_zip_codes(state)
 
             # Access XML to retrieve login credentials
-            tree = ET.parse(os.path.join(config_file_directory, 'resources.xml'))
+            tree = ET.parse(str(config_file_directory / 'resources.xml'))
             login_credentials = tree.getroot()
             username = (login_credentials[1][0].text)
             password = (login_credentials[1][1].text)
@@ -193,10 +151,10 @@ class CreateQuote(unittest.TestCase):
 
             # Initialize Driver; Launch URL
             # baseURL = "https://svcdemo1.wn.nasinsurance.com/"
-            driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
+            # driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
             # Maximize Window; Launch URL
-            driver.maximize_window()
+            # driver.maximize_window()
             # driver.get(baseURL)
 
             driver.get(base_URL)
@@ -474,8 +432,3 @@ class CreateQuote(unittest.TestCase):
 
             # Close Browser
             driver.quit()
-
-            i += 1
-
-cq = CreateQuote()
-cq.test_login_search_for_agent_create_quote()
