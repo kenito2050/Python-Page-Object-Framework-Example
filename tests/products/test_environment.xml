@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <data>
     <TestEnvironment One ="">
-        <Server>Live</Server>
+        <Server>Stage</Server>
     </TestEnvironment>
 </data>
 
