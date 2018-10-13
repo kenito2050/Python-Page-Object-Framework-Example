@@ -88,7 +88,7 @@ class TestCreateQuote:
         # 1 - Second Worksheet...etc
 
         wb = xlrd.open_workbook(str(test_case_directory / Product) + '.xlsx')
-        sh = wb.sheet_by_index(0)
+        sh = wb.sheet_by_index(1)
 
         ## Begin For Loop to iterate through Test Scenarios
         i = 1
