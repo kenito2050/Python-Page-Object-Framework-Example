@@ -110,11 +110,6 @@ class TestCreateQuote():
 
         ## Determine Test Environment to run scripts
 
-        ## Read in value from test_environment.xml
-        tree = ET.parse(str(config_file_directory / 'test_environment.xml'))
-        test_environment = tree.getroot()
-        environment = (test_environment[0][0].text)
-
         ## Select Appropriate URL based on the Environment Value from above
         base_URL = Environments.return_environments(env)
 
@@ -134,13 +129,12 @@ class TestCreateQuote():
         date_today = dtg.return_date_today()
 
         # Access XML to retrieve login credentials
-        tree = ET.parse('resources.xml')
+        tree = ET.parse(str(config_file_directory / 'resources.xml'))
         login_credentials = tree.getroot()
         username = (login_credentials[1][0].text)
         password = (login_credentials[1][1].text)
 
-        # Maximize Window; Launch URL
-        # driver.maximize_window()
+        # Launch URL; Begin Browser Session
         driver.get(base_URL)
         driver.implicitly_wait(3)
 
@@ -162,10 +156,6 @@ class TestCreateQuote():
         cs.manually_input_new_client()
         cs.enter_new_client_name_address(company_name_string, street_address_string, city, state)
         cc = ClientContact(driver)
-
-        # TODO:
-        # Code now parses URL String & retrieves application ID
-        #cc.parse_url_get_app_id()
 
         # Get the Application ID from URL -- THIS WORKS
         current_url = driver.current_url
