@@ -1,12 +1,8 @@
-import datetime
 import time
 from urllib.parse import urlparse, parse_qs
 from xml.etree import ElementTree as ET
 
 import xlrd
-from faker import address
-from faker import company
-from faker import name
 
 from pages.producer_center.client_contact_page import ClientContact
 from pages.producer_center.client_search_page import ClientSearch
