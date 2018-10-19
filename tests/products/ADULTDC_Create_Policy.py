@@ -1,15 +1,8 @@
-import datetime
-import os
 import time
-import unittest
 from urllib.parse import urlparse, parse_qs
 from xml.etree import ElementTree as ET
 
 import xlrd
-from faker import address
-from faker import company
-from faker import name
-from selenium import webdriver
 
 from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.producer_center.client_search_page import ClientSearch
@@ -43,6 +36,8 @@ from utilities.Environments.Environments import Environments
 from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes.zip_codes import ZipCodes
+from utilities.Faker.Data_Generator import Data_Generator
+from utilities.Date_Time_Generator.Date_Time_Generator import Date_Time_Generator
 from config_globals import *
 
 class TestCreateQuote():
@@ -59,13 +54,6 @@ class TestCreateQuote():
         config_file_directory = CONFIG_PATH
         test_case_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Products'
         test_results_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Test_Results'
-
-        # Determine the Test Run Type
-        # Get Test Run Type Text from config file
-        tree = ET.parse(str(config_file_directory / 'test_environment.xml'))
-        test_environment = tree.getroot()
-        test_run_type = (test_environment[1][0].text)
-        test_run_type_value = ''
 
         global test_summary
         global test_scenario
@@ -130,34 +118,26 @@ class TestCreateQuote():
         ## Select Appropriate URL based on the Environment Value from above
         base_URL = Environments.return_environments(env)
 
-        first_name = name.first_name()
-        last_name = name.last_name()
-        company_name = company.company_name()
-        # company_name_string = company_name
-        company_name_string = "QA Test" + " " + "-" + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
-        address_value = address.street_address()
-        # city = StateCapitals.return_state_capital(state)
-        # postal_code = ZipCodes.return_zip_codes(state)
+        # Create Instance of Data Generator
+        dg = Data_Generator()
+
+        # Create Company Name Value
+        company_name_string = dg.create_full_company_name()
+
+        # Create Street Address Value
+        street_address_string = dg.create_street_address()
+
+        # Create Instance of Date Time Generator
+        dtg = Date_Time_Generator()
+
+        # Create Today's Date
+        date_today = dtg.return_date_today()
 
         # Access XML to retrieve login credentials
         tree = ET.parse('resources.xml')
         login_credentials = tree.getroot()
         username = (login_credentials[1][0].text)
         password = (login_credentials[1][1].text)
-
-        # Date Variables
-        date_today = time.strftime("%m/%d/%Y")
-        ad_hoc_effectiveDate = "09/06/2017"
-
-        # Convert effective_date value to format MM/DD/YYYY
-        d = xlrd.xldate_as_tuple(int(effective_date), 0)
-        # convert date tuple in mm-dd-yyyy format
-        d = datetime.datetime(*(d[0:3]))
-        effective_date_formatted = d.strftime("%m/%d/%Y")
-
-        # Initialize Driver; Launch URL
-        # baseURL = "https://svcdemo2.wn.nasinsurance.com/"
-        # driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
         # Maximize Window; Launch URL
         # driver.maximize_window()
@@ -180,7 +160,7 @@ class TestCreateQuote():
         cs = ClientSearch(driver)
         cs.input_bogus_client_data(zip)
         cs.manually_input_new_client()
-        cs.enter_new_client_name_address(company_name_string, address_value, city, state)
+        cs.enter_new_client_name_address(company_name_string, street_address_string, city, state)
         cc = ClientContact(driver)
 
         # TODO:
