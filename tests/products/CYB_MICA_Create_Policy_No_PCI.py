@@ -41,9 +41,10 @@ from pages.service_center.policy_screens.effective_periods import Effective_Peri
 from pages.service_center.policy_screens.policy_screens import Policy_Screens
 from pages.service_center.subjectivities import Subjectivities
 from utilities.Environments.Environments import Environments
-from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from utilities.Faker.Data_Generator import Data_Generator
+from utilities.Date_Time_Generator.Date_Time_Generator import Date_Time_Generator
 from config_globals import *
 
 class TestCreateQuote():
@@ -60,9 +61,6 @@ class TestCreateQuote():
         config_file_directory = CONFIG_PATH
         test_case_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Products'
         test_results_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Test_Results'
-
-        # Determine the Test Run Type
-        baseURL  = Environments.return_environments(env)
 
         global test_summary
         global test_scenario
@@ -96,7 +94,6 @@ class TestCreateQuote():
                 # If Cell Value is NOT empty, set empty_cell to False
                 empty_cell = False
 
-
             # Check to see if cell is NOT empty
             # If cell is not empty, read in the values
             if empty_cell == False:
@@ -117,35 +114,37 @@ class TestCreateQuote():
             else:
                 break
 
+            # Create Instance of Data Generator
+            dg = Data_Generator()
+
+            # Create Company Name Value
+            company_name_string = dg.create_full_company_name()
+
+            # Create Street Address Value
+            address_value = dg.create_street_address()
+
+            city = StateCapitals.return_state_capital(state)
+
+            postal_code = ZipCodes.return_zip_codes(state)
+
+            # Create Instance of Date Time Generator
+            dtg = Date_Time_Generator()
+
+            # Date Variables
+
+            # Create Today's Date
+            date_today = dtg.return_date_today()
+
             ## Determine Test Environment to run scripts
 
             ## Select Appropriate URL based on the Environment Value from above
             base_URL = Environments.return_environments(env)
-
-            first_name = name.first_name()
-            last_name = name.last_name()
-            company_name = company.company_name()
-            # company_name_string = company_name
-            company_name_string = "QA Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
-            address_value = address.street_address()
-            city = StateCapitals.return_state_capital(state)
-            postal_code = ZipCodes.return_zip_codes(state)
 
             # Access XML to retrieve login credentials
             tree = ET.parse(str(config_file_directory / 'resources.xml'))
             login_credentials = tree.getroot()
             username = (login_credentials[0][0].text)
             password = (login_credentials[1][1].text)
-
-            # Date Variables
-            date_today = time.strftime("%m/%d/%Y")
-            ad_hoc_effectiveDate = "09/06/2017"
-
-            # Convert effective_date value to format MM/DD/YYYY
-            d = xlrd.xldate_as_tuple(int(effective_date), 0)
-            # convert date tuple in mm-dd-yyyy format
-            d = datetime.datetime(*(d[0:3]))
-            effective_date_formatted = d.strftime("%m/%d/%Y")
 
             driver.get(base_URL)
 
@@ -177,10 +176,6 @@ class TestCreateQuote():
             cs.enter_new_client_name_address(company_name_string, address_value, city, state)
             cc = ClientContact(driver)
 
-            # TODO:
-            # Code now parses URL String & retrieves application ID
-            # cc.parse_url_get_app_id()
-
             # Get the Application ID from URL -- THIS WORKS
             current_url = driver.current_url
             first_url_string = urlparse(current_url)
@@ -210,7 +205,7 @@ class TestCreateQuote():
             app_details = App_Details(driver)
 
             # Update the Create Date to the Ad Hoc Effective Date Value
-            app_details.update_create_date(effective_date_formatted)
+            app_details.update_create_date(date_today)
 
             # Click Update Button
             app_details.click_update_button()
@@ -224,7 +219,7 @@ class TestCreateQuote():
             # cp.enter_ad_hoc_effective_date(effective_date_formatted)
 
             # Enter Today's Date as Effective Date
-            cp.enter_current_date_as_effective_date(effective_date_formatted)
+            cp.enter_current_date_as_effective_date(date_today)
 
             # Click Next
             cp.click_next()
@@ -295,8 +290,6 @@ class TestCreateQuote():
             time.sleep(3)
 
             # At this point, script is re-directed to service center login screen
-            # This works on DEV
-            # TODO: FIX redirection; should redirect back to Service Center
             saw_confirm_issue.click_return_to_Admin_Interface()
 
             time.sleep(2)
@@ -327,8 +320,6 @@ class TestCreateQuote():
             # Approve Subjectivities
             sub = Subjectivities(driver)
             sub.set_all_subjectivities_to_recieved()
-            # sub.change_open_subjectivities_to_received()
-            # sub.select_yes_to_subjectivities_met()
             sub.click_submit()
             sub.click_agent_link()
 
@@ -389,8 +380,6 @@ class TestCreateQuote():
 
             # Click Policy
             ap.click_policy_link(policy_text)
-
-            # Code works up to this point
 
             # Wait
             driver.implicitly_wait(3)
