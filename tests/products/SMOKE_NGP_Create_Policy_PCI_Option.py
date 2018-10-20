@@ -414,17 +414,9 @@ class TestCreateQuote:
             time.sleep(3)
 
             # At this point, script is re-directed to service center login screen
-            # This works on DEV
-            # TODO: FIX redirection; should redirect back to Service Center
             saw_confirm_issue.click_return_to_Admin_Interface()
 
             time.sleep(2)
-
-            # This section is necessary ONLY on STAGE
-            # Call Login methods from Pages.home.login_page.py
-            # lp = LoginPage(driver)
-            # lp.login(username, password)
-            # nb = NavigationBar(driver)
 
             # Click Applications link on Navigation Bar
             nb.click_applications()
