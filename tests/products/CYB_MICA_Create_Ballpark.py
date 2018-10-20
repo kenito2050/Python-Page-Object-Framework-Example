@@ -1,13 +1,5 @@
-import unittest
-import os
 from xml.etree import ElementTree as ET
 import xlrd
-
-from faker import address
-from faker import company
-from faker import name
-from selenium import webdriver
-
 from pages.producer_center.ballpark.ballpark_Indication import BallPark_Indication
 from pages.producer_center.ballpark.ballpark_PAF import BallPark_PAF
 from pages.producer_center.ballpark.ballpark_download_send import BallPark_Download_Send
@@ -15,10 +7,11 @@ from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.service_center.agents_page import AgentsPage
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
-from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.Environments.Environments import Environments
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from utilities.Faker.Data_Generator import Data_Generator
+from utilities.Date_Time_Generator.Date_Time_Generator import Date_Time_Generator
 import time
 from config_globals import *
 
@@ -84,22 +77,31 @@ class TestCreateQuote():
             else:
                 break
 
-        ## Determine Test Environment to run scripts
+        # Create Instance of Data Generator
+        dg = Data_Generator()
 
-        ## Read in value from test_environment.xml
-        tree = ET.parse(str(config_file_directory / 'test_environment.xml'))
-        test_environment = tree.getroot()
-        environment = (test_environment[0][0].text)
+        # Create Company Name Value
+        company_name_string = dg.create_full_company_name()
+
+        # Create Street Address Value
+        address_value = dg.create_street_address()
+
+        city = StateCapitals.return_state_capital(state)
+
+        postal_code = ZipCodes.return_zip_codes(state)
+
+        # Create Instance of Date Time Generator
+        dtg = Date_Time_Generator()
+
+        # Date Variables
+
+        # Create Today's Date
+        date_today = dtg.return_date_today()
+
+        ## Determine Test Environment to run scripts
 
         ## Select Appropriate URL based on the Environment Value from above
         baseURL = Environments.return_environments(env)
-
-        first_name = name.first_name()
-        last_name = name.last_name()
-        company_name = company.company_name()
-        # company_name_string = company_name
-        company_name_string = "QA Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
-        postal_code = ZipCodes.return_zip_codes(state)
 
         # Access XML to retrieve login credentials
         tree = ET.parse(str(config_file_directory /  'resources.xml'))
@@ -107,11 +109,7 @@ class TestCreateQuote():
         username = (login_credentials[0][0].text)
         password = (login_credentials[1][1].text)
 
-        date_today = time.strftime("%m/%d/%Y")
-        ad_hoc_effectiveDate = "07/01/2017"
-
         # Maximize Window; Launch URL
-        # driver.maximize_window()
         driver.get(baseURL)
         driver.implicitly_wait(3)
 
@@ -159,9 +157,6 @@ class TestCreateQuote():
 
         # Switch to First Window (Service Center)
         driver.switch_to.window(driver.window_handles[0])
-
-        # Close First Window (Service Center)
-        #driver.close()
 
         # Wait
         driver.implicitly_wait(3)
