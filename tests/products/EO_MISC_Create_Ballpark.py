@@ -1,14 +1,6 @@
-import datetime
-import os
-import time
-from urllib.parse import urlparse, parse_qs
 from xml.etree import ElementTree as ET
-
+import time
 import xlrd
-from faker import address
-from faker import company
-from faker import name
-
 from pages.producer_center.ballpark.ballpark_Indication import BallPark_Indication
 from pages.producer_center.ballpark.ballpark_PAF import BallPark_PAF
 from pages.producer_center.ballpark.ballpark_download_send import BallPark_Download_Send
@@ -16,13 +8,12 @@ from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.service_center.agents_page import AgentsPage
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
-from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.Environments.Environments import Environments
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
-import time
+from utilities.Faker.Data_Generator import Data_Generator
+from utilities.Date_Time_Generator.Date_Time_Generator import Date_Time_Generator
 from config_globals import *
-
 
 class TestCreateQuote:
 
@@ -84,44 +75,32 @@ class TestCreateQuote:
             else:
                 break
 
-            ## Determine Test Environment to run scripts
+            # Create Instance of Data Generator
+            dg = Data_Generator()
 
-            ## Read in value from test_environment.xml
-            # tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
-            # test_environment = tree.getroot()
-            # environment = (test_environment[0][0].text)
-
-            ## Select Appropriate URL based on the Environment Value from above
-            base_URL = Environments.return_environments(env)
-
-            first_name = name.first_name()
-            last_name = name.last_name()
-            company_name = company.company_name()
-            # company_name_string = company_name
-            company_name_string = "QA Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
-            address_value = address.street_address()
+            # Create Company Name Value
+            company_name_string = dg.create_full_company_name()
+            # Create Street Address Value
+            address_value = dg.create_street_address()
             city = StateCapitals.return_state_capital(state)
             postal_code = ZipCodes.return_zip_codes(state)
 
+            # Create Instance of Date Time Generator
+            dtg = Date_Time_Generator()
+            # Create Today's Date
+            date_today = dtg.return_date_today()
+
             # Access XML to retrieve login credentials
-            tree = ET.parse(str(config_file_directory /'resources.xml'))
+            tree = ET.parse(str(config_file_directory / 'resources.xml'))
             login_credentials = tree.getroot()
             username = (login_credentials[1][0].text)
             password = (login_credentials[1][1].text)
 
-            # Date Variables
-            date_today = time.strftime("%m/%d/%Y")
-            ad_hoc_effectiveDate = "09/06/2017"
+            ## Test Environment
+            ## Select Appropriate URL based on the Environment Value (env)
+            baseURL = Environments.return_environments(env)
 
-            # Convert effective_date value to format MM/DD/YYYY
-            d = xlrd.xldate_as_tuple(int(effective_date), 0)
-            # convert date tuple in mm-dd-yyyy format
-            d = datetime.datetime(*(d[0:3]))
-            effective_date_formatted = d.strftime("%m/%d/%Y")
-
-            # driver.get(baseURL)
-
-            driver.get(base_URL)
+            driver.get(baseURL)
             driver.implicitly_wait(3)
 
             # Call Login methods from Pages.home.login_page.py
@@ -167,9 +146,6 @@ class TestCreateQuote:
 
             # Switch to First Window (Service Center)
             driver.switch_to.window(driver.window_handles[0])
-
-            # Close First Window (Service Center)
-            # driver.close()
 
             # Wait
             driver.implicitly_wait(3)
