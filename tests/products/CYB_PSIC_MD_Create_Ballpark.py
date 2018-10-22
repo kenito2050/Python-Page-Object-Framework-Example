@@ -1,11 +1,7 @@
-import unittest
-import os
 from xml.etree import ElementTree as ET
-
 from faker import address
 from faker import company
 from faker import name
-from selenium import webdriver
 
 import xlrd
 from pages.producer_center.ballpark.ballpark_Indication import BallPark_Indication
@@ -19,6 +15,8 @@ from utilities.Environments.Environments import Environments
 from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from utilities.Faker.Data_Generator import Data_Generator
+from utilities.Date_Time_Generator.Date_Time_Generator import Date_Time_Generator
 import time
 from config_globals import *
 
@@ -88,74 +86,35 @@ class TestCreateQuote():
             else:
                 break
 
+        # Create Instance of Data Generator
+        dg = Data_Generator()
+
+        # Create Company Name Value
+        company_name_string = dg.create_full_company_name()
+        # Create Street Address Value
+        address_value = dg.create_street_address()
+        city = StateCapitals.return_state_capital(state)
+        postal_code = ZipCodes.return_zip_codes(state)
+
+        # Create Instance of Date Time Generator
+        dtg = Date_Time_Generator()
+
+        # Date Variables
+        # Create Today's Date
+        date_today = dtg.return_date_today()
+
+        # Access XML to retrieve login credentials
+        tree = ET.parse(str(config_file_directory / 'resources.xml'))
+        login_credentials = tree.getroot()
+        username = (login_credentials[1][0].text)
+        password = (login_credentials[1][1].text)
+
         ## Determine Test Environment to run scripts
 
         ## Select Appropriate URL based on the Environment Value from above
         baseURL  = Environments.return_environments(env)
 
-        # Create "Fake" Variables
-        #state = frandom.us_state()
-        state = "California"
-        #state = Create_Insured_Address.return_alabama(state_value)
-        first_name = name.first_name()
-        last_name = name.last_name()
-        company_name = company.company_name()
-        #company_name_string = company_name
-        company_name_string = "QA Ballpark Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
-        address_value = address.street_address()
-        city = StateCapitals.return_state_capital(state)
-        postal_code = ZipCodes.return_zip_codes(state)
-
-        # Access XML to retrieve login credentials
-        tree = ET.parse(str(config_file_directory / 'resources.xml'))
-        login_credentials = tree.getroot()
-        username = (login_credentials[0][0].text)
-        password = (login_credentials[1][1].text)
-
-        # Access XML to retrieve the agent to search for
-        tree = ET.parse(str(config_file_directory / 'Agents.xml'))
-        agents = tree.getroot()
-        agent = (agents[5][0].text)
-
-        # 0,0 = Crump Tester                -- Wholesale Agent - Crump Insurance Services, Boston - Test Account
-        # 1,0 = Susan Leeming - TEST        -- Sub Agent of Wholesale Agency
-        # 2,0 = Retail Agent                -- Retail Agent - Boston Retail Insurance
-        # 3,0 = Preferred Agent             -- Preferred Agent - Preferred Agency
-        # 4,0 = TMLT Test User              -- Account to Test COMM2 Scenarios
-        # 5,0 = QA Agent                    -- QA Agent
-        # 6,0 = 2nd Preferred Agent         -- 2nd Preferred Agent - ABC Insurance
-
-        # TODO: NEED TO FIX SO THAT SCRIPT USES STRING VALUE CONTAINED IN contract_class variable
-        # Access XML to retrieve contract_class
-
-        # NOTE: For XML, the array count starts at 0
-        # I have inserted a placeholder element at 0 -- Ken
-        # Array will be 1 - 74
-        # For List of Contract Classes, See Contract_Classes.xml
-        tree = ET.parse(str(config_file_directory / 'Contract_Classes_Medical.xml'))
-        contract_classes_XML = tree.getroot()
-        contract_class = (contract_classes_XML[0][3].text)
-        # Contract Class - 1 - Medical Group
-        # Contract Class - 2 - Office of Physician
-        # Contract Class - 3 - Office of Dentists
-
-        # NOTE: For contract_classes.py, the array count starts at 1
-        # Array will be 1 - 74
-        contract_class_int_value = ContractClasses_Medical.return_contract_class_values(contract_class)
-
-        # To Debug, contract_class, uncomment the next line; set value to an integer from the utilities.contract_classes.py class
-        #contract_class_value = "74"
-
-        # Date Variables
-        date_today = time.strftime("%m/%d/%Y")
-        ad_hoc_effectiveDate = "07/01/2017"
-
-        # Initialize Driver; Launch URL
-        # baseURL = "https://service.wn.nasinsurance.com/"
-        # driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
-
         # Maximize Window; Launch URL
-        # driver.maximize_window()
         driver.get(baseURL)
         driver.implicitly_wait(3)
 
