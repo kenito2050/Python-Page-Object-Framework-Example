@@ -1,16 +1,7 @@
-import datetime
-import os
-import time
-import unittest
 from urllib.parse import urlparse, parse_qs
 from xml.etree import ElementTree as ET
-
 import xlrd
-from faker import address
-from faker import company
-from faker import name
-from selenium import webdriver
-
+import time
 from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.producer_center.client_search_page import ClientSearch
 from pages.producer_center.my_policies.my_policies_screens.active_policies import active_policies
@@ -40,6 +31,10 @@ from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.subjectivities import Subjectivities
 from utilities.Environments.Environments import Environments
+from utilities.state_capitals.state_capitals import StateCapitals
+from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from utilities.Faker.Data_Generator import Data_Generator
+from utilities.Date_Time_Generator.Date_Time_Generator import Date_Time_Generator
 from config_globals import *
 
 class TestCreateQuote():
@@ -112,19 +107,20 @@ class TestCreateQuote():
             else:
                 break
 
-        ## Determine Test Environment to run scripts
+        # Create Instance of Data Generator
+        dg = Data_Generator()
 
-        ## Select Appropriate URL based on the Environment Value
-        base_URL = Environments.return_environments(env)
+        # Create Company Name Value
+        company_name_string = dg.create_full_company_name()
+        # Create Street Address Value
+        address_value = dg.create_street_address()
+        city = StateCapitals.return_state_capital(state)
+        postal_code = ZipCodes.return_zip_codes(state)
 
-        first_name = name.first_name()
-        last_name = name.last_name()
-        company_name = company.company_name()
-        # company_name_string = company_name
-        company_name_string = "QA Test" + " " + "-" + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
-        address_value = address.street_address()
-        # city = StateCapitals.return_state_capital(state)
-        # postal_code = ZipCodes.return_zip_codes(state)
+        # Create Instance of Date Time Generator
+        dtg = Date_Time_Generator()
+        # Create Today's Date
+        date_today = dtg.return_date_today()
 
         # Access XML to retrieve login credentials
         tree = ET.parse(str(config_file_directory / 'resources.xml'))
@@ -132,23 +128,12 @@ class TestCreateQuote():
         username = (login_credentials[1][0].text)
         password = (login_credentials[1][1].text)
 
-        # Date Variables
-        date_today = time.strftime("%m/%d/%Y")
-        ad_hoc_effectiveDate = "09/06/2017"
-
-        # Convert effective_date value to format MM/DD/YYYY
-        d = xlrd.xldate_as_tuple(int(effective_date), 0)
-        # convert date tuple in mm-dd-yyyy format
-        d = datetime.datetime(*(d[0:3]))
-        effective_date_formatted = d.strftime("%m/%d/%Y")
-
-        # Initialize Driver; Launch URL
-        # baseURL = "https://svcdemo2.wn.nasinsurance.com/"
-        # driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
+        ## Test Environment
+        ## Select Appropriate URL based on the Environment Value (env)
+        baseURL = Environments.return_environments(env)
 
         # Maximize Window; Launch URL
-        # driver.maximize_window()
-        driver.get(base_URL)
+        driver.get(baseURL)
         driver.implicitly_wait(3)
 
         # Call Login methods from Pages.home.login_page.py
@@ -173,10 +158,6 @@ class TestCreateQuote():
         cs.manually_input_new_client()
         cs.enter_new_client_name_address(company_name_string, address_value, city, state)
         cc = ClientContact(driver)
-
-        # TODO:
-        # Code now parses URL String & retrieves application ID
-        #cc.parse_url_get_app_id()
 
         # Get the Application ID from URL -- THIS WORKS
         current_url = driver.current_url
@@ -249,10 +230,6 @@ class TestCreateQuote():
         app_page.enter_application_id(application_id)
         app_page.click_search_button()
 
-        # Click on application id link
-        # THIS IS NOT WORKING
-        #app_page.click_application_id_link(application_id)
-
         # Navigate to Application Details page
         new_current_url = driver.current_url
         slashparts = new_current_url.split('/')
@@ -269,11 +246,8 @@ class TestCreateQuote():
         driver.get(application_subjectivites_screen)
 
         # Approve Subjectivities
-        # Added Anna's Subjectivities Code 5-15-17
         sub = Subjectivities(driver)
         sub.set_all_subjectivities_to_recieved()
-        #sub.change_open_subjectivities_to_received()
-        #sub.select_yes_to_subjectivities_met()
         sub.click_submit()
         sub.click_agent_link()
 
@@ -335,8 +309,6 @@ class TestCreateQuote():
 
         # Click Policy
         ap.click_policy_link(policy_text)
-
-        # Code works up to this point
 
         # Wait
         driver.implicitly_wait(3)
