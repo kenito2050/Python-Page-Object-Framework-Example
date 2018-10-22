@@ -103,8 +103,6 @@ class TestCreateQuote():
             else:
                 break
 
-        ## Determine Test Environment to run scripts
-
         # Create Instance of Data Generator
         dg = Data_Generator()
 
@@ -117,8 +115,6 @@ class TestCreateQuote():
 
         # Create Instance of Date Time Generator
         dtg = Date_Time_Generator()
-
-        # Date Variables
         # Create Today's Date
         date_today = dtg.return_date_today()
 
@@ -128,7 +124,8 @@ class TestCreateQuote():
         username = (login_credentials[1][0].text)
         password = (login_credentials[1][1].text)
 
-        ## Select Appropriate URL based on the Environment Value from above
+        ## Test Environment
+        ## Select Appropriate URL based on the Environment Value (env)
         baseURL  = Environments.return_environments(env)
 
         # Maximize Window; Launch URL
