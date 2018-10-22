@@ -224,8 +224,6 @@ class TestCreateQuote():
         saw_confirm_issue = Confirm_and_Issue(driver)
 
         # At this point, script is re-directed to service center login screen
-        # This works on DEV
-        # TODO: FIX redirection; should redirect back to Service Center
         saw_confirm_issue.click_return_to_Admin_Interface()
 
         time.sleep(2)
