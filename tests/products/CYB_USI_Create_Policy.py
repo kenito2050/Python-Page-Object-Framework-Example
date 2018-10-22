@@ -1,16 +1,7 @@
-import datetime
-import os
-import time
-import unittest
 from urllib.parse import urlparse, parse_qs
 from xml.etree import ElementTree as ET
-
+import time
 import xlrd
-from faker import address
-from faker import company
-from faker import name
-from selenium import webdriver
-
 from pages.producer_center.client_contact_page import ClientContact
 from pages.producer_center.client_search_page import ClientSearch
 from pages.producer_center.my_policies.my_policies_screens.active_policies import active_policies
@@ -48,9 +39,10 @@ from pages.service_center.policy_screens.effective_periods import Effective_Peri
 from pages.service_center.policy_screens.policy_screens import Policy_Screens
 from pages.service_center.subjectivities import Subjectivities
 from utilities.Environments.Environments import Environments
-from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from utilities.Faker.Data_Generator import Data_Generator
+from utilities.Date_Time_Generator.Date_Time_Generator import Date_Time_Generator
 from config_globals import *
 
 class TestCreateQuote():
@@ -123,40 +115,33 @@ class TestCreateQuote():
             else:
                 break
 
-            ## Determine Test Environment to run scripts
+            # Create Instance of Data Generator
+            dg = Data_Generator()
 
-            ## Select Appropriate URL based on the Environment Value from above
-            base_URL = Environments.return_environments(env)
-
-            first_name = name.first_name()
-            last_name = name.last_name()
-            company_name = company.company_name()
-            # company_name_string = company_name
-            company_name_string = "QA Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
-            address_value = address.street_address()
+            # Create Company Name Value
+            company_name_string = dg.create_full_company_name()
+            # Create Street Address Value
+            address_value = dg.create_street_address()
             city = StateCapitals.return_state_capital(state)
             postal_code = ZipCodes.return_zip_codes(state)
 
-            # Access XML to retrieve login credentials
+            # Create Instance of Date Time Generator
+            dtg = Date_Time_Generator()
+            # Create Today's Date
+            date_today = dtg.return_date_today()
 
+            # Access XML to retrieve login credentials
             tree = ET.parse(str(config_file_directory / 'resources.xml'))
             login_credentials = tree.getroot()
             username = (login_credentials[1][0].text)
             password = (login_credentials[1][1].text)
 
-            # Date Variables
-            date_today = time.strftime("%m/%d/%Y")
-            ad_hoc_effectiveDate = "09/06/2017"
-
-            # Convert effective_date value to format MM/DD/YYYY
-            d = xlrd.xldate_as_tuple(int(effective_date), 0)
-            # convert date tuple in mm-dd-yyyy format
-            d = datetime.datetime(*(d[0:3]))
-            effective_date_formatted = d.strftime("%m/%d/%Y")
-
+            ## Test Environment
+            ## Select Appropriate URL based on the Environment Value (env)
+            baseURL = Environments.return_environments(env)
             # Initialize Driver; Launch URL
 
-            driver.get(base_URL)
+            driver.get(baseURL)
 
             driver.implicitly_wait(3)
 
@@ -186,11 +171,7 @@ class TestCreateQuote():
             cs.enter_new_client_name_address(company_name_string, address_value, city, state)
             cc = ClientContact(driver)
 
-            # TODO:
-            # Code now parses URL String & retrieves application ID
-            # cc.parse_url_get_app_id()
-
-            # Get the Application ID from URL -- THIS WORKS
+            # Get the Application ID from URL
             current_url = driver.current_url
             first_url_string = urlparse(current_url)
             query_dict = parse_qs(first_url_string.query)
@@ -357,8 +338,6 @@ class TestCreateQuote():
             time.sleep(3)
 
             # At this point, script is re-directed to service center login screen
-            # This works on DEV
-            # TODO: FIX redirection; should redirect back to Service Center
             saw_confirm_issue.click_return_to_Admin_Interface()
 
             time.sleep(2)
@@ -451,8 +430,6 @@ class TestCreateQuote():
 
             # Click Policy
             ap.click_policy_link(policy_text)
-
-            # Code works up to this point
 
             # Wait
             driver.implicitly_wait(3)
