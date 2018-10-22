@@ -1,12 +1,5 @@
-import unittest
-import os
 from urllib.parse import urlparse, parse_qs
 from xml.etree import ElementTree as ET
-
-from faker import address
-from faker import company
-from faker import name
-from selenium import webdriver
 import time
 
 import xlrd
@@ -39,9 +32,10 @@ from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.subjectivities import Subjectivities
 from utilities.Environments.Environments import Environments
-from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from utilities.Faker.Data_Generator import Data_Generator
+from utilities.Date_Time_Generator.Date_Time_Generator import Date_Time_Generator
 from config_globals import *
 
 class TestCreateQuote():
@@ -110,54 +104,35 @@ class TestCreateQuote():
             else:
                 break
 
+        # Create Instance of Data Generator
+        dg = Data_Generator()
+
+        # Create Company Name Value
+        company_name_string = dg.create_full_company_name()
+        # Create Street Address Value
+        address_value = dg.create_street_address()
+        city = StateCapitals.return_state_capital(state)
+        postal_code = ZipCodes.return_zip_codes(state)
+
+        # Create Instance of Date Time Generator
+        dtg = Date_Time_Generator()
+
+        # Date Variables
+        # Create Today's Date
+        date_today = dtg.return_date_today()
+
+        # Access XML to retrieve login credentials
+        tree = ET.parse(str(config_file_directory / 'resources.xml'))
+        login_credentials = tree.getroot()
+        username = (login_credentials[1][0].text)
+        password = (login_credentials[1][1].text)
+
         ## Determine Test Environment to run scripts
 
         ## Select Appropriate URL based on the Environment Value from above
         baseURL  = Environments.return_environments(env)
 
-        # Create "Fake" Variables
-        #state = frandom.us_state()
-        state = "California"
-        #state = Create_Insured_Address.return_alabama(state_value)
-        first_name = name.first_name()
-        last_name = name.last_name()
-        company_name = company.company_name()
-
-        #company_name_string = "QA Test - The Lance Armstrong Live Strong Company"
-        #address_value = "7021 Cerritos Ave"
-        #city = "Cerritos"
-        #postal_code = "90623"
-
-        company_name_string = "QA Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
-        address_value = address.street_address()
-        city = StateCapitals.return_state_capital(state)
-        postal_code = ZipCodes.return_zip_codes(state)
-
-        # revenue = "10000000"
-        # total_num_records = '1 to 100,000'
-        # doctor_count = "5"
-
-        # Access XML to retrieve login credentials
-        tree = ET.parse(str(config_file_directory / 'resources.xml'))
-        login_credentials = tree.getroot()
-        username = (login_credentials[0][0].text)
-        password = (login_credentials[1][1].text)
-
-        # Access XML to retrieve the agent to search for
-        tree = ET.parse(str(config_file_directory / 'Agents.xml'))
-        agents = tree.getroot()
-        agent = (agents[5][0].text)
-
-        # Date Variables
-        date_today = time.strftime("%m/%d/%Y")
-        ad_hoc_effectiveDate = "07/01/2017"
-
-        # Initialize Driver; Launch URL
-        # baseURL = "https://service.wn.nasinsurance.com/"
-        # driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
-
         # Maximize Window; Launch URL
-        # driver.maximize_window()
         driver.get(baseURL)
         driver.implicitly_wait(3)
 
@@ -174,24 +149,11 @@ class TestCreateQuote():
         pp = ProductsAndPrograms(driver)
         pp.click_CYB_PSIC_DDS()
 
-        # Contract Class is not required for CYB_PSIC_DDS
-
-        # The following lines added on 5-15-17 work
-        #pp.click_contract_class_drop_down_select_contract_class(contract_class)
-        #pp.select_contract_class_dropdown()
-
-        #pp.select_contract_class(contract_class)  # Script Ends Here
-        #pp.click_continue_on_contract_class_modal_after_selecting_contract_class()
-
         cs = ClientSearch(driver)
         cs.input_bogus_client_data(postal_code)
         cs.manually_input_new_client()
         cs.enter_new_client_name_address(company_name_string, address_value, city, state)
         cc = ClientContact(driver)
-
-        # TODO:
-        # Code now parses URL String & retrieves application ID
-        #cc.parse_url_get_app_id()
 
         # Get the Application ID from URL -- THIS WORKS
         current_url = driver.current_url
@@ -271,17 +233,9 @@ class TestCreateQuote():
         saw_confirm_issue = Confirm_and_Issue(driver)
 
         # At this point, script is re-directed to service center login screen
-        # This works on DEV
-        # TODO: FIX redirection; should redirect back to Service Center
         saw_confirm_issue.click_return_to_Admin_Interface()
 
         time.sleep(2)
-
-        #This section is necessary ONLY on STAGE
-        # Call Login methods from Pages.home.login_page.py
-        #lp = LoginPage(driver)
-        #lp.login(username, password)
-        #nb = NavigationBar(driver)
 
         # Click Applications link on Navigation Bar
         nb.click_applications()
@@ -290,10 +244,6 @@ class TestCreateQuote():
         app_page = ApplicationsPage(driver)
         app_page.enter_application_id(application_id)
         app_page.click_search_button()
-
-        # Click on application id link
-        # THIS IS NOT WORKING
-        #app_page.click_application_id_link(application_id)
 
         # Navigate to Application Details page
         new_current_url = driver.current_url
@@ -311,11 +261,8 @@ class TestCreateQuote():
         driver.get(application_subjectivites_screen)
 
         # Approve Subjectivities
-        # Added Anna's Subjectivities Code 5-15-17
         sub = Subjectivities(driver)
         sub.set_all_subjectivities_to_recieved()
-        #sub.change_open_subjectivities_to_received()
-        #sub.select_yes_to_subjectivities_met()
         sub.click_submit()
         sub.click_agent_link()
 
@@ -377,8 +324,6 @@ class TestCreateQuote():
 
         # Click Policy
         ap.click_policy_link(policy_text)
-
-        # Code works up to this point
 
         # Wait
         driver.implicitly_wait(3)
