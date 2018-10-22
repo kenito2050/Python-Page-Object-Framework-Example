@@ -72,7 +72,6 @@ class TestCreateQuote():
         global _OLD_scenario
         global _OLD_scenario_number
 
-
         # Open Test Scenario Workbook; Instantiate worksheet object
         wb = xlrd.open_workbook(str(test_case_directory / Product) + '.xlsx')
         sh = wb.sheet_by_index(0)
@@ -155,9 +154,6 @@ class TestCreateQuote():
 
             # The following lines added on 5-15-17 work
             pp.click_contract_class_drop_down_select_contract_class(contract_class)
-            # pp.select_contract_class_dropdown()
-
-            # pp.select_contract_class(contract_class)  # Script Ends Here
             pp.click_continue_on_contract_class_modal_after_selecting_contract_class()
 
             cs = ClientSearch(driver)
