@@ -37,7 +37,6 @@ from pages.service_center.policy_screens.effective_periods import Effective_Peri
 from pages.service_center.policy_screens.policy_screens import Policy_Screens
 from pages.service_center.subjectivities import Subjectivities
 from utilities.Environments.Environments import Environments
-from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
 from utilities.Faker.Data_Generator import Data_Generator
