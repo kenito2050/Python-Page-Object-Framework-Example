@@ -20,6 +20,8 @@ from utilities.contract_classes.contract_classes_Medical import ContractClasses_
 from utilities.Environments.Environments import Environments
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from utilities.Faker.Data_Generator import Data_Generator
+from utilities.Date_Time_Generator.Date_Time_Generator import Date_Time_Generator
 import time
 from config_globals import *
 
@@ -89,40 +91,37 @@ class TestCreateQuote():
             else:
                 break
 
+        # Create Instance of Data Generator
+        dg = Data_Generator()
+
+        # Create Company Name Value
+        company_name_string = dg.create_full_company_name()
+
+        # Create Street Address Value
+        address_value = dg.create_street_address()
+
+        city = StateCapitals.return_state_capital(state)
+
+        postal_code = ZipCodes.return_zip_codes(state)
+
+        # Create Instance of Date Time Generator
+        dtg = Date_Time_Generator()
+
+        # Date Variables
+
+        # Create Today's Date
+        date_today = dtg.return_date_today()
+
         ## Determine Test Environment to run scripts
 
         ## Select Appropriate URL based on the Environment Value from above
         baseURL  = Environments.return_environments(env)
-
-        # Create "Fake" Variables
-        #state = frandom.us_state()
-        # state = "North Carolina"
-        #state = Create_Insured_Address.return_alabama(state_value)
-        first_name = name.first_name()
-        last_name = name.last_name()
-        company_name = company.company_name()
-        #company_name_string = company_name
-        company_name_string = "QA Ballpark Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
-        postal_code = ZipCodes.return_zip_codes(state)
 
         # Access XML to retrieve login credentials
         tree = ET.parse(str(config_file_directory /  'resources.xml'))
         login_credentials = tree.getroot()
         username = (login_credentials[0][0].text)
         password = (login_credentials[1][1].text)
-
-        date_today = time.strftime("%m/%d/%Y")
-
-        # Convert effective_date value to format MM/DD/YYYY
-        d = xlrd.xldate_as_tuple(int(effective_date), 0)
-        # convert date tuple in mm-dd-yyyy format
-        d = datetime.datetime(*(d[0:3]))
-        effective_date_formatted = d.strftime("%m/%d/%Y")
-
-
-        # Initialize Driver; Launch URL
-        # baseURL = "https://svcrel.wn.nasinsurance.com/"
-        # driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
 
         # Maximize Window; Launch URL
         # driver.maximize_window()
@@ -151,7 +150,7 @@ class TestCreateQuote():
         time.sleep(3)
 
         # Enter Ad Hoc Effective Date
-        bp_PAF.enter_effective_date(effective_date_formatted)
+        bp_PAF.enter_effective_date(date_today)
 
         # Enter Today's Date as Effective Date
         # bp_PAF.enter_current_date(date_today)
