@@ -1,13 +1,5 @@
-import unittest
-import os
 from xml.etree import ElementTree as ET
-
-from faker import address
-from faker import company
-from faker import name
-from selenium import webdriver
 import time
-
 import xlrd
 from pages.producer_center.ballpark.ballpark_Indication import BallPark_Indication
 from pages.producer_center.ballpark.ballpark_PAF import BallPark_PAF
@@ -16,10 +8,11 @@ from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.service_center.agents_page import AgentsPage
 from pages.service_center.login_page import LoginPage
 from pages.service_center.navigation_bar import NavigationBar
-from utilities.contract_classes.contract_classes import ContractClasses
 from utilities.Environments.Environments import Environments
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from utilities.Faker.Data_Generator import Data_Generator
+from utilities.Date_Time_Generator.Date_Time_Generator import Date_Time_Generator
 from config_globals import *
 
 class TestCreateQuote():
@@ -53,7 +46,7 @@ class TestCreateQuote():
         # 1 - Second Worksheet...etc
 
         wb = xlrd.open_workbook(str(test_case_directory / Product) + '.xlsx')
-        sh = wb.sheet_by_index(1)
+        sh = wb.sheet_by_index(2)
 
         ## Begin For Loop to iterate through Test Scenarios
         i = 1
@@ -88,42 +81,32 @@ class TestCreateQuote():
             else:
                 break
 
-        ## Determine Test Environment to run scripts
+        # Create Instance of Data Generator
+        dg = Data_Generator()
 
-        ## Select Appropriate URL based on the Environment Value from above
-        baseURL  = Environments.return_environments(env)
-
-        # Create "Fake" Variables
-        #state = frandom.us_state()
-        state = "California"
-        #state = Create_Insured_Address.return_alabama(state_value)
-        first_name = name.first_name()
-        last_name = name.last_name()
-        company_name = company.company_name()
-        #company_name_string = company_name
-        company_name_string = "QA Ballpark Test" + " " + "-" + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
-        address_value = address.street_address()
+        # Create Company Name Value
+        company_name_string = dg.create_full_company_name()
+        # Create Street Address Value
+        address_value = dg.create_street_address()
         city = StateCapitals.return_state_capital(state)
         postal_code = ZipCodes.return_zip_codes(state)
 
-        # revenue = "20,000,000"
+        # Create Instance of Date Time Generator
+        dtg = Date_Time_Generator()
+        # Create Today's Date
+        date_today = dtg.return_date_today()
 
         # Access XML to retrieve login credentials
         tree = ET.parse(str(config_file_directory / 'resources.xml'))
         login_credentials = tree.getroot()
-        username = (login_credentials[0][0].text)
+        username = (login_credentials[1][0].text)
         password = (login_credentials[1][1].text)
 
-        # Date Variables
-        date_today = time.strftime("%m/%d/%Y")
-        ad_hoc_effectiveDate = "07/01/2017"
-
-        # Initialize Driver; Launch URL
-        # baseURL = "https://svcdemo1.wn.nasinsurance.com/"
-        # driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
+        ## Test Environment
+        ## Select Appropriate URL based on the Environment Value (env)
+        baseURL = Environments.return_environments(env)
 
         # Maximize Window; Launch URL
-        # driver.maximize_window()
         driver.get(baseURL)
         driver.implicitly_wait(3)
 
@@ -171,9 +154,6 @@ class TestCreateQuote():
 
         # Switch to First Window (Service Center)
         driver.switch_to.window(driver.window_handles[0])
-
-        # Close First Window (Service Center)
-        # driver.close()
 
         # Wait
         driver.implicitly_wait(3)
