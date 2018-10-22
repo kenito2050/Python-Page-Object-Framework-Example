@@ -13,6 +13,14 @@ class Date_Time_Generator:
         year_current = now.year
         return year_current
 
+    def return_last_year(self):
+        # This Year
+        now = datetime.now()
+        # Last Year
+        last_year_unformatted = datetime.now() - relativedelta(years=1)
+        last_year_formatted = last_year_unformatted.strftime('%Y')
+        return last_year_formatted
+
     def return_expiration_day(self):
 
         # This Year
