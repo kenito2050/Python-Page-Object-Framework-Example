@@ -1,16 +1,7 @@
-import datetime
-import os
-import time
-import unittest
 from urllib.parse import urlparse, parse_qs
 from xml.etree import ElementTree as ET
-
+import time
 import xlrd
-from faker import address
-from faker import company
-from faker import name
-from selenium import webdriver
-
 from pages.producer_center.products_programs_page import ProductsAndPrograms
 from pages.producer_center.client_search_page import ClientSearch
 from pages.producer_center.my_policies.my_policies_screens.active_policies import active_policies
@@ -40,6 +31,10 @@ from pages.service_center.agent_screens.agent_details import Agent_Details
 from pages.service_center.policy_screens.effective_periods import Effective_Periods
 from pages.service_center.subjectivities import Subjectivities
 from utilities.Environments.Environments import Environments
+from utilities.state_capitals.state_capitals import StateCapitals
+from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from utilities.Faker.Data_Generator import Data_Generator
+from utilities.Date_Time_Generator.Date_Time_Generator import Date_Time_Generator
 from config_globals import *
 
 class TestCreateQuote:
@@ -56,13 +51,6 @@ class TestCreateQuote:
         config_file_directory = CONFIG_PATH
         test_case_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Products'
         test_results_directory = framework_directory / 'utilities' / 'Excel_Sheets' / 'Test_Results'
-
-        # # Determine the Test Run Type
-        # # Get Test Run Type Text from config file
-        # tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
-        # test_environment = tree.getroot()
-        # test_run_type = (test_environment[1][0].text)
-        # test_run_type_value = ''
 
         global test_summary
         global test_scenario
@@ -119,24 +107,20 @@ class TestCreateQuote:
             else:
                 break
 
-        ## Determine Test Environment to run scripts
+        # Create Instance of Data Generator
+        dg = Data_Generator()
 
-        ## Read in value from test_environment.xml
-        # tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
-        # test_environment = tree.getroot()
-        # environment = (test_environment[0][0].text)
+        # Create Company Name Value
+        company_name_string = dg.create_full_company_name()
+        # Create Street Address Value
+        address_value = dg.create_street_address()
+        city = StateCapitals.return_state_capital(state)
+        postal_code = ZipCodes.return_zip_codes(state)
 
-        ## Select Appropriate URL based on the Environment Value from above
-        base_URL = Environments.return_environments(env)
-
-        first_name = name.first_name()
-        last_name = name.last_name()
-        company_name = company.company_name()
-        # company_name_string = company_name
-        company_name_string = "QA Test" + " " + "-" + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
-        address_value = address.street_address()
-        # city = StateCapitals.return_state_capital(state)
-        # postal_code = ZipCodes.return_zip_codes(state)
+        # Create Instance of Date Time Generator
+        dtg = Date_Time_Generator()
+        # Create Today's Date
+        date_today = dtg.return_date_today()
 
         # Access XML to retrieve login credentials
         tree = ET.parse(str(config_file_directory / 'resources.xml'))
@@ -144,29 +128,12 @@ class TestCreateQuote:
         username = (login_credentials[1][0].text)
         password = (login_credentials[1][1].text)
 
-        # Date Variables
-        date_today = time.strftime("%m/%d/%Y")
-        ad_hoc_effectiveDate = "09/06/2017"
-
-        # Convert effective_date value to format MM/DD/YYYY
-        d = xlrd.xldate_as_tuple(int(effective_date), 0)
-        # convert date tuple in mm-dd-yyyy format
-        d = datetime.datetime(*(d[0:3]))
-        effective_date_formatted = d.strftime("%m/%d/%Y")
-
-        # Convert retroactive_date value to format MM/DD/YYYY
-        r = xlrd.xldate_as_tuple(int(retroactive_date), 0)
-        # convert date tuple in mm-dd-yyyy format
-        r = datetime.datetime(*(r[0:3]))
-        retroactive_date_formatted = r.strftime("%m/%d/%Y")
-
-        # Initialize Driver; Launch URL
-        # baseURL = "https://svcdemo2.wn.nasinsurance.com/"
-        # driver = webdriver.Chrome(os.path.join(config_file_directory, 'chromedriver.exe'))
+        ## Test Environment
+        ## Select Appropriate URL based on the Environment Value (env)
+        baseURL = Environments.return_environments(env)
 
         # Maximize Window; Launch URL
-        # driver.maximize_window()
-        driver.get(base_URL)
+        driver.get(baseURL)
         driver.implicitly_wait(3)
 
         # Call Login methods from Pages.home.login_page.py
@@ -224,10 +191,10 @@ class TestCreateQuote:
 
         if test_scenario == "1":
             saw_PAF.create_quote_include_HNOA(years_in_business, staff_count, total_occupied_beds)
-            saw_PAF.input_retroactive_date(retroactive_date_formatted)
+            saw_PAF.input_retroactive_date(date_today)
         elif test_scenario == "2":
             saw_PAF.create_quote_NO_HNOA(years_in_business, staff_count, total_occupied_beds)
-            saw_PAF.input_retroactive_date(retroactive_date_formatted)
+            saw_PAF.input_retroactive_date(date_today)
 
         # Click Next on PAF screen
         saw_PAF.click_next()
@@ -254,7 +221,6 @@ class TestCreateQuote:
         saw_confirm_issue = Confirm_and_Issue(driver)
 
         # At this point, script is re-directed to service center login screen
-        # This works on DEV
         saw_confirm_issue.click_return_to_Admin_Interface()
 
         time.sleep(3)
@@ -266,10 +232,6 @@ class TestCreateQuote:
         app_page = ApplicationsPage(driver)
         app_page.enter_application_id(application_id)
         app_page.click_search_button()
-
-        # Click on application id link
-        # THIS IS NOT WORKING
-        #app_page.click_application_id_link(application_id)
 
         # Navigate to Application Details page
         new_current_url = driver.current_url
@@ -287,11 +249,8 @@ class TestCreateQuote:
         driver.get(application_subjectivites_screen)
 
         # Approve Subjectivities
-        # Added Anna's Subjectivities Code 5-15-17
         sub = Subjectivities(driver)
         sub.set_all_subjectivities_to_recieved()
-        #sub.change_open_subjectivities_to_received()
-        #sub.select_yes_to_subjectivities_met()
         sub.click_submit()
         sub.click_agent_link()
 
@@ -353,8 +312,6 @@ class TestCreateQuote:
 
         # Click Policy
         ap.click_policy_link(policy_text)
-
-        # Code works up to this point
 
         # Wait
         driver.implicitly_wait(3)
