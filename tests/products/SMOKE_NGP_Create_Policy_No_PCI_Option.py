@@ -1,17 +1,7 @@
-import csv
-import datetime
-import os
-import time
-import unittest
 from urllib.parse import urlparse, parse_qs
 from xml.etree import ElementTree as ET
-
+import time
 import xlrd
-from faker import address
-from faker import company
-from faker import name
-from selenium import webdriver
-
 from pages.producer_center.client_contact_page import ClientContact
 from pages.producer_center.client_search_page import ClientSearch
 from pages.producer_center.my_policies.my_policies_screens.active_policies import active_policies
@@ -48,9 +38,10 @@ from pages.service_center.policy_screens.effective_periods import Effective_Peri
 from pages.service_center.policy_screens.policy_screens import Policy_Screens
 from pages.service_center.subjectivities import Subjectivities
 from utilities.Environments.Environments import Environments
-from utilities.contract_classes.contract_classes_Medical import ContractClasses_Medical
 from utilities.state_capitals.state_capitals import StateCapitals
 from utilities.zip_codes_state_capitals.zip_codes import ZipCodes
+from utilities.Faker.Data_Generator import Data_Generator
+from utilities.Date_Time_Generator.Date_Time_Generator import Date_Time_Generator
 from config_globals import *
 
 class TestCreateQuote:
@@ -121,44 +112,32 @@ class TestCreateQuote:
             else:
                 break
 
-            ## Determine Test Environment to run scripts
+            # Create Instance of Data Generator
+            dg = Data_Generator()
 
-            ## Read in value from test_environment.xml
-            # tree = ET.parse(os.path.join(config_file_directory, 'test_environment.xml'))
-            # test_environment = tree.getroot()
-            # environment = (test_environment[0][0].text)
-
-            ## Select Appropriate URL based on the Environment Value from above
-            base_URL = Environments.return_environments(env)
-
-            first_name = name.first_name()
-            last_name = name.last_name()
-            company_name = company.company_name()
-            # company_name_string = company_name
-            company_name_string = "QA Test" + " " + "-" + " " + "Dr." + " " + first_name + " " + last_name + " " + "dba" + " " + company_name
-            address_value = address.street_address()
+            # Create Company Name Value
+            company_name_string = dg.create_full_company_name()
+            # Create Street Address Value
+            address_value = dg.create_street_address()
             city = StateCapitals.return_state_capital(state)
             postal_code = ZipCodes.return_zip_codes(state)
 
+            # Create Instance of Date Time Generator
+            dtg = Date_Time_Generator()
+            # Create Today's Date
+            date_today = dtg.return_date_today()
+
             # Access XML to retrieve login credentials
-            tree = ET.parse(str(config_file_directory /'resources.xml'))
+            tree = ET.parse(str(config_file_directory / 'resources.xml'))
             login_credentials = tree.getroot()
             username = (login_credentials[1][0].text)
             password = (login_credentials[1][1].text)
 
-            # Date Variables
-            date_today = time.strftime("%m/%d/%Y")
-            ad_hoc_effectiveDate = "09/06/2017"
+            ## Test Environment
+            ## Select Appropriate URL based on the Environment Value (env)
+            baseURL = Environments.return_environments(env)
 
-            # Convert effective_date value to format MM/DD/YYYY
-            d = xlrd.xldate_as_tuple(int(effective_date), 0)
-            # convert date tuple in mm-dd-yyyy format
-            d = datetime.datetime(*(d[0:3]))
-            effective_date_formatted = d.strftime("%m/%d/%Y")
-
-            # driver.get(baseURL)
-
-            driver.get(base_URL)
+            driver.get(baseURL)
 
             driver.implicitly_wait(3)
 
@@ -174,7 +153,6 @@ class TestCreateQuote:
 
             pp = ProductsAndPrograms(driver)
             pp.click_NGP()
-            # pp.click_Ken_V_Test()
 
             # The following lines added on 10-09-17 work
             pp.click_contract_class_drop_down_select_contract_class(contract_class)
@@ -196,54 +174,6 @@ class TestCreateQuote:
             cc.click_next()
 
             cp = CoveragePeriods(driver)
-            # This section commented out
-            # cp.click_return_to_Admin_Interface()
-            #
-            # time.sleep(3)
-            #
-            # # Navigate to Application Details page
-            # current_url_2 = driver.current_url
-            # slashparts = current_url_2.split('/')
-            # # Now join back the first three sections 'http:', '' and 'example.com'
-            # base_url_2 = '/'.join(slashparts[:3]) + '/'
-            #
-            # app_details_string = "?c=app.view&id="
-            # # app_subjectivities_string = "?c=app.track_subjectivities&id="
-            #
-            # application_details_screen = base_url_2 + app_details_string + application_id
-            #
-            # # Navigate to Application Subjectivities Screen
-            # driver.get(application_details_screen)
-            #
-            # # Declare an app details class for Agents & Sub-Agents
-            # app_details = App_Details(driver)
-            # app_details_sub_agent = App_Details_sub_agent(driver)
-            #
-            # # Update the Create Date to the Ad Hoc Effective Date Value
-            # # app_details.update_create_date(effective_date_formatted)
-            #
-            # # This section if agent is direct
-            # # Click Update Button
-            # app_details.click_update_button()
-            #
-            # # Click on Agent Link to return to Producer Center
-            # app_details.click_agent_text_link()
-            # # Click on Agent Link to return to Producer Center
-            #
-            # # This section if agent is Sub-Agent
-            # # app_details_sub_agent.update_create_date(effective_date_formatted)
-            # # app_details_sub_agent.click_update_button()
-            # # app_details_sub_agent.click_sub_agent_text_link()
-            #
-            # # Return to Coverage Periods screen
-            #
-            # # Enter an Ad Hoc Effective Date
-            # cp.enter_ad_hoc_effective_date(effective_date_formatted)
-
-            # Enter Today's Date as Effective Date
-            # cp.enter_current_date_as_effective_date(date_today)
-
-            # End Comment Section
 
             # Click Next
             cp.click_next()
@@ -485,17 +415,9 @@ class TestCreateQuote:
             time.sleep(3)
 
             # At this point, script is re-directed to service center login screen
-            # This works on DEV
-            # TODO: FIX redirection; should redirect back to Service Center
             saw_confirm_issue.click_return_to_Admin_Interface()
 
             time.sleep(2)
-
-            # This section is necessary ONLY on STAGE
-            # Call Login methods from Pages.home.login_page.py
-            # lp = LoginPage(driver)
-            # lp.login(username, password)
-            # nb = NavigationBar(driver)
 
             # Click Applications link on Navigation Bar
             nb.click_applications()
@@ -504,10 +426,6 @@ class TestCreateQuote:
             app_page = ApplicationsPage(driver)
             app_page.enter_application_id(application_id)
             app_page.click_search_button()
-
-            # Click on application id link
-            # THIS IS NOT WORKING
-            # app_page.click_application_id_link(application_id)
 
             # Navigate to Application Details page
             new_current_url = driver.current_url
@@ -527,8 +445,6 @@ class TestCreateQuote:
             # Approve Subjectivities
             sub = Subjectivities(driver)
             sub.set_all_subjectivities_to_recieved()
-            # sub.change_open_subjectivities_to_received()
-            # sub.select_yes_to_subjectivities_met()
             sub.click_submit()
             sub.click_agent_link()
 
@@ -538,8 +454,6 @@ class TestCreateQuote:
             # Retrieve Policy Number of Policy that was issued; Policy Number stored in policy_text
             thank_you = Thank_You_Page(driver)
             policy_text = thank_you.retrieve_store_policy_number()
-
-            # Code works up to this point
 
             # Wait
             driver.implicitly_wait(3)
