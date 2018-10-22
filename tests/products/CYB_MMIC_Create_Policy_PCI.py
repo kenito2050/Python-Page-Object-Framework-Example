@@ -294,12 +294,6 @@ class TestCreateQuote():
 
             time.sleep(2)
 
-            # This section is necessary ONLY on STAGE
-            # Call Login methods from Pages.home.login_page.py
-            # lp = LoginPage(driver)
-            # lp.login(username, password)
-            # nb = NavigationBar(driver)
-
             # Click Applications link on Navigation Bar
             nb.click_applications()
 
@@ -307,10 +301,6 @@ class TestCreateQuote():
             app_page = ApplicationsPage(driver)
             app_page.enter_application_id(application_id)
             app_page.click_search_button()
-
-            # Click on application id link
-            # THIS IS NOT WORKING
-            # app_page.click_application_id_link(application_id)
 
             # Navigate to Application Details page
             new_current_url = driver.current_url
@@ -330,8 +320,6 @@ class TestCreateQuote():
             # Approve Subjectivities
             sub = Subjectivities(driver)
             sub.set_all_subjectivities_to_recieved()
-            # sub.change_open_subjectivities_to_received()
-            # sub.select_yes_to_subjectivities_met()
             sub.click_submit()
             sub.click_agent_link()
 
@@ -392,8 +380,6 @@ class TestCreateQuote():
 
             # Click Policy
             ap.click_policy_link(policy_text)
-
-            # Code works up to this point
 
             # Wait
             driver.implicitly_wait(3)
