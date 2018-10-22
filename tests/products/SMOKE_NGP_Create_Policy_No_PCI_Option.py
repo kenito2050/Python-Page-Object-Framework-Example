@@ -255,7 +255,6 @@ class TestCreateQuote:
             ### PCI Scenarios
             if test_scenario == "1":
                 saw_CC_in_use = PCI_Coverage_Options(driver)
-                # saw_CC_in_use.test_ken(limit)
 
                 # Assert Limits Display
                 _NGP_with_BrandGuard_PCI_Assessment_250K_limit_label_text = saw_CC_in_use.return_NGP_with_BrandGuard_PCI_Assessment_250K_limit_label_text()
