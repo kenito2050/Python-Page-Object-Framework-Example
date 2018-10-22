@@ -226,9 +226,9 @@ class TestCreateQuote():
         # test_scenario 2, Product Liability
 
         if test_scenario == "1":
-            saw_PAF.create_quote_No_Product_Liability(years_in_business, staff_count, number_procedures, revenue_last_year, revenue_upcoming_year, effective_date_formatted)
+            saw_PAF.create_quote_No_Product_Liability(years_in_business, staff_count, number_procedures, revenue_last_year, revenue_upcoming_year, date_today)
         elif test_scenario == "2":
-            saw_PAF.create_quote_Product_Liability(years_in_business, staff_count, number_procedures, revenue_last_year, revenue_upcoming_year, effective_date_formatted)
+            saw_PAF.create_quote_Product_Liability(years_in_business, staff_count, number_procedures, revenue_last_year, revenue_upcoming_year, date_today)
 
         # saw_PAF.create_quote_No_Product_Liability(years_in_business, number_procedures, revenue_last_year, revenue_upcoming_year, effective_date_formatted)
 
