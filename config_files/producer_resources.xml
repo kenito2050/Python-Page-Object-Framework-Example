@@ -2,14 +2,14 @@
 <data>
     <user type= "producer1">
         <username>qatest</username>
-        <password>test1234</password>
+        <password>XXX</password>
     </user >
     <user type= "producer2">
         <username>janice_test</username>
-        <password>test1234</password>
+        <password>XXX</password>
     </user >
     <user type= "producer3">
     <username>qatest</username>
-    <password>test1234</password>
+    <password>XXX</password>
     </user >
 </data>
